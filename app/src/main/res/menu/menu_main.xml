@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/icons8_home_96"
+        android:title="@string/home"
+        app:cnb_backgroundColor="@color/red_light"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white"
+        />
+
+    <item
+        android:id="@+id/menu_love"
+        android:icon="@drawable/icons8_love_50"
+        android:title="love"
+        app:cnb_backgroundColor="@color/red_light"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white"
+        />
+
+    <item
+        android:id="@+id/menu_card"
+        android:icon="@drawable/icons8_card_64"
+        android:title="card"
+        app:cnb_backgroundColor="@color/red_light"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white"
+        />
+
+    <item
+        android:id="@+id/menu_cart"
+        android:icon="@drawable/icons8_cart_96"
+        android:title="cart"
+        app:cnb_backgroundColor="@color/red_light"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white"/>
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/icons8_person_64"
+        android:title="@string/profile"
+        app:cnb_backgroundColor="@color/red_light"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white"/>
+
+</menu>

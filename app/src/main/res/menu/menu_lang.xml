@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_en"
+        android:icon="@drawable/img_flag_en"
+        android:title="@string/en"
+        />
+
+    <item
+        android:id="@+id/menu_vi"
+        android:icon="@drawable/img_flag_vi"
+        android:title="@string/vi"
+        />
+
+</menu>
