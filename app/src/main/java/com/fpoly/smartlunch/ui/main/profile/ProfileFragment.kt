@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
@@ -22,6 +23,7 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
     ): FragmentProfileBinding = FragmentProfileBinding.inflate(layoutInflater)
 
     override fun invalidate() {
+
     }
 
     @Inject

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/icons8_home_96"
+        android:icon="@drawable/icon_home"
         android:title="@string/home"
         app:cnb_backgroundColor="@color/red_light"
         app:cnb_iconColor="@color/white"
@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/menu_love"
-        android:icon="@drawable/icons8_love_50"
-        android:title="love"
+        android:icon="@drawable/icon_favourite"
+        android:title="@string/favourite"
         app:cnb_backgroundColor="@color/red_light"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white"
@@ -22,8 +22,8 @@
 
     <item
         android:id="@+id/menu_card"
-        android:icon="@drawable/icons8_card_64"
-        android:title="card"
+        android:icon="@drawable/icon_card"
+        android:title="@string/card"
         app:cnb_backgroundColor="@color/red_light"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white"
@@ -31,15 +31,15 @@
 
     <item
         android:id="@+id/menu_cart"
-        android:icon="@drawable/icons8_cart_96"
-        android:title="cart"
+        android:icon="@drawable/icon_cart"
+        android:title="@string/cart"
         app:cnb_backgroundColor="@color/red_light"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white"/>
 
     <item
         android:id="@+id/menu_profile"
-        android:icon="@drawable/icons8_person_64"
+        android:icon="@drawable/icon_user"
         android:title="@string/profile"
         app:cnb_backgroundColor="@color/red_light"
         app:cnb_iconColor="@color/white"

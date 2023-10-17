@@ -1,5 +1,7 @@
 package com.fpoly.smartlunch.ui.main.home
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,9 @@ import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.core.PolyDialog
+import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
+import com.fpoly.smartlunch.databinding.DialogHomeBinding
 import com.fpoly.smartlunch.databinding.FragmentHomeBinding
 import javax.inject.Inject
 
@@ -36,10 +41,50 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         homeViewModel.testEvent()
 
         homeViewModel.observeViewEvents {
-            Log.e("TAG", "HomeFragment viewEvent: $it" )
+            when(it){
+                is HomeViewEvent.testViewEvent -> Log.e("TAG", "HomeFragment viewEvent: $it" )
+            }
         }
 
         homeViewModel.handle(HomeViewAction.GetUserViewAction)
+
+        lisstenClickUI()
+    }
+
+    private fun lisstenClickUI() {
+        views.btnButtomShet.setOnClickListener{
+            showBottomSheet()
+        }
+
+        views.btnDialog.setOnClickListener{
+            showDialog()
+        }
+
+    }
+
+    private fun showBottomSheet() {
+        val bottomSheet: HomeBottomSheet = HomeBottomSheet.newInstance()
+        bottomSheet.show(childFragmentManager, HomeBottomSheet.TAG)
+    }
+
+    private fun showDialog() {
+        // đây là dialog tự custom với tùy chỉnh được border radius, width, height, ...
+        val dialog
+                = PolyDialog.Builder(requireContext(), DialogHomeBinding.inflate(layoutInflater))
+            .isBorderRadius(true)
+            .isWidthMatchParent(true)
+            .isHeightMatchParent(false)
+            .isTransparent(false)
+            .layoutGravity(PolyDialog.GRAVITY_TOP)
+            .build()
+
+        dialog.setCancelable(true)
+        dialog.show()
+
+        // lấy ra binding để thao tác với view
+        dialog.viewsDialog.btnDismiss.setOnClickListener{
+            dialog.dismiss()
+        }
     }
 
     override fun invalidate(): Unit = withState(homeViewModel){

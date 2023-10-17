@@ -8,4 +8,8 @@ interface UserApi {
 
     @GET("user")
     fun getUser(): Observable<List<User>>
+
+
+
+
 }

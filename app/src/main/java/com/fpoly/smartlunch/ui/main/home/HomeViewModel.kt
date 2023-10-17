@@ -11,6 +11,7 @@ import com.fpoly.smartlunch.data.repository.HomeRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel @AssistedInject constructor(
     @Assisted state: HomeViewState,
