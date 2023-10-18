@@ -29,6 +29,7 @@ interface PolyConponent {
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ProfileFragment)
 
+
     fun fragmentFactory(): FragmentFactory
     fun viewModelFactory(): ViewModelProvider.Factory
 

@@ -1,6 +1,5 @@
 package com.fpoly.smartlunch.ui.main.home
 
-import android.util.Log
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
@@ -19,27 +18,21 @@ class HomeViewModel @AssistedInject constructor(
 
     override fun handle(action: HomeViewAction) {
         when(action){
-            is HomeViewAction.TestViewAction -> handleTestViewACtion()
-            is HomeViewAction.GetUserViewAction -> handleGetUsers()
+            is HomeViewAction.GetListProduct -> handleGetProduct()
+          //  is HomeViewAction.GetUserViewAction -> handleGetUsers()
         }
     }
 
-    private fun handleTestViewACtion() {
-        setState { copy(test = Loading()) }
-        repo.test()
+    private fun handleGetProduct() {
+
+        setState { copy(products = Loading()) }
+        repo.getProducts()
             .execute {
-                copy(test = it)
+                copy(products = it)
             }
     }
 
-    private fun handleGetUsers() {
-        Log.e("TAG", "handleTestViewACtion" )
-        setState { copy(users = Loading()) }
-        repo.getUsers()
-            .execute {
-                copy(users = it)
-            }
-    }
+
 
     fun testEvent(){
         _viewEvents.post(HomeViewEvent.testViewEvent)

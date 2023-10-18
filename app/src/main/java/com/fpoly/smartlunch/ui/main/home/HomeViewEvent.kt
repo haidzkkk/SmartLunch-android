@@ -4,5 +4,6 @@ import com.fpoly.smartlunch.core.PolyViewEvent
 
 sealed class HomeViewEvent : PolyViewEvent {
     object testViewEvent: HomeViewEvent()
+    object ReturnDetailUser : HomeViewEvent()
 
 }

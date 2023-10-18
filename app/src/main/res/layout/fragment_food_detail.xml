@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/food_detail"
+    android:layout_height="match_parent"
+    android:clipToOutline="true"
+    tools:context=".ui.Product.FoodDetailFragment">
+
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="match_parent"
+        android:layout_height="234dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/baseline_arrow_back_24"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_below="@+id/rectangle_3"
+        android:gravity="center"
+        android:id="@+id/lin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Name_detail_food"
+            android:layout_width="225dp"
+            android:layout_height="32dp"
+            android:lineSpacingExtra="8sp"
+            android:text="Cơm lứt bò sốt tiêu"
+            android:textStyle="bold"
+
+            android:translationY="-4.07sp" />
+        <TextView
+            android:id="@+id/price_detail_food"
+            android:layout_width="102dp"
+            android:layout_height="28dp"
+            android:text="200.000đ"
+            android:textAppearance="@style/Text_Name"
+            android:lineSpacingExtra="7sp"
+            android:translationY="-3.26sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_below="@+id/lin"
+        android:id="@+id/lin2"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="100dp"
+        >
+        <TextView
+            android:id="@+id/m_t_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả"
+            />
+        <TextView
+            android:id="@+id/desc_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl. Viverra vulputate sodales quis etdui, lacus. Iaculis eu egestas leo egestas vel. Ultrices "
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.65sp"
+            android:gravity="top"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_10000"
+        android:layout_below="@+id/lin2"
+        android:layout_width="327dp"
+        android:layout_height="76dp"
+        >
+        <TextView
+            android:id="@+id/k_ch_c_"
+            android:layout_width="327dp"
+            android:layout_height="24dp"
+            android:text="@string/k_ch_c_"
+            android:textAppearance="@style/k_ch_c_"
+            android:lineSpacingExtra="5sp"
+            android:gravity="center_vertical"
+            />
+        <LinearLayout
+            android:id="@+id/frame_100000"
+            android:layout_below="@+id/k_ch_c_"
+            android:layout_width="327dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            >
+            <RelativeLayout
+                android:layout_width="73dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/chips"
+                >
+
+                <TextView
+                    android:id="@+id/size_M"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="3sp"
+                    android:text="@string/Size_M"
+                    android:textAppearance="@style/pizza" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="73dp"
+                android:layout_height="36dp"
+                android:background="@drawable/chips"
+                >
+
+                <TextView
+                    android:id="@+id/Size_L"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:lineSpacingExtra="3sp"
+                    android:text="@string/Size_L"
+                    android:textAppearance="@style/pizza" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="73dp"
+                android:layout_height="36dp"
+                android:background="@drawable/chips"
+                >
+
+                <TextView
+                    android:id="@+id/size_XL"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:lineSpacingExtra="3sp"
+                    android:text="@string/Size_XL"
+                    android:textAppearance="@style/pizza" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="375dp"
+        android:layout_height="88dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:background="#FFFFFF"
+        >
+        <RelativeLayout
+
+            android:id="@+id/info"
+            android:layout_width="327dp"
+            android:layout_height="52dp"
+            >
+            <RelativeLayout
+                android:id="@+id/group_11"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                 android:layout_margin="10dp"
+                >
+
+                    <LinearLayout
+                        android:id="@+id/linear_minu"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="5dp"
+                        android:orientation="horizontal"
+                        >
+
+                            <TextView
+                                android:id="@+id/except_food"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="-"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:layout_alignParentLeft="true"
+                                android:textAppearance="@style/some_id"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerInParent="true"
+                                />
+
+                        <TextView
+                            android:id="@+id/quanlity_food"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:lineSpacingExtra="5sp"
+                            android:text="1"
+                            android:layout_marginLeft="10dp"
+                            android:textAppearance="@style/some_id"
+                            android:translationY="-2.27sp" />
+
+                        <TextView
+                            android:id="@+id/plus_food"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:text="+"
+                            android:layout_marginLeft="10dp"
+                            android:layout_alignParentEnd="true"
+                            android:textAppearance="@style/some_id"
+                            />
+                    </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/button_add_cart"
+            android:layout_width="181dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button"
+            >
+
+            <TextView
+                android:id="@+id/h4"
+                android:layout_width="124dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/h4"
+                android:textAppearance="@style/h4" /> <!-- Đảm bảo TextView nằm ở giữa cả chiều ngang và chiều dọc -->
+            />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

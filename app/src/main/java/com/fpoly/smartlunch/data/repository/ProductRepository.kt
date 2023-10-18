@@ -7,7 +7,8 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.random.Random
 
-class HomeRepository @Inject constructor(
+
+class ProductRepository @Inject constructor(
     private val api: ProductApi
 ) {
     private var number = Random.nextInt()
