@@ -19,9 +19,12 @@
     <style name="Theme.PolyFriend" parent="Base.Theme.PolyFriend" />
 
     <!-- Custom border radius for bottomSheetDialogFragment in onCreate with setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme) -->
-    <style name="AppBottomSheetDialogTheme"
+    <style name="BorderRadiusBottomSheetDialogTheme"
         parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+    <style name="UnBorderRadiusBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
     </style>
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">

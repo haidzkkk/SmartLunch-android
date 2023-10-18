@@ -10,12 +10,12 @@ import kotlin.random.Random
 class HomeRepository @Inject constructor(
     private val api: ProductApi
 ) {
-    private var number = Random.nextInt()
 
     fun test(): Observable<String> {
-        Thread.sleep(2000)
-        return Observable.just("Repository test: $number")
+        return Observable.just("Repository test")
     }
 
+
     fun getProducts(): Observable<ProductsResponse> = api.getAllProduct().subscribeOn(Schedulers.io())
+
 }

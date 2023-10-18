@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/image_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_app"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo_app"
         android:layout_centerInParent="true"/>
 
     <com.airbnb.lottie.LottieAnimationView

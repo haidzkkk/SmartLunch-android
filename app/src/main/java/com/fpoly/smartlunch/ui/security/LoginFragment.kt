@@ -54,6 +54,10 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(){
         super.onViewCreated(view, savedInstanceState)
 
         listenClickUI()
+
+        loginViewModel.observeViewEvents {
+
+        }
     }
 
 

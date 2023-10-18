@@ -1,6 +1,10 @@
 package com.fpoly.smartlunch.ui.main.home
 
+
 import android.annotation.SuppressLint
+
+
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +17,9 @@ import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.core.PolyDialog
+import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
+import com.fpoly.smartlunch.databinding.DialogHomeBinding
 import com.fpoly.smartlunch.databinding.FragmentHomeBinding
 
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
@@ -37,8 +44,11 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         initUi()
 
         homeViewModel.observeViewEvents {
-            Log.e("TAG", "HomeFragment viewEvent: $it" )
+            when(it){
+                is HomeViewEvent.testViewEvent -> Log.e("TAG", "HomeFragment viewEvent: $it" )
+            }
         }
+
 
 
         homeViewModel.handle(HomeViewAction.GetListProduct)
@@ -53,7 +63,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         views.recyclerViewVer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL , false)
         views.recyclerViewVer.adapter = adapterver
 
-        Log.d("bbb","mmmm"+adapter.products)
+      
+
     }
 
     override fun invalidate(): Unit = withState(homeViewModel) {
