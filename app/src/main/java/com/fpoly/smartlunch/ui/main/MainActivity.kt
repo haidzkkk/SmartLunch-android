@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -11,7 +12,11 @@ import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
+import com.fpoly.smartlunch.core.PolyDialog
+import com.fpoly.smartlunch.data.network.SocketManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
+import com.fpoly.smartlunch.databinding.DialogHomeBinding
+import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.HomeViewState
 import com.fpoly.smartlunch.ui.main.home.TestViewModel
@@ -44,6 +49,12 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         Log.e("TAG", "activity: ${homeViewModel.hashCode()}")
         Log.e("TAG", "tesst viewmodel: ${testViewModel.hashCode()}")
         Log.e("TAG", "tesst viewmodel mvrx: ${testViewModelMvRx.hashCode()}")
+
+        views.btnOk.setOnClickListener{
+            startActivity(Intent(this, ChatActivity::class.java))
+
+            PolyDialog.Builder(this, DialogHomeBinding.inflate(layoutInflater)).build().show()
+        }
     }
 
     override fun getBinding(): ActivityMainBinding {

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemRoomLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:colorBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:importantForAccessibility="no"
+        tools:src="@drawable/logo_app"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <ImageView
+        android:id="@+id/imgFaildSend"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/icon_warning"
+        app:layout_constraintCircle="@id/imgAvatar"
+        app:layout_constraintCircleAngle="45"
+        app:layout_constraintCircleRadius="30dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imgOnline"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/background_boder_radius_circle"
+        android:padding="2dp"
+        android:src="@drawable/icon_public_room"
+        app:layout_constraintCircle="@id/imgAvatar"
+        app:layout_constraintCircleAngle="135"
+        app:layout_constraintCircleRadius="28dp"
+        tools:ignore="MissingConstraints" />
+
+    <Space
+        android:id="@+id/roomAvatarBottomSpace"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgAvatar"
+        tools:layout_marginStart="20dp" />
+
+    <TextView
+        android:id="@+id/tvDisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:duplicateParentState="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/tvTime"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/imgAvatar"
+        app:layout_constraintTop_toTopOf="parent"
+ />
+
+    <TextView
+        android:id="@+id/tvBadge"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:text="5"
+        android:textColor="@color/white"
+        android:maxLength="2"
+        android:background="@drawable/background_boder_radius_circle"
+        android:backgroundTint="@color/red_light"
+        android:gravity="center_vertical|center_horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/tvMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvMessage"
+        android:layout_marginEnd="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/title"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@id/tvDisplayName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDisplayName"
+  />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:lines="2"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDisplayName"
+        app:layout_constraintTop_toBottomOf="@id/tvDisplayName"
+/>
+
+    <Space
+        android:id="@+id/roomLastEventBottomSpace"
+        android:layout_width="0dp"
+        android:layout_height="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMessage"
+        tools:layout_marginStart="120dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 fun TextInputEditText.checkNull(res : Resources): Boolean{
     if (this.text.toString().trim() == ""){
-        this.error = res.getString(R.string.notEmpty)
+        this.error = res?.getString(R.string.notEmpty)
         return true
     }
     this.error = null

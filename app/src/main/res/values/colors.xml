@@ -35,8 +35,10 @@
     <color name="grey_light">#e4e9f3</color>
     <color name="grey">#aaa</color>
     <color name="dark_grey">#ff424242</color>
+    <color name="grey_white">#F3F3F3</color>
 
     <color name="background">@color/white</color>
+    <color name="background1">#aaa/</color>
     <color name="title">#000000</color>
     <color name="message">#373737</color>
     <color name="transparent">#00FFFFFF</color>

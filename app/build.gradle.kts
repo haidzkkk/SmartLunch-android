@@ -110,5 +110,13 @@ dependencies {
 
     implementation("com.google.firebase:firebase-messaging-ktx")
 
+    // Socket
+    implementation ("io.socket:socket.io-client:2.0.0")
+
+    // gson
+    implementation ("com.google.code.gson:gson:2.10.1")
+
+    // webrtc
+    implementation ("com.mesibo.api:webrtc:1.0.5")
 
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="3dp"    >
+
+    <RelativeLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="15sp"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTime"
+            android:gravity="bottom"
+            android:layout_alignParentStart="true">
+
+            <LinearLayout
+                android:id="@+id/cvAvatar"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="8dp">
+
+                <ImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_boder_radius_circle"
+                    android:clipToOutline="true"
+                    />
+
+            </LinearLayout>
+
+          <RelativeLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+              <RelativeLayout
+                  android:id="@+id/layout_reply"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="-10dp"
+                  android:layout_marginLeft="10dp"
+                  android:visibility="gone"
+                  >
+
+
+                  <TextView
+                      android:id="@+id/tvReply"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12sp"
+                      android:maxWidth="250dp"
+                      android:paddingHorizontal="16dp"
+                      android:paddingVertical="8dp"
+                      android:background="@drawable/background_border_radius_chat"
+                      android:backgroundTint="@color/green_while"
+                      android:text="alo 123"
+                      android:layout_below="@+id/imgReply"
+                      />
+
+                  <ImageView
+                      android:id="@+id/imgReply"
+                      android:layout_width="60dp"
+                      android:layout_height="40dp"
+                      android:scaleType="centerCrop"
+                      android:src="@mipmap/ic_launcher"
+                      android:layout_below="@+id/tvTitleReply"
+                      android:background="@drawable/background_border_radius_chat"
+                      android:clipToOutline="true"
+                      android:visibility="gone"/>
+
+                  <TextView
+                      android:id="@+id/tvTitleReply"
+                      android:layout_centerHorizontal="true"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Bạn đang trả lời chính bạn"
+                      android:textSize="10sp"/>
+
+              </RelativeLayout>
+
+              <RelativeLayout
+                  android:id="@+id/layout_message"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@+id/layout_reply"
+                  >
+
+                  <TextView
+                      android:id="@+id/tvMessage"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="14sp"
+                      android:maxWidth="250dp"
+                      android:paddingHorizontal="16dp"
+                      android:paddingVertical="8dp"
+                      android:background="@drawable/background_border_radius_chat"
+                      android:backgroundTint="@color/grey_white"
+                      android:layout_below="@+id/imgMassage"
+                      android:text="Xin chào bạn mình là hải"
+                      />
+
+                  <ImageView
+                      android:id="@+id/imgMassage"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:maxHeight="300dp"
+                      android:maxWidth="200dp"
+                      android:src="@mipmap/ic_launcher"
+                      android:background="@drawable/background_border_radius_chat"
+                      android:clipToOutline="true"
+                      android:visibility="gone"
+                      />
+
+              </RelativeLayout>
+
+          </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/baseline_reply_24"
+        android:layout_toRightOf="@+id/layout_main"/>
+
+</RelativeLayout>

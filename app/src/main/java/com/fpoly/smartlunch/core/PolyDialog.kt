@@ -42,7 +42,7 @@ class PolyDialog<VB: ViewBinding>(
         val width = displayMetrics.widthPixels
 
         // border radius
-        if (isBorderRadius) binding.root.setBackgroundResource(R.drawable.background_boder_radius)
+        if (isBorderRadius) binding.root.setBackgroundResource(R.drawable.background_border_radius_dialog)
         // trong suốt
         if (isTransparent) this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -52,11 +52,9 @@ class PolyDialog<VB: ViewBinding>(
         layoutParams.copyFrom(this.window?.attributes)
         layoutParams.width = if (isWidthMatchParent) (width * 0.9).toInt() else WRAP_CONTENT
         layoutParams.height = if (isHeightMatchParent) (height * 0.95).toInt() else WRAP_CONTENT
-
         // set layout gravity
         layoutParams.gravity = layoutGravity
         if (layoutGravity != GRAVITY_CENTER) layoutParams.y = 100                    // margin theo chiều gravity
-
         this.window?.attributes = layoutParams
 
         super.onCreate(savedInstanceState)
