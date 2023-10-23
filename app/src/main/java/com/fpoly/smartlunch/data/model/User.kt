@@ -17,3 +17,4 @@ data class User(
     var verified: Boolean=false,
     var confirmPassword: String=""
 ): Serializable
+

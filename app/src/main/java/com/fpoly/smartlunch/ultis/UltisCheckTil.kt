@@ -29,7 +29,6 @@ fun checkValidEmail(res : Resources , edt : TextInputEditText): Boolean {
     val strEmail = edt.text.toString().trim()
     if (TextUtils.isEmpty(strEmail) or !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()){
         edt.error =   res.getString(R.string.validateEmail)
-
         return true
     }
     edt.error = null
