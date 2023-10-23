@@ -7,21 +7,30 @@
     android:background="@color/white"
     tools:context=".ui.security.SplashScreenActivity">
 
-    <ImageView
-        android:id="@+id/image_icon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/logo_app"
-        android:layout_centerInParent="true"/>
-
-    <com.airbnb.lottie.LottieAnimationView
+    <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/image_icon"
-        android:layout_centerHorizontal="true"
-        app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/loading_gif"
-        app:lottie_loop="true"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:src="@drawable/logo_app"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smart Lunch"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="50dp"
+            android:textSize="40sp"/>
+    </LinearLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="40dp"
         />
 
 </RelativeLayout>

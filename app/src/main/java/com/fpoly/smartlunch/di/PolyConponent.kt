@@ -12,6 +12,7 @@ import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.security.LoginActivity
 import com.fpoly.smartlunch.ui.security.LoginFragment
 import com.fpoly.smartlunch.ui.security.SplashScreenActivity
+import com.fpoly.smartlunch.ui.security.onboarding.ThirdFragment
 import dagger.BindsInstance
 import dagger.Component
 
@@ -26,6 +27,7 @@ interface PolyConponent {
     fun inject(activity: SplashScreenActivity)
     fun inject(activity: MainActivity)
     fun inject(activity: LoginActivity)
+    fun inject(fragment: ThirdFragment)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ProfileFragment)
 

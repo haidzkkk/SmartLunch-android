@@ -5,13 +5,14 @@
         <item name="boxCornerRadiusTopEnd">24dp</item>
         <item name="boxCornerRadiusBottomStart">24dp</item>
         <item name="boxCornerRadiusBottomEnd">24dp</item>
-        <item name="boxBackgroundColor">@color/grey_light</item>
+        <item name="boxBackgroundColor">#F3F3F3</item>
         <item name="boxStrokeColor">@color/boxstroke_outline</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">56dp</item>
     </style>
 
     <style name="PolyButton">
         <item name="cornerRadius">44dp</item>
         <item name="backgroundTint">@color/grey</item>
     </style>
+
 </resources>
