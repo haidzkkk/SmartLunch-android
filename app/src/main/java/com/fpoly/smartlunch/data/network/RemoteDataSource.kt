@@ -41,7 +41,7 @@ class RemoteDataSource(
                 var newRequest : Request = originalRequest.newBuilder()
                     .header("Authorization", SessionManager(context.applicationContext)
                         .fetchAuthTokenAccess().let {token ->
-                        if (token.isNullOrEmpty()) "Basic Y29yZV9jbGllbnQ6c2VjcmV0" else "Bearer $it" }
+                        if (token.isNullOrEmpty()) "Basic Y29yZV9jbGllbnQ6c2VjcmV0" else "Bearer $token" }
                     )
                     .build();
                 it.proceed(newRequest)

@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Smart lunch</string>
+    <!-- Tiếng Anh -->
+    <string name="app_name">Smart Lunch</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="favourite">Favourite</string>
@@ -14,11 +15,84 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_greeting1">Hello! We are\nSmart Lunch</string>
+    <string name="onboarding_greeting2">Easy and convenient with\nSmart Lunch</string>
+    <string name="onboarding_greeting3">Diverse choices with\nSmart Lunch</string>
+    <string name="details_onboarding_fragment1">Explore and order delicious food anytime, anywhere</string>
+    <string name="details_onboarding_fragment2">Choose food, place an order, and get it delivered to your doorstep</string>
+    <string name="details_onbroading_fragment3">Discover a variety of options from popular restaurants</string>
+    <string name="skip">Skip</string>
+    <string name="continute">Continue</string>
+
+    <!-- Security -->
+    <string name="btn_continue">Continue</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="or">Or</string>
+    <string name="label_sign_up">Don\'t have an account? Sign up now</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="signup">Signup</string>
     <string name="notEmpty">Not empty</string>
+    <string name="validateEmail">Invalid format</string>
+    <string name="validatePassword">Invalid password</string>
+    <string name="login_title">Log in</string>
+    <string name="email_title">Please enter your email</string>
+    <string name="forget_password">Forgot password</string>
+    <string name="lable_sign_up">Don\'t have an account? <font color="#0085FF"><b>Sign up</b></font></string>
+    <string name="lable_sign_in">Already have an account? <font color="#0085FF"><b>Log in</b></font></string>
+    <string name="username_not_empty">This field cannot be empty.</string>
+    <string name="password_not_empty">This field cannot be empty.</string>
+    <string name="email_not_empty">This field cannot be empty.</string>
+    <string name="display_name_not_empty">This field cannot be empty.</string>
+    <string name="confirm_password_not_empty">This field cannot be empty.</string>
+    <string name="login_fail">Username or password is incorrect</string>
+    <string name="login_success">Login successful</string>
+    <string name="display_name">Display name</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="my_location">My location</string>
+    <string name="support">Support</string>
+    <string name="logout">Logout</string>
+    <string name="notify">Notifications</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="change_password">Change password</string>
+    <string name="language">Language</string>
+    <string name="details_onbroading_fragment1">Welcome to our app! We will provide the best service for you</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="signin_account">Sign in account</string>
+    <string name="signup_account">Sign up account</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="address">Address</string>
+    <string name="signup_success">Signup successful</string>
+    <string name="password_not_match">Passwords do not match</string>
+    <string name="last_name_not_empty">Last name cannot be empty</string>
+    <string name="phone_not_empty">Phone number cannot be empty</string>
+    <string name="address_not_empty">Address cannot be empty</string>
+    <string name="otp_title">Enter OTP</string>
+    <string name="email_verification_hint">Enter your account\'s email address to receive the verification code</string>
+    <string name="otp_message_guide">"The verification code has been sent to your email"</string>
+    <string name="otp_message_question">Did not receive the code?</string>
+    <string name="confirm">Confirm</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="reset_password_success_title">Password Reset Successful</string>
+    <string name="reset_password_success_message">Your new password has been updated. Press continue to log in.</string>
+    <string name="verify_otp_send_button_text">Send</string>
+    <string name="verify_otp_resend_button_text">Resend code</string>
+    <string name="verify_otp_code_entry_hint">Enter your OTP here</string>
+    <string name="verify_otp_success_title">Registration Successful</string>
+    <string name="verify_otp_success_message">Your account has been registered successfully.</string>
+    <string name="verify_otp_reset_password_success_title">Password Reset Successful</string>
+    <string name="verify_otp_reset_password_success_message">Your new password has been updated.</string>
+    <string name="reset_pass_title">Reset Password</string>
+    <string name="new_password">New Password</string>
+    <!--    end-->
     <string name="validateEmail">invali format</string>
     <string name="validatePassword">invali password</string>
     <string name="add_product">add_product</string>
