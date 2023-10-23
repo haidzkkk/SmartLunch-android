@@ -7,15 +7,16 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.random.Random
 
-class HomeRepository @Inject constructor(
+
+class ProductRepository @Inject constructor(
     private val api: ProductApi
 ) {
+    private var number = Random.nextInt()
 
     fun test(): Observable<String> {
-        return Observable.just("Repository test")
+        Thread.sleep(2000)
+        return Observable.just("Repository test: $number")
     }
 
-
     fun getProducts(): Observable<ProductsResponse> = api.getAllProduct().subscribeOn(Schedulers.io())
-
 }

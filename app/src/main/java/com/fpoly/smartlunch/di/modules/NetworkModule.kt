@@ -2,11 +2,13 @@ package com.fpoly.smartlunch.di.modules
 
 import android.content.Context
 import com.fpoly.smartlunch.data.network.AuthApi
+import com.fpoly.smartlunch.data.network.ProductApi
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.data.network.UserApi
 import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
+import com.fpoly.smartlunch.data.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
 
@@ -28,9 +30,21 @@ object NetworkModule {
     ): UserApi = remoteDataSource.buildApi(UserApi::class.java, context)
 
     @Provides
+    fun providerApiProduct(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): ProductApi = remoteDataSource.buildApi(ProductApi::class.java, context)
+
+    @Provides
     fun providerHomeRepository(
-        api: UserApi
+        api: ProductApi
     ): HomeRepository = HomeRepository(api)
+
+    @Provides
+    fun providerProductRepository(
+        api: ProductApi
+    ): ProductRepository = ProductRepository(api)
+
 
     @Provides
     fun providerApiAuth(

@@ -93,5 +93,28 @@
     <string name="reset_pass_title">Reset Password</string>
     <string name="new_password">New Password</string>
     <!--    end-->
+    <string name="validateEmail">invali format</string>
+    <string name="validatePassword">invali password</string>
+    <string name="add_product">add_product</string>
+    <string name="name_product">Bánh pizza gà phô mai 23cm đế mỏng</string>
+    <string name="price_product">200.000đ</string>
+    <string name="k_ch_c_">Kích cỡ</string>
+    <string name="Size_M">Size M</string>
+    <string name="Size_L">Size L</string>
+    <string name="Size_XL">Size XL</string>
+    <string name="h4">
+     Thêm
+</string>
+    <string name="t_v_nh_di_n">
+35 Tô Vĩnh Diện, Thanh Xuân
+</string>
+    <string name="b_n_ang_kha">Bạn đang khao khát điều gì?</string>
+
+    <string name="pizza_th_gi">
+Pizza thư giãn cùng bà Bảy
+</string>
+    <string name="some_id">
+48.000 đ
+</string>
 
 </resources>

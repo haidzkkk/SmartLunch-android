@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="PolyInputLayoutLogin" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxCornerRadiusTopStart">24dp</item>
         <item name="boxCornerRadiusTopEnd">24dp</item>
@@ -13,6 +13,50 @@
     <style name="PolyButton">
         <item name="cornerRadius">44dp</item>
         <item name="backgroundTint">@color/grey</item>
+    </style>
+
+    <style name="Text_Name">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#F44849</item>
+        <item name="android:lineHeight" tools:ignore="NewApi">18sp</item>
+
+    </style>
+
+        <style name="k_ch_c_">
+            <item name="android:textSize">16sp</item>
+            <item name="android:textColor">#000000</item>
+        </style>
+    <style name="pizza">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#F44849</item>
+    </style>
+    <style name="some_id">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#222B45</item>
+    </style>
+    <!-- styles.xml -->
+    <style name="h4">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="NimpeButtonLogin">
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">#f44849</item>
+
+    </style>
+    <style name="t_v_nh_di_n">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#171725</item>
+    </style>
+    <style name="b_n_ang_kha">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#9CA4AB</item>
+    </style>
+    <style name="pizza_th_gi">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#171725</item>
     </style>
 
 </resources>
