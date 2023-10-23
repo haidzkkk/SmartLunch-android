@@ -2,15 +2,19 @@ package com.fpoly.smartlunch.di.modules
 
 import android.content.Context
 import com.fpoly.smartlunch.data.network.AuthApi
+import com.fpoly.smartlunch.data.network.ChatApi
 import com.fpoly.smartlunch.data.network.ProductApi
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.data.network.SessionManager
+import com.fpoly.smartlunch.data.network.SocketManager
 import com.fpoly.smartlunch.data.network.UserApi
 import com.fpoly.smartlunch.data.repository.AuthRepository
+import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 object NetworkModule {
@@ -56,5 +60,22 @@ object NetworkModule {
     fun providerAuthRepository(
         api: AuthApi
     ): AuthRepository = AuthRepository(api)
+
+    @Provides
+    fun providerApiChat(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): ChatApi = remoteDataSource.buildApi(ChatApi::class.java, context)
+
+    @Provides
+    fun providerChatRepository(
+        chatApi: ChatApi,
+        authApi: AuthApi,
+        socketManager: SocketManager
+    ): ChatRepository = ChatRepository(chatApi, authApi, socketManager)
+
+    @Provides
+    fun providerSocketManger(
+    ): SocketManager = SocketManager()
 }
 

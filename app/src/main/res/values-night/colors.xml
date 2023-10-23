@@ -37,6 +37,7 @@
     <color name="dark_grey">#ff424242</color>
 
     <color name="background">#202124</color>
+    <color name="background1">#aaa/</color>
     <color name="title">#FFFFFF</color>
     <color name="message">#FAFAFA</color>
     <color name="transparent">#00FFFFFF</color>

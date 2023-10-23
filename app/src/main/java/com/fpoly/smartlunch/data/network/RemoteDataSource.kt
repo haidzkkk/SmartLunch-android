@@ -13,7 +13,8 @@ class RemoteDataSource(
 
 ) {
     companion object{
-        private const val BASE_URL = "http://192.168.1.182:3000"
+        public const val BASE_URL = "http://192.168.1.11:3000"
+        private const val tokenSecret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzI0MWZhMGNjYjkwZTQ5NjQ2ZDhjZiIsImlhdCI6MTY5ODA3NTQ0OSwiZXhwIjoxNjk4MTYxODQ5fQ.4UpsjRfD26s2lPmNNJHb02gJYawUTrTNXVRaDn0kMFY"
     }
 
     public fun <API> buildApi(apiClass: Class<API>, context: Context): API{
@@ -41,7 +42,7 @@ class RemoteDataSource(
                 var newRequest : Request = originalRequest.newBuilder()
                     .header("Authorization", SessionManager(context.applicationContext)
                         .fetchAuthTokenAccess().let {token ->
-                        if (token.isNullOrEmpty()) "Basic Y29yZV9jbGllbnQ6c2VjcmV0" else "Bearer $it" }
+                        if (token.isNullOrEmpty()) "Basic Y29yZV9jbGllbnQ6c2VjcmV0" else "Bearer ${tokenSecret}" }
                     )
                     .build();
                 it.proceed(newRequest)

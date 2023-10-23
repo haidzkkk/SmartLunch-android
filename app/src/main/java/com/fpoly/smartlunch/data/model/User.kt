@@ -1,8 +1,19 @@
 package com.fpoly.smartlunch.data.model
 
-data class User (
-    var id: String,
-    var name: String,
-    var username: String,
-    val password: String) {
-}
+import java.io.Serializable
+
+data class User(
+    var _id: String="",
+    var address: String="",
+    var authType: String="",
+    var email: String="",
+    var facebookId: String="",
+    var first_name: String="",
+    var googleId: String="",
+    var last_name: String="",
+    var password: String="",
+    var phone: String="",
+    var role: String="",
+    var verified: Boolean=false,
+    var confirmPassword: String=""
+): Serializable

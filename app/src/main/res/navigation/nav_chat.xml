@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_chat"
+    app:startDestination="@id/homeChatFragment">
+
+    <fragment
+        android:id="@+id/homeChatFragment"
+        android:name="com.fpoly.smartlunch.ui.chat.home.HomeChatFragment"
+        android:label="fragment_home_chat"
+        tools:layout="@layout/fragment_home_chat" >
+        <action
+            android:id="@+id/action_homeChatFragment_to_roomChatFragment"
+            app:destination="@id/roomChatFragment" />
+        <action
+            android:id="@+id/action_homeChatFragment_to_searchChatFragment"
+            app:destination="@id/searchChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomChatFragment"
+        android:name="com.fpoly.smartlunch.ui.chat.room.RoomChatFragment"
+        android:label="fragment_room_chat"
+        tools:layout="@layout/fragment_room_chat" />
+    <fragment
+        android:id="@+id/searchChatFragment"
+        android:name="com.fpoly.smartlunch.ui.chat.search.SearchChatFragment"
+        android:label="fragment_search_chat"
+        tools:layout="@layout/fragment_search_chat" >
+        <action
+            android:id="@+id/action_searchChatFragment_to_roomChatFragment"
+            app:destination="@id/roomChatFragment" />
+    </fragment>
+</navigation>
