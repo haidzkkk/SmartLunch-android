@@ -1,14 +1,36 @@
 package com.fpoly.smartlunch.data.repository
 
+import com.fpoly.smartlunch.data.model.Data
+import com.fpoly.smartlunch.data.model.LoginRequest
+import com.fpoly.smartlunch.data.model.ResetPasswordRequest
 import com.fpoly.smartlunch.data.model.TokenResponse
+import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.UserRequest
+import com.fpoly.smartlunch.data.model.VerifyOTPRequest
+import com.fpoly.smartlunch.data.model.VerifyOTPResponse
 import com.fpoly.smartlunch.data.network.AuthApi
-import com.fpoly.smartlunch.ultis.getFakeTokenLogin
+import com.fpoly.smartlunch.ui.security.SecurityViewAction
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.http.Body
 
 class AuthRepository(
     private val api: AuthApi,
 ) {
-    fun login(userName: String, password: String): Observable<TokenResponse>
-            = getFakeTokenLogin().subscribeOn(Schedulers.io())
+    fun signUp(user : UserRequest):Observable<VerifyOTPResponse> = api.signUp(
+        user
+    ).subscribeOn(Schedulers.io())
+    fun login(email: String, password: String): Observable<TokenResponse> = api.login(
+        LoginRequest(email,password)
+    ).subscribeOn(Schedulers.io())
+
+    fun verifyOTP(verifyOTP: VerifyOTPRequest):Observable<User> = api.verifyOTP(verifyOTP).subscribeOn(Schedulers.io())
+    fun verifyOTPChangePassword(verifyOTP: VerifyOTPRequest):Observable<User> = api.verifyOTPChangePassword(verifyOTP).subscribeOn(Schedulers.io())
+    fun resendOTPCode(resendOTPCode: Data):Observable<VerifyOTPResponse> = api.resendOTPCode(resendOTPCode).subscribeOn(Schedulers.io())
+
+    fun resetPassword(resetPasswordRequest: ResetPasswordRequest):Observable<User> =api.resetPassword(resetPasswordRequest).subscribeOn(Schedulers.io())
+
+    fun forgotPassword(email: String):Observable<VerifyOTPResponse> = api.forgotPassword(email).subscribeOn(Schedulers.io())
+
+    fun getCurrentUser():Observable<User> = api.getCurrentUser().subscribeOn(Schedulers.io())
 }

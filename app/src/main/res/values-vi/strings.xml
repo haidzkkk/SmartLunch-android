@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tiếng Anh -->
+    <string name="app_name">Smart Lunch</string>
+    <string name="hello_blank_fragment">Chào fragment trống</string>
+    <string name="home">Trang chủ</string>
+    <string name="favourite">Yêu thích</string>
+    <string name="card">Thẻ</string>
+    <string name="cart">Giỏ hàng</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="chat">Trò chuyện</string>
+    <string name="en">Tiếng Anh</string>
+    <string name="vi">Tiếng Việt</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="first_fragment_label">Fragment Đầu Tiên</string>
+    <string name="second_fragment_label">Fragment Thứ Hai</string>
+    <string name="next">Tiếp</string>
+    <string name="previous">Trước</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_greeting1">Xin chào! Chúng tôi là\nSmart Lunch</string>
+    <string name="onboarding_greeting2">Dễ dàng và tiện lợi với\nSmart Lunch</string>
+    <string name="onboarding_greeting3">Đa dạng lựa chọn với\nSmart Lunch</string>
+    <string name="details_onboarding_fragment1">Khám phá và đặt đồ ăn ngon mọi lúc, mọi nơi</string>
+    <string name="details_onboarding_fragment2">Chọn đồ ăn, đặt hàng và nhận giao hàng tận cửa</string>
+    <string name="details_onbroading_fragment3">Khám phá nhiều lựa chọn từ các nhà hàng phổ biến</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="continute">Tiếp tục</string>
+
+    <!-- Security -->
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="or">Hoặc</string>
+    <string name="label_sign_up">Chưa có tài khoản? Đăng ký ngay</string>
+    <string name="username">Tên người dùng</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="signup">Đăng ký</string>
+    <string name="notEmpty">Không được để trống</string>
+    <string name="validateEmail">Định dạng không hợp lệ</string>
+    <string name="validatePassword">Mật khẩu không hợp lệ</string>
+    <string name="login_title">Đăng nhập</string>
+    <string name="email_title">Vui lòng nhập địa chỉ email của bạn</string>
+    <string name="forget_password">Quên mật khẩu</string>
+    <string name="lable_sign_up">Bạn chưa có tài khoản? <font color="#0085FF"><b>Đăng ký</b></font></string>
+    <string name="lable_sign_in">Bạn đã có tài khoản? <font color="#0085FF"><b>Đăng nhập</b></font></string>
+    <string name="username_not_empty">Trường này không được để trống.</string>
+    <string name="password_not_empty">Trường này không được để trống.</string>
+    <string name="email_not_empty">Trường này không được để trống.</string>
+    <string name="display_name_not_empty">Trường này không được để trống.</string>
+    <string name="confirm_password_not_empty">Trường này không được để trống.</string>
+    <string name="login_fail">Tên người dùng hoặc mật khẩu không chính xác</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="display_name">Tên hiển thị</string>
+    <string name="edit_profile">Chỉnh sửa hồ sơ</string>
+    <string name="my_location">Vị trí của tôi</string>
+    <string name="support">Hỗ trợ</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="notify">Thông báo</string>
+    <string name="dark_mode">Chế độ tối</string>
+    <string name="change_password">Thay đổi mật khẩu</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="details_onbroading_fragment1">Chào mừng bạn đến với ứng dụng của chúng tôi! Chúng tôi sẽ cung cấp dịch vụ tốt nhất cho bạn</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="signin_account">Đăng nhập tài khoản</string>
+    <string name="signup_account">Đăng ký tài khoản</string>
+    <string name="last_name">Họ</string>
+    <string name="first_name">Tên</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="address">Địa chỉ</string>
+    <string name="signup_success">Đăng ký thành công</string>
+    <string name="password_not_match">Mật khẩu không trùng khớp</string>
+    <string name="last_name_not_empty">Họ không được để trống</string>
+    <string name="phone_not_empty">Số điện thoại không được để trống</string>
+    <string name="address_not_empty">Địa chỉ không được để trống</string>
+    <string name="otp_title">Nhập mã OTP</string>
+    <string name="email_verification_hint">Nhập địa chỉ email tài khoản của bạn để nhận mã xác thực tài khoản</string>
+    <string name="otp_message_guide">"Mã xác nhận đã được gửi đến email của bạn"</string>
+    <string name="otp_message_question">Chưa nhận được mã?</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="resend_otp">Gửi lại OTP</string>
+    <string name="dismiss">Đóng</string>
+    <string name="reset_password_success_title">Đặt lại mật khẩu thành công</string>
+    <string name="reset_password_success_message">Mật khẩu mới của bạn đã được cập nhật. Hãy nhấn tiếp tục để đăng nhập.</string>
+    <string name="verify_otp_send_button_text">Gửi</string>
+    <string name="verify_otp_resend_button_text">Gửi lại mã</string>
+    <string name="verify_otp_code_entry_hint">Nhập mã OTP của bạn tại đây</string>
+    <string name="verify_otp_success_title">Đăng ký thành công</string>
+    <string name="verify_otp_success_message">Tài khoản của bạn đã được đăng ký thành công.</string>
+    <string name="verify_otp_reset_password_success_title">Đặt lại mật khẩu thành công</string>
+    <string name="verify_otp_reset_password_success_message">Mật khẩu mới của bạn đã được cập nhật.</string>
+    <string name="reset_pass_title">Đặt lại mật khẩu</string>
+    <string name="new_password">Mật khẩu mới</string>
+</resources>
