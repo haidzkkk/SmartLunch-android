@@ -37,19 +37,19 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.handle(HomeViewAction.TestViewAction)
 
-        views.btnDismiss.setOnClickListener{
-            this.dismiss()
-        }
+
+//        views.btnDismiss.setOnClickListener{
+//            this.dismiss()
+//        }
     }
 
     override fun invalidate(): Unit = withState(homeViewModel){
-        when(it.test){
-            is Success -> views.tvTest.text = it.test.invoke()
-            else -> {
-                Log.e("TAG", "HomeFragment view state: else" )
-            }
-        }
+//        when(it.test){
+//            is Success -> views.tvTest.text = it.test.invoke()
+//            else -> {
+//                Log.e("TAG", "HomeFragment view state: else" )
+//            }
+//        }
     }
 }

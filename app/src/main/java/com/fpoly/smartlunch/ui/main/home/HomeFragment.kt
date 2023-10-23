@@ -10,18 +10,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseFragment
-import com.fpoly.smartlunch.core.PolyDialog
-import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
-import com.fpoly.smartlunch.databinding.DialogHomeBinding
 import com.fpoly.smartlunch.databinding.FragmentHomeBinding
-
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
 import javax.inject.Inject
@@ -40,18 +35,25 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         super.onViewCreated(view, savedInstanceState)
 
 
-
         initUi()
-
+        bottom_Sheet()
         homeViewModel.observeViewEvents {
             when(it){
                 is HomeViewEvent.testViewEvent -> Log.e("TAG", "HomeFragment viewEvent: $it" )
+                else -> {}
             }
         }
-
-
-
         homeViewModel.handle(HomeViewAction.GetListProduct)
+    }
+
+    private fun bottom_Sheet(){
+        views.floatBottomSheet.setOnClickListener {
+            bottomSheet()
+        }
+    }
+    private fun bottomSheet() {
+        val bottomSheetFragment = HomeBottomSheet()
+        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
     }
     private fun initUi() {
 

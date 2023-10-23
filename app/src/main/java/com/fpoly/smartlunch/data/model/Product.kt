@@ -1,6 +1,6 @@
 package com.fpoly.smartlunch.data.model
 
-data class Doc(
+data class Product(
     val _id: String,
     val categoryId: String,
     val createdAt: String,
@@ -11,6 +11,4 @@ data class Doc(
     val sold_quantity: Int,
     val updatedAt: String,
     val views: Int
-
-
 )

@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewModel.Factory {
 
+
     val viewModel: SecurityViewModel by viewModel()
 
     @Inject

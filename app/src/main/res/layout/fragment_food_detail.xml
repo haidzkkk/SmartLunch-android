@@ -5,34 +5,36 @@
     android:id="@+id/food_detail"
     android:layout_height="match_parent"
     android:clipToOutline="true"
-    tools:context=".ui.Product.FoodDetailFragment">
+    android:padding="16dp"
+   >
 
 
     <View
-        android:id="@+id/rectangle_3"
+        android:id="@+id/image_food_detail"
         android:layout_width="match_parent"
         android:layout_height="234dp"
+        android:background="@drawable/img_4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         />
+
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/icon"
+        android:id="@+id/icon_back_food_detail"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="24dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/baseline_arrow_back_24"
-        />
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/baseline_arrow_back_24" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_below="@+id/rectangle_3"
+        android:layout_below="@+id/image_food_detail"
         android:gravity="center"
         android:id="@+id/lin"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal">
 
         <TextView
@@ -42,13 +44,15 @@
             android:lineSpacingExtra="8sp"
             android:text="Cơm lứt bò sốt tiêu"
             android:textStyle="bold"
-
+            android:textSize="20sp"
             android:translationY="-4.07sp" />
         <TextView
             android:id="@+id/price_detail_food"
             android:layout_width="102dp"
             android:layout_height="28dp"
             android:text="200.000đ"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:textAppearance="@style/Text_Name"
             android:lineSpacingExtra="7sp"
             android:translationY="-3.26sp"
@@ -62,12 +66,16 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="100dp"
+        android:layout_marginTop="24dp"
         >
         <TextView
             android:id="@+id/m_t_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Mô tả"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
             />
         <TextView
             android:id="@+id/desc_food"
@@ -76,6 +84,8 @@
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl. Viverra vulputate sodales quis etdui, lacus. Iaculis eu egestas leo egestas vel. Ultrices "
             android:lineSpacingExtra="3sp"
             android:translationY="-1.65sp"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
             android:gravity="top"
             />
     </LinearLayout>
@@ -85,6 +95,7 @@
         android:layout_below="@+id/lin2"
         android:layout_width="327dp"
         android:layout_height="76dp"
+        android:layout_marginTop="24dp"
         >
         <TextView
             android:id="@+id/k_ch_c_"
@@ -95,81 +106,14 @@
             android:lineSpacingExtra="5sp"
             android:gravity="center_vertical"
             />
-        <LinearLayout
-            android:id="@+id/frame_100000"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/k_ch_c_"
-            android:layout_width="327dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="10dp"
-            >
-            <RelativeLayout
-                android:layout_width="73dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/chips"
-                >
-
-                <TextView
-                    android:id="@+id/size_M"
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:gravity="center"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/Size_M"
-                    android:textAppearance="@style/pizza" />
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginLeft="10dp"
-                android:layout_width="73dp"
-                android:layout_height="36dp"
-                android:background="@drawable/chips"
-                >
-
-                <TextView
-                    android:id="@+id/Size_L"
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/Size_L"
-                    android:textAppearance="@style/pizza" />
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginLeft="10dp"
-                android:layout_width="73dp"
-                android:layout_height="36dp"
-                android:background="@drawable/chips"
-                >
-
-                <TextView
-                    android:id="@+id/size_XL"
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/Size_XL"
-                    android:textAppearance="@style/pizza" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
+            android:layout_marginTop="4dp"
+            tools:listitem="@layout/layout_size" />
 
     </RelativeLayout>
     <RelativeLayout
@@ -186,62 +130,86 @@
             android:layout_width="327dp"
             android:layout_height="52dp"
             >
+
             <RelativeLayout
                 android:id="@+id/group_11"
-                android:layout_width="120dp"
+                android:layout_width="110dp"
                 android:layout_height="40dp"
-                 android:layout_margin="10dp"
-                >
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp">
 
-                    <LinearLayout
-                        android:id="@+id/linear_minu"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+
+                <RelativeLayout
+                    android:id="@+id/linear_minu1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/clip"
+                    >
+
+
+                    <View
+                        android:id="@+id/quanlity_tru"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_margin="5dp"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="9dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/tru"
+                        android:gravity="center" />
 
-                            <TextView
-                                android:id="@+id/except_food"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:text="-"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:layout_alignParentLeft="true"
-                                android:textAppearance="@style/some_id"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerInParent="true"
-                                />
+                </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/quanlity_food"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:gravity="center"
-                            android:lineSpacingExtra="5sp"
-                            android:text="1"
-                            android:layout_marginLeft="10dp"
-                            android:textAppearance="@style/some_id"
-                            android:translationY="-2.27sp" />
+                <TextView
+                    android:id="@+id/some_id_quality"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="2"
+                    android:layout_toRightOf="@+id/linear_minu1"
+                    android:textAppearance="@style/some_id"
+                    android:lineSpacingExtra="5sp"
+                    android:translationY="-2.27sp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal|top"
+                    />
 
-                        <TextView
-                            android:id="@+id/plus_food"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:text="+"
-                            android:layout_marginLeft="10dp"
-                            android:layout_alignParentEnd="true"
-                            android:textAppearance="@style/some_id"
-                            />
-                    </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/linear_minu2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_toRightOf="@+id/some_id_quality"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="14dp"
+                    android:background="@drawable/clip"
+                    >
 
 
+                    <View
+                        android:id="@+id/quanlity_cong"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/cong"
+                        android:gravity="center" />
+
+                </RelativeLayout>
             </RelativeLayout>
+
+
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/button_add_cart"
