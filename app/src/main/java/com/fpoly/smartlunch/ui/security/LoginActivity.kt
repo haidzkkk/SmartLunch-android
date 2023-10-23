@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), LoginViewModel.Factory {
 
-    override fun getBinding(): ActivityLoginBinding =
-        ActivityLoginBinding.inflate(layoutInflater)
+    override fun getBinding(): ActivityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
+
 
     @Inject
     lateinit var loginViewModelFactory: LoginViewModel.Factory

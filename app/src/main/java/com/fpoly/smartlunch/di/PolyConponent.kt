@@ -8,6 +8,7 @@ import com.fpoly.smartlunch.di.modules.FragmentModule
 import com.fpoly.smartlunch.di.modules.NetworkModule
 import com.fpoly.smartlunch.di.modules.ViewModelModule
 import com.fpoly.smartlunch.ui.main.MainActivity
+import com.fpoly.smartlunch.ui.main.product.ProductActivity
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.security.LoginActivity
 import com.fpoly.smartlunch.ui.security.LoginFragment
@@ -28,8 +29,7 @@ interface PolyConponent {
     fun inject(activity: LoginActivity)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ProfileFragment)
-
-
+    fun inject(productActivity : ProductActivity)
     fun fragmentFactory(): FragmentFactory
     fun viewModelFactory(): ViewModelProvider.Factory
 

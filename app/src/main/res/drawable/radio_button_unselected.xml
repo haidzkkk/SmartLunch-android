@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF" /> <!-- Màu trắng cho nền khi không chọn -->
+        </shape>
+    </item>
+    <item android:drawable="@drawable/buger" android:tint="#FF0000" /> <!-- Màu đỏ cho văn bản khi không chọn -->
+</layer-list>

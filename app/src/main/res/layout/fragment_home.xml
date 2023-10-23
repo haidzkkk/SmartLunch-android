@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +9,14 @@
     android:background="@color/white"
     android:paddingHorizontal="16dp"
     >
-
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:id="@+id/float_BottomSheet"
+        app:layout_anchor="@id/recycler_view_ver"
+    app:layout_anchorGravity="bottom|end"
+    android:layout_margin="16dp"
+     />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -38,66 +44,64 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginVertical="16dp"
-                app:cardCornerRadius="10dp">
 
-                <ViewFlipper
-                    android:id="@+id/v_lipper"
+            <RelativeLayout
+                android:id="@+id/banner_tran"
+                android:layout_width="327dp"
+                android:layout_height="175dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
+                >
+
+                <View
+                    android:id="@+id/rectangle_2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="150dp"
+                    android:background="@drawable/img_2_home" />
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/slider1"
+                    android:layout_width="56dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="18dp"
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/image" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    >
+                    <View
+                        android:id="@+id/tab"
+                        android:layout_width="24dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/dot" />
 
-                </ViewFlipper>
+                    <View
+                        android:id="@+id/tab2"
+                        android:layout_toRightOf="@+id/tab"
+                        android:layout_width="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_height="8dp"
+                        android:background="#BFC6CC" />
 
+                    <View
+                        android:id="@+id/tab3"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@+id/tab2"
+                        android:background="#BFC6CC" />
+                </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
-
-            <LinearLayout
-                android:id="@+id/indicator_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <View
-                    android:id="@+id/indicator_dot1"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_margin="4dp"
-                    />
-
-                <View
-                    android:id="@+id/indicator_dot2"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_margin="4dp"
-                    />
-
-                <View
-                    android:id="@+id/indicator_dot3"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_margin="4dp"
-                    />
-
-                <!-- Thêm các chấm tròn cho các ảnh khác nếu cần -->
-
-            </LinearLayout>
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="4"
                 android:rowCount="1"
+                android:layout_marginTop="10dp"
                 >
 
                 <LinearLayout
@@ -121,6 +125,7 @@
                         android:textColor="@color/black"
                         android:textSize="18sp" />
                 </LinearLayout>
+
 
 
                 <LinearLayout
@@ -161,7 +166,7 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Sushi"
                         android:textColor="@color/black"
@@ -193,31 +198,99 @@
 
             </GridLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingTop="25dp"
-                android:text="Phổ biến"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/nh_gi_cao1"
+                android:layout_width="327dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:id="@+id/nh_gi_cao"
+                    android:layout_width="106dp"
+                    android:layout_height="28dp"
+                    android:text="@string/ph_bi_n"
+                    android:textAppearance="@style/ph_bi_n"
+                    android:lineSpacingExtra="7sp"
+                    android:layout_marginTop="6dp"
+                    android:translationY="-3.26sp"
+                    android:textStyle="bold"
+
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/slider"
+                    android:layout_width="56dp"
+                    android:layout_height="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="13dp"
+                    android:layout_marginBottom="11dp">
+
+                    <View
+                        android:id="@+id/dot"
+                        android:layout_width="24dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/dot" />
+
+                    <View
+                        android:id="@+id/dot1"
+                        android:layout_toRightOf="@+id/dot"
+                        android:layout_width="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_height="8dp"
+                        android:background="#BFC6CC" />
+
+                    <View
+                        android:id="@+id/dot2"
+                        android:layout_width="8dp"
+                        android:layout_toRightOf="@+id/dot1"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:background="#BFC6CC" />
+                </RelativeLayout>
+            </RelativeLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_hoz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_product_layout_hoz" />
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingTop="25dp"
-                android:text="Đánh giá cao"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/nh_gi_cao3"
+                android:layout_width="327dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="12dp"
+                >
+                <TextView
+                    android:id="@+id/nh_gi_cao2"
+                    android:layout_width="106dp"
+                    android:layout_height="28dp"
+                    android:text="@string/nh_gi_cao"
+
+                    android:textAppearance="@style/nh_gi_cao"
+                    android:lineSpacingExtra="7sp"
+                    android:layout_marginTop="6dp"
+                    android:translationY="-3.26sp"
+
+                    />
+                <!-- Auto layout, variables, and unit scale are not yet supported -->
+                <TextView
+                    android:id="@+id/xem_th_m1"
+                    android:layout_width="60dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="25dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="4sp"
+                    android:text="@string/xem_th_m"
+                    android:layout_marginTop="9dp"
+                    android:textAppearance="@style/xem_th_m"
+                    android:translationY="-1.84sp" />
+            </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_ver"
@@ -228,7 +301,8 @@
                 tools:listitem="@layout/item_new_layout_ver" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
  
 
