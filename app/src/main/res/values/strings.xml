@@ -2,6 +2,7 @@
     <!-- Tiếng Anh -->
     <string name="app_name">Smart Lunch</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notification">Notification</string>
     <string name="home">Home</string>
     <string name="favourite">Favourite</string>
     <string name="card">Card</string>
@@ -36,8 +37,6 @@
     <string name="login">Login</string>
     <string name="signup">Signup</string>
     <string name="notEmpty">Not empty</string>
-    <string name="validateEmail">Invalid format</string>
-    <string name="validatePassword">Invalid password</string>
     <string name="login_title">Log in</string>
     <string name="email_title">Please enter your email</string>
     <string name="forget_password">Forgot password</string>
@@ -178,4 +177,5 @@ Thanh toán 200.000đ
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="order">Order</string>
 </resources>

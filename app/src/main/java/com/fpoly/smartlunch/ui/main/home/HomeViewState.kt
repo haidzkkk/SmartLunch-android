@@ -7,8 +7,7 @@ import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.User
 
 data class HomeViewState(
-
     var users : Async<List<User>> = Uninitialized,
-    var products: Async<ProductsResponse> = Uninitialized,
+
 ): MvRxState {
 }

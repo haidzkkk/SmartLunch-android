@@ -181,6 +181,29 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:background="@android:color/transparent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/icon_chat_outline" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="@string/chat"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/layout_support"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

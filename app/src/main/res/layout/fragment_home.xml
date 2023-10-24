@@ -9,40 +9,56 @@
     android:background="@color/white"
     android:paddingHorizontal="16dp"
     >
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="100dp"
-        android:layout_height="70dp"
-        android:id="@+id/float_BottomSheet"
-        app:layout_anchor="@id/recycler_view_ver"
-    app:layout_anchorGravity="bottom|end"
-    android:layout_margin="16dp"
-     />
-    <androidx.core.widget.NestedScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_toolbar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title"
+            android:drawableStart="@drawable/location_black"
+            android:text="35 Tô Vĩnh Diện, Thanh Xuân"
+            android:textSize="16sp"
+            android:layout_marginVertical="16dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/seach"
+            app:hintEnabled="false"
+            style="@style/PolyInputLayoutLogin">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tim kiếm"
+                android:hint="@string/username"
+                android:layout_marginBottom="12dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_header"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:startIconDrawable="@drawable/seach"
-                app:hintEnabled="false"
-                style="@style/PolyInputLayoutLogin">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tim kiếm"
-                    android:hint="@string/username"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <RelativeLayout
@@ -259,6 +275,7 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_product_layout_hoz" />
+
             <RelativeLayout
                 android:id="@+id/nh_gi_cao3"
                 android:layout_width="327dp"
@@ -301,6 +318,75 @@
                 tools:listitem="@layout/item_new_layout_ver" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/layout_order"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@drawable/background_boder_radius_circle"
+        android:layout_margin="8dp"
+        android:layout_above="@+id/layout_cart">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Bạn có 2 đơn hàng đang giao"
+            android:textColor="@color/title"
+            android:drawableStart="@drawable/icon_car"
+            android:drawableTint="@color/red_light"
+            android:paddingStart="10dp"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/btn_see_detail"
+            />
+
+        <Button
+            android:id="@+id/btn_see_detail"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/blue_while"
+            android:paddingHorizontal="24dp"
+            android:text="Xem chi tiết"
+            android:textColor="@color/blue_light"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_cart"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="74dp"
+            android:layout_height="match_parent"
+            android:text="3"
+            android:textColor="@color/red_light"
+            android:drawableStart="@drawable/icon_cart"
+            android:drawableTint="@color/red_light"
+            android:gravity="center"
+            />
+
+        <Button
+            android:id="@+id/float_BottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Thanh toán  200.000đ"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="24dp"/>
+
+    </LinearLayout>
+
+    </RelativeLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

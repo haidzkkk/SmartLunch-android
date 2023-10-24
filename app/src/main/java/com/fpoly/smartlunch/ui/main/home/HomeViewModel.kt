@@ -7,10 +7,10 @@ import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.repository.HomeRepository
+import com.fpoly.smartlunch.ui.main.product.ProductFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel @AssistedInject constructor(
     @Assisted state: HomeViewState,
@@ -19,25 +19,19 @@ class HomeViewModel @AssistedInject constructor(
 
     override fun handle(action: HomeViewAction) {
         when(action){
-            is HomeViewAction.GetListProduct -> handleGetProduct()
-          //  is HomeViewAction.GetUserViewAction -> handleGetUsers()
+            else -> {}
         }
     }
 
-    private fun handleGetProduct() {
 
-        setState { copy(products = Loading()) }
-        repo.getProducts()
-            .execute {
-                copy(products = it)
-            }
+    fun returnDetailProductFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(ProductFragment::class.java))
     }
 
-
-
-    fun testEvent(){
-        _viewEvents.post(HomeViewEvent.testViewEvent)
+    fun returnVisibleBottomNav(isVisible: Boolean){
+        _viewEvents.post(HomeViewEvent.ReturnVisibleBottomNav(isVisible))
     }
+
 
     fun test() = "test"
 

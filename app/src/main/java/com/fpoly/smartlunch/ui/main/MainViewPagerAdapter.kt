@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.fpoly.smartlunch.ui.main.cart.CartFragment
+import com.fpoly.smartlunch.ui.main.cart.OrderFragment
 import com.fpoly.smartlunch.ui.main.home.HomeFragment
-import com.fpoly.smartlunch.ui.main.love.LoveFragment
+import com.fpoly.smartlunch.ui.main.love.FavouriteFragment
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 
 class MainViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
@@ -18,9 +18,9 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
     override fun createFragment(position: Int): Fragment {
         when(position){
             0 -> return HomeFragment()
-            1 -> return LoveFragment()
-            2 -> return CartFragment()
-            3 -> return CartFragment()
+            1 -> return FavouriteFragment()
+            2 -> return OrderFragment()
+            3 -> return OrderFragment()
             4 -> return ProfileFragment()
         }
         return HomeFragment();

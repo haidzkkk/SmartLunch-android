@@ -7,30 +7,31 @@
     tools:context=".ui.main.MainActivity"
     >
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_nav"
-        />
+        android:layout_height="match_parent">
 
-    <com.ismaeldivita.chipnavigation.ChipNavigationBar
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="88dp"
-        android:layout_alignParentBottom="true"
-        android:fadingEdge="horizontal"
-        app:cnb_menuResource="@menu/menu_main"
-        android:background="@color/white"
-        app:cnb_unselectedColor="@color/dark_grey"
-        app:cnb_iconSize="34dp"
-        />
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_nav"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"/>
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:layout_alignParentBottom="true"
+            android:fadingEdge="horizontal"
+            app:cnb_menuResource="@menu/menu_main"
+            android:background="@color/white"
+            app:cnb_unselectedColor="@color/dark_grey"
+            app:cnb_iconSize="34dp"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>

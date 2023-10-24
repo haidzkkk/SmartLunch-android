@@ -35,4 +35,6 @@ interface AuthApi {
     fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest):Observable<User>
     @GET("api/getCurrentUser")
     fun getCurrentUser():Observable<User>
+    @GET("api/users/{id}")
+    fun getUserById(@Path("id") id: String):Observable<User>
 }

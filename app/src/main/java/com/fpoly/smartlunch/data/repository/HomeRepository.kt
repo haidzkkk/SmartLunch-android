@@ -16,6 +16,4 @@ class HomeRepository @Inject constructor(
     }
 
 
-    fun getProducts(): Observable<ProductsResponse> = api.getAllProduct().subscribeOn(Schedulers.io())
-
 }

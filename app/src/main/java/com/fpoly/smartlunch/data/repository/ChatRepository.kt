@@ -18,7 +18,7 @@ class ChatRepository @Inject constructor(
 
 
     fun getUserById(id: String): Observable<User> = authApi.getUserById(id).subscribeOn(Schedulers.io())
-    fun getCurentUser(): Observable<User> = authApi.getCurentUser().subscribeOn(Schedulers.io())
+    fun getCurentUser(): Observable<User> = authApi.getCurrentUser().subscribeOn(Schedulers.io())
 
     fun getRoom(): Observable<ArrayList<Room>> = chatApi.getRoom().subscribeOn(Schedulers.io())
     fun getMessage(idRoom: String): Observable<ArrayList<Message>> = chatApi.getMessage(idRoom).subscribeOn(Schedulers.io())
