@@ -14,5 +14,5 @@ class TestRepo(private val api: UserApi) {
         return Observable.just("Repository test: $number")
     }
 
-    fun getUsers(): Observable<List<User>> = api.getUser().subscribeOn(Schedulers.io())
+//    fun getUsers(): Observable<List<User>> = api.getUser().subscribeOn(Schedulers.io())
 }

@@ -4,6 +4,4 @@ import com.fpoly.smartlunch.core.PolyViewAction
 
 sealed class HomeViewAction: PolyViewAction {
 
-//    object GetUserViewAction: HomeViewAction()
-    object GetListProduct : HomeViewAction()
 }

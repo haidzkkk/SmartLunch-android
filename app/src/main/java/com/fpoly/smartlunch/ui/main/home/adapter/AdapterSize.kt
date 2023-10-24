@@ -1,20 +1,14 @@
 package com.fpoly.smartlunch.ui.main.home.adapter
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fpoly.smartlunch.R
-import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.Size
-import com.fpoly.smartlunch.databinding.ItemProductLayoutHozBinding
 import com.fpoly.smartlunch.databinding.LayoutSizeBinding
-import com.fpoly.smartlunch.ui.main.product.ProductActivity
 
-class AdapterSize(private val context: Context) : RecyclerView.Adapter<AdapterSize.SizeViewHolder>() {
+class AdapterSize(private val onClickItem :(id: String) -> Unit) : RecyclerView.Adapter<AdapterSize.SizeViewHolder>() {
 
     var Listsize: List<Size> = ArrayList()
 
@@ -39,11 +33,7 @@ class AdapterSize(private val context: Context) : RecyclerView.Adapter<AdapterSi
             Listsize.forEach { it.isSelected = false }
             currentProduct.isSelected = true
             notifyDataSetChanged()
-            val bundle = Bundle()
-            bundle.putString("id_size", currentProduct._id)
-            val intent = Intent(context, ProductActivity::class.java)
-            intent.putExtras(bundle)
-            context.startActivity(intent)
+            onClickItem(currentProduct._id)
         }
 
     }

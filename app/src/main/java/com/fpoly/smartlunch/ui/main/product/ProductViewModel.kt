@@ -10,7 +10,6 @@ import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.home.HomeViewAction
-import com.fpoly.smartlunch.ui.security.LoginViewEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -26,12 +25,21 @@ private val repository: ProductRepository
 
     override fun handle(action: ProductAction) {
         when(action){
+            is ProductAction.GetListProduct -> handleGetListProduct()
             is ProductAction.oneProduct -> handleGetProduct(action.id)
              is ProductAction.GetListSize -> handleGetSize()
 
             else -> {
             }
         }
+    }
+
+    private fun handleGetListProduct() {
+        setState { copy(products = Loading()) }
+        repository.getProducts()
+            .execute {
+                copy(products = it)
+            }
     }
 
 

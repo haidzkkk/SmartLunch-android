@@ -20,6 +20,7 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
+import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
@@ -28,6 +29,7 @@ import javax.inject.Inject
 
 class ProductFragment @Inject constructor() : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
+    private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
     private  var currentSoldQuantity: Int? = null
     private lateinit var adapterSize: AdapterSize
@@ -44,6 +46,12 @@ class ProductFragment @Inject constructor() : PolyBaseFragment<FragmentFoodDetai
         super.onViewCreated(view, savedInstanceState)
         initUiSize()
         productViewModel.handle(ProductAction.GetListSize)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.returnVisibleBottomNav(false)
     }
 
     private fun addCart(){
@@ -74,7 +82,9 @@ class ProductFragment @Inject constructor() : PolyBaseFragment<FragmentFoodDetai
 
 
     private fun initUiSize() {
-        adapterSize = AdapterSize(requireContext())
+        adapterSize = AdapterSize{idSize ->
+
+        }
         views.rcvSize.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         views.rcvSize.adapter = adapterSize
     }

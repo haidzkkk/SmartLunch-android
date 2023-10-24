@@ -12,7 +12,7 @@
         />
 
     <item
-        android:id="@+id/menu_love"
+        android:id="@+id/menu_favourite"
         android:icon="@drawable/icon_favourite"
         android:title="@string/favourite"
         app:cnb_backgroundColor="@color/red_light"
@@ -30,9 +30,9 @@
         />
 
     <item
-        android:id="@+id/menu_cart"
+        android:id="@+id/menu_order"
         android:icon="@drawable/icon_cart"
-        android:title="@string/cart"
+        android:title="@string/order"
         app:cnb_backgroundColor="@color/red_light"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white"/>

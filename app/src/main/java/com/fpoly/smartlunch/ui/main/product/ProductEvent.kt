@@ -1,7 +1,6 @@
 package com.fpoly.smartlunch.ui.main.product
 
 import com.fpoly.smartlunch.core.PolyViewEvent
-import com.fpoly.smartlunch.ui.security.LoginViewEvent
 
 sealed class ProductEvent : PolyViewEvent {
     object handProduct : ProductEvent()
