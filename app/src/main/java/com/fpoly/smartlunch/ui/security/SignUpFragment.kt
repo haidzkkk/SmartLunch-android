@@ -41,7 +41,6 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
         views.lastName.addTextChangedListener(this)
         views.email.addTextChangedListener(this)
         views.phone.addTextChangedListener(this)
-        views.address.addTextChangedListener(this)
         views.password.addTextChangedListener(this)
         views.confirmPassword.addTextChangedListener(this)
     }
@@ -52,7 +51,6 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
             last_name = views.lastName.text.toString(),
             email = views.email.text.toString(),
             phone = views.phone.text.toString(),
-            address = views.address.text.toString(),
             password = views.password.text.toString(),
             confirmPassword = views.confirmPassword.text.toString()
         )
@@ -105,7 +103,6 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                     lastName.text?.isNotEmpty() == true &&
                     email.text?.isNotEmpty() == true &&
                     phone.text?.isNotEmpty() == true &&
-                    address.text?.isNotEmpty() == true &&
                     password.text?.isNotEmpty() == true &&
                     confirmPassword.text?.isNotEmpty() == true
         }
@@ -119,7 +116,6 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                 views.lastName.text -> views.lastNameTil.error = null
                 views.email.text -> views.emailTil.error = null
                 views.phone.text -> views.phoneTil.error = null
-                views.address.text -> views.addressTil.error = null
                 views.password.text -> views.passwordTil.error = null
                 views.confirmPassword.text -> views.confirmPasswordTil.error = null
             }
