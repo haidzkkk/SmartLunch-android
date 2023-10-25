@@ -36,7 +36,6 @@ fun Activity.changeLanguage(lang: String) {
     val myLocale = Locale(lang)
     conf.setLocale(myLocale)
     res.updateConfiguration(conf, dm)
-    conf.setLocale(Locale(lang))
 }
 
 fun Activity.startActivityAnim(intent: Intent) {

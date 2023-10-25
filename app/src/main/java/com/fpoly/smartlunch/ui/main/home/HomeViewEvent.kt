@@ -6,6 +6,7 @@ import com.fpoly.smartlunch.core.PolyViewEvent
 
 
 sealed class HomeViewEvent : PolyViewEvent {
+    data class ChangeDarkMode(var isCheckedDarkMode: Boolean) : HomeViewEvent()
     data class ReturnVisibleBottomNav(val isVisibleBottomNav: Boolean): HomeViewEvent()
     data class ReturnFragment<T: Fragment>(val fragmentClass: Class<T>): HomeViewEvent()
 }

@@ -23,7 +23,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="12dp" />
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_avatar"
                     android:layout_width="124dp"
                     android:layout_height="124dp"
@@ -46,7 +46,7 @@
                     android:layout_height="12dp" />
 
                 <Button
-                    android:id="@+id/btn_navigate"
+                    android:id="@+id/btn_edit_profile"
                     style="@style/PolyButton"
                     android:layout_width="212dp"
                     android:layout_height="50dp"
@@ -79,6 +79,8 @@
                         android:src="@drawable/location" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -103,6 +105,8 @@
                         android:src="@drawable/lock" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -126,6 +130,8 @@
                         android:src="@drawable/language" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -172,6 +178,8 @@
                         android:src="@drawable/notification" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -195,6 +203,8 @@
                         android:src="@drawable/icon_chat_outline" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -218,6 +228,8 @@
                         android:src="@drawable/messge_question" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"

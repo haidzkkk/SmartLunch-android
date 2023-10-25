@@ -14,6 +14,8 @@ import com.fpoly.smartlunch.core.PolyBaseActivity
 import com.fpoly.smartlunch.core.PolyDialog
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
 import com.fpoly.smartlunch.databinding.DialogHomeBinding
 import com.fpoly.smartlunch.ui.chat.ChatActivity
@@ -32,6 +34,8 @@ import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import com.fpoly.smartlunch.ultis.changeLanguage
+import com.fpoly.smartlunch.ultis.changeMode
 import javax.inject.Inject
 
 
@@ -46,7 +50,13 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     lateinit var userViewModelFactory: UserViewModel.Factory
 
     @Inject
+    lateinit var userViewModelFactory: UserViewModel.Factory
+
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private val homeViewModel: HomeViewModel by viewModel()
     private val testViewModel : TestViewModel by lazy{ viewModelProvider.get(TestViewModel::class.java) }
@@ -59,6 +69,8 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         super.onCreate(savedInstanceState)
         setupBottomNavigation()
         handleViewModel()
+        changeMode(sessionManager.fetchDarkMode())
+        changeLanguage(sessionManager.fetchLanguage())
     }
 
     private fun handleViewModel() {
@@ -121,8 +133,15 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         when (event) {
             is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
             is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
+            is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
         }
 
+    }
+
+    private fun handleDarkMode(checkedDarkMode: Boolean) {
+        sessionManager.saveDarkMode(checkedDarkMode)
+        changeMode(checkedDarkMode)
+        changeLanguage(sessionManager.fetchLanguage())
     }
 
     fun visibilityBottomNav(isVisible: Boolean){
@@ -143,18 +162,16 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
     }
 
-
     override fun create(initialState: HomeViewState): HomeViewModel {
         return homeViewModelFactory.create(initialState)
     }
-
+    
     override fun create(initialState: ProductState): ProductViewModel {
         return productViewModelFactory.create(initialState)
     }
 
     override fun create(initialState: UserViewState): UserViewModel {
-       return userViewModelFactory.create(initialState)
+        return userViewModelFactory.create(initialState)
     }
-
 
 }

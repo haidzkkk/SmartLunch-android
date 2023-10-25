@@ -4,9 +4,11 @@ import java.io.Serializable
 
 data class User(
     var _id: String="",
-    var address: String="",
+    var avatar: Image? =null,
     var authType: String="",
     var email: String="",
+    var birthday: String="",
+    var gender: Boolean,
     var facebookId: String="",
     var first_name: String="",
     var googleId: String="",
