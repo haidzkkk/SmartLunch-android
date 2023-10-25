@@ -17,6 +17,7 @@ import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import javax.inject.Inject
 
 class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>() {
@@ -26,6 +27,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
     private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
+    private val userViewModel: UserViewModel by activityViewModel()
+
     private lateinit var adapter : AdapterProduct
     private lateinit var adapterver : AdapterProductVer
 
@@ -39,11 +42,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         initUi()
         bottom_Sheet()
-        homeViewModel.observeViewEvents {
-            when(it){
-                else -> {}
-            }
-        }
+
         productViewModel.handle(ProductAction.GetListProduct)
     }
 
@@ -68,8 +67,10 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             homeViewModel.returnDetailProductFragment()
         }
         views.recyclerViewHoz.adapter = adapter
-
-        adapterver = AdapterProductVer(requireContext())
+        adapterver = AdapterProductVer{
+            productViewModel.handle(ProductAction.oneProduct(it))
+            homeViewModel.returnDetailProductFragment()
+        }
         views.recyclerViewVer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL , false)
         views.recyclerViewVer.adapter = adapterver
 
@@ -85,6 +86,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                 adapter.notifyDataSetChanged()
                 adapterver.notifyDataSetChanged()
             }
+
 
             else -> {
 

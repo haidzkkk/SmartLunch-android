@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemNewLayoutVerBinding
 
-class AdapterProductVer(private val context: Context) : RecyclerView.Adapter<AdapterProductVer.ProductViewHolder>() {
+class AdapterProductVer(private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterProductVer.ProductViewHolder>() {
 
     var products: List<Product> = ArrayList()
 
@@ -36,12 +36,7 @@ class AdapterProductVer(private val context: Context) : RecyclerView.Adapter<Ada
             holder.price.text = currentProduct.product_price.toString()
 
         holder.linearLayout.setOnClickListener {
-//            val selectedProduct = products[position]
-//            val bundle = Bundle()
-//            bundle.putString("id", selectedProduct._id)
-//            val intent = Intent(context, ProductActivity::class.java)
-//            intent.putExtras(bundle)
-//            context.startActivity(intent)
+            onClickItem(products[position]._id)
         }
 
     }

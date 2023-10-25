@@ -46,6 +46,8 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     @Inject
     lateinit var productViewModelFactory: ProductViewModel.Factory
+    @Inject
+    lateinit var userViewModelFactory: UserViewModel.Factory
 
     @Inject
     lateinit var userViewModelFactory: UserViewModel.Factory
@@ -160,11 +162,10 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
     }
 
-
     override fun create(initialState: HomeViewState): HomeViewModel {
         return homeViewModelFactory.create(initialState)
     }
-
+    
     override fun create(initialState: ProductState): ProductViewModel {
         return productViewModelFactory.create(initialState)
     }
@@ -172,6 +173,5 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     override fun create(initialState: UserViewState): UserViewModel {
         return userViewModelFactory.create(initialState)
     }
-
 
 }

@@ -1,21 +1,35 @@
 package com.fpoly.smartlunch.ui.main.home
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseBottomSheet
+import com.fpoly.smartlunch.data.model.CartResponse
+import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
+import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCart
+import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
+import com.fpoly.smartlunch.ui.main.product.ProductAction
+import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 
 class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
-    private val homeViewModel: HomeViewModel by activityViewModel()
+    private val productViewModel: ProductViewModel by activityViewModel()
 
+    private val userViewModel: UserViewModel by activityViewModel()
+
+
+    private lateinit var adapterCart: AdapterCart
     // mặc định là như này
     override val isBorderRadiusTop: Boolean
         get() = true
@@ -36,20 +50,90 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUi()
+        listenEvent()
 
-
-
-//        views.btnDismiss.setOnClickListener{
-//            this.dismiss()
-//        }
     }
 
-    override fun invalidate(): Unit = withState(homeViewModel){
-//        when(it.test){
-//            is Success -> views.tvTest.text = it.test.invoke()
-//            else -> {
-//                Log.e("TAG", "HomeFragment view state: else" )
-//            }
-//        }
+    private fun listenEvent() {
+        views.deleteCart.setOnClickListener {
+            showClearCartConfirmationDialog()
+        }
+        views.vuesaxLineVisible.setOnClickListener{
+            this.dismiss()
+        }
+        views.buttonThanh.setOnClickListener {
+            productViewModel.returnAbateFragment()
+        }
     }
+
+    private fun showClearCartConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Clear Cart")
+            .setMessage("Are you sure you want to clear your cart?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                clearCart()
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+   private fun clearCart(){
+       withState(userViewModel){
+           val userId = it.asyncCurrentUser.invoke()?._id
+           if (userId != null){
+               productViewModel.handle(ProductAction.GetClearCart(userId))
+           }
+
+       }
+   }
+
+
+
+    private fun initUi() {
+        withState(userViewModel){
+            val userId = it.asyncCurrentUser.invoke()?._id
+            if (userId != null){
+                productViewModel.handle(ProductAction.GetOneCartById(userId))
+            }
+        }
+        adapterCart = AdapterCart{ idCart ->
+
+
+        }
+        views.rcvCart.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL , false)
+        views.rcvCart.adapter = adapterCart
+    }
+
+
+
+    override fun invalidate(): Unit = withState(productViewModel) {
+        when (it.getOneCartById) {
+            is Loading -> Log.e("TAG", "HomeFragment view state: Loading")
+            is Success -> {
+                adapterCart.productsCart = it.getOneCartById.invoke()?.products!!
+                adapterCart.notifyDataSetChanged()
+
+            }
+            else -> {
+
+            }
+        }
+        when(it.getClearCart){
+            is Success -> {
+                initUi()
+                adapterCart.productsCart = it.getOneCartById.invoke()?.products!!
+                adapterCart.notifyDataSetChanged()
+                productViewModel.handleRemoveAsyncClearCart()
+
+            }
+
+            else -> {}
+        }
+
+    }
+
 }

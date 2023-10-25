@@ -5,11 +5,12 @@ import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
-import com.fpoly.smartlunch.data.repository.AuthRepository
+import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.repository.ProductRepository
-import com.fpoly.smartlunch.ui.main.home.HomeViewAction
+import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -20,15 +21,18 @@ private val repository: ProductRepository
 ): PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state){
 
     init {
-        handleGetSize()
+        handleGetAllSize()
     }
 
     override fun handle(action: ProductAction) {
         when(action){
             is ProductAction.GetListProduct -> handleGetListProduct()
-            is ProductAction.oneProduct -> handleGetProduct(action.id)
-             is ProductAction.GetListSize -> handleGetSize()
-
+            is ProductAction.oneProduct -> handleGetOneProduct(action.id)
+            is ProductAction.GetListSize -> handleGetAllSize()
+            is ProductAction.oneSize -> handleGetSizeById(action.id)
+            is ProductAction.CreateCart -> handleCreateCart(action.id,action.cart)
+            is ProductAction.GetOneCartById -> handleGetOneCartById(action.id)
+            is ProductAction.GetClearCart -> handleGetClearCartById(action.id)
             else -> {
             }
         }
@@ -43,7 +47,7 @@ private val repository: ProductRepository
     }
 
 
-    private fun handleGetProduct(id: String?) {
+    private fun handleGetOneProduct(id: String?) {
         setState { copy(product = Loading()) }
         if(id != null){
             repository.getOneProducts(id)
@@ -55,13 +59,13 @@ private val repository: ProductRepository
         }
 
     }
-    private fun handleGetSize(){
+    private fun handleGetAllSize(){
         setState { copy(size = Loading()) }
         repository.getSize().execute {
             copy(size = it)
         }
     }
-    private fun handleGetOne(id: String?) {
+    private fun handleGetSizeById(id: String?) {
         setState { copy(oneSize = Loading()) }
         if(id != null){
             repository.getOneSize(id)
@@ -74,8 +78,48 @@ private val repository: ProductRepository
 
     }
 
+    private fun handleCreateCart(id: String, cart: CartRequest){
+        setState { copy(asyncCreateCart = Loading()) }
+        if (id != null){
+            repository.getCreateCart(id,cart)
+                .execute {
+                    copy(asyncCreateCart = it)
+                }
+        }
+    }
+    private fun handleGetOneCartById(id: String){
+        setState { copy(getOneCartById = Loading()) }
+        if(id != null){
+            repository.getOneCartById(id)
+                .execute {
+                    copy(getOneCartById = it)
+                }
+        }else{
+            setState { copy(getOneCartById = Fail(throw Throwable())) }
+        }
+
+    }
+    private fun handleGetClearCartById(id: String){
+        setState { copy(getClearCart = Loading()) }
+            repository.getClearCart(id)
+                .execute {
+                    copy(getClearCart = it)
+                }
 
 
+    }
+
+   fun handleRemoveAsyncCreateCart(){
+       setState { copy(asyncCreateCart = Uninitialized) }
+   }
+
+    fun handleRemoveAsyncClearCart(){
+        setState { copy(getClearCart = Uninitialized) }
+    }
+
+    fun returnAbateFragment(){
+        _viewEvents.post(ProductEvent.ReturnFragment(AbateFragment::class.java))
+    }
 
 
     @AssistedFactory
