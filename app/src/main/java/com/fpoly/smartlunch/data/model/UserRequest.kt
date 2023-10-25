@@ -7,8 +7,6 @@ data class UserRequest(
     var password:String ="",
     var confirmPassword: String ="",
     var phone: String ="",
-    var address: String ="",
-    var avatar: String?= null
 ) {
 
 }

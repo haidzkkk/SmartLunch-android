@@ -82,6 +82,7 @@
     <string name="confirm">Xác nhận</string>
     <string name="resend_otp">Gửi lại OTP</string>
     <string name="dismiss">Đóng</string>
+    <string name="change_password_success_message">Mật khẩu mới của bạn đã được cập nhật. Hãy nhấn tiếp tục để thoát.</string>
     <string name="reset_password_success_title">Đặt lại mật khẩu thành công</string>
     <string name="reset_password_success_message">Mật khẩu mới của bạn đã được cập nhật. Hãy nhấn tiếp tục để đăng nhập.</string>
     <string name="verify_otp_send_button_text">Gửi</string>
@@ -94,4 +95,8 @@
     <string name="reset_pass_title">Đặt lại mật khẩu</string>
     <string name="new_password">Mật khẩu mới</string>
     <string name="order">Đơn hàng</string>
+    <string name="gender">Giới tính</string>
+    <string name="birthday">Ngày sinh</string>
+    <string name="gender_female">Nữ</string>
+    <string name="gender_male">Nam</string>
 </resources>

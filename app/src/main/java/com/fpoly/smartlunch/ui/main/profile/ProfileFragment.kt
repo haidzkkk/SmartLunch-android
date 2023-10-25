@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
     private val homeViewModel: HomeViewModel by activityViewModel()
+    private val userViewModel: UserViewModel by activityViewModel()
     companion object{
         const val TAG = "ProfileFragment"
     }
@@ -35,9 +37,23 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity().application as PolyApplication).polyConponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
-
         configData()
-        listenClickUI()
+        setupUI()
+        listenEvent()
+    }
+
+    private fun setupUI(): Unit = withState(userViewModel){
+        val user = it.asyncCurrentUser.invoke()
+        views.apply {
+            if (user != null) {
+                Glide.with(requireContext())
+                    .load(user.avatar?.url)
+                    .placeholder(R.drawable.baseline_person_outline_24)
+                    .error(R.drawable.baseline_person_outline_24)
+                    .into(imgAvatar)
+                displayName.text = "${user.first_name} ${user.last_name}"
+            }
+        }
     }
 
     override fun onResume() {
@@ -47,30 +63,39 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
 
     private fun configData() {
         sessionManager.fetchDarkMode().let { views.switchDarkMode.isChecked = it }
-
     }
 
-    private fun listenClickUI() {
+    private fun listenEvent() {
+        views.btnEditProfile.setOnClickListener {
+            homeViewModel.returnEditProfileFragment()
+        }
         views.layoutLocation.setOnClickListener {  }
         views.layoutChangePass.setOnClickListener {
-
+        homeViewModel.returnChangePasswordFragment()
         }
         views.layoutLanguage.setOnClickListener{
-            showOptionMenu{strLang ->
-                sessionManager.let {
-                    activity?.changeLanguage(strLang)
-                    it.saveLanguage(strLang)
-                }
-            }
+//            showOptionMenu{strLang ->
+//                sessionManager.let {
+//                    activity?.changeLanguage(strLang)
+//                    it.saveLanguage(strLang)
+//                }
+//            }
+            homeViewModel.returnLanguageFragment()
         }
-        views.switchDarkMode.apply {
-            this.setTrackResource(R.drawable.track_switch)
-            this.setThumbResource(R.drawable.thumb_switch)
-            this.setOnCheckedChangeListener { _, isChecked ->
-                changeMode(isChecked)
-                sessionManager.let { it.saveDarkMode(isChecked) }
-            }
+        sessionManager.fetchDarkMode().let {
+            views.switchDarkMode.isChecked=it
         }
+        views.switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
+            homeViewModel.handleChangeThemeMode(isChecked)
+        }
+//        views.switchDarkMode.apply {
+//            this.setTrackResource(R.drawable.track_switch)
+//            this.setThumbResource(R.drawable.thumb_switch)
+//            this.setOnCheckedChangeListener { _, isChecked ->
+//                changeMode(isChecked)
+//                sessionManager.let { it.saveDarkMode(isChecked) }
+//            }
+//        }
 
         views.layoutChat.setOnClickListener{
             activity?.startActivity(Intent(requireContext(), ChatActivity::class.java))

@@ -65,7 +65,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
 
-//    // bottom nav
+    // bottom nav
     implementation("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 
     // glide image
@@ -118,5 +118,8 @@ dependencies {
 
     // webrtc
     implementation ("com.mesibo.api:webrtc:1.0.5")
+
+    // circle image view
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 }

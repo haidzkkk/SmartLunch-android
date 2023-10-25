@@ -26,6 +26,7 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
     private var resendEnabled = false
     private lateinit var editTexts: Array<EditText>
     private var isAllFieldsFilled = false
+    private var countDownTimer: CountDownTimer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -135,7 +136,7 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
 
     private fun startCountDownTimer() {
         resendEnabled = false
-        object : CountDownTimer(resendTime * 1000, 1000) {
+        countDownTimer = object : CountDownTimer(resendTime * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 views.resendOtp.text =
                     """${getString(R.string.verify_otp_resend_button_text)}(${millisUntilFinished / 1000}s)"""
@@ -146,6 +147,11 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
                 views.resendOtp.text = getString(R.string.verify_otp_resend_button_text)
             }
         }.start()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDownTimer?.cancel()
     }
 
     override fun getBinding(

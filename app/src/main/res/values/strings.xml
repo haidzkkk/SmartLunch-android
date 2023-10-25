@@ -82,6 +82,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="reset_password_success_title">Password Reset Successful</string>
     <string name="reset_password_success_message">Your new password has been updated. Press continue to log in.</string>
+    <string name="change_password_success_message">Your new password has been updated. Press continue to exit.</string>
     <string name="verify_otp_send_button_text">Send</string>
     <string name="verify_otp_resend_button_text">Resend code</string>
     <string name="verify_otp_code_entry_hint">Enter your OTP here</string>
@@ -178,4 +179,8 @@ Thanh toán 200.000đ
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="order">Order</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
 </resources>
