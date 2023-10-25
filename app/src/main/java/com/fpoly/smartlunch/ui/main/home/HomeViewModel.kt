@@ -27,7 +27,6 @@ class HomeViewModel @AssistedInject constructor(
     fun returnDetailProductFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(ProductFragment::class.java))
     }
-
     fun returnVisibleBottomNav(isVisible: Boolean){
         _viewEvents.post(HomeViewEvent.ReturnVisibleBottomNav(isVisible))
     }

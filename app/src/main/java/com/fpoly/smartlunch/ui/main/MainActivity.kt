@@ -29,17 +29,21 @@ import com.fpoly.smartlunch.ui.main.love.FavouriteFragment
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
+import com.fpoly.smartlunch.ui.main.profile.UserViewModel
+import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ultis.addFragmentToBackstack
 import javax.inject.Inject
 
 
-class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory {
+class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory, UserViewModel.Factory {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
 
     @Inject
     lateinit var productViewModelFactory: ProductViewModel.Factory
+    @Inject
+    lateinit var userViewModelFactory: UserViewModel.Factory
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -146,6 +150,10 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     override fun create(initialState: ProductState): ProductViewModel {
         return productViewModelFactory.create(initialState)
+    }
+
+    override fun create(initialState: UserViewState): UserViewModel {
+       return userViewModelFactory.create(initialState)
     }
 
 

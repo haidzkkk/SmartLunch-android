@@ -32,8 +32,9 @@ class AdapterSize(private val onClickItem :(id: String) -> Unit) : RecyclerView.
         holder.liner.setOnClickListener{
             Listsize.forEach { it.isSelected = false }
             currentProduct.isSelected = true
-            notifyDataSetChanged()
             onClickItem(currentProduct._id)
+            notifyDataSetChanged()
+
         }
 
     }
