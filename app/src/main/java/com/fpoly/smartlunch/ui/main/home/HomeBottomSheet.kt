@@ -28,6 +28,9 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
     private val userViewModel: UserViewModel by activityViewModel()
 
+    private val homeViewModel: HomeViewModel by activityViewModel()
+
+
 
     private lateinit var adapterCart: AdapterCart
     // mặc định là như này
@@ -52,7 +55,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initUi()
         listenEvent()
-
     }
 
     private fun listenEvent() {
@@ -63,7 +65,8 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             this.dismiss()
         }
         views.buttonThanh.setOnClickListener {
-            productViewModel.returnAbateFragment()
+           homeViewModel.returnCartFragment()
+            this.dismiss()
         }
     }
 
@@ -91,8 +94,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
        }
    }
 
-
-
     private fun initUi() {
         withState(userViewModel){
             val userId = it.asyncCurrentUser.invoke()?._id
@@ -101,7 +102,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             }
         }
         adapterCart = AdapterCart{ idCart ->
-
 
         }
         views.rcvCart.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL , false)
@@ -114,19 +114,15 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         when (it.getOneCartById) {
             is Loading -> Log.e("TAG", "HomeFragment view state: Loading")
             is Success -> {
-                adapterCart.productsCart = it.getOneCartById.invoke()?.products!!
-                adapterCart.notifyDataSetChanged()
-
+                adapterCart.setData(it.getOneCartById.invoke()?.products)
             }
             else -> {
-
             }
         }
         when(it.getClearCart){
             is Success -> {
                 initUi()
-                adapterCart.productsCart = it.getOneCartById.invoke()?.products!!
-                adapterCart.notifyDataSetChanged()
+                adapterCart.setData(it.getOneCartById.invoke()?.products)
                 productViewModel.handleRemoveAsyncClearCart()
 
             }

@@ -9,11 +9,13 @@ import com.fpoly.smartlunch.databinding.ItemProductLayoutHozBinding
 
 class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterProduct.ProductViewHolder>() {
 
-    var products: List<Product> = ArrayList()
+    private var products: List<Product> = listOf()
 
-    fun setData(list: List<Product>){
-        products = list
-        notifyDataSetChanged()
+    fun setData(list: List<Product>?){
+        if (list != null){
+            products = list
+            notifyDataSetChanged()
+        }
     }
     class ProductViewHolder(private val binding: ItemProductLayoutHozBinding) : RecyclerView.ViewHolder(binding.root) {
         val image = binding.image
@@ -42,4 +44,3 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
         return products.size
     }
 }
-
