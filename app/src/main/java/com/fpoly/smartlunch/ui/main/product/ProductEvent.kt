@@ -8,4 +8,5 @@ sealed class ProductEvent : PolyViewEvent {
     object ReturnFragmentViewEvent : ProductEvent()
     data class ToFragmentViewEvent(val id : Int) : ProductEvent()
     data class ReturnFragment<T: Fragment>(val fragmentClass: Class<T>): ProductEvent()
+
 }
