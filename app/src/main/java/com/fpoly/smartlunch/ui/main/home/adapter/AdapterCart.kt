@@ -10,8 +10,15 @@ import com.fpoly.smartlunch.databinding.ItemCartBinding
 
 class AdapterCart (private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterCart.CartViewHolder>() {
 
-    var productsCart: List<ProductCart> = ArrayList()
+    private var productsCart: List<ProductCart> = listOf()
     private  var currentSoldQuantity: Int? = null
+
+    fun setData(list: List<ProductCart>?){
+        if (list != null){
+            productsCart=list
+            notifyDataSetChanged()
+        }
+    }
 
     class CartViewHolder(private val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root) {
         val image = binding.image
@@ -21,7 +28,6 @@ class AdapterCart (private val onClickItem: (id: String) -> Unit) : RecyclerView
         val quanlity = binding.someIdQuanlitySheet
         val quantily_tru = binding.linearMinu1Sheet
         val quantily_cong = binding.linearMinu2Sheet
-
     }
 
     override fun onCreateViewHolder(
@@ -39,7 +45,9 @@ class AdapterCart (private val onClickItem: (id: String) -> Unit) : RecyclerView
         holder.name.text = currentProduct.product_name.toString()
         holder.price.text = currentProduct.product_price.toString()
         holder.quanlity.text = currentProduct.purchase_quantity.toString()
-
+        holder.linearLayout.setOnClickListener{
+            onClickItem(productsCart[position]._id)
+        }
         var currentSoldQuantity: Int = currentProduct.purchase_quantity
 
         holder.quantily_cong.setOnClickListener {

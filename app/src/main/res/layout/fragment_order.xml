@@ -1,9 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.cart.OrderFragment">
+    >
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/toolbar_header"
+        />
 
+    <!-- Thêm TabLayout vào layout -->
+    <com.google.android.material.tabs.TabLayout
+        android:layout_below="@+id/appBar"
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabGravity="start"
+        app:tabInlineLabel="true"
+        app:tabMinWidth="0dp"
+        app:tabRippleColor="?attr/colorAccent"
+        app:tabBackground="@drawable/custom_chip_tab_background"
+        app:tabIndicatorColor="?attr/colorPrimary"
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="?attr/colorPrimary"
+        app:tabTextColor="?attr/colorPrimaryDark"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        tools:ignore="MissingConstraints" />
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_below="@id/tabLayout"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

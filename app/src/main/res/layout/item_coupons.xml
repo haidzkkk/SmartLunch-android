@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="181dp"
+    android:layout_height="80dp"
+    android:orientation="vertical"
+    android:id="@+id/liner_coupon"
+    android:layout_marginRight="16dp">
+
+    <TextView
+        android:id="@+id/tv_free"
+        android:layout_marginTop="10dp"
+        android:layout_width="157dp"
+        android:layout_height="18dp"
+        android:text="Free"
+        android:paddingLeft="5dp"
+        android:textSize="12dp"
+       />
+
+
+    <TextView
+        android:id="@+id/tv_free_ship"
+        android:layout_marginTop="5dp"
+        android:layout_width="157dp"
+        android:layout_height="18dp"
+        android:textSize="12dp"
+        android:text="Freeship tới 3km"
+        android:paddingLeft="5dp"
+       />
+    <LinearLayout
+        android:layout_width="157dp"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="12dp"
+            android:paddingLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hết hạn:"
+            />
+        <TextView
+            android:id="@+id/tv_date"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="30/06/2021"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

@@ -2,8 +2,12 @@ package com.fpoly.smartlunch.data.repository
 
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.CartResponse
+import com.fpoly.smartlunch.data.model.CouponsRequest
+import com.fpoly.smartlunch.data.model.CouponsResponse
+import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductCart
+import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 
@@ -33,6 +37,11 @@ class ProductRepository @Inject constructor(
     fun getOneCartById(id : String): Observable<CartResponse> = api.getOneCartById(id).subscribeOn(Schedulers.io())
     fun getClearCart(id :String): Observable<CartResponse> = api.getClearCart(id).subscribeOn(Schedulers.io())
     fun getChangeQuantityCart(id : String) : Observable<CartResponse> = api.getChangeQuantityCart(id).subscribeOn(Schedulers.io())
+    fun createOrder(order: OrderRequest)=api.createOrder(order).subscribeOn(Schedulers.io())
+    fun getCoupons(): Observable<List<CouponsResponse>> = api.getAllCoupons().subscribeOn(Schedulers.io())
+
+
+    fun applyCoupon(id :String,coupons:CouponsRequest): Observable<CartResponse> = api.applyCoupon(id,coupons).subscribeOn(Schedulers.io())
 
 
 }
