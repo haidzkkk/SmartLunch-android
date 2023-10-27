@@ -1,6 +1,5 @@
 package com.fpoly.smartlunch.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
@@ -11,15 +10,13 @@ import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
-import com.fpoly.smartlunch.core.PolyDialog
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
-import com.fpoly.smartlunch.databinding.DialogHomeBinding
-import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.card.CardFragment
+import com.fpoly.smartlunch.ui.main.cart.CartViewModel
+import com.fpoly.smartlunch.ui.main.cart.CartViewState
 import com.fpoly.smartlunch.ui.main.cart.OrderFragment
 import com.fpoly.smartlunch.ui.main.home.HomeFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
@@ -42,15 +39,16 @@ import com.fpoly.smartlunch.ultis.changeMode
 import javax.inject.Inject
 
 
+
 class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory, UserViewModel.Factory,SecurityViewModel.Factory {
+
+
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
 
     @Inject
     lateinit var productViewModelFactory: ProductViewModel.Factory
-    @Inject
-    lateinit var userViewModelFactory: UserViewModel.Factory
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -59,6 +57,9 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     lateinit var securityFactory: SecurityViewModel.Factory
 
 
+
+    @Inject
+    lateinit var cartViewModelFactory: CartViewModel.Factory
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -97,7 +98,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     }
 
     private fun setupBottomNavigation() {
-        supportFragmentManager.commit { add<HomeFragment>(R.id.frame_layout) }
+//        supportFragmentManager.commit { add<HomeFragment>(R.id.frame_layout) }
         views.bottomNav.apply {
             this.setItemSelected(R.id.menu_home)
             this.setOnItemSelectedListener { itemId ->
@@ -143,6 +144,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     private fun handleEvent(event: HomeViewEvent) {
         when (event) {
             is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
+            is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, bundle = event.bundle)}
             is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
             is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
         }
@@ -195,5 +197,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     override fun create(initialState: SecurityViewState): SecurityViewModel {
       return  securityFactory.create(initialState)
     }
+
 
 }

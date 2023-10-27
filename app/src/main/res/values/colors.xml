@@ -42,4 +42,8 @@
     <color name="title">#000000</color>
     <color name="message">#373737</color>
     <color name="transparent">#00FFFFFF</color>
+
+    <color name="selected_tab_color">#ff464f</color>
+    <color name="unselected_tab_color">#CCCCCC</color>
+
 </resources>

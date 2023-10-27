@@ -5,20 +5,21 @@ import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.CategoryResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.Favourite
+import com.fpoly.smartlunch.data.model.CouponsRequest
+import com.fpoly.smartlunch.data.model.CouponsResponse
+import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductCart
+import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
-
 import com.fpoly.smartlunch.data.network.ProductApi
 import io.reactivex.Completable
-
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.http.Query
 import javax.inject.Inject
 import kotlin.random.Random
-
 
 class ProductRepository @Inject constructor(
     private val api: ProductApi
@@ -43,6 +44,11 @@ class ProductRepository @Inject constructor(
     fun getAllProductByIdCategory(id : String): Observable<List<Product>> = api.getAllProductByIdCategory(id).subscribeOn(Schedulers.io())
     fun getViewProduct(id : String) : Completable = api.getViewProduct(id).subscribeOn(Schedulers.io())
     fun getAllFavourite(): Observable<List<Favourite>> = api.getAllFavourite().subscribeOn(Schedulers.io())
+    fun getChangeQuantityCart(id : String) : Observable<CartResponse> = api.getChangeQuantityCart(id).subscribeOn(Schedulers.io())
+    fun createOrder(order: OrderRequest)=api.createOrder(order).subscribeOn(Schedulers.io())
+    fun getCoupons(): Observable<List<CouponsResponse>> = api.getAllCoupons().subscribeOn(Schedulers.io())
+    fun applyCoupon(id :String,coupons:CouponsRequest): Observable<CartResponse> = api.applyCoupon(id,coupons).subscribeOn(Schedulers.io())
+
 
 
 }

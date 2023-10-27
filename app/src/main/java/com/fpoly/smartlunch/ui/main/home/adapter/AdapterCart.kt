@@ -14,22 +14,25 @@ class AdapterCart(private val onClickItem: (id: String, purchaseQuantity: Int, s
     RecyclerView.Adapter<AdapterCart.CartViewHolder>() {
 
     private var productsCart: List<ProductCart> = listOf()
-
-    fun setData(list: List<ProductCart>?) {
-        if (list != null) {
-            productsCart = list
+    private  var currentSoldQuantity: Int? = null
+    fun setData(list: List<ProductCart>?){
+        if (list != null){
+            productsCart=list
             notifyDataSetChanged()
         }
     }
 
+
     inner class CartViewHolder(private val binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         val image = binding.image
         val name = binding.nameProductSheet
         val price = binding.priceProductSheet
         val quanlity = binding.someIdQuanlitySheet
         val quantily_tru = binding.linearMinu1Sheet
         val quantily_cong = binding.linearMinu2Sheet
+
         fun bind(currentProduct: ProductCart) {
             name.text = currentProduct.product_name.toString()
             price.text = currentProduct.product_price.toString()
@@ -64,7 +67,6 @@ class AdapterCart(private val onClickItem: (id: String, purchaseQuantity: Int, s
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCartBinding.inflate(inflater, parent, false)
         return CartViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
@@ -72,8 +74,6 @@ class AdapterCart(private val onClickItem: (id: String, purchaseQuantity: Int, s
         holder.bind(currentProduct)
 
     }
-
-
     override fun getItemCount(): Int {
         return productsCart.size
     }

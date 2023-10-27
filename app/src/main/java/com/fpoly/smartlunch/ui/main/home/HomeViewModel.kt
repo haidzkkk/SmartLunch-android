@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.home
 
+import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
@@ -8,6 +9,8 @@ import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.ui.main.product.ProductEvent
+import com.fpoly.smartlunch.ui.main.cart.CartFragment
+import com.fpoly.smartlunch.ui.main.cart.PayFragment
 import com.fpoly.smartlunch.ui.main.product.ProductFragment
 import com.fpoly.smartlunch.ui.main.product.ProductListFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
@@ -48,13 +51,19 @@ class HomeViewModel @AssistedInject constructor(
     fun handleChangeThemeMode(isChecked: Boolean) {
         _viewEvents.post(HomeViewEvent.ChangeDarkMode(isChecked))
     }
-
     fun returnProductListFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(ProductListFragment::class.java))
     }
 
-
-    fun test() = "test"
+    fun returnCartFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(CartFragment::class.java))
+    }
+    fun returnHomeFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(HomeFragment::class.java))
+    }
+    fun returnPayFragment(bundle: Bundle){
+        _viewEvents.post(HomeViewEvent.ReturnFragmentWithArgument(PayFragment::class.java,bundle))
+    }
 
     @AssistedFactory
     interface Factory {

@@ -11,7 +11,10 @@ import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
+import com.fpoly.smartlunch.data.model.CouponsRequest
+import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.repository.ProductRepository
+import com.fpoly.smartlunch.ui.main.cart.CartFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -41,11 +44,39 @@ private val repository: ProductRepository
             is ProductAction.getRemoveProductByIdCart -> handleRemoveProductCart(action.id, action.idProduct, action.sizeId)
             is ProductAction.getAllProductByIdCategory -> handleAllProductByIdCategory(action.id)
             is ProductAction.incrementViewProduct -> handleGetViewProduct(action.id)
+            is ProductAction.CreateOder -> handleCreateOrder(action.oder)
+            is ProductAction.GetListCoupons -> handleGetListCoupons()
+            is ProductAction.applyCoupon -> handleApplyCoupon(action.id,action.coupons)
 
             else -> {
             }
         }
     }
+
+    private fun handleApplyCoupon(id: String, coupons: CouponsRequest) {
+     setState { copy(applyCoupons = Loading()) }
+        repository.applyCoupon(id,coupons)
+            .execute {
+            copy(applyCoupons=it)
+        }
+    }
+
+    private fun handleGetListCoupons() {
+        setState { copy(coupons = Loading()) }
+        repository.getCoupons()
+            .execute {
+                copy(coupons = it)
+            }
+    }
+
+    private fun handleCreateOrder(oder: OrderRequest) {
+        setState { copy(addOrder = Loading()) }
+        repository.createOrder(oder)
+            .execute {
+            copy(addOrder = it)
+        }
+    }
+
 
     private fun handleGetListProduct() {
         setState { copy(products = Loading()) }
@@ -151,12 +182,14 @@ private val repository: ProductRepository
     fun handleRemoveAsyncClearCart(){
         setState { copy(getClearCart = Uninitialized) }
     }
+
     fun handleRemoveAsyncGetCart(){
         setState { copy(getOneCartById = Uninitialized) }
     }
     fun handleRemoveAsyncProductCart(){
         setState { copy(getRemoveProductByIdCart = Uninitialized) }
     }
+
 
     @AssistedFactory
     interface Factory {

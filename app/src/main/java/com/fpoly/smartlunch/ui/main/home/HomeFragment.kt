@@ -39,8 +39,10 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         initUi()
         listenEvent()
+
         productViewModel.handle(ProductAction.GetListProduct)
     }
 
@@ -90,13 +92,14 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         when (it.products) {
             is Loading -> Log.e("TAG", "HomeFragment view state: Loading")
             is Success -> {
+
                 adapter.setData(it.products.invoke()?.docs!!)
                 adapterver.setData(it.products.invoke()?.docs!!)
                 adapter.notifyDataSetChanged()
+
+
                 adapterver.notifyDataSetChanged()
             }
-
-
             else -> {
 
             }

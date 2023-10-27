@@ -5,8 +5,11 @@ import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.CategoryResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.Favourite
+import com.fpoly.smartlunch.data.model.CouponsRequest
+import com.fpoly.smartlunch.data.model.CouponsResponse
+import com.fpoly.smartlunch.data.model.OrderRequest
+import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
-import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import io.reactivex.Completable
@@ -14,6 +17,7 @@ import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -46,6 +50,12 @@ interface ProductApi {
     fun getViewProduct(@Path("id") id: String) : Completable
     @GET("/api/favourite")
     fun getAllFavourite(): Observable<List<Favourite>>
-
-
+    @DELETE("/api/carts/{id}/change")
+    fun getChangeQuantityCart(@Path("id") id: String): Observable<CartResponse>
+    @POST("/api/order")
+    fun createOrder( @Body order: OrderRequest): Observable<OrderResponse>
+    @GET("/api/coupons")
+    fun getAllCoupons(): Observable<List<CouponsResponse>>
+    @PATCH("/api/carts/{id}/apply")
+    fun applyCoupon(@Path("id") id: String, @Body coupons: CouponsRequest): Observable<CartResponse>
 }

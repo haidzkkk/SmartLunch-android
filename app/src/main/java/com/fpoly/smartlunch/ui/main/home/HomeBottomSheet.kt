@@ -34,9 +34,14 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
     private val userViewModel: UserViewModel by activityViewModel()
 
+
     private lateinit var idProduct : String
     private lateinit var sizeId : String
     private var purchaseQuantity : Int? = null
+    private val homeViewModel: HomeViewModel by activityViewModel()
+
+
+
 
     private lateinit var adapterCart: AdapterCart
     // mặc định là như này
@@ -61,7 +66,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initUi()
         listenEvent()
-
     }
 
     private fun listenEvent() {
@@ -71,6 +75,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         views.vuesaxLineVisible.setOnClickListener{
             this.dismiss()
         }
+
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,
             ItemTouchHelper.RIGHT){
             override fun onMove(
@@ -107,6 +112,12 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             }
         }).attachToRecyclerView(views.rcvCart)
 
+
+        views.buttonThanh.setOnClickListener {
+           homeViewModel.returnCartFragment()
+            this.dismiss()
+        }
+
     }
 
     private fun showClearCartConfirmationDialog() {
@@ -133,8 +144,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
        }
    }
 
-
-
     private fun initUi() {
         withState(userViewModel){
             val userId = it.asyncCurrentUser.invoke()?._id
@@ -142,10 +151,13 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                 productViewModel.handle(ProductAction.GetOneCartById(userId))
             }
         }
+
         adapterCart = AdapterCart{ idProductAdapter , currentSoldQuantity ,currentSizeID ->
             sizeId = currentSizeID
             idProduct = idProductAdapter
             purchaseQuantity = currentSoldQuantity
+
+
         }
         views.rcvCart.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL , false)
         views.rcvCart.adapter = adapterCart

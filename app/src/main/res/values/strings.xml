@@ -11,6 +11,8 @@
     <string name="chat">Chat</string>
     <string name="en">English</string>
     <string name="vi">Vietnamese</string>
+    <string name="en_code" translatable="false">en</string>
+    <string name="vi_code" translatable="false">vi</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
