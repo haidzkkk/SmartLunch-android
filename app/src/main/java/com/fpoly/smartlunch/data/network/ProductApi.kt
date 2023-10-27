@@ -2,16 +2,22 @@ package com.fpoly.smartlunch.data.network
 
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.CartResponse
+import com.fpoly.smartlunch.data.model.CategoryResponse
+import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
+import com.fpoly.smartlunch.data.model.Favourite
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import io.reactivex.Completable
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ProductApi {
     @GET("/api/products")
@@ -28,9 +34,18 @@ interface ProductApi {
     fun getOneCartById(@Path("id")id: String): Observable<CartResponse>
     @DELETE("/api/carts/{id}/clears")
     fun getClearCart(@Path("id") id: String): Observable<CartResponse>
-
-    @DELETE("/api/carts/{id}/change")
-    fun getChangeQuantityCart(@Path("id") id: String): Observable<CartResponse>
+    @PUT("/api/carts/{id}/change")
+    fun getChangeQuantityCart(@Path("id") id: String, @Query("idProduct") idProduct: String,@Body changeQuantityRequest: ChangeQuantityRequest): Observable<CartResponse>
+    @DELETE("/api/carts/{id}/remove")
+    fun getRemoveGetOneProductCart(@Path("id") id: String,@Query("idProduct") idProduct: String,@Query("sizeId") sizeId: String ): Observable<CartResponse>
+    @GET("/api/category")
+    fun getAllCategory(): Observable<CategoryResponse>
+    @GET("/api/category/products/{categoryId}")
+    fun getAllProductByIdCategory(@Path("categoryId") id: String): Observable<List<Product>>
+    @GET("/api/products/views/{id}")
+    fun getViewProduct(@Path("id") id: String) : Completable
+    @GET("/api/favourite")
+    fun getAllFavourite(): Observable<List<Favourite>>
 
 
 }

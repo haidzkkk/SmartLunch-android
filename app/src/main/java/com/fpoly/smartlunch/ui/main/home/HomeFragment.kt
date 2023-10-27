@@ -39,11 +39,19 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initUi()
-        bottom_Sheet()
-
+        listenEvent()
         productViewModel.handle(ProductAction.GetListProduct)
+    }
+
+    private fun listenEvent() {
+       views.btnDefault.setOnClickListener{
+           categoryBottomSheet()
+       }
+
+        views.floatBottomSheet.setOnClickListener {
+            cartBottomSheet()
+        }
     }
 
     override fun onResume() {
@@ -51,19 +59,21 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         homeViewModel.returnVisibleBottomNav(true)
     }
 
-    private fun bottom_Sheet(){
-        views.floatBottomSheet.setOnClickListener {
-            bottomSheet()
-        }
-    }
-    private fun bottomSheet() {
+    private fun cartBottomSheet(){
         val bottomSheetFragment = HomeBottomSheet()
         bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
     }
+    private fun categoryBottomSheet(){
+        val bottomSheetFragment = HomeBottomSheetCategory()
+        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+    }
+
     private fun initUi() {
 
         adapter = AdapterProduct{
+
             productViewModel.handle(ProductAction.oneProduct(it))
+
             homeViewModel.returnDetailProductFragment()
         }
         views.recyclerViewHoz.adapter = adapter
@@ -80,9 +90,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         when (it.products) {
             is Loading -> Log.e("TAG", "HomeFragment view state: Loading")
             is Success -> {
-                adapter.products = it.products.invoke()?.docs!!
-
-                adapterver.products = it.products.invoke()?.docs!!
+                adapter.setData(it.products.invoke()?.docs!!)
+                adapterver.setData(it.products.invoke()?.docs!!)
                 adapter.notifyDataSetChanged()
                 adapterver.notifyDataSetChanged()
             }
@@ -91,6 +100,13 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             else -> {
 
             }
+        }
+        when(it.product){
+            is  Success ->{
+                productViewModel.handle(ProductAction.incrementViewProduct(it.product.invoke()?._id!!))
+            }
+
+            else -> {}
         }
     }
 }

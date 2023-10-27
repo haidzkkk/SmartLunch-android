@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.product
 
+import android.util.Log
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.FragmentViewModelContext
@@ -9,11 +10,13 @@ import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.CartRequest
+import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import retrofit2.http.Query
 
 class ProductViewModel @AssistedInject constructor(
 @Assisted state: ProductState,
@@ -21,6 +24,7 @@ private val repository: ProductRepository
 ): PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state){
 
     init {
+        handleGetAllCategory()
         handleGetAllSize()
     }
 
@@ -33,6 +37,11 @@ private val repository: ProductRepository
             is ProductAction.CreateCart -> handleCreateCart(action.id,action.cart)
             is ProductAction.GetOneCartById -> handleGetOneCartById(action.id)
             is ProductAction.GetClearCart -> handleGetClearCartById(action.id)
+            is ProductAction.GetChangeQuantity -> handleChangeQuantity(action.id, action.idProduct,action.changeQuantityRequest)
+            is ProductAction.getRemoveProductByIdCart -> handleRemoveProductCart(action.id, action.idProduct, action.sizeId)
+            is ProductAction.getAllProductByIdCategory -> handleAllProductByIdCategory(action.id)
+            is ProductAction.incrementViewProduct -> handleGetViewProduct(action.id)
+
             else -> {
             }
         }
@@ -54,8 +63,6 @@ private val repository: ProductRepository
                 .execute {
                     copy(product = it)
                 }
-        }else{
-          setState { copy(product = Fail(throw Throwable())) }
         }
 
     }
@@ -72,8 +79,6 @@ private val repository: ProductRepository
                 .execute {
                     copy(oneSize = it)
                 }
-        }else{
-            setState { copy(oneSize = Fail(throw Throwable())) }
         }
 
     }
@@ -105,10 +110,40 @@ private val repository: ProductRepository
                 .execute {
                     copy(getClearCart = it)
                 }
-
-
+    }
+    private fun handleChangeQuantity(id: String ,idProduct: String, changeQuantityRequest: ChangeQuantityRequest){
+        setState { copy(getChangeQuantity = Loading()) }
+        repository.getChangeQuantityCart(id,idProduct,changeQuantityRequest)
+            .execute {
+                copy(getChangeQuantity = it)
+            }
     }
 
+    private fun handleRemoveProductCart(id: String, idProduct: String, sizeId: String){
+        setState { copy(getRemoveProductByIdCart = Loading()) }
+        repository.getRemoveGetOneProductCart(id, idProduct,sizeId)
+            .execute {
+                copy(getRemoveProductByIdCart = it)
+            }
+    }
+
+    private fun handleGetAllCategory(){
+        setState { copy(category = Loading()) }
+        repository.getAllCategory().execute {
+            copy(category = it)
+        }
+    }
+    private fun handleAllProductByIdCategory(id : String){
+        setState { copy(getAllProductByIdCategory = Loading()) }
+        repository.getAllProductByIdCategory(id).execute {
+            copy(getAllProductByIdCategory = it)
+        }
+    }
+    private fun handleGetViewProduct(id : String){
+        repository.getViewProduct(id).execute {
+            copy()
+        }
+    }
    fun handleRemoveAsyncCreateCart(){
        setState { copy(asyncCreateCart = Uninitialized) }
    }
@@ -116,11 +151,12 @@ private val repository: ProductRepository
     fun handleRemoveAsyncClearCart(){
         setState { copy(getClearCart = Uninitialized) }
     }
-
-    fun returnAbateFragment(){
-        _viewEvents.post(ProductEvent.ReturnFragment(AbateFragment::class.java))
+    fun handleRemoveAsyncGetCart(){
+        setState { copy(getOneCartById = Uninitialized) }
     }
-
+    fun handleRemoveAsyncProductCart(){
+        setState { copy(getRemoveProductByIdCart = Uninitialized) }
+    }
 
     @AssistedFactory
     interface Factory {

@@ -28,18 +28,21 @@ import com.fpoly.smartlunch.ui.main.home.HomeViewState
 import com.fpoly.smartlunch.ui.main.home.TestViewModel
 import com.fpoly.smartlunch.ui.main.home.TestViewModelMvRx
 import com.fpoly.smartlunch.ui.main.love.FavouriteFragment
+import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
+import com.fpoly.smartlunch.ui.security.SecurityViewModel
+import com.fpoly.smartlunch.ui.security.SecurityViewState
 import com.fpoly.smartlunch.ultis.addFragmentToBackstack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
 import javax.inject.Inject
 
 
-class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory, UserViewModel.Factory {
+class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory, UserViewModel.Factory,SecurityViewModel.Factory {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
@@ -50,15 +53,18 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     lateinit var userViewModelFactory: UserViewModel.Factory
 
     @Inject
-    lateinit var userViewModelFactory: UserViewModel.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var securityFactory: SecurityViewModel.Factory
+
+
 
     @Inject
     lateinit var sessionManager: SessionManager
 
     private val homeViewModel: HomeViewModel by viewModel()
+    private val productViewModel : ProductViewModel by viewModel()
     private val testViewModel : TestViewModel by lazy{ viewModelProvider.get(TestViewModel::class.java) }
     private val testViewModelMvRx: TestViewModelMvRx by viewModel()
 
@@ -77,6 +83,11 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         homeViewModel.observeViewEvents {
             if (it != null) {
                 handleEvent(it)
+            }
+        }
+        productViewModel.observeViewEvents {
+            if (it != null) {
+                handleEventProduct(it)
             }
         }
     }
@@ -135,8 +146,15 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
             is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
             is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
         }
-
     }
+    private fun handleEventProduct(event: ProductEvent) {
+        when (event) {
+            is ProductEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
+
+            else -> {}
+        }
+    }
+
 
     private fun handleDarkMode(checkedDarkMode: Boolean) {
         sessionManager.saveDarkMode(checkedDarkMode)
@@ -172,6 +190,10 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     override fun create(initialState: UserViewState): UserViewModel {
         return userViewModelFactory.create(initialState)
+    }
+
+    override fun create(initialState: SecurityViewState): SecurityViewModel {
+      return  securityFactory.create(initialState)
     }
 
 }
