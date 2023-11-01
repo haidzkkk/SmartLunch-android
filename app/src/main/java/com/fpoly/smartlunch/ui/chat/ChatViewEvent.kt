@@ -1,7 +1,9 @@
 package com.fpoly.smartlunch.ui.chat
 
 import com.fpoly.smartlunch.core.PolyViewEvent
+import org.webrtc.MediaStream
 
 sealed class ChatViewEvent : PolyViewEvent{
-    data class ReturnSetupAppbar(val isVisible: Boolean, val isTextView: Boolean, val tvTitle: String, val isVisibleIconCall: Boolean): ChatViewEvent()
+    object initObserverPeerConnection: ChatViewEvent()
+    data class addViewToViewWebRTC(val p0: MediaStream?): ChatViewEvent()
 }

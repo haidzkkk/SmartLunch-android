@@ -7,16 +7,22 @@
     android:paddingHorizontal="10dp"
     tools:context=".ui.chat.home.HomeChatFragment">
 
+    <include
+        android:id="@+id/layout_header"
+        layout="@layout/toolbar_header"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_header">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/PolyInputLayoutLogin"
-            app:startIconDrawable="@drawable/baseline_search_24"
+            app:startIconDrawable="@drawable/icon_search"
+            app:hintEnabled="false"
             android:layout_marginBottom="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -25,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:transformPivotY="10dp"
                 android:focusable="false"
-                android:text="Search"
+                android:hint="Search"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

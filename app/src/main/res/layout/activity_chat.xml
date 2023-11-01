@@ -11,79 +11,93 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="10dp">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolBar"
-                android:layout_width="match_parent"
-                android:layout_height="64dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/PolyInputLayoutLogin"
-                    app:startIconDrawable="@drawable/baseline_search_24"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="gone">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:transformPivotY="10dp"
-                        android:focusable="false"
-                        android:text="Search"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đoạn chat"
-                    android:textSize="24sp"
-                    style="@style/TitleToolBarChat"
-                    android:layout_gravity="center"
-                    android:visibility="visible"/>
-
-                <ImageView
-                    android:id="@+id/imgCall"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="end"
-                    android:src="@drawable/icon_call"
-                    android:layout_marginRight="15dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgCallVideo"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="end"
-                    android:src="@drawable/baseline_videocam_24"
-                    android:layout_marginRight="15dp"
-                    />
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <fragment
             android:id="@+id/nav_fragment"
-            android:layout_below="@+id/appBar"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_chat"/>
 
-
     </RelativeLayout>
 
+
+    <LinearLayout
+        android:id="@+id/layout_call_header"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:backgroundTint="@color/grey_light"
+        android:background="@drawable/background_boder_radius"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/background_boder_radius_circle"
+                android:clipToOutline="true"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_avatar"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/title"
+                />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_avatar"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginStart="20dp"
+                android:textSize="15sp"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_refuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Từ chối"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                />
+
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chấp nhận"
+                android:layout_weight="1"
+                android:backgroundTint="@color/green"
+                android:layout_margin="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

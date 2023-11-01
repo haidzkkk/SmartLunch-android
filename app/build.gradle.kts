@@ -101,6 +101,9 @@ dependencies {
     // Effects imageview
     implementation("com.airbnb.android:lottie:6.0.1")
 
+    // show image
+    implementation("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
+
     // map
     implementation("com.google.android.gms:play-services-maps:18.1.0")
 
@@ -119,9 +122,14 @@ dependencies {
     // webrtc
     implementation ("com.mesibo.api:webrtc:1.0.5")
 
+
+    // request permission
+    implementation ("com.guolindev.permissionx:permissionx:1.7.1")
+
     // circle image view
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     // image slider
+
 
 }

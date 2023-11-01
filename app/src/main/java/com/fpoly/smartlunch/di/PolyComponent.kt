@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.di
 
+import android.app.Application
 import android.content.Context
 import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +9,7 @@ import com.fpoly.smartlunch.di.modules.FragmentModule
 import com.fpoly.smartlunch.di.modules.NetworkModule
 import com.fpoly.smartlunch.di.modules.ViewModelModule
 import com.fpoly.smartlunch.ui.chat.ChatActivity
+import com.fpoly.smartlunch.ui.chat.home.HomeChatFragment
 import com.fpoly.smartlunch.ui.main.MainActivity
 import com.fpoly.smartlunch.ui.main.payment.AddressPaymentFragment
 import com.fpoly.smartlunch.ui.main.payment.PayFragment
@@ -39,6 +41,8 @@ interface PolyComponent {
     fun inject(fragment: ThirdFragment)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ProfileFragment)
+    fun inject(fragment: HomeChatFragment)
+
     fun inject(fragment: PayFragment)
     fun inject(fragment: AddressFragment)
     fun inject(fragment: AddressPaymentFragment)
