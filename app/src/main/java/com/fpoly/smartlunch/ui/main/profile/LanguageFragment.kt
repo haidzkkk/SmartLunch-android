@@ -19,38 +19,51 @@ import javax.inject.Inject
 
 class LanguageFragment : PolyBaseFragment<FragmentLanguageBinding>() {
     private val homeViewModel: HomeViewModel by activityViewModel()
+
     @Inject
     lateinit var sessionManager: SessionManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (requireActivity().application as PolyApplication).polyConponent.inject(this)
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
         setupUI()
         listenEvent()
     }
 
     private fun setupUI() {
-        val languages = createLanguageList() // Thay thế bằng danh sách ngôn ngữ thực tế
-        val adapter = LanguageAdapter(languages) { language ->
+        views.appBar.tvTitleToolbar.text = getText(R.string.language)
+        val adapter = LanguageAdapter{ language ->
             sessionManager.let {
                 activity?.changeLanguage(language.code)
                 it.saveLanguage(language.code)
             }
         }
+        adapter.setData(createLanguageList())
         views.rcyLanguage.adapter = adapter
     }
 
     private fun listenEvent() {
-        // Thêm xử lý sự kiện khi ngôn ngữ được chọn
+        views.btnSaveLanguage.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+        }
     }
 
     private fun createLanguageList(): List<Language> {
-        val sharedPreferences = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
-        val selectedLanguage = sharedPreferences.getString("selected_language", "en") // Lấy ngôn ngữ được lưu trong local
-
         val languages = ArrayList<Language>()
-        languages.add(Language("English", "en", selectedLanguage == "en"))
-        languages.add(Language("Vietnamese", "vi", selectedLanguage == "vi"))
+        languages.add(
+            Language(
+                getString(R.string.en),
+                getString(R.string.en_code),
+                sessionManager.fetchLanguage() == getString(R.string.en_code)
+            )
+        )
+        languages.add(
+            Language(
+                getString(R.string.vi),
+                getString(R.string.vi_code),
+                sessionManager.fetchLanguage() == getString(R.string.vi_code)
+            )
+        )
         return languages
     }
 

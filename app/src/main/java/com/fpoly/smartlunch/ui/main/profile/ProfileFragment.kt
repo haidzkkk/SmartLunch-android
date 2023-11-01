@@ -35,7 +35,7 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
     lateinit var sessionManager: SessionManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (requireActivity().application as PolyApplication).polyConponent.inject(this)
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
         configData()
         setupUI()
@@ -69,17 +69,13 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.btnEditProfile.setOnClickListener {
             homeViewModel.returnEditProfileFragment()
         }
-        views.layoutLocation.setOnClickListener {  }
+        views.layoutLocation.setOnClickListener {
+            homeViewModel.returnAddressFragment()
+        }
         views.layoutChangePass.setOnClickListener {
         homeViewModel.returnChangePasswordFragment()
         }
         views.layoutLanguage.setOnClickListener{
-//            showOptionMenu{strLang ->
-//                sessionManager.let {
-//                    activity?.changeLanguage(strLang)
-//                    it.saveLanguage(strLang)
-//                }
-//            }
             homeViewModel.returnLanguageFragment()
         }
         sessionManager.fetchDarkMode().let {
@@ -88,14 +84,6 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
             homeViewModel.handleChangeThemeMode(isChecked)
         }
-//        views.switchDarkMode.apply {
-//            this.setTrackResource(R.drawable.track_switch)
-//            this.setThumbResource(R.drawable.thumb_switch)
-//            this.setOnCheckedChangeListener { _, isChecked ->
-//                changeMode(isChecked)
-//                sessionManager.let { it.saveDarkMode(isChecked) }
-//            }
-//        }
 
         views.layoutChat.setOnClickListener{
             activity?.startActivity(Intent(requireContext(), ChatActivity::class.java))

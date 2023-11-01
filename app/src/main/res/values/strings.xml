@@ -185,4 +185,11 @@ Thanh toán
     <string name="birthday">Birthday</string>
     <string name="gender_female">Female</string>
     <string name="gender_male">Male</string>
+    <string name="pay">Pay</string>
+    <string name="category">Category</string>
+    <string name="note_default">having no note</string>
+    <string name="min_cost">0 đ</string>
+    <string name="payment_id">no value</string>
+    <string name="payment_fail">fail</string>
+    <string name="error_500">server error</string>
 </resources>

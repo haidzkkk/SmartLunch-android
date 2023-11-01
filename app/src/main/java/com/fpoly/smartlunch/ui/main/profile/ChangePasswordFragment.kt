@@ -18,6 +18,8 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentChangePasswordBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
+import com.fpoly.smartlunch.ui.main.profile.adapter.LanguageAdapter
+import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.showUtilDialog
 import javax.inject.Inject
 
@@ -31,9 +33,17 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
     private var isSendButtonEnabled = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (requireActivity().application as PolyApplication).polyConponent.inject(this)
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
         listenEvent()
+    }
+
+    private fun setupUI() {
+        views.appBar.apply {
+            btnBackToolbar.visibility = View.VISIBLE
+            tvTitleToolbar.text = ""
+        }
     }
 
     private fun listenEvent() {
@@ -41,7 +51,7 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
         views.currentPassword.addTextChangedListener(this)
         views.newPassword.addTextChangedListener(this)
         views.confirmPassword.addTextChangedListener(this)
-        views.btnBack.setOnClickListener {
+        views.appBar.btnBackToolbar.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
         views.btnSend.setOnClickListener {

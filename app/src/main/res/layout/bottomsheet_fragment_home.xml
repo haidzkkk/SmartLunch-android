@@ -2,16 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/gi_h_ng"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true">
 
         <RelativeLayout
-            android:id="@+id/s_n_ph_m_tr"
+            android:id="@+id/layout_cart"
             android:layout_width="327dp"
             android:layout_height="32dp"
             android:layout_marginLeft="24dp"
@@ -58,65 +59,42 @@
             android:id="@+id/rcv_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/s_n_ph_m_tr"
+            android:layout_below="@+id/layout_cart"
             android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             android:padding="10dp" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/arrow_3_but"
-        android:layout_width="327dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="42dp"
-        android:background="@color/white">
-
-        <RelativeLayout
-            android:id="@+id/frame_10000"
-            android:layout_width="74dp"
-            android:layout_height="48dp"
-            android:background="@drawable/frame_cart">
+        <LinearLayout
+            android:layout_below="@+id/rcv_cart"
+            android:id="@+id/arrow_3_but"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="@color/white">
 
             <TextView
-                android:layout_width="60dp"
+                android:id="@+id/quantity_product"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:drawableStart="@drawable/cart_figma"
-                android:drawableTint="@color/red_light"
-                android:gravity="center"
+                android:layout_marginHorizontal="12dp"
                 android:text="3"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/cart_figma"
                 android:textColor="@color/red_light" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/button_thanh"
-            android:layout_width="245dp"
-            android:layout_height="48dp"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@+id/frame_10000"
-            android:background="@drawable/button">
-
-            <TextView
-                android:id="@+id/thanh_to_n_"
-                android:layout_width="161dp"
-                android:layout_height="24dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="41dp"
-                android:layout_marginEnd="43dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal|top"
-                android:lineSpacingExtra="5sp"
+            <Button
+                android:id="@+id/button_thanh"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="@color/red"
                 android:text="@string/thanh_to_n_"
-                android:textAppearance="@style/thanh_to_n_"
-                android:textColor="@color/blue_while"
-                android:translationY="-2.45sp" />
-        </RelativeLayout>
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
+
+
 </RelativeLayout>

@@ -7,6 +7,7 @@ import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
+import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.ChangePassword
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.data.repository.UserRepository
@@ -25,6 +26,7 @@ class UserViewModel @AssistedInject constructor(
 
     init {
         handleCurrentUser()
+        handleGetListAddress()
     }
 
     override fun handle(action: UserViewAction) {
@@ -34,6 +36,37 @@ class UserViewModel @AssistedInject constructor(
             is UserViewAction.ChangePasswordUser -> handleChangePassword(action.changePassword)
             is UserViewAction.UpdateUser -> handleUpdateUser(action.updateUser)
             is UserViewAction.UploadAvatar -> handleUploadAvatar(action.avatar)
+            is UserViewAction.GetAddressById -> handleGetAddressById(action.id)
+            is UserViewAction.AddAddress -> handleAddAddress(action.addressRequest)
+            is UserViewAction.DeleteAddressById -> handleDeleteAddressById(action.id)
+        }
+    }
+
+    private fun handleDeleteAddressById(id: String) {
+        setState { copy(asyncDeleteAddress = Loading()) }
+        repository.deleteAddress(id).execute {
+            copy(asyncDeleteAddress = it)
+        }
+    }
+
+    private fun handleAddAddress(addressRequest: AddressRequest) {
+        setState { copy(asyncCreateAddress = Loading()) }
+        repository.createAddress(addressRequest).execute {
+            copy(asyncCreateAddress = it)
+        }
+    }
+
+    private fun handleGetAddressById(id: String) {
+        setState { copy(asyncAddress = Loading()) }
+        repository.getAddressById(id).execute {
+            copy(asyncAddress = it)
+        }
+    }
+
+    private fun handleGetListAddress() {
+        setState { copy(asyncListAddress = Loading()) }
+        repository.getAllAddressByUser().execute {
+            copy(asyncListAddress = it)
         }
     }
 

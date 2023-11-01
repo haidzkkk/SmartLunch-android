@@ -11,6 +11,7 @@ class SessionManager(context: Context) {
         const val TOKEN_REFRESH="refresh_token"
         const val DARK_MODE = "dark_mode"
         const val LANGUAGE = "language"
+        const val ADDRESS = "address"
     }
 
     private var prefs: SharedPreferences =
@@ -67,6 +68,16 @@ class SessionManager(context: Context) {
     }
     fun fetchLanguage(): String {
         return prefs.getString(LANGUAGE, "vi").toString()
+    }
+
+    //address
+    fun saveAddress(addressId: String) {
+        val editor = prefs.edit()
+        editor.putString(ADDRESS, addressId)
+        editor.apply()
+    }
+    fun fetchAddress(): String {
+        return prefs.getString(ADDRESS, "").toString()
     }
 
     //onboarding

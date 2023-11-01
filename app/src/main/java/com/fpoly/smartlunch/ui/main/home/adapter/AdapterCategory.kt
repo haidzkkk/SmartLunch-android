@@ -6,19 +6,28 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Category
 import com.fpoly.smartlunch.databinding.LayoutCategoryBinding
 
 class AdapterCategory (private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterCategory.CategoryViewHolder>() {
 
-    var categories: List<Category> = ArrayList()
+    private var categories: List<Category> = ArrayList()
+    fun setData(list: List<Category>?){
+        if (list!=null){
+            categories= list
+            notifyDataSetChanged()
+        }
+    }
    inner class CategoryViewHolder( val binding : LayoutCategoryBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
         val imageCategory = binding.imageCategory
         val nameCategory = binding.nameCategory
         val linerCategory = binding.LinerCategory
         fun bind(category : Category ){
             Glide.with(context)
-                .load(category.category_image) // Đặt URL hình ảnh vào load()
+                .load(category.category_image.url)
+                .placeholder(R.drawable.loading_img)
+                .error(R.drawable.loading_img)
                 .into(imageCategory)
             nameCategory.text = category.category_name.toString()
 

@@ -25,6 +25,7 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.databinding.FragmentEditProfileBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
+import com.fpoly.smartlunch.ultis.showDatePickerDialog
 import com.fpoly.smartlunch.ultis.showUtilDialog
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -85,6 +86,11 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             resultLauncher.launch(intent)
+        }
+        views.birthday.setOnClickListener {
+            activity?.showDatePickerDialog {
+                views.birthday.setText(it)
+            }
         }
     }
 
@@ -149,7 +155,6 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
             if (intent!!.data != null && result.resultCode == Activity.RESULT_OK) {
                 val selectedImageUri = intent.data
                 if (selectedImageUri != null) {
-                    // Chuyển URI thành file
                     val imageFile = File(uriToFilePath(selectedImageUri))
                     viewModel.handle(UserViewAction.UploadAvatar(imageFile))
                 }
@@ -216,7 +221,6 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
                 views.lastName.text -> views.lastNameTil.error = null
                 views.email.text -> views.emailTil.error = null
                 views.phone.text -> views.phoneTil.error = null
-                views.birthday.text -> views.birthdayTil.error = null
             }
         }
     }

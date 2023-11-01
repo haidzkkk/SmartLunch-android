@@ -5,7 +5,7 @@ data class Product(
     val categoryId: String,
     val createdAt: String,
     val deleted: Boolean,
-    val image: List<Image>,
+    val images: List<Image>,
     val description: String,
     val product_name: String,
     val product_price: Int,

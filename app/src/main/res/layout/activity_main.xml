@@ -24,13 +24,14 @@
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="58dp"
             android:layout_alignParentBottom="true"
             android:fadingEdge="horizontal"
             app:cnb_menuResource="@menu/menu_main"
             android:background="@color/white"
             app:cnb_unselectedColor="@color/dark_grey"
-            app:cnb_iconSize="34dp"
+            app:cnb_iconSize="28dp"
+            android:paddingTop="12dp"
             />
 
     </RelativeLayout>

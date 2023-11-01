@@ -1,22 +1,27 @@
 package com.fpoly.smartlunch.ui.main.profile.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Language
+import com.fpoly.smartlunch.databinding.ItemLanguageBinding
 
-class LanguageAdapter(private val languages: List<Language>, val onClick: (Language) -> Unit) :
+class LanguageAdapter(val onClick: (Language) -> Unit) :
     RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_language, parent, false)
-        return LanguageViewHolder(view)
+    private var languages: List<Language> = listOf()
+    fun setData(list: List<Language>) {
+        languages = list
+        notifyDataSetChanged()
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageViewHolder =
+        LanguageViewHolder(
+            ItemLanguageBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
         val language = languages[position]
@@ -25,17 +30,13 @@ class LanguageAdapter(private val languages: List<Language>, val onClick: (Langu
 
     override fun getItemCount() = languages.size
 
-    inner class LanguageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val radioButton: RadioButton = itemView.findViewById(R.id.radio_button_language)
-        private val textViewName: TextView = itemView.findViewById(R.id.tv_languageName)
-
+    inner class LanguageViewHolder(private val itemLanguageBinding: ItemLanguageBinding) :
+        RecyclerView.ViewHolder(itemLanguageBinding.root) {
         fun bind(language: Language) {
-            textViewName.text = language.name
-            radioButton.isChecked = language.isSelected
-
-            radioButton.setOnClickListener {
+            itemLanguageBinding.tvLanguageName.text = language.name
+            itemLanguageBinding.radioButtonLanguage.isChecked = language.isSelected
+            itemLanguageBinding.radioButtonLanguage.setOnClickListener {
                 onClick(language)
-                // Đánh dấu ngôn ngữ đã chọn
                 for (item in languages) {
                     item.isSelected = (item == language)
                 }

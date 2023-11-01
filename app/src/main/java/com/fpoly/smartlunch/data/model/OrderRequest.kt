@@ -12,5 +12,6 @@ data class OrderRequest(
     var phone: String,
     var products: List<ProductCart>,
     var total: Int,
+    var discount: Int,
     var userId: String
 ): Serializable

@@ -122,4 +122,6 @@ dependencies {
     // circle image view
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
+    // image slider
+
 }
