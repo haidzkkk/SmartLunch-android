@@ -4,6 +4,7 @@ import com.fpoly.smartlunch.core.PolyViewAction
 import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.Room
 import com.fpoly.smartlunch.data.model.User
+import java.io.File
 
 sealed class ChatViewAction : PolyViewAction{
 
@@ -14,10 +15,15 @@ sealed class ChatViewAction : PolyViewAction{
     data class setCurrentChat(val room: Room): ChatViewAction()
     object removeCurrentChat: ChatViewAction()
 
-    data class postMessage(val message: Message): ChatViewAction()
+    data class postMessage(val message: Message, val files: List<File>?): ChatViewAction()
     object removePostMessage: ChatViewAction()
 
     object returnConnectSocket: ChatViewAction()
     object returnDisconnectSocket: ChatViewAction()
     data class returnOffEventMessageSocket(val roomId: String): ChatViewAction()
+
+    object getDataGallery: ChatViewAction()
+
+    data class searchUserByName(val text: String): ChatViewAction()
+    data class findRoomSearch(val user: User): ChatViewAction()
 }

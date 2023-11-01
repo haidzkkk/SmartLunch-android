@@ -1,8 +1,10 @@
 package com.fpoly.smartlunch.di.modules
 
+import android.app.Application
 import android.content.Context
 import com.fpoly.smartlunch.data.network.AuthApi
 import com.fpoly.smartlunch.data.network.ChatApi
+import com.fpoly.smartlunch.data.network.ContentDataSource
 import com.fpoly.smartlunch.data.network.ProductApi
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.data.network.SessionManager
@@ -12,17 +14,25 @@ import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
+import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 object NetworkModule {
 
     @Provides
+    fun providerWebRTCClient(
+        context: Context,
+    ) : WebRTCClient = WebRTCClient(context as Application)
+    @Provides
     fun providerSessionManager(
         context: Context
     ) : SessionManager = SessionManager(context.applicationContext)
+    @Provides
+    fun providerContentDataSource(
+        context: Context
+    ) : ContentDataSource = ContentDataSource(context.contentResolver)
 
     @Provides
     fun providerRemoteDateSource(): RemoteDataSource = RemoteDataSource()
@@ -71,8 +81,9 @@ object NetworkModule {
     fun providerChatRepository(
         chatApi: ChatApi,
         authApi: AuthApi,
-        socketManager: SocketManager
-    ): ChatRepository = ChatRepository(chatApi, authApi, socketManager)
+        socketManager: SocketManager,
+        contentDataSource: ContentDataSource
+    ): ChatRepository = ChatRepository(chatApi, authApi, socketManager, contentDataSource)
 
     @Provides
     fun providerSocketManger(

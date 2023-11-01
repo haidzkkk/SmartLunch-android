@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ui.chat.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,13 +33,28 @@ class RoomChatAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateData(room: Room?){
+        if (room == null) return
+
+        val indexFind = rooms.indexOfFirst { it._id == room._id }
+        if (indexFind != -1) {
+            rooms.removeAt(indexFind)
+            rooms.add(0, room)
+            notifyItemMoved(indexFind, 0)
+            notifyItemChanged(0)
+        } else {
+            rooms.add(0, room)
+            notifyItemInserted(0)
+        }
+    }
+
     inner class ViewHolder(private val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(room: Room) {
             with(binding as ItemRoomBinding){
                 this.imgAvatar.setImageResource(R.drawable.logo_app)
                 this.tvDisplayName.text = "${room.shopUserId?.first_name} ${room.shopUserId?.last_name}"
-                this.tvMessage.text = room.messSent
+                this.tvMessage.text = (if (room.userUserId?._id == room.userIdSend?._id) "Bạn: " else "") + room.messSent
                 this.tvTime.text = room.timeSent?.convertToStringFormat(dateIso8601Format, dateTimeDayFormat)
 
                 binding.root.setOnClickListener{ callBack.onClickItem(room)}

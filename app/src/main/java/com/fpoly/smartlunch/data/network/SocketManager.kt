@@ -15,55 +15,70 @@ class SocketManager @Inject constructor() {
     companion object {
         const val CLIENT_LISTEN_ROOM: String = "client-listen-room-"
         const val CLIENT_LISTEN_MESSAGE: String = "client-listen-message-"
+
+        const val SERVER_LISTEN_CALL: String = "server-listen-call"
+        const val CLIENT_LISTEN_CALL: String = "client-listen-call-"
     }
 
-    private var mSocket: Socket? = null
+    private lateinit var mSocket: Socket
     val socket get () = mSocket
 
     init {
         this.mSocket = IO.socket(RemoteDataSource.BASE_URL.replace("3000", "3001"))
-        Log.e("TAG", "SocketManager: init ${SocketManager.hashCode()}, socker: ${mSocket.hashCode()}", )
     }
 
     public fun connect(){
+        mSocket.connect()
         Log.e("SocketManager", "connect: connect  ${mSocket.hashCode()}", )
-        mSocket?.connect()
     }
 
     public fun disconnect(){
+        mSocket.disconnect()
         Log.e("SocketManager", "connect: disconnect  ${mSocket.hashCode()}", )
-        mSocket?.disconnect()
     }
 
 
-    public fun sendEmitSocket(event: String, data: Any){
-        if (mSocket?.connected() == true){
-            mSocket?.emit(event, Gson().toJson(data))
+    public fun sendEmitToSocket(toEvent: String, data: Any){
+        if (mSocket.connected() == true){
+            mSocket.emit(toEvent, Gson().toJson(data))
         }else{
             Log.e("SocketManager", "socket: isDisconnect", )
         }
     }
+//    private val socketListeners: MutableMap<String, MutableList<() -> Unit>> = HashMap()
 
-    public fun <T> onReceiveEmitSocket(event: String, type: Class<T>, callBack: (data: T?) -> Unit){
-        if (mSocket?.connected() == true){
-            Log.e("SocketManager", "socket: onReceiveEmitSocket ok ${mSocket.hashCode()}", )
-            mSocket!!.on(event){
-                if (!it[0].toString().isNullOrEmpty()){
-                    CoroutineScope(Dispatchers.Main).launch {
-                        callBack(Gson().fromJson(it[0].toString(), type))
+    public fun <T> onReceiveEmitSocket(event: String, type: Class<T>, callBack: (data: T?) -> Unit) {
+        Log.e("SocketManager", "onReceiveEmitSocket: connected: ${mSocket.connected()} event $event")
+        if (mSocket.connected() == true) {
+//            if (!socketListeners.containsKey(event)) {
+//                socketListeners[event] = mutableListOf()
+
+                mSocket.on(event) {
+                    if (!it[0].toString().isNullOrEmpty()) {
+//                        val listeners = socketListeners[event]
+                        CoroutineScope(Dispatchers.Main).launch {
+//                            listeners?.forEach { listener -> listener() }
+
+                            callBack(Gson().fromJson(it[0].toString(), type))
+                        }
+                    } else {
+                        Log.e("SocketManager", "receive: event $event -> null")
                     }
-                }else{
-                    Log.e("SocketManager", "receive: event $event -> null", )
                 }
-            }
-        }else{
-            Log.e("SocketManager", "socket: onReceiveEmitSocket isDisconnect  ${mSocket.hashCode()}", )
+//            }
+//            socketListeners[event]?.add { callBack(null) }
         }
     }
 
-    public fun offReceiEmitSocket(event: String) {
-        if (mSocket?.connected() == true){
-            mSocket!!.off(event)
+
+
+
+
+
+
+public fun offReceiEmitSocket(event: String) {
+        if (mSocket.connected() == true){
+            mSocket.off(event)
         }
     }
 }

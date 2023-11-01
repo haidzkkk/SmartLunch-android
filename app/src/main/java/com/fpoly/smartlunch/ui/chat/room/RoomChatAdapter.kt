@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.chat.room
 
+import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +10,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.fpoly.smartlunch.R
+import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.MessageType
 import com.fpoly.smartlunch.data.model.User
@@ -19,9 +24,16 @@ import com.fpoly.smartlunch.databinding.ItemChatYouBinding
 import com.fpoly.smartlunch.ultis.StringUltis
 import com.fpoly.smartlunch.ultis.convertToStringFormat
 
+@SuppressLint("SetTextI18n")
 class RoomChatAdapter(
     private val myUser: User,
+    private val onCallBack: IOnClickLisstenner
 ) : RecyclerView.Adapter<RoomChatAdapter.ViewHolder>() {
+
+    interface IOnClickLisstenner{
+        fun onClickItem(message: Message)
+        fun onLongClickItem(message: Message)
+    }
 
     companion object{
         const val TYPE_ME = 0
@@ -31,16 +43,16 @@ class RoomChatAdapter(
     var messages: ArrayList<Message> = ArrayList()
 
     fun setData(data: ArrayList<Message>?){
-        if (data == null) return
+        if (data.isNullOrEmpty()) return
         messages = data
         notifyDataSetChanged()
     }
 
-    fun addData(data: Message?){
-        if (data == null) return
+    fun addData(data: Message?): Int? {
+        if (data == null) return null
         messages.add(data)
         notifyItemInserted(messages.size - 1)
-        Log.e("TAG", "${messages.size - 1} addData: $data", )
+        return messages.size - 1
     }
 
     inner class ViewHolder(private val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -78,23 +90,38 @@ class RoomChatAdapter(
     }
 
 
+
     private fun handChatMe(binding: ItemChatMeBinding, message: Message, position: Int) {
-        if ( position + 1 < messages.size && messages[position].userIdSend?._id == messages[position + 1].userIdSend?._id){
-            binding.imgAvatar.isVisible = false
-        }else{
-            binding.imgAvatar.isVisible = true
-            binding.imgAvatar.setImageResource(R.mipmap.ic_launcher)
-        }
 
         binding.tvTime.text = message.time?.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
-        binding.tvMessage.text = message.message
 
-//        if (message.type == MessageType.TYPE_IMAGE && message.images?.get(0) != null){
-//            binding.imgMassage.apply {
-//                isVisible = true
-//                Glide.with(this.context).load(message.images[0].url).into(this)
-//            }
-//        }
+        if (message.type == MessageType.TYPE_IMAGE && !message.images.isNullOrEmpty()){
+            binding.tvMessage.isVisible = false
+            binding.imgMassage.isVisible = true
+            Glide.with(binding.root.context)
+                .load(message.images[0].url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(binding.imgMassage)
+
+
+            if (message.images.size > 1) {
+                binding.tvCountImages.isVisible = true
+                binding.tvCountImages.text = "+${message.images.size - 1}"
+            }else binding.tvCountImages.isVisible = false
+        }else{
+            binding.imgMassage.isVisible = false
+            binding.tvMessage.isVisible = true
+            binding.tvCountImages.isVisible = false
+            binding.tvMessage.text = message.message
+        }
+
+        binding.imgMassage.setOnClickListener{ onCallBack.onClickItem(message) }
+        binding.tvMessage.setOnClickListener{ onCallBack.onClickItem(message) }
+        binding.tvMessage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
+            true }
+        binding.imgMassage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
+            true }
     }
 
 
@@ -107,13 +134,32 @@ class RoomChatAdapter(
         }
 
         binding.tvTime.text = message.time?.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
-        binding.tvMessage.text = message.message
 
-//        if (message.type == MessageType.TYPE_IMAGE && message.images?.get(0) != null){
-//            binding.imgMassage.apply {
-//                isVisible = true
-//                Glide.with(this.context).load(message.images[0].url).into(this)
-//            }
-//        }
+        if (message.type == MessageType.TYPE_IMAGE && !message.images.isNullOrEmpty()){
+            binding.tvMessage.isVisible = false
+            binding.imgMassage.isVisible = true
+            Glide.with(binding.root.context)
+                .load(message.images[0].url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(binding.imgMassage)
+
+            if (message.images.size > 1) {
+                binding.tvCountImages.isVisible = true
+                binding.tvCountImages.text = "+${message.images.size - 1}"
+            }else binding.tvCountImages.isVisible = false
+        }else{
+            binding.imgMassage.isVisible = false
+            binding.tvMessage.isVisible = true
+            binding.tvCountImages.isVisible = false
+            binding.tvMessage.text = message.message
+        }
+
+        binding.imgMassage.setOnClickListener{ onCallBack.onClickItem(message) }
+        binding.tvMessage.setOnClickListener{ onCallBack.onClickItem(message) }
+        binding.tvMessage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
+            true }
+        binding.imgMassage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
+            true }
     }
 }

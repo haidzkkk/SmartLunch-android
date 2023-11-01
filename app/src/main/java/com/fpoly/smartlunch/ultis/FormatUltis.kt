@@ -47,12 +47,12 @@ fun String.convertToDateFormat(inputDateFormat: SimpleDateFormat): Date? =
         null
     }
 fun Date.convertDateToStringFormat(outputDateFormat: SimpleDateFormat): String = outputDateFormat.format(this)
-fun Long.convertLongToStringFormat(outputDateFormat: SimpleDateFormat): String = outputDateFormat.format(this)
-
 fun Date.compareWithString(strDate: String ,inputDateFormat: SimpleDateFormat) : Boolean {
     var date1 = StringUltis.dateFormat.parse(StringUltis.dateFormat.format(this))
     var date2 = StringUltis.dateFormat.parse(StringUltis.dateFormat.format(inputDateFormat.parse(strDate)!!))
     return date1.time == date2.time;
 }
+fun Long.convertLongToStringFormat(outputDateFormat: SimpleDateFormat): String = outputDateFormat.format(this)
+fun Long.convertLongToDate(): Date = Date(this)
 
 

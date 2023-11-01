@@ -16,12 +16,19 @@
         <action
             android:id="@+id/action_homeChatFragment_to_searchChatFragment"
             app:destination="@id/searchChatFragment" />
+        <action
+            android:id="@+id/action_homeChatFragment_to_callChatFragment"
+            app:destination="@id/callChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/roomChatFragment"
         android:name="com.fpoly.smartlunch.ui.chat.room.RoomChatFragment"
         android:label="fragment_room_chat"
-        tools:layout="@layout/fragment_room_chat" />
+        tools:layout="@layout/fragment_room_chat" >
+        <action
+            android:id="@+id/action_roomChatFragment_to_callChatFragment"
+            app:destination="@id/callChatFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchChatFragment"
         android:name="com.fpoly.smartlunch.ui.chat.search.SearchChatFragment"
@@ -30,5 +37,13 @@
         <action
             android:id="@+id/action_searchChatFragment_to_roomChatFragment"
             app:destination="@id/roomChatFragment" />
+        <action
+            android:id="@+id/action_searchChatFragment_to_callChatFragment"
+            app:destination="@id/callChatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/callChatFragment"
+        android:name="com.fpoly.smartlunch.ui.chat.call.CallChatFragment"
+        android:label="fragment_call_chat"
+        tools:layout="@layout/fragment_call_chat" />
 </navigation>

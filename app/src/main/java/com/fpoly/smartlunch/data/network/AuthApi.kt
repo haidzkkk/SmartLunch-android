@@ -37,4 +37,6 @@ interface AuthApi {
     fun getCurrentUser():Observable<User>
     @GET("api/users/{id}")
     fun getUserById(@Path("id") id: String):Observable<User>
+    @GET("api/users/search/{text}")
+    fun searchUserByName(@Path("text") text: String):Observable<ArrayList<User>>
 }
