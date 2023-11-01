@@ -15,7 +15,6 @@ import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 object NetworkModule {
@@ -23,10 +22,15 @@ object NetworkModule {
     @Provides
     fun providerSessionManager(
         context: Context
-    ) : SessionManager = SessionManager(context.applicationContext)
+    ): SessionManager = SessionManager(context.applicationContext)
 
     @Provides
     fun providerRemoteDateSource(): RemoteDataSource = RemoteDataSource()
+
+    @Provides
+    fun providerHomeRepository(
+        api: ProductApi
+    ): HomeRepository = HomeRepository(api)
 
     @Provides
     fun providerApiUser(
@@ -46,15 +50,9 @@ object NetworkModule {
     ): ProductApi = remoteDataSource.buildApi(ProductApi::class.java, context)
 
     @Provides
-    fun providerHomeRepository(
-        api: ProductApi
-    ): HomeRepository = HomeRepository(api)
-
-    @Provides
     fun providerProductRepository(
         api: ProductApi
     ): ProductRepository = ProductRepository(api)
-
 
     @Provides
     fun providerApiAuth(

@@ -26,7 +26,7 @@ class SplashScreenActivity : PolyBaseActivity<ActivitySplashScreenBinding>(),Sec
     lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as PolyApplication).polyConponent.inject(this)
+        (application as PolyApplication).polyComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(views.root)
         viewModel.subscribe(this) {

@@ -9,7 +9,7 @@
     tools:context=".ui.main.home.HomeBottomSheetCategory">
 
   <include
-
+      android:id="@+id/appBar"
       layout="@layout/toolbar_header"
 
       />

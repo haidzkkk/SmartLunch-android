@@ -1,235 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/food_detail"
-    android:layout_height="match_parent"
-    android:clipToOutline="true"
-    android:padding="16dp"
-   >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <View
-        android:id="@+id/image_food_detail"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="234dp"
-        android:background="@drawable/img_4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_food_detail"
+                android:layout_width="match_parent"
+                android:layout_height="234dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/image_food_detail"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp">
+
+                <RelativeLayout
+                    android:id="@+id/lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/image_food_detail">
+
+                    <TextView
+                        android:id="@+id/Name_detail_food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cơm lứt bò sốt tiêu"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/price_detail_food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="200.000đ"
+                        android:textColor="@color/red"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/lin2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lin"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/m_t_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mô tả"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/desc_food"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="top"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl. Viverra vulputate sodales quis etdui, lacus. Iaculis eu egestas leo egestas vel. Ultrices "
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/frame_10000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/k_ch_c_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/k_ch_c_"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_size"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_size" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
-        android:id="@+id/icon_back_food_detail"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="26dp"
-        android:background="@drawable/baseline_arrow_back_24" />
-
-    <LinearLayout
+        android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_food_detail"
-        android:gravity="center"
-        android:id="@+id/lin"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/Name_detail_food"
-            android:layout_width="225dp"
-            android:layout_height="32dp"
-            android:lineSpacingExtra="8sp"
-            android:text="Cơm lứt bò sốt tiêu"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:translationY="-4.07sp" />
-        <TextView
-            android:id="@+id/price_detail_food"
-            android:layout_width="102dp"
-            android:layout_height="28dp"
-            android:text="200.000đ"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textAppearance="@style/Text_Name"
-            android:lineSpacingExtra="7sp"
-            android:translationY="-3.26sp"
-
-            />
-    </LinearLayout>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@+id/lin"
-        android:id="@+id/lin2"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="100dp"
-        android:layout_marginTop="24dp"
-        >
-        <TextView
-            android:id="@+id/m_t_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mô tả"
-            android:textSize="16sp"
-            android:textStyle="bold"
-
-            />
-        <TextView
-            android:id="@+id/desc_food"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl. Viverra vulputate sodales quis etdui, lacus. Iaculis eu egestas leo egestas vel. Ultrices "
-            android:lineSpacingExtra="3sp"
-            android:translationY="-1.65sp"
-            android:layout_marginTop="16dp"
-            android:textSize="14sp"
-            android:gravity="top"
-            />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/frame_10000"
-        android:layout_below="@+id/lin2"
-        android:layout_width="327dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="24dp"
-        >
-        <TextView
-            android:id="@+id/k_ch_c_"
-            android:layout_width="327dp"
-            android:layout_height="24dp"
-            android:text="@string/k_ch_c_"
-            android:textAppearance="@style/k_ch_c_"
-            android:lineSpacingExtra="5sp"
-            android:gravity="center_vertical"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/k_ch_c_"
-            android:layout_marginTop="4dp"
-            tools:listitem="@layout/layout_size" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="375dp"
-        android:layout_height="88dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:background="#FFFFFF"
-        >
-        <RelativeLayout
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp">
 
-            android:id="@+id/info"
-            android:layout_width="327dp"
-            android:layout_height="52dp"
-            >
+        <LinearLayout
+            android:id="@+id/linear_quanlity"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/group_11"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp">
+            <ImageView
+                android:id="@+id/linear_minu1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/icon_btn_minus" />
 
+            <TextView
+                android:id="@+id/some_id_quality"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:gravity="center_horizontal|top"
+                android:text="2"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-                <RelativeLayout
-                    android:id="@+id/linear_minu1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center"
-                    android:background="@drawable/clip"
-                    >
+            <ImageView
+                android:id="@+id/linear_minu2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_btn_plus" />
+        </LinearLayout>
 
-
-                    <View
-                        android:id="@+id/quanlity_tru"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="9dp"
-                        android:layout_marginTop="9dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/tru"
-                        android:gravity="center" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/some_id_quality"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:text="2"
-                    android:layout_toRightOf="@+id/linear_minu1"
-                    android:textAppearance="@style/some_id"
-                    android:lineSpacingExtra="5sp"
-                    android:translationY="-2.27sp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal|top"
-                    />
-
-                <RelativeLayout
-                    android:id="@+id/linear_minu2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_toRightOf="@+id/some_id_quality"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="14dp"
-                    android:background="@drawable/clip"
-                    >
-
-
-                    <View
-                        android:id="@+id/quanlity_cong"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="9dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/cong"
-                        android:gravity="center" />
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-
-        </RelativeLayout>
-        <RelativeLayout
+        <Button
             android:id="@+id/button_add_cart"
             android:layout_width="181dp"
             android:layout_height="52dp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button"
-            >
-
-            <TextView
-                android:id="@+id/h4"
-                android:layout_width="124dp"
-                android:layout_height="24dp"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:lineSpacingExtra="5sp"
-                android:text="@string/h4"
-                android:textAppearance="@style/h4" /> <!-- Đảm bảo TextView nằm ở giữa cả chiều ngang và chiều dọc -->
-            />
-        </RelativeLayout>
+            android:text="@string/h4" />
     </RelativeLayout>
 
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/toolbar_header" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/like_emty"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/background_icon"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btn_like"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:id="@+id/anim_like"
+        android:visibility="gone"
+        app:lottie_loop="false"
+        android:layout_alignParentEnd="true"
+/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        android:visibility="gone"
+        android:id="@+id/anim_add_product"/>
 </RelativeLayout>

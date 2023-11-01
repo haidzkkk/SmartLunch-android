@@ -1,0 +1,384 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/orderDetailContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.order.OrderDetailFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/orderDetailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/appBar"
+                layout="@layout/toolbar_header" />
+
+            <LinearLayout
+                android:id="@+id/orderStatusLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/orderStatusTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_marginRight="32dp"
+                    android:text="Đã có tài xế nhận hàng"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/orderStatusMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="32dp"
+                    android:text="Tài xế đang chờ lấy hàng"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:id="@+id/orderStatusProgressLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:background="@drawable/traking_toolbar"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/waitingOrderIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/icon_waiting_order" />
+
+                    <View
+                        android:id="@+id/progressView1"
+                        android:layout_width="80dp"
+                        android:layout_height="5dp"
+                        android:background="@color/red" />
+
+                    <ImageView
+                        android:id="@+id/cookingIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/icon_cooking" />
+
+                    <View
+                        android:id="@+id/progressView2"
+                        android:layout_width="80dp"
+                        android:layout_height="5dp"
+                        android:background="@color/red" />
+
+                    <ImageView
+                        android:id="@+id/deliveringIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/icon_delivering" />
+
+                    <View
+                        android:id="@+id/progressView3"
+                        android:layout_width="80dp"
+                        android:layout_height="5dp"
+                        android:background="@color/red" />
+
+                    <ImageView
+                        android:id="@+id/deliveredIcon"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/icon_delivered" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/followOrderText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Theo dõi >"
+                    android:textAlignment="textEnd"
+                    android:textColor="#F44849" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/spacer"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F3F4F6"
+                android:layout_marginVertical="16dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/restaurantInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/restaurantImage"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/img1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="73dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/restaurantType"
+                        android:layout_width="178dp"
+                        android:layout_height="21dp"
+                        android:text="Nhà hàng giao"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/restaurantName"
+                        android:layout_width="246dp"
+                        android:layout_height="48dp"
+                        android:text="SmartLunch - Trịnh Văn Bô, Nam Từ Liêm"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/orderInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="119dp"
+                android:layout_margin="16dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/orderInfoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thông tin đơn hàng"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/orderTimeLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thời gian đặt"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/orderTimeValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="16/11/2022, 12:30 - 13:00"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/orderCodeLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Mã đơn hàng"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/orderCodeValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="#252893"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/pickupTimeLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thời gian nhận"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/pickupTimeValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hôm nay, 12:15"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/deliveryAddressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="141dp"
+                android:layout_margin="16dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/deliveryAddressTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Địa chỉ nhận hàng"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/recipientLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Người nhận:"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/recipientName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nguyễn Văn Khuyến"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/phoneNumberLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="21dp"
+                        android:layout_weight="1"
+                        android:text="Số điện thoại:"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/phoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="21dp"
+                        android:layout_weight="1"
+                        android:text=" 0988522939"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/locationLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="21dp"
+                        android:layout_weight="1"
+                        android:text="Địa chỉ:"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_weight="1"
+                        android:text="315,  Trường Chinh, Khương Mai, Đống Đa, Hà Nội"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hình thức thanh toán"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tiền mặt"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/payment_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thanh toán khi nhận hàng"
+                        android:textAlignment="textEnd"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnConfirmReceived"
+                android:layout_width="327dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:text="Đã nhận được hàng"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

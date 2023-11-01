@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
@@ -55,9 +55,21 @@
             />
 
         <Button
-            android:id="@+id/btn_dismiss"
+            android:visibility="gone"
+            android:id="@+id/btn_continute"
             style="@style/PolyButton"
             android:backgroundTint="?attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginHorizontal="24dp"
+            android:gravity="center"
+            android:text="@string/continute"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+        <Button
+            android:id="@+id/btn_dismiss"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"

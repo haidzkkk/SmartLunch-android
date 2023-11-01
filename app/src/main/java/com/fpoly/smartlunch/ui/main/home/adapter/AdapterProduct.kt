@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemProductLayoutHozBinding
 
@@ -28,12 +29,14 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
         val price = binding.priceProduct
         fun bind(currentProduct : Product ) {
             Glide.with(context)
-                .load(currentProduct.image) // Đặt URL hình ảnh vào load()
+                .load(currentProduct.images[0].url)
+                .placeholder(R.drawable.loading_img)
+                .error(R.drawable.loading_img)
                 .into(image)
             name.text = currentProduct.product_name.toString()
             price.text = currentProduct.product_price.toString()
             Liner_hoz.setOnClickListener {
-                onClickItem(products[position]._id)
+                onClickItem(currentProduct._id)
             }
         }
 

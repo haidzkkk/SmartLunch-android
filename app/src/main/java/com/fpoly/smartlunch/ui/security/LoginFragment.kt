@@ -27,7 +27,7 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
     lateinit var sessionManager: SessionManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (requireActivity().application as PolyApplication).polyConponent.inject(this)
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         listenEvent()
         super.onViewCreated(view, savedInstanceState)
     }

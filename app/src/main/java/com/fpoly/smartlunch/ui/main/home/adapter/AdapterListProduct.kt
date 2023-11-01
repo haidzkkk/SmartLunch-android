@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Category
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.LayoutCategoryBinding
@@ -27,7 +28,9 @@ class AdapterListProduct(private val onClickItem: (id: String) -> Unit) : Recycl
         val linerCategory = binding.layoutItemProduct
         fun bind(product : Product){
             Glide.with(context)
-                .load(product.image) // Đặt URL hình ảnh vào load()
+                .load(product.images[0].url)
+                .placeholder(R.drawable.loading_img)
+                .error(R.drawable.loading_img)
                 .into(imageCategory)
             nameCategory.text = product.product_name
             linerCategory.setOnClickListener {

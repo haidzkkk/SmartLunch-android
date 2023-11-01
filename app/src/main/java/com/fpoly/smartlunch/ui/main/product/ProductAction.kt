@@ -7,25 +7,23 @@ import retrofit2.http.Body
 import retrofit2.http.Query
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.OrderRequest
+import com.fpoly.smartlunch.data.model.Product
 
 
 sealed class ProductAction : PolyViewAction {
+    data class LikeProduct(val product: Product):ProductAction()
     object GetListProduct : ProductAction()
-
-    object GetListCategory : ProductAction()
-    object handProduct : ProductAction()
-    data class oneProduct(val id : String?) : ProductAction()
-    data class oneSize(val id : String?) : ProductAction()
+    data class GetDetailProduct(val id : String) : ProductAction()
+    data class GetSizeById(val id : String?) : ProductAction()
     object GetListSize : ProductAction()
     data class CreateCart(val id : String,val cart : CartRequest) : ProductAction()
     data class GetOneCartById(val id : String) : ProductAction()
     data class GetClearCart(val id : String) : ProductAction()
     data class GetChangeQuantity(val id : String, val idProduct : String , val changeQuantityRequest: ChangeQuantityRequest): ProductAction()
-    data class getRemoveProductByIdCart(val id : String , val idProduct : String, val sizeId : String): ProductAction()
-    data class getAllProductByIdCategory(val id : String): ProductAction()
-    data class incrementViewProduct(val id : String): ProductAction()
-    data class CreateOder( val oder : OrderRequest) : ProductAction()
-    object GetListCoupons : ProductAction()
-    data class applyCoupon(val id : String,val coupons : CouponsRequest) : ProductAction()
+    data class GetRemoveProductByIdCart(val id : String , val idProduct : String, val sizeId : String): ProductAction()
+    data class GetAllProductByIdCategory(val id : String): ProductAction()
+    data class GetCurrentOrder( val id : String) : ProductAction()
+    data class GetAllOrderByUserId(val userId : String) : ProductAction()
+
 
 }

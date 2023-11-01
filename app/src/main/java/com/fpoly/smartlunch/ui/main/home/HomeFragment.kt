@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
@@ -16,12 +18,13 @@ import com.fpoly.smartlunch.databinding.FragmentHomeBinding
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
 import com.fpoly.smartlunch.ui.main.product.ProductAction
+import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import javax.inject.Inject
 
 class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>() {
-    companion object{
+    companion object {
         const val TAG = "HomeFragment"
     }
 
@@ -29,8 +32,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     private val productViewModel: ProductViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
-    private lateinit var adapter : AdapterProduct
-    private lateinit var adapterver : AdapterProductVer
+    private lateinit var adapter: AdapterProduct
+    private lateinit var adapterver: AdapterProductVer
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
@@ -38,22 +41,65 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         initUi()
         listenEvent()
+    }
 
-        productViewModel.handle(ProductAction.GetListProduct)
+    private fun initUi() {
+        updateCart()
+        //setup rcyH
+        adapter = AdapterProduct {
+            onItemProductClickListener(it)
+        }
+        views.recyclerViewHoz.adapter = adapter
+
+        //setup rcyV
+        adapterver = AdapterProductVer {
+            onItemProductClickListener(it)
+        }
+        views.recyclerViewVer.adapter = adapterver
+    }
+
+    private fun updateCart() {
+        withState(userViewModel){
+            val userId = it.asyncCurrentUser.invoke()?._id
+            if (userId != null){
+                productViewModel.handle(ProductAction.GetOneCartById(userId))
+            }
+        }
     }
 
     private fun listenEvent() {
-       views.btnDefault.setOnClickListener{
-           categoryBottomSheet()
-       }
-
-        views.floatBottomSheet.setOnClickListener {
-            cartBottomSheet()
+        productViewModel.observeViewEvents {
+            handleViewEvent(it)
         }
+        views.btnDefault.setOnClickListener {
+            openCategoryBottomSheet()
+        }
+        views.floatBottomSheet.setOnClickListener {
+            openCartBottomSheet()
+        }
+    }
+
+    private fun handleViewEvent(event: ProductEvent) {
+    when(event){
+        is ProductEvent.UpdateCart -> updateCart()
+    }
+    }
+
+    private fun openCartBottomSheet() {
+        val bottomSheetFragment = HomeBottomSheet()
+        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun openCategoryBottomSheet() {
+        val bottomSheetFragment = HomeBottomSheetCategory()
+        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun onItemProductClickListener(productId:String) {
+        productViewModel.handle(ProductAction.GetDetailProduct(productId))
+        homeViewModel.returnDetailProductFragment()
     }
 
     override fun onResume() {
@@ -61,55 +107,36 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         homeViewModel.returnVisibleBottomNav(true)
     }
 
-    private fun cartBottomSheet(){
-        val bottomSheetFragment = HomeBottomSheet()
-        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
-    }
-    private fun categoryBottomSheet(){
-        val bottomSheetFragment = HomeBottomSheetCategory()
-        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
-    }
-
-    private fun initUi() {
-
-        adapter = AdapterProduct{
-
-            productViewModel.handle(ProductAction.oneProduct(it))
-
-            homeViewModel.returnDetailProductFragment()
-        }
-        views.recyclerViewHoz.adapter = adapter
-        adapterver = AdapterProductVer{
-            productViewModel.handle(ProductAction.oneProduct(it))
-            homeViewModel.returnDetailProductFragment()
-        }
-        views.recyclerViewVer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL , false)
-        views.recyclerViewVer.adapter = adapterver
-
-    }
-
     override fun invalidate(): Unit = withState(productViewModel) {
         when (it.products) {
-            is Loading -> Log.e("TAG", "HomeFragment view state: Loading")
             is Success -> {
-
-                adapter.setData(it.products.invoke()?.docs!!)
-                adapterver.setData(it.products.invoke()?.docs!!)
-                adapter.notifyDataSetChanged()
-
-
-                adapterver.notifyDataSetChanged()
+                adapterver.setData(it.products.invoke()?.docs)
             }
             else -> {
-
             }
         }
-        when(it.product){
-            is  Success ->{
-                productViewModel.handle(ProductAction.incrementViewProduct(it.product.invoke()?._id!!))
+        when (it.asyncTopProduct) {
+            is Success -> {
+                adapter.setData(it.asyncTopProduct.invoke())
             }
-
-            else -> {}
+            else -> {
+            }
+        }
+        when (it.getOneCartById) {
+            is Success -> {
+                if (it.getOneCartById.invoke()?.products?.size!! > 0) {
+                    views.layoutCart.visibility = View.VISIBLE
+                }else{
+                    views.layoutCart.visibility = View.GONE
+                }
+            }
+            is Fail -> {
+                views.layoutCart.visibility = View.GONE
+            }
+            else -> {
+                views.layoutCart.visibility = View.GONE
+            }
         }
     }
+
 }

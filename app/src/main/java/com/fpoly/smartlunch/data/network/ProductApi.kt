@@ -44,12 +44,18 @@ interface ProductApi {
     fun getRemoveGetOneProductCart(@Path("id") id: String,@Query("idProduct") idProduct: String,@Query("sizeId") sizeId: String ): Observable<CartResponse>
     @GET("/api/category")
     fun getAllCategory(): Observable<CategoryResponse>
+    @GET("/api/topViewedProducts")
+    fun getTopViewedProducts(): Observable<List<Product>>
     @GET("/api/category/products/{categoryId}")
     fun getAllProductByIdCategory(@Path("categoryId") id: String): Observable<List<Product>>
     @GET("/api/products/views/{id}")
     fun getViewProduct(@Path("id") id: String) : Completable
     @GET("/api/favourite")
-    fun getAllFavourite(): Observable<List<Favourite>>
+    fun getAllFavourite(): Observable<List<Product>>
+    @GET("/api/favourite/product/{id}")
+    fun getFavourite(@Path("id") id: String): Observable<Favourite>
+    @POST("/api/favourite")
+    fun likeProduct(@Body product: Product): Observable<Favourite>
     @DELETE("/api/carts/{id}/change")
     fun getChangeQuantityCart(@Path("id") id: String): Observable<CartResponse>
     @POST("/api/order")
@@ -58,4 +64,15 @@ interface ProductApi {
     fun getAllCoupons(): Observable<List<CouponsResponse>>
     @PATCH("/api/carts/{id}/apply")
     fun applyCoupon(@Path("id") id: String, @Body coupons: CouponsRequest): Observable<CartResponse>
+    @GET("/api/order/{userId}/user")
+    fun getAllOrderByUserId(
+        @Path("userId") userId: String,
+        @Query("statusId") statusId: String
+    ): Observable<List<OrderResponse>>
+    @GET("/api/order/{id}")
+    fun getCurrentOrder(@Path("id") id: String): Observable<OrderResponse>
+
+
+
+
 }

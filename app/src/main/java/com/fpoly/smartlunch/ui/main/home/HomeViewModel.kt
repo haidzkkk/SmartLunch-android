@@ -3,16 +3,17 @@ package com.fpoly.smartlunch.ui.main.home
 import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
-import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.repository.HomeRepository
-import com.fpoly.smartlunch.ui.main.product.ProductEvent
-import com.fpoly.smartlunch.ui.main.cart.CartFragment
-import com.fpoly.smartlunch.ui.main.cart.PayFragment
+import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
+import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
+//import com.fpoly.smartlunch.ui.main.order.CartFragment
+//import com.fpoly.smartlunch.ui.main.order.PayFragment
 import com.fpoly.smartlunch.ui.main.product.ProductFragment
 import com.fpoly.smartlunch.ui.main.product.ProductListFragment
+import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
 import com.fpoly.smartlunch.ui.main.profile.EditProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.LanguageFragment
@@ -31,7 +32,6 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-
     fun returnDetailProductFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(ProductFragment::class.java))
     }
@@ -41,6 +41,8 @@ class HomeViewModel @AssistedInject constructor(
     }
     fun returnEditProfileFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(EditProfileFragment::class.java))
+    }fun returnAddressFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(AddressFragment::class.java))
     }
     fun returnLanguageFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(LanguageFragment::class.java))
@@ -54,15 +56,11 @@ class HomeViewModel @AssistedInject constructor(
     fun returnProductListFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(ProductListFragment::class.java))
     }
-
-    fun returnCartFragment(){
-        _viewEvents.post(HomeViewEvent.ReturnFragment(CartFragment::class.java))
+    fun returnTrackingOrderFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(TrackingOrderFragment::class.java))
     }
-    fun returnHomeFragment(){
-        _viewEvents.post(HomeViewEvent.ReturnFragment(HomeFragment::class.java))
-    }
-    fun returnPayFragment(bundle: Bundle){
-        _viewEvents.post(HomeViewEvent.ReturnFragmentWithArgument(PayFragment::class.java,bundle))
+    fun returnOrderDetailFragment(bundle: Bundle){
+        _viewEvents.post(HomeViewEvent.ReturnFragmentWithArgument(OrderDetailFragment::class.java,bundle))
     }
 
     @AssistedFactory

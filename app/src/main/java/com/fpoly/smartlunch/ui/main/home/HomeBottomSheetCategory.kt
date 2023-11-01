@@ -10,7 +10,6 @@ import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseBottomSheet
-import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
 import com.fpoly.smartlunch.databinding.FragmentHomeBottomSheetCategoryBinding
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCart
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCategory
@@ -24,7 +23,6 @@ class HomeBottomSheetCategory : PolyBaseBottomSheet<FragmentHomeBottomSheetCateg
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
     private lateinit var adapterCategory : AdapterCategory
-    // mặc định là như này
     override val isBorderRadiusTop: Boolean
         get() = true
     override val isDraggable: Boolean
@@ -49,8 +47,9 @@ class HomeBottomSheetCategory : PolyBaseBottomSheet<FragmentHomeBottomSheetCateg
     }
 
     private fun initUi(){
+        views.appBar.tvTitleToolbar.text=getString(R.string.category)
         adapterCategory = AdapterCategory{
-            productViewModel.handle(ProductAction.getAllProductByIdCategory(it))
+            productViewModel.handle(ProductAction.GetAllProductByIdCategory(it))
             homeViewModel.returnProductListFragment()
         }
         views.rcvCategory.adapter = adapterCategory
@@ -59,8 +58,7 @@ class HomeBottomSheetCategory : PolyBaseBottomSheet<FragmentHomeBottomSheetCateg
     override fun invalidate() : Unit = withState(productViewModel){
        when(it.category){
            is Success ->{
-               adapterCategory.categories = it.category.invoke()?.docs!!
-               adapterCategory.notifyDataSetChanged()
+               adapterCategory.setData(it.category.invoke()?.docs)
            }
 
            else -> {}

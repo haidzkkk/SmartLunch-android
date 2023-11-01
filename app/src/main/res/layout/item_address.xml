@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="14dp"
+    android:id="@+id/layout_address">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/recipientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Bao Bao"
+            android:layout_marginBottom="4dp"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center_vertical"
+            android:text="08531234"
+            android:textSize="16sp" />
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center_vertical"
+            android:text="Số 35 Tô Vĩnh Diện, Nguyễn Trãi, Hà Nội"
+            android:textSize="16sp" />
+        <TextView
+            android:background="@drawable/background_border_outline"
+            android:id="@+id/btn_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColor="?attr/colorPrimary"
+            android:text="Chi tiết" />
+    </LinearLayout>
+    <RadioButton
+        android:id="@+id/radio_button_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        />
+
+</RelativeLayout>
