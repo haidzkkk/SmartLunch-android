@@ -14,11 +14,8 @@ import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
-<<<<<<< HEAD
 import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
-=======
 import com.fpoly.smartlunch.data.repository.UserRepository
->>>>>>> devlop
 import dagger.Module
 import dagger.Provides
 
