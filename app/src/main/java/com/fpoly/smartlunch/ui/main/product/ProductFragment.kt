@@ -1,123 +1,237 @@
 package com.fpoly.smartlunch.ui.main.product
 
+import android.animation.Animator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.mvrx.Fail
-import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.Product
-import com.fpoly.smartlunch.data.model.ProductsResponse
-import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
-import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
-import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
-import javax.inject.Inject
+import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 
-
-class ProductFragment @Inject constructor() : PolyBaseFragment<FragmentFoodDetailBinding>() {
+class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
-    private  var currentSoldQuantity: Int? = null
-    private lateinit var adapterSize: AdapterSize
+    private val userViewModel: UserViewModel by activityViewModel()
 
-
-    override fun getBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentFoodDetailBinding {
-        return FragmentFoodDetailBinding.inflate(layoutInflater)
-    }
+    private var adapterSize: AdapterSize? = null
+    private var currentProduct: Product? = null
+    private var currentSoldQuantity: Int? = 1
+    private var sizeId: String? = null
+    private var isLiked: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupAppBar()
         initUiSize()
-        productViewModel.handle(ProductAction.GetListSize)
+        listenEvent()
     }
 
+    private fun setupAppBar() {
+        views.apply {
+            appBar.apply {
+                btnBackToolbar.apply {
+                    setBackgroundResource(R.drawable.background_icon)
+                    setImageResource(R.drawable.icon_white_arow_left)
+                    visibility = View.VISIBLE
+                }
+                tvTitleToolbar.text = ""
+            }
+            buttonAddCart.isEnabled = false
+        }
+    }
+
+    private fun initUiSize() {
+        adapterSize = AdapterSize { idSize ->
+            productViewModel.handle(ProductAction.GetSizeById(idSize))
+        }
+        views.rcvSize.adapter = adapterSize
+    }
+
+    private fun listenEvent() {
+        views.appBar.btnBackToolbar.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+        }
+        views.linearMinu2.setOnClickListener {
+            increaseQuantity()
+        }
+
+        views.linearMinu1.setOnClickListener {
+            reduceQuantity()
+        }
+        views.buttonAddCart.setOnClickListener {
+            addCart()
+        }
+
+        views.btnLike.setOnClickListener {
+            productViewModel.handle(ProductAction.LikeProduct(currentProduct!!))
+            if (isLiked == false) {
+                isLiked = true
+                enableAnimation(views.animLike, R.raw.anim_like)
+            } else {
+                disableLike()
+            }
+        }
+        views.animLike.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                views.btnLike.setImageResource(R.drawable.like_full)
+                views.animLike.visibility = View.GONE
+            }
+
+            override fun onAnimationCancel(animation: Animator) {
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+            }
+
+        })
+        views.animAddProduct.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                views.animAddProduct.visibility = View.GONE
+                activity?.supportFragmentManager?.popBackStack()
+            }
+
+            override fun onAnimationCancel(animation: Animator) {
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+            }
+
+        })
+    }
+
+    private fun initUi(product: Product) {
+        currentProduct = product
+        views.apply {
+            Glide.with(requireContext()).load(currentProduct?.images?.get(0)?.url)
+                .placeholder(R.drawable.loading_img).error(R.drawable.loading_img)
+                .into(imageFoodDetail)
+            NameDetailFood.text = currentProduct?.product_name
+            priceDetailFood.text = "${currentProduct?.product_price.toString()} đ"
+            descFood.text = currentProduct?.description
+            someIdQuality.text = "1"
+        }
+    }
+
+    private fun addCart() {
+        val newCartProduct = currentProduct?.let {
+            CartRequest(
+                productId = it._id,
+                image = it.images[0].url,
+                product_name = it.product_name,
+                product_price = it.product_price,
+                purchase_quantity = currentSoldQuantity!!,
+                sizeId = sizeId!!
+            )
+        }
+        withState(userViewModel) {
+            val userId = it.asyncCurrentUser.invoke()?._id
+            if (userId != null) {
+                productViewModel.handle(ProductAction.CreateCart(userId, newCartProduct!!))
+            }
+        }
+        currentSoldQuantity = 1
+        enableAnimation(views.animAddProduct, R.raw.anim_add_to_cart)
+    }
+
+    private fun enableAnimation(view: LottieAnimationView, raw: Int) {
+        view.visibility = View.VISIBLE
+        view.setAnimation(raw)
+        view.playAnimation()
+    }
+
+    private fun increaseQuantity() {
+        currentSoldQuantity = currentSoldQuantity!! + 1
+        views.someIdQuality.text = currentSoldQuantity.toString()
+    }
+
+    private fun reduceQuantity() {
+        if (currentSoldQuantity!! > 1) {
+            currentSoldQuantity = currentSoldQuantity!! - 1
+            views.someIdQuality.text = currentSoldQuantity.toString()
+        }
+    }
+
+    private fun enableLike() {
+        isLiked = true
+        views.btnLike.setImageResource(R.drawable.like_full)
+    }
+
+    private fun disableLike() {
+        isLiked = false
+        views.btnLike.setImageResource(R.drawable.like_emty)
+    }
 
     override fun onResume() {
         super.onResume()
         homeViewModel.returnVisibleBottomNav(false)
     }
 
-    private fun addCart(){
-
-    }
-    private fun quanlity_product(initialQuantity: Int) {
-        var currentQuantity = initialQuantity // Khởi tạo số lượng hiện tại với giá trị ban đầu
-
-        views.someIdQuality.text = currentQuantity.toString()
-
-
-        views.linearMinu2.setOnClickListener {
-
-            currentQuantity++
-            views.someIdQuality.text = currentQuantity.toString()
-        }
-
-
-        views.linearMinu1.setOnClickListener {
-
-            if (currentQuantity > 1) {
-                currentQuantity--
-                views.someIdQuality.text = currentQuantity.toString()
-            }
-        }
+    override fun getBinding(
+        inflater: LayoutInflater, container: ViewGroup?
+    ): FragmentFoodDetailBinding {
+        return FragmentFoodDetailBinding.inflate(layoutInflater)
     }
 
-
-
-    private fun initUiSize() {
-        adapterSize = AdapterSize{idSize ->
-
-        }
-        views.rcvSize.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        views.rcvSize.adapter = adapterSize
-    }
-
-    private fun initUi(product: Product) {
-
-        views.apply {
-            NameDetailFood.text = product.product_name
-            priceDetailFood.text = product.product_price.toString()+"đ"
-            descFood.text = product.description
-            someIdQuality.text = product.sold_quantity.toString()
-        }
-        quanlity_product(product.sold_quantity)
-    }
-
-    override fun invalidate() : Unit = withState(productViewModel) {
-        when(it.size) {
-            is Loading -> {
-                Log.e("TAG", "HomeFragment view state: Loading")
-            }
-
-             is Success -> {
-                it.product.invoke()?.let { product ->
-                    initUi(product)
-
+    override fun invalidate(): Unit = withState(productViewModel) {
+        when (it.asynGetAllSize) {
+            is Success -> {
+                it.asynGetAllSize.invoke()?.let {
+                    adapterSize?.setData(it)
                 }
-                 adapterSize.Listsize = it.size.invoke()!!
-                 adapterSize.notifyDataSetChanged()
-
             }
 
+            else -> {}
+        }
+        when (it.asyncGetOneSize) {
+            is Success -> {
+                it.asyncGetOneSize.invoke()?.let {
+                    sizeId = it._id
+                    views.buttonAddCart.isEnabled = true
+                }
+            }
+
+            else -> {}
+        }
+        when (it.asyncProduct) {
+            is Success -> {
+                it.asyncProduct.invoke()?.let { product ->
+                    initUi(product)
+                }
+            }
+
+            else -> {}
+        }
+        when (it.asyncGetFavourite) {
+            is Success -> {
+                enableLike()
+                productViewModel.handleRemoveAsyncGetFavourite()
+            }
+
+            is Fail -> {
+                disableLike()
+            }
 
             else -> {}
         }
     }
+
 }

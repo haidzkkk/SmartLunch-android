@@ -11,6 +11,8 @@
     <string name="chat">Chat</string>
     <string name="en">English</string>
     <string name="vi">Vietnamese</string>
+    <string name="en_code" translatable="false">en</string>
+    <string name="vi_code" translatable="false">vi</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -82,6 +84,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="reset_password_success_title">Password Reset Successful</string>
     <string name="reset_password_success_message">Your new password has been updated. Press continue to log in.</string>
+    <string name="change_password_success_message">Your new password has been updated. Press continue to exit.</string>
     <string name="verify_otp_send_button_text">Send</string>
     <string name="verify_otp_resend_button_text">Resend code</string>
     <string name="verify_otp_code_entry_hint">Enter your OTP here</string>
@@ -137,7 +140,7 @@ Giỏ hàng
 Xóa
 </string>
     <string name="thanh_to_n_">
-Thanh toán 200.000đ
+Thanh toán
 </string>
     <string name="title_activity_prodoct">ProdoctActivity</string>
 
@@ -178,4 +181,15 @@ Thanh toán 200.000đ
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="order">Order</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+    <string name="pay">Pay</string>
+    <string name="category">Category</string>
+    <string name="note_default">having no note</string>
+    <string name="min_cost">0 đ</string>
+    <string name="payment_id">no value</string>
+    <string name="payment_fail">fail</string>
+    <string name="error_500">server error</string>
 </resources>

@@ -21,7 +21,7 @@ class ThirdFragment : PolyBaseFragment<FragmentThirdBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity().application as PolyApplication).polyConponent.inject(this)
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         views.next.setOnClickListener {
             (requireActivity() as AppCompatActivity).
             addFragmentToBackstack(R.id.frame_layout, LoginFragment::class.java)

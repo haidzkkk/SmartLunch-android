@@ -36,7 +36,7 @@ class ChatActivity : PolyBaseActivity<ActivityChatBinding>(), ChatViewmodel.Fact
     override fun getBinding(): ActivityChatBinding = ActivityChatBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as PolyApplication).polyConponent.inject(this)
+        (application as PolyApplication).polyComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         initUI()

@@ -14,7 +14,11 @@ import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
+<<<<<<< HEAD
 import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
+=======
+import com.fpoly.smartlunch.data.repository.UserRepository
+>>>>>>> devlop
 import dagger.Module
 import dagger.Provides
 
@@ -34,8 +38,14 @@ object NetworkModule {
         context: Context
     ) : ContentDataSource = ContentDataSource(context.contentResolver)
 
+
     @Provides
     fun providerRemoteDateSource(): RemoteDataSource = RemoteDataSource()
+
+    @Provides
+    fun providerHomeRepository(
+        api: ProductApi
+    ): HomeRepository = HomeRepository(api)
 
     @Provides
     fun providerApiUser(
@@ -44,21 +54,20 @@ object NetworkModule {
     ): UserApi = remoteDataSource.buildApi(UserApi::class.java, context)
 
     @Provides
+    fun providerUserRepository(
+        api: UserApi
+    ): UserRepository = UserRepository(api)
+
+    @Provides
     fun providerApiProduct(
         remoteDataSource: RemoteDataSource,
         context: Context
     ): ProductApi = remoteDataSource.buildApi(ProductApi::class.java, context)
 
     @Provides
-    fun providerHomeRepository(
-        api: ProductApi
-    ): HomeRepository = HomeRepository(api)
-
-    @Provides
     fun providerProductRepository(
         api: ProductApi
     ): ProductRepository = ProductRepository(api)
-
 
     @Provides
     fun providerApiAuth(

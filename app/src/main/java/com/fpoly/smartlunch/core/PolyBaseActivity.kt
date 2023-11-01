@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.fpoly.smartlunch.di.DaggerPolyConponent
+import com.fpoly.smartlunch.di.DaggerPolyComponent
 import com.fpoly.smartlunch.di.HasScreenInjector
-import com.fpoly.smartlunch.di.PolyConponent
+import com.fpoly.smartlunch.di.PolyComponent
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 abstract class PolyBaseActivity<VB: ViewBinding> : AppCompatActivity(), HasScreenInjector {
@@ -20,11 +20,11 @@ abstract class PolyBaseActivity<VB: ViewBinding> : AppCompatActivity(), HasScree
     private lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private var savedInstanceState: Bundle? = null
-    private lateinit var appComponent: PolyConponent
+    private lateinit var appComponent: PolyComponent
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        appComponent = DaggerPolyConponent.factory().create(this)
+        appComponent = DaggerPolyComponent.factory().create(this)
         fragmentFactory = appComponent.fragmentFactory()
         viewModelFactory = appComponent.viewModelFactory()
         supportFragmentManager.fragmentFactory = fragmentFactory  //giúp quản lý vòng đời của Fragment trong khi khôi phục trạng thái của activity và đảm bảo rằng việc tái tạo Fragment diễn ra đúng cách  ||||  Việc xác định FragmentFactory trong supportFragmentManager giúp đảm bảo rằng FragmentManager sẽ sử dụng FragmentFactory đã cung cấp để tái tạo các Fragment, đảm bảo rằng các tham số của Fragment như arguments hay dữ liệu trạng thái được giữ nguyên đúng cách.
@@ -68,7 +68,7 @@ abstract class PolyBaseActivity<VB: ViewBinding> : AppCompatActivity(), HasScree
         get() = ViewModelProvider(this, viewModelFactory)
 
 
-    override fun injector(): PolyConponent {
+    override fun injector(): PolyComponent {
         return appComponent
     }
 }

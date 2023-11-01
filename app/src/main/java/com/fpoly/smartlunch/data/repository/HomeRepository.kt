@@ -10,10 +10,7 @@ import kotlin.random.Random
 class HomeRepository @Inject constructor(
     private val api: ProductApi
 ) {
-
     fun test(): Observable<String> {
         return Observable.just("Repository test")
     }
-
-
 }

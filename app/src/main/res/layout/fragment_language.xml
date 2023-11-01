@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/toolbar_header"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/appBar"
+        android:id="@+id/rcy_language"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp" />
+    <Button
+        android:id="@+id/btn_save_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/continute"/>
+</RelativeLayout>

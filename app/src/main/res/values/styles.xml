@@ -10,6 +10,16 @@
         <item name="android:layout_height">56dp</item>
     </style>
 
+    <style name="PolyInputLayoutSpecial" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxCornerRadiusTopStart">24dp</item>
+        <item name="boxCornerRadiusTopEnd">24dp</item>
+        <item name="boxCornerRadiusBottomStart">24dp</item>
+        <item name="boxCornerRadiusBottomEnd">24dp</item>
+        <item name="boxBackgroundColor">#F3F3F3</item>
+        <item name="boxStrokeColor">@color/boxstroke_outline</item>
+        <item name="android:layout_height">56dp</item>
+    </style>
+
     <style name="PolyInputLayoutChat" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxCornerRadiusTopStart">24dp</item>
         <item name="boxCornerRadiusTopEnd">24dp</item>
@@ -28,7 +38,9 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#F44849</item>
         <item name="android:lineHeight" tools:ignore="NewApi">18sp</item>
+    </style>
 
+    <style name="CustomDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
     </style>
 
         <style name="k_ch_c_">

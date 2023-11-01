@@ -13,7 +13,7 @@ class RemoteDataSource(
 
 ) {
     companion object{
-        public const val BASE_URL = "http://192.168.1.11:3000"
+        public const val BASE_URL = "http://192.168.1.44:3000"
         private const val tokenSecret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzI0MWZhMGNjYjkwZTQ5NjQ2ZDhjZiIsImlhdCI6MTY5ODA3NTQ0OSwiZXhwIjoxNjk4MTYxODQ5fQ.4UpsjRfD26s2lPmNNJHb02gJYawUTrTNXVRaDn0kMFY"
     }
 
@@ -26,7 +26,6 @@ class RemoteDataSource(
             .build()
             .create(apiClass)
     }
-
     // build okhttp
     private fun getHttpClientBuilder(context: Context) : OkHttpClient.Builder{
         var builder: OkHttpClient.Builder = OkHttpClient.Builder()

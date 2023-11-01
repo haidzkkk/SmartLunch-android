@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,14 +12,12 @@ import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
-import com.fpoly.smartlunch.core.PolyDialog
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
+import com.fpoly.smartlunch.data.model.Notify
+import com.fpoly.smartlunch.data.model.OrderResponse
+import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
-import com.fpoly.smartlunch.databinding.DialogHomeBinding
-import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.card.CardFragment
-import com.fpoly.smartlunch.ui.main.cart.OrderFragment
+import com.fpoly.smartlunch.ui.main.order.OrderFragment
 import com.fpoly.smartlunch.ui.main.home.HomeFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
@@ -26,14 +25,24 @@ import com.fpoly.smartlunch.ui.main.home.HomeViewState
 import com.fpoly.smartlunch.ui.main.home.TestViewModel
 import com.fpoly.smartlunch.ui.main.home.TestViewModelMvRx
 import com.fpoly.smartlunch.ui.main.love.FavouriteFragment
+import com.fpoly.smartlunch.ui.main.payment.PayFragment
+import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
+import com.fpoly.smartlunch.ui.main.profile.UserViewModel
+import com.fpoly.smartlunch.ui.main.profile.UserViewState
+import com.fpoly.smartlunch.ui.security.SecurityViewModel
+import com.fpoly.smartlunch.ui.security.SecurityViewState
 import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import com.fpoly.smartlunch.ultis.changeLanguage
+import com.fpoly.smartlunch.ultis.changeMode
+import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
 import javax.inject.Inject
 
 
-class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory {
+
+class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory,SecurityViewModel.Factory, UserViewModel.Factory {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
@@ -44,17 +53,28 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var securityFactory: SecurityViewModel.Factory
+    @Inject
+    lateinit var userViewModelFactory: UserViewModel.Factory
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
     private val homeViewModel: HomeViewModel by viewModel()
+    private val productViewModel : ProductViewModel by viewModel()
     private val testViewModel : TestViewModel by lazy{ viewModelProvider.get(TestViewModel::class.java) }
     private val testViewModelMvRx: TestViewModelMvRx by viewModel()
 
     var doubleClickBack: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as PolyApplication).polyConponent.inject(this)
+        (application as PolyApplication).polyComponent.inject(this)
         super.onCreate(savedInstanceState)
         setupBottomNavigation()
         handleViewModel()
+        changeMode(sessionManager.fetchDarkMode())
+        changeLanguage(sessionManager.fetchLanguage())
     }
 
     private fun handleViewModel() {
@@ -70,7 +90,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     }
 
     private fun setupBottomNavigation() {
-        supportFragmentManager.commit { add<HomeFragment>(R.id.frame_layout) }
         views.bottomNav.apply {
             this.setItemSelected(R.id.menu_home)
             this.setOnItemSelectedListener { itemId ->
@@ -83,7 +102,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                     R.id.menu_card -> fragmentManager.findFragmentByTag(CardFragment.TAG)
                     R.id.menu_order -> fragmentManager.findFragmentByTag(OrderFragment.TAG)
                     R.id.menu_profile -> fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    // Thêm các Fragment khác ở đây
                     else -> null
                 }
 
@@ -95,7 +113,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                         R.id.menu_card -> transaction.add(R.id.frame_layout, CardFragment(), CardFragment.TAG).addToBackStack(CardFragment.TAG)
                         R.id.menu_order -> transaction.add(R.id.frame_layout, OrderFragment(), OrderFragment.TAG).addToBackStack(OrderFragment.TAG)
                         R.id.menu_profile -> transaction.add(R.id.frame_layout, ProfileFragment(), ProfileFragment.TAG).addToBackStack(ProfileFragment.TAG)
-                        // Thêm các Fragment khác ở đây
                     }
                 } else {
                     transaction.show(fragment)
@@ -116,13 +133,54 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     private fun handleEvent(event: HomeViewEvent) {
         when (event) {
             is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
+            is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, bundle = event.bundle)}
             is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
+            is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
+            else -> {}
         }
+    }
 
+    private fun handleDarkMode(checkedDarkMode: Boolean) {
+        sessionManager.saveDarkMode(checkedDarkMode)
+        changeMode(checkedDarkMode)
+        changeLanguage(sessionManager.fetchLanguage())
     }
 
     fun visibilityBottomNav(isVisible: Boolean){
         views.bottomNav.isVisible = isVisible
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PayFragment.ACTIVITY_PAY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                val resultDataBundle = data.getBundleExtra("resultDataPaymentIntent")
+                if (resultDataBundle != null) {
+                    val result: OrderResponse =
+                        resultDataBundle.getSerializable("resultDataPaymentBundle") as OrderResponse
+                    handlePaymentSuccess(result)
+                }
+            }
+        }
+    }
+
+    private fun handlePaymentSuccess(result: OrderResponse) {
+        productViewModel.handleUpdateCart()
+        productViewModel.handle(ProductAction.GetClearCart(result.userId))
+        productViewModel.handle(ProductAction.GetCurrentOrder(result._id))
+        showUtilDialogWithCallback(
+            Notify(
+                "Đặt hàng thành công",
+                "Chờ xác nhận",
+                "Đơn hàng đã được gửi tới nhà hàng vui lòng chờ trong giây lát",
+                R.raw.animation_successfully
+            )
+        ){
+            val bundle= Bundle()
+            bundle.putSerializable("order_detail",result)
+            homeViewModel.returnOrderDetailFragment(bundle)
+        }
     }
 
     override fun onBackPressed() {
@@ -139,13 +197,20 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
     }
 
-
     override fun create(initialState: HomeViewState): HomeViewModel {
         return homeViewModelFactory.create(initialState)
     }
-
+    
     override fun create(initialState: ProductState): ProductViewModel {
         return productViewModelFactory.create(initialState)
+    }
+
+    override fun create(initialState: SecurityViewState): SecurityViewModel {
+      return  securityFactory.create(initialState)
+    }
+
+    override fun create(initialState: UserViewState): UserViewModel {
+        return userViewModelFactory.create(initialState)
     }
 
 

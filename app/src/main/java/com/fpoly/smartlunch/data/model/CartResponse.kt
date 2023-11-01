@@ -1,10 +1,10 @@
 package com.fpoly.smartlunch.data.model
 
-data class Cart(
+data class CartResponse(
     val _id: String,
-    val couponId: Any,
+    val couponId: String,
     val createdAt: String,
-    val products: List<Product_cart>,
+    val products: List<ProductCart>,
     val total: Int,
     val updatedAt: String,
     val userId: String

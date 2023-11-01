@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/Rela_card"
+        android:layout_width="327dp"
+        android:layout_height="90dp"
+        android:background="@drawable/card_sell_o">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/image"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:src="@drawable/img_6" />
+
+        <TextView
+            android:id="@+id/nameProduct_sheet"
+            android:layout_width="230dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@+id/image"
+            android:gravity="top"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/pizza_th_gi"
+            android:textAppearance="@style/pizza_th_gi"
+            android:translationY="-2.45sp" />
+
+        <TextView
+            android:id="@+id/priceProduct_sheet"
+            android:layout_width="67dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@+id/image"
+            android:gravity="right|top"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/some_id"
+            android:textAppearance="@style/some_id"
+            android:translationY="-2.45sp" />
+
+        <RelativeLayout
+            android:id="@+id/group_11"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="1dp">
+
+
+            <RelativeLayout
+                android:id="@+id/linear_minu1_sheet"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:background="@drawable/clip">
+
+
+                <View
+                    android:id="@+id/vuesax_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/tru"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/some_id_quanlity_sheet"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@+id/linear_minu1_sheet"
+                android:gravity="center_horizontal|top"
+                android:lineSpacingExtra="5sp"
+                android:text="2"
+                android:textAppearance="@style/some_id"
+                android:translationY="-2.27sp" />
+
+            <RelativeLayout
+                android:id="@+id/linear_minu2_sheet"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="14dp"
+                android:layout_toRightOf="@+id/some_id_quanlity_sheet"
+                android:background="@drawable/clip">
+
+
+                <View
+                    android:id="@+id/vuesax_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/cong"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
