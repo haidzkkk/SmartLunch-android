@@ -44,7 +44,7 @@ class HomeChatFragment : PolyBaseFragment<FragmentHomeChatBinding>() {
     lateinit var webRTCClient: WebRTCClient
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (requireActivity().application as PolyApplication).polyConponent.inject(this)
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
 
         initUI()
