@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.main.payment
+package com.fpoly.smartlunch.ui.payment
 
 import com.fpoly.smartlunch.core.PolyViewAction
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest

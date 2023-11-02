@@ -1,9 +1,11 @@
 package com.fpoly.smartlunch.ui.main.love
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -24,6 +26,8 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
+        listenEvent()
+
     }
 
     private fun initUi() {
@@ -33,6 +37,11 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
         views.recyclerViewHoz.adapter = adapter
     }
 
+    private fun listenEvent() {
+        views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetAllFavouriteProduct)
+        }
+    }
     private fun onItemProductClickListener(productId:String) {
         productViewModel.handle(ProductAction.GetDetailProduct(productId))
         homeViewModel.returnDetailProductFragment()
@@ -46,13 +55,14 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
     }
 
     override fun invalidate():Unit = withState(productViewModel) {
+        views.swipeLoading.isRefreshing = it.asyncFavourites is Loading
+
         when(it.asyncFavourites){
             is Success -> {
-                initUi()
                 adapter?.setData(it.asyncFavourites.invoke())
             }
-
-            else -> {}
+            else -> {
+            }
         }
     }
 

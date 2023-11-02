@@ -44,6 +44,7 @@ class HomeBottomSheetCategory : PolyBaseBottomSheet<FragmentHomeBottomSheetCateg
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
+        productViewModel.handle(ProductAction.GetAllCategory)
     }
 
     private fun initUi(){

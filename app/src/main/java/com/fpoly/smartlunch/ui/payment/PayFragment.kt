@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.main.payment
+package com.fpoly.smartlunch.ui.payment
 
 import android.app.Activity
 import android.content.Intent

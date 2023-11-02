@@ -28,8 +28,9 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
         val name = binding.nameProduct
         val price = binding.priceProduct
         fun bind(currentProduct : Product ) {
+
             Glide.with(context)
-                .load(currentProduct.images[0].url)
+                .load( if(currentProduct.images.isNotEmpty()) currentProduct.images[0].url else "")
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.loading_img)
                 .into(image)

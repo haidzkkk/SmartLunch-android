@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.main.payment
+package com.fpoly.smartlunch.ui.payment
 
 import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MvRxState

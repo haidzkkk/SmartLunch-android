@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.mvrx.Fail
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -63,6 +64,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
+        }
+        views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetDetailProduct(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
+            productViewModel.handle(ProductAction.GetListSize)
         }
         views.linearMinu2.setOnClickListener {
             increaseQuantity()
@@ -121,7 +126,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     private fun initUi(product: Product) {
         currentProduct = product
         views.apply {
-            Glide.with(requireContext()).load(currentProduct?.images?.get(0)?.url)
+            Glide.with(requireContext()).load(if(currentProduct?.images?.isNotEmpty() == true) currentProduct?.images!![0].url else "")
                 .placeholder(R.drawable.loading_img).error(R.drawable.loading_img)
                 .into(imageFoodDetail)
             NameDetailFood.text = currentProduct?.product_name
@@ -135,7 +140,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         val newCartProduct = currentProduct?.let {
             CartRequest(
                 productId = it._id,
-                image = it.images[0].url,
+                image = if(it.images.isNotEmpty()) it.images[0].url else "",
                 product_name = it.product_name,
                 product_price = it.product_price,
                 purchase_quantity = currentSoldQuantity!!,
@@ -192,6 +197,8 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     }
 
     override fun invalidate(): Unit = withState(productViewModel) {
+        views.swipeLoading.isRefreshing = it.asyncTopProduct is Loading || it.asynGetAllSize is Loading
+
         when (it.asynGetAllSize) {
             is Success -> {
                 it.asynGetAllSize.invoke()?.let {

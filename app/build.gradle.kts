@@ -56,8 +56,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
 
-
-
     // extention
     implementation("androidx.fragment:fragment-ktx:1.6.1")
 
@@ -82,7 +80,6 @@ dependencies {
     //okhttp
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")
-
 
     // rxjava rxandroid
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
@@ -131,5 +128,7 @@ dependencies {
 
     // image slider
 
+    // swipe load
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 }

@@ -23,7 +23,7 @@ class ProductViewModel @AssistedInject constructor(
 ) : PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state) {
 
     init {
-        handleGetAllCategory()
+//        handleGetAllCategory()
         handleGetListProduct()
         handleGetAllSize()
         handleGetAllFavouriteProduct()
@@ -33,6 +33,9 @@ class ProductViewModel @AssistedInject constructor(
     override fun handle(action: ProductAction) {
         when (action) {
             is ProductAction.GetListProduct -> handleGetListProduct()
+            is ProductAction.GetListTopProduct -> handleGetTopProduct()
+            is ProductAction.GetAllCategory -> handleGetAllCategory()
+            is ProductAction.GetAllFavouriteProduct -> handleGetAllFavouriteProduct()
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
             is ProductAction.GetListSize -> handleGetAllSize()
             is ProductAction.GetSizeById -> handleGetSizeById(action.id)

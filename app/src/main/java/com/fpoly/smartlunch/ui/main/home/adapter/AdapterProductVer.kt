@@ -28,11 +28,13 @@ class AdapterProductVer(private val onClickItem: (id: String) -> Unit) : Recycle
         val price = binding.priceProduct
         val linearLayout = binding.layoutItemProduct
         fun bind(currentProduct: Product){
+
             Glide.with(context)
-                .load(currentProduct.images[0].url)
+                .load( if(currentProduct.images.isNotEmpty()) currentProduct.images[0].url else "")
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.loading_img)
                 .into(image)
+
             name.text = currentProduct.product_name.toString()
             price.text = "${currentProduct.product_price} đ"
 

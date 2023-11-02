@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ui.main.product
 
 import com.airbnb.mvrx.Async
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.Uninitialized
 import com.fpoly.smartlunch.data.model.CartResponse
@@ -36,4 +37,6 @@ data class ProductState(
     var asyncFavourites: Async<List<Product>> = Uninitialized,
     var asyncTopProduct: Async<List<Product>> = Uninitialized,
     ): MvRxState {
+
+        var isSwipeLoading = products is Loading || asyncTopProduct is Loading
 }

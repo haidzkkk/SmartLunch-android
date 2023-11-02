@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.payment.PaymentActivity">
+    tools:context=".ui.payment.PaymentActivity">
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frame_layout"
-        android:name="com.fpoly.smartlunch.ui.main.payment.CartFragment"
+        android:name="com.fpoly.smartlunch.ui.payment.CartFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="0dp"

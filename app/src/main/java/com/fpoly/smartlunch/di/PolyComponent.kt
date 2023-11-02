@@ -11,9 +11,9 @@ import com.fpoly.smartlunch.di.modules.ViewModelModule
 import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.chat.home.HomeChatFragment
 import com.fpoly.smartlunch.ui.main.MainActivity
-import com.fpoly.smartlunch.ui.main.payment.AddressPaymentFragment
-import com.fpoly.smartlunch.ui.main.payment.PayFragment
-import com.fpoly.smartlunch.ui.main.payment.PaymentActivity
+import com.fpoly.smartlunch.ui.payment.AddressPaymentFragment
+import com.fpoly.smartlunch.ui.payment.PayFragment
+import com.fpoly.smartlunch.ui.payment.PaymentActivity
 import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
 import com.fpoly.smartlunch.ui.main.profile.LanguageFragment

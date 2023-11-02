@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.main.payment
+package com.fpoly.smartlunch.ui.payment
 
 import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
@@ -137,7 +137,12 @@ class PaymentViewModel @AssistedInject constructor(
         _viewEvents.post(PaymentViewEvent.ReturnFragment(AddressPaymentFragment::class.java))
     }
     fun returnPayFragment(bundle: Bundle){
-        _viewEvents.post(PaymentViewEvent.ReturnFragmentWithArgument(PayFragment::class.java,bundle))
+        _viewEvents.post(
+            PaymentViewEvent.ReturnFragmentWithArgument(
+                PayFragment::class.java,
+                bundle
+            )
+        )
     }
 
 
