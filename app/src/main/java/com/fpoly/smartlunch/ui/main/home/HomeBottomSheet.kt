@@ -19,9 +19,9 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCart
-import com.fpoly.smartlunch.ui.main.payment.PayFragment
-import com.fpoly.smartlunch.ui.main.payment.PaymentActivity
-import com.fpoly.smartlunch.ui.main.payment.PaymentViewAction
+import com.fpoly.smartlunch.ui.payment.PayFragment
+import com.fpoly.smartlunch.ui.payment.PaymentActivity
+import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel

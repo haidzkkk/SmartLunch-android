@@ -13,8 +13,7 @@ class RemoteDataSource(
 
 ) {
     companion object{
-        public const val BASE_URL = "http://192.168.1.44:3000"
-        private const val tokenSecret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzI0MWZhMGNjYjkwZTQ5NjQ2ZDhjZiIsImlhdCI6MTY5ODA3NTQ0OSwiZXhwIjoxNjk4MTYxODQ5fQ.4UpsjRfD26s2lPmNNJHb02gJYawUTrTNXVRaDn0kMFY"
+        public const val BASE_URL = "http://192.168.31.98:3000"
     }
 
     public fun <API> buildApi(apiClass: Class<API>, context: Context): API{

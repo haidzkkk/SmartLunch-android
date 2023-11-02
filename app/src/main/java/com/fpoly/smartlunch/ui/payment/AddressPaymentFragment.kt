@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.main.payment
+package com.fpoly.smartlunch.ui.payment
 
 import android.os.Bundle
 import android.view.LayoutInflater

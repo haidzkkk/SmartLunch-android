@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
+import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.databinding.FragmentFavouriteBinding
 import com.fpoly.smartlunch.ui.main.love.Adapter.FavouriteViewPagerAdapter
 import com.fpoly.smartlunch.ui.main.order.OrderViewPagerAdapter
+import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.google.android.material.tabs.TabLayout

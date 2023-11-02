@@ -13,6 +13,9 @@ import com.fpoly.smartlunch.data.model.Product
 sealed class ProductAction : PolyViewAction {
     data class LikeProduct(val product: Product):ProductAction()
     object GetListProduct : ProductAction()
+    object GetListTopProduct : ProductAction()
+    object GetAllCategory : ProductAction()
+    object GetAllFavouriteProduct : ProductAction()
     data class GetDetailProduct(val id : String) : ProductAction()
     data class GetSizeById(val id : String?) : ProductAction()
     object GetListSize : ProductAction()

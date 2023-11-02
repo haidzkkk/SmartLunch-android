@@ -1,10 +1,11 @@
-package com.fpoly.smartlunch.ui.main.payment
+package com.fpoly.smartlunch.ui.payment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.airbnb.mvrx.Fail
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -63,6 +64,11 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
     private fun listenEvent() {
         views.layoutToolbarCart.btnBackToolbar.setOnClickListener {
             activity?.finish()
+        }
+        views.swipeLoading.setOnRefreshListener {
+            init()
+            paymentViewModel.handle(PaymentViewAction.GetListCoupons)
+//            paymentViewModel.handle(PaymentViewAction.ApplyCoupon)
         }
         views.btnThem.setOnClickListener {
             activity?.finish()
@@ -144,6 +150,8 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
     }
 
     override fun invalidate(): Unit = withState(paymentViewModel) {
+        views.swipeLoading.isRefreshing = it.asyncGetOneCartById is Loading
+
         when (it.asyncProducts) {
             is Success -> {
                 setupListProduct()

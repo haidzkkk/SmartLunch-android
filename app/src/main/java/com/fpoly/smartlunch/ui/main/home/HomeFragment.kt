@@ -73,6 +73,12 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         productViewModel.observeViewEvents {
             handleViewEvent(it)
         }
+
+        views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetListProduct)
+            productViewModel.handle(ProductAction.GetListTopProduct)
+        }
+
         views.btnDefault.setOnClickListener {
             openCategoryBottomSheet()
         }
@@ -108,6 +114,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     }
 
     override fun invalidate(): Unit = withState(productViewModel) {
+        views.swipeLoading.isRefreshing = it.isSwipeLoading
+
         when (it.products) {
             is Success -> {
                 adapterver.setData(it.products.invoke()?.docs)
