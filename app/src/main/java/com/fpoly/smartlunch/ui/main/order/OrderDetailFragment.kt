@@ -39,12 +39,12 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             tvTitleToolbar.text = getString(R.string.order)
         }
         views.apply {
-            recipientName.text = currentOrder.consignee_name
+            recipientName.text = currentOrder.address.recipientName
             orderTimeValue.text = currentOrder.createdAt
             pickupTimeValue.text =currentOrder.updatedAt
             orderCodeValue.text = currentOrder._id
-            location.text = currentOrder.address
-            phoneNumber.text = currentOrder.phone
+            location.text = currentOrder.address.addressLine
+            phoneNumber.text = currentOrder.address.phoneNumber
         }
     }
 

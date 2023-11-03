@@ -34,7 +34,8 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
     private var currentCartResponse: CartResponse? = null
     private var userId: String? = null
     private var total: Int = 0
-    private var discount: Int =0
+    private var discount: Int = 0
+    private var couponId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,7 +69,6 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         views.swipeLoading.setOnRefreshListener {
             init()
             paymentViewModel.handle(PaymentViewAction.GetListCoupons)
-//            paymentViewModel.handle(PaymentViewAction.ApplyCoupon)
         }
         views.btnThem.setOnClickListener {
             activity?.finish()
@@ -80,16 +80,15 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
 
     private fun sendDataToPayScreen() {
         val orderRequest = OrderRequest(
-            "",
-            "",
+            null,
             getInputData(),
             getString(R.string.payment_id),
             getString(R.string.payment_id),
             getString(R.string.payment_id),
-            "",
             products,
             currentCartResponse!!.total,
             discount,
+            couponId,
             userId!!
         )
         val bundle = Bundle()
@@ -97,10 +96,10 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         paymentViewModel.returnPayFragment(bundle)
     }
 
-    private fun getInputData():String {
+    private fun getInputData(): String {
         var note: String = views.note.text.toString()
-        if (note.isNullOrEmpty()){
-            note= getString(R.string.note_default)
+        if (note.isNullOrEmpty()) {
+            note = getString(R.string.note_default)
         }
         return note
     }
@@ -141,7 +140,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
 
     private fun resetCostInCard() {
         discount = (total - currentCartResponse?.total!!)
-        views.tvGiamGia.text =(total - currentCartResponse?.total!!).toString()
+        views.tvGiamGia.text = (total - currentCartResponse?.total!!).toString()
         views.tvTong.text = currentCartResponse?.total.toString()
     }
 
@@ -183,6 +182,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         when (it.asyncApplyCoupons) {
             is Success -> {
                 currentCartResponse = it.asyncApplyCoupons.invoke()
+                couponId = currentCartResponse?.couponId
                 resetCostInCard()
             }
 
