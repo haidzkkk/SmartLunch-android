@@ -29,8 +29,7 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
             it.asyncCurrentUser.invoke()?._id
         }
         if (userId!=null){
-            productViewModel.handle(ProductAction.GetAllOrderByUserId(userId)) //"6526a6e6adce6a54f6f67d7d"
-            //"653bc0a72006e5791beab35b"
+            productViewModel.handle(ProductAction.GetAllOrderByUserId(userId))
         }
     }
     override fun invalidate() {

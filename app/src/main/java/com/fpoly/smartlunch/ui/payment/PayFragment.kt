@@ -102,9 +102,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>() {
     private fun payment(orderRequest: OrderRequest) {
         if (myAddress != null) {
             orderRequest.apply {
-                address = myAddress?.addressLine.toString()
-                phone = myAddress?.phoneNumber.toString()
-                consignee_name = myAddress?.recipientName.toString()
+                address = myAddress!!._id
             }
             paymentViewModel.handle(PaymentViewAction.CreateOder(orderRequest))
         } else {

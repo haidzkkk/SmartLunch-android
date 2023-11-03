@@ -4,15 +4,15 @@ import java.io.Serializable
 
 data class OrderResponse(
     val _id: String,
-    val address: String,
-    val consignee_name: String,
+    val address: Address,
     val createdAt: String,
+    val couponId: String,
     val notes: String,
     val payerId: String,
     val paymentCode: String,
-    val phone: String,
     val products: List<ProductCart>,
-    val status: String,
+    val discount: Int,
+    val status: Status,
     val total: Int,
     val updatedAt: String,
     val userId: String

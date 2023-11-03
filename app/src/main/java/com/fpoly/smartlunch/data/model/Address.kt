@@ -1,5 +1,7 @@
 package com.fpoly.smartlunch.data.model
 
+import java.io.Serializable
+
 data class Address(
     val _id: String,
     val recipientName: String,
@@ -9,4 +11,4 @@ data class Address(
     val longitude: Double,
     val userId: String,
     var isSelected: Boolean
-)
+):Serializable
