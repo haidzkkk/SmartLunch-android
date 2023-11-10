@@ -17,3 +17,4 @@ data class Address(
         return LatLng(latitude, longitude)
     }
 }
+
