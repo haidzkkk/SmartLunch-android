@@ -131,4 +131,6 @@ dependencies {
     // swipe load
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    // paypal sdk
+    implementation("com.paypal.checkout:android-sdk:0.112.2")
 }

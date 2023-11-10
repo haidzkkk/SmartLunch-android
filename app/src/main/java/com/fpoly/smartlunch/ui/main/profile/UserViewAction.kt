@@ -10,6 +10,8 @@ sealed class UserViewAction: PolyViewAction {
     object GetCurrentUser: UserViewAction()
     data class GetUserById(val id: String): UserViewAction()
     data class DeleteAddressById(val id: String): UserViewAction()
+    data class UpdateAddress(val id: String): UserViewAction()
+    object GetListAddress: UserViewAction()
     data class GetAddressById(val id: String): UserViewAction()
     data class AddAddress(val addressRequest: AddressRequest): UserViewAction()
     data class ChangePasswordUser(val changePassword: ChangePassword): UserViewAction()

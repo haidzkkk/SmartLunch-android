@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fpoly.smartlunch.data.model.Address
 import com.fpoly.smartlunch.databinding.ItemAddressBinding
 
-class AddressAdapter(val onClick: (Address) -> Unit) :
+class AddressAdapter(val onClickDetail: (Address) -> Unit, val onClick: (Address) -> Unit,) :
 RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
     private var addresss: List<Address> = listOf()
 
@@ -50,6 +50,12 @@ RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
 
             itemAddressBinding.radioButtonAddress.setOnClickListener {
                 onClick(address)
+            }
+            itemAddressBinding.root.setOnClickListener {
+                onClick(address)
+            }
+            itemAddressBinding.btnDetail.setOnClickListener{
+                onClickDetail(address)
             }
 
         }

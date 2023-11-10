@@ -17,17 +17,26 @@ interface ItemTouchHelperAdapter {
 }
 
 class AdapterCart(
-    private val onClickItem: (id: String, purchaseQuantity: Int, sizeId: String) -> Unit,
-    private val onSwipeItem: (id: String, purchaseQuantity: Int?, sizeId: String) -> Unit
+    private val onClickLisstenner: ItemClickLisstenner
 ) :
     RecyclerView.Adapter<AdapterCart.CartViewHolder>(), ItemTouchHelperAdapter {
-    private var currentSoldQuantity: Int = 0
-    private var productsCart: List<ProductCart> = listOf()
-    fun setData(list: List<ProductCart>?) {
+    private var listProductCart: ArrayList<ProductCart> = arrayListOf()
+    fun setData(list: ArrayList<ProductCart>?) {
         if (list != null) {
-            productsCart = list
+            listProductCart = list
             notifyDataSetChanged()
         }
+    }
+
+    fun changeData(productCart: ProductCart?){
+        if (productCart != null) return
+
+        val indexFind = listProductCart.indexOfFirst { it._id == productCart?._id }
+        if (indexFind != -1) {
+            listProductCart[indexFind] = productCart!!
+            notifyItemChanged(indexFind)
+        }
+
     }
 
     inner class CartViewHolder(private val binding: ItemCartBinding, val context: Context) :
@@ -46,27 +55,23 @@ class AdapterCart(
             name.text = currentProduct.product_name.toString()
             price.text = currentProduct.product_price.toString()
             quanlity.text = currentProduct.purchase_quantity.toString()
-            currentSoldQuantity = currentProduct.purchase_quantity
+            var currentSoldQuantity = currentProduct.purchase_quantity
 
             binding.image.setOnClickListener {
-                onClickItem(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
+                onClickLisstenner.onClickItem(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
             }
 
             quantily_cong.setOnClickListener {
                 currentSoldQuantity++
                 quanlity.text = currentSoldQuantity.toString()
-                onClickItem(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
+                onClickLisstenner.onChangeQuantity(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
             }
 
             quantily_tru.setOnClickListener {
                 if (currentSoldQuantity > 1) {
                     currentSoldQuantity--
                     quanlity.text = currentSoldQuantity.toString()
-                    onClickItem(
-                        currentProduct.productId,
-                        currentSoldQuantity,
-                        currentProduct.sizeId
-                    )
+                    onClickLisstenner.onChangeQuantity(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
                 }
             }
         }
@@ -83,22 +88,28 @@ class AdapterCart(
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        val currentProduct: ProductCart = productsCart[position]
+        val currentProduct: ProductCart = listProductCart[position]
         holder.bind(currentProduct)
 
     }
 
     override fun getItemCount(): Int {
-        return productsCart.size
+        return listProductCart.size
     }
 
     override fun onItemSwiped(position: Int) {
-        val currentProduct = productsCart[position]
-        onSwipeItem(
+        val currentProduct = listProductCart[position]
+        onClickLisstenner.onSwipeItem(
             currentProduct.productId,
-            currentSoldQuantity,
+            currentProduct.purchase_quantity,
             currentProduct.sizeId
         )
     }
 
+    abstract class ItemClickLisstenner() {
+        open fun onClickItem(idProductAdapter: String, currentSoldQuantity: Int, currentSizeID: String) {}
+        open fun onChangeQuantity(idProductAdapter: String, currentSoldQuantity: Int, currentSizeID: String) {}
+        open fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {}
+
+    }
 }

@@ -43,4 +43,6 @@ class UserRepository(
         api.deleteAddress(id).subscribeOn(Schedulers.io())
     fun getAddressById(id: String): Observable<Address> =
         api.getAddressById(id).subscribeOn(Schedulers.io())
+    fun getUpdateById(id: String): Observable<Address> =
+        api.getUpdateById(id).subscribeOn(Schedulers.io())
 }

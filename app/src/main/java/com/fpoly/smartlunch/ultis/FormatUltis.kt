@@ -1,6 +1,8 @@
 package com.fpoly.smartlunch.ultis
 
 import android.annotation.SuppressLint
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,5 +56,17 @@ fun Date.compareWithString(strDate: String ,inputDateFormat: SimpleDateFormat) :
 }
 fun Long.convertLongToStringFormat(outputDateFormat: SimpleDateFormat): String = outputDateFormat.format(this)
 fun Long.convertLongToDate(): Date = Date(this)
+
+fun Double.formatCash(): String {
+    val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+    val symbols = formatter.decimalFormatSymbols
+    symbols.groupingSeparator = ','
+    formatter.decimalFormatSymbols = symbols
+
+    if (this < 0) return "So tien am"
+    return "${formatter.format(this)} đ"
+}
+
+
 
 

@@ -1,6 +1,8 @@
 package com.fpoly.smartlunch.ui.main.home.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +11,10 @@ import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemCouponsBinding
 
-class AdapterCoupons (private val onClickItem :(id: String) -> Unit) : RecyclerView.Adapter<AdapterCoupons.CouponsViewHolder>() {
+@SuppressLint("NotifyDataSetChanged")
+class AdapterCoupons (private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterCoupons.CouponsViewHolder>() {
 
+    var couponSelect: CouponsResponse? = null
     var listCoupons: List<CouponsResponse> = listOf()
     fun setData(list: List<CouponsResponse>?){
         if (list != null){
@@ -18,6 +22,25 @@ class AdapterCoupons (private val onClickItem :(id: String) -> Unit) : RecyclerV
             notifyDataSetChanged()
         }
     }
+
+    fun selectItem(couponsResponse: CouponsResponse?){
+        if (couponsResponse == null ){
+            Log.e("AdapterCoupons", "selectItem: ${couponsResponse}", )
+            couponSelect = null
+            notifyDataSetChanged()
+        }else{
+            val position = listCoupons.indexOfFirst { it._id == couponsResponse._id }
+            if (position == -1) {
+                return
+            }else{
+                couponSelect = couponsResponse
+                notifyDataSetChanged()
+            }
+        }
+
+
+    }
+
     class CouponsViewHolder(private val binding: ItemCouponsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val date = binding.tvDate
@@ -35,29 +58,26 @@ class AdapterCoupons (private val onClickItem :(id: String) -> Unit) : RecyclerV
     override fun onBindViewHolder(holder: CouponsViewHolder, position: Int) {
         val coupons: CouponsResponse = listCoupons[position]
         holder.date.text = coupons.expiration_date
-        holder.free.text = "FREE"
+        holder.free.text = coupons.coupon_name
         holder.ship.text = "Freeship tới 3km"
-        updateUI(holder, coupons.isSelected)
-        holder.linner.setOnClickListener{
-            listCoupons.forEach { it.isSelected = false }
-            coupons.isSelected = true
-            onClickItem(coupons._id)
-            notifyDataSetChanged()
-        }
 
-    }
-
-    override fun getItemCount(): Int {
-        return listCoupons.size
-    }
-
-    private fun updateUI(holder: CouponsViewHolder, isSelected: Boolean) {
-        if (isSelected) {
+        if (coupons == couponSelect) {
             holder.linner.setBackgroundResource(R.drawable.khung)
             holder.free.setTextColor(Color.RED)
         } else {
             holder.free.setTextColor(Color.BLACK)
             holder.linner.setBackgroundResource(R.drawable.khung1)
         }
+
+        holder.linner.setOnClickListener{
+            couponSelect = if (couponSelect == coupons) null else coupons
+            notifyDataSetChanged()
+            onClickItem(coupons._id)
+        }
+
+    }
+
+    override fun getItemCount(): Int {
+        return listCoupons.size
     }
 }

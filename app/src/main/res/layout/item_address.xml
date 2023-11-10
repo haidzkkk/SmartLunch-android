@@ -48,6 +48,7 @@
             android:textColor="?attr/colorPrimary"
             android:text="Chi tiết" />
     </LinearLayout>
+
     <RadioButton
         android:id="@+id/radio_button_address"
         android:layout_width="wrap_content"

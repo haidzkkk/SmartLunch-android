@@ -45,3 +45,15 @@ fun checkValidEPassword(res : Resources , edt1 : TextInputEditText, edt2 : TextI
     edt2.error = null
     return false
 }
+
+fun TextInputEditText.checkPhoneNumberValid(res : Resources): Boolean {
+    val regex = """(0[1-9][0-9]{8,9})""".toRegex()
+    var isCheck = regex.matches(this.text.toString().trim())
+
+    if (!isCheck){
+        this.error = res.getString(R.string.validatePhone)
+        return true
+    }
+    this.error = null
+    return false
+}

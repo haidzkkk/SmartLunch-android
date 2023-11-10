@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class User(
     var _id: String="",
-    var avatar: Image? =null,
+    var avatar: Image? = null,
     var authType: String="",
     var email: String="",
     var birthday: String="",
@@ -16,7 +16,7 @@ data class User(
     var password: String="",
     var phone: String="",
     var role: String="",
-    var verified: Boolean=false,
+    var verified: Boolean = false,
     var confirmPassword: String=""
 ): Serializable
 

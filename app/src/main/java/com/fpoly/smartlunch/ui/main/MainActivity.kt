@@ -25,7 +25,7 @@ import com.fpoly.smartlunch.ui.main.home.HomeViewState
 import com.fpoly.smartlunch.ui.main.home.TestViewModel
 import com.fpoly.smartlunch.ui.main.home.TestViewModelMvRx
 import com.fpoly.smartlunch.ui.main.love.FavouriteFragment
-import com.fpoly.smartlunch.ui.payment.PayFragment
+import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
@@ -167,7 +167,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     private fun handlePaymentSuccess(result: OrderResponse) {
         productViewModel.handleUpdateCart()
-        productViewModel.handle(ProductAction.GetClearCart(result.userId))
+        productViewModel.handle(ProductAction.GetClearCart)
         productViewModel.handle(ProductAction.GetCurrentOrder(result._id))
         showUtilDialogWithCallback(
             Notify(
