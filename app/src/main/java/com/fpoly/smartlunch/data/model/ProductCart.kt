@@ -10,5 +10,4 @@ data class ProductCart(
     val product_price: Int,
     val purchase_quantity : Int,
     val sizeId: String,
-    val sizeName: String
 ):Serializable

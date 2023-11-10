@@ -1,31 +1,30 @@
 package com.fpoly.smartlunch.ui.main.home
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
-import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseBottomSheet
+import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
-import com.fpoly.smartlunch.data.model.Notify
-import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.databinding.BottomsheetFragmentHomeBinding
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCart
-import com.fpoly.smartlunch.ui.payment.PayFragment
+import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import com.fpoly.smartlunch.ui.payment.PaymentActivity
-import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
-import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
 
 class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
@@ -86,14 +85,8 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                     builder.setPositiveButton("Xóa") { dialog, which ->
                         withState(userViewModel) {
                             val userId = it.asyncCurrentUser.invoke()?._id
-                            if (userId != null && idProduct != null && sizeId != null) {
-                                productViewModel.handle(
-                                    ProductAction.GetRemoveProductByIdCart(
-                                        userId,
-                                        idProduct!!,
-                                        sizeId!!
-                                    )
-                                )
+                            if (idProduct != null && sizeId != null) {
+                                productViewModel.handle(ProductAction.GetRemoveProductByIdCart(idProduct!!, sizeId!!))
                             }
                         }
                         dialog.dismiss()
@@ -134,48 +127,39 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
     private fun clearCart() {
         withState(userViewModel) {
-            val userId = it.asyncCurrentUser.invoke()?._id
-            if (userId != null) {
-                productViewModel.handle(ProductAction.GetClearCart(userId))
-            }
-
+            productViewModel.handle(ProductAction.GetClearCart)
         }
     }
 
     private fun initUi() {
-        adapterCart = AdapterCart(
-            { idProductAdapter, currentSoldQuantity, currentSizeID ->
-                sizeId = currentSizeID
-                idProduct = idProductAdapter
-                purchaseQuantity = currentSoldQuantity
-                homeViewModel.returnDetailProductFragment()
-            },
-            { idProductAdapter, currentSoldQuantity, currentSizeID ->
+        adapterCart = AdapterCart(object : AdapterCart.ItemClickLisstenner(){
+            override fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {
                 sizeId = currentSizeID
                 idProduct = idProductAdapter
                 purchaseQuantity = currentSoldQuantity
             }
-        )
+
+            override fun onChangeQuantity(
+                idProductAdapter: String,
+                currentSoldQuantity: Int,
+                currentSizeID: String
+            ) {
+                super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID)
+                productViewModel.handle(
+                    ProductAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
+                )
+            }
+        })
         views.rcvCart.adapter = adapterCart
+    }
+    fun updateDataUI(cartResponse: CartResponse){
+        adapterCart.setData(cartResponse.products)
+        views.quantityProduct.text = cartResponse.products.size.toString()
+        views.buttonThanh.text = "Thanh toán ${cartResponse.total} VND"
     }
 
     override fun onPause() {
         super.onPause()
-        withState(userViewModel) {
-            val userId = it.asyncCurrentUser.invoke()?._id
-            if (userId != null) {
-                if (purchaseQuantity != null) {
-                    productViewModel.handle(
-                        ProductAction.GetChangeQuantity(
-                            userId, idProduct!!, ChangeQuantityRequest(
-                                purchaseQuantity!!,
-                                sizeId!!
-                            )
-                        )
-                    )
-                }
-            }
-        }
     }
 
     override fun getBinding(
@@ -186,13 +170,19 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     override fun invalidate(): Unit = withState(productViewModel) {
         when (it.getOneCartById) {
             is Success -> {
-                initUi()
-                adapterCart.setData(it.getOneCartById.invoke()?.products)
-                views.quantityProduct.text = it.getOneCartById.invoke()?.products?.size.toString()
-                views.buttonThanh.text= "Thanh toán " + it.getOneCartById.invoke()?.total + " đ"
+                val cartGetOne =  it.getOneCartById.invoke()
+                if (cartGetOne != null) updateDataUI(cartGetOne)
+                else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
+
+                it.getOneCartById = Uninitialized
+            }
+
+            is Fail ->{
+                Toast.makeText(requireContext(), "getOneCartById Lỗi", Toast.LENGTH_SHORT).show()
             }
 
             else -> {
+                it.getOneCartById = Uninitialized
             }
         }
         when (it.getClearCart) {
@@ -200,30 +190,44 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                 adapterCart.setData(it.getOneCartById.invoke()?.products)
                 productViewModel.handleRemoveAsyncClearCart()
                 productViewModel.handleUpdateCart()
+
+                it.getClearCart = Uninitialized
             }
 
-            else -> {}
+            else -> {
+                it.getClearCart = Uninitialized
+            }
         }
         when (it.getRemoveProductByIdCart) {
             is Success -> {
                 adapterCart.setData(it.getOneCartById.invoke()?.products)
                 productViewModel.handleRemoveAsyncProductCart()
                 productViewModel.handleUpdateCart()
+                it.getRemoveProductByIdCart = Uninitialized
             }
 
-            else -> {}
+            else -> {
+                it.getRemoveProductByIdCart = Uninitialized
+            }
         }
         when (it.getChangeQuantity) {
+
             is Success -> {
-                adapterCart.setData(it.getOneCartById.invoke()?.products)
-                productViewModel.handleRemoveAsyncChangeQuantity()
-                productViewModel.handleUpdateCart()
+                var cartChangeQuantity = it.getChangeQuantity.invoke()
+                if (cartChangeQuantity != null) updateDataUI(cartChangeQuantity)
+                else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
+
+                it.getChangeQuantity = Uninitialized
+            }
+
+            is Fail -> {
+                Toast.makeText(requireContext(), "Không thay đổi được số lượng", Toast.LENGTH_SHORT).show()
+                it.getOneCartById = Uninitialized
             }
 
             else -> {}
         }
-
-
     }
+
 
 }

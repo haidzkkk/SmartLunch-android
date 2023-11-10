@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.airbnb.mvrx.Fail
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.ui.security.LoginActivity
@@ -125,4 +126,29 @@ fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
     val path =
         MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
     return Uri.parse(path)
+}
+fun<T> checkStatusApiRes(err: Fail<T>): Int {
+    return when(err.error.message!!.trim()){
+        "HTTP 200" ->{
+            R.string.http200
+        }
+        "HTTP 400" ->{
+            R.string.http400
+        }
+        "HTTP 401" ->{
+            R.string.http401
+        }
+        "HTTP 403" ->{
+            R.string.http403
+        }
+        "HTTP 404" ->{
+            R.string.http404
+        }
+        "HTTP 500" ->{
+            R.string.http500
+        }
+        else -> {
+            R.string.http500
+        }
+    }
 }

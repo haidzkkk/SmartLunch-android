@@ -39,20 +39,12 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
             is ProductAction.GetListSize -> handleGetAllSize()
             is ProductAction.GetSizeById -> handleGetSizeById(action.id)
-            is ProductAction.CreateCart -> handleCreateCart(action.id, action.cart)
-            is ProductAction.GetOneCartById -> handleGetOneCartById(action.id)
-            is ProductAction.GetClearCart -> handleGetClearCartById(action.id)
-            is ProductAction.GetChangeQuantity -> handleChangeQuantity(
-                action.id,
-                action.idProduct,
-                action.changeQuantityRequest
-            )
 
-            is ProductAction.GetRemoveProductByIdCart -> handleRemoveProductCart(
-                action.id,
-                action.idProduct,
-                action.sizeId
-            )
+            is ProductAction.CreateCart -> handleCreateCart(action.cart)
+            is ProductAction.GetOneCartById -> handleGetOneCartById()
+            is ProductAction.GetClearCart -> handleGetClearCartById()
+            is ProductAction.GetChangeQuantity -> handleChangeQuantity(action.idProduct, action.changeQuantityRequest)
+            is ProductAction.GetRemoveProductByIdCart -> handleRemoveProductCart(action.idProduct, action.sizeId)
 
             is ProductAction.GetAllProductByIdCategory -> handleAllProductByIdCategory(action.id)
             is ProductAction.GetAllOrderByUserId -> handleGetAllOrderByUserId(action.userId)
@@ -147,49 +139,44 @@ class ProductViewModel @AssistedInject constructor(
 
     }
 
-    private fun handleCreateCart(id: String, cart: CartRequest) {
+    private fun handleCreateCart(cart: CartRequest) {
         setState { copy(asyncCreateCart = Loading()) }
-        if (id != null) {
-            repository.getCreateCart(id, cart)
-                .execute {
-                    copy(asyncCreateCart = it)
-                }
-        }
+        repository.getCreateCart(cart)
+            .execute {
+                copy(asyncCreateCart = it)
+            }
     }
 
-    private fun handleGetOneCartById(id: String) {
+    private fun handleGetOneCartById() {
         setState { copy(getOneCartById = Loading()) }
-        if (id != null) {
-            repository.getOneCartById(id)
-                .execute {
-                    copy(getOneCartById = it)
-                }
-        }
+        repository.getOneCartById()
+            .execute {
+                copy(getOneCartById = it)
+            }
     }
 
-    private fun handleGetClearCartById(id: String) {
+    private fun handleGetClearCartById() {
         setState { copy(getClearCart = Loading()) }
-        repository.getClearCart(id)
+        repository.getClearCart()
             .execute {
                 copy(getClearCart = it)
             }
     }
 
     private fun handleChangeQuantity(
-        id: String,
         idProduct: String,
         changeQuantityRequest: ChangeQuantityRequest
     ) {
         setState { copy(getChangeQuantity = Loading()) }
-        repository.getChangeQuantityCart(id, idProduct, changeQuantityRequest)
+        repository.getChangeQuantityCart(idProduct, changeQuantityRequest)
             .execute {
                 copy(getChangeQuantity = it)
             }
     }
 
-    private fun handleRemoveProductCart(id: String, idProduct: String, sizeId: String) {
+    private fun handleRemoveProductCart(idProduct: String, sizeId: String) {
         setState { copy(getRemoveProductByIdCart = Loading()) }
-        repository.getRemoveGetOneProductCart(id, idProduct, sizeId)
+        repository.getRemoveGetOneProductCart(idProduct, sizeId)
             .execute {
                 copy(getRemoveProductByIdCart = it)
             }

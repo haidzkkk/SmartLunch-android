@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -46,12 +47,18 @@ class AddressFragment : PolyBaseFragment<FragmentAddressBinding>() {
     }
 
     private fun setupListAddress(){
-        adapterAddress = AddressAdapter{address->
-            userViewModel.handle(UserViewAction.GetAddressById(address._id))
-            sessionManager.let {
-                it.saveAddress(address._id)
+        adapterAddress = AddressAdapter({
+
+        }){ address ->
+            if (address._id == null){
+                Toast.makeText(requireContext(), "Không có id address", Toast.LENGTH_SHORT).show()
+            }else{
+                userViewModel.handle(UserViewAction.UpdateAddress(address._id))
+                sessionManager.let {
+                    it.saveAddress(address._id)
+                }
+                adapterAddress?.updateSelectedAddress(address)
             }
-            adapterAddress?.updateSelectedAddress(address)
         }
         views.rcyAddress.adapter=adapterAddress
     }

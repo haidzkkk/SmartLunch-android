@@ -15,6 +15,7 @@ data class UserViewState(
     var asyncListAddress: Async<List<Address>> = Uninitialized,
     var asyncAddress: Async<Address> = Uninitialized,
     var asyncCreateAddress: Async<Address> = Uninitialized,
+    var asyncUpdateAddress: Async<Address> = Uninitialized,
     var asyncDeleteAddress: Async<Address> = Uninitialized,
     var asyncChangePassword: Async<TokenResponse> = Uninitialized,
 ): MvRxState {

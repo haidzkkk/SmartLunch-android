@@ -43,7 +43,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             orderTimeValue.text = currentOrder.createdAt
             pickupTimeValue.text =currentOrder.updatedAt
             orderCodeValue.text = currentOrder._id
-            location.text = currentOrder.address
+            location.text = currentOrder.address.addressLine
             phoneNumber.text = currentOrder.phone
         }
     }

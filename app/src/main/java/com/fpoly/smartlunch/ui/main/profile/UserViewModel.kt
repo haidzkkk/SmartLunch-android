@@ -36,11 +36,14 @@ class UserViewModel @AssistedInject constructor(
             is UserViewAction.ChangePasswordUser -> handleChangePassword(action.changePassword)
             is UserViewAction.UpdateUser -> handleUpdateUser(action.updateUser)
             is UserViewAction.UploadAvatar -> handleUploadAvatar(action.avatar)
+            is UserViewAction.GetListAddress -> handleGetListAddress()
             is UserViewAction.GetAddressById -> handleGetAddressById(action.id)
             is UserViewAction.AddAddress -> handleAddAddress(action.addressRequest)
+            is UserViewAction.UpdateAddress -> handleUpdateAddress(action.id)
             is UserViewAction.DeleteAddressById -> handleDeleteAddressById(action.id)
         }
     }
+
 
     private fun handleDeleteAddressById(id: String) {
         setState { copy(asyncDeleteAddress = Loading()) }
@@ -63,6 +66,12 @@ class UserViewModel @AssistedInject constructor(
         }
     }
 
+    private fun handleUpdateAddress(id: String) {
+        setState { copy(asyncUpdateAddress = Loading()) }
+        repository.getUpdateById(id).execute {
+            copy(asyncUpdateAddress = it)
+        }
+    }
     private fun handleGetListAddress() {
         setState { copy(asyncListAddress = Loading()) }
         repository.getAllAddressByUser().execute {

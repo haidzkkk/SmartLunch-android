@@ -38,4 +38,6 @@ interface UserApi {
     fun deleteAddress(@Path("id") id: String):Observable<Address>
     @GET("api/addresses/{id}")
     fun getAddressById(@Path("id") id: String):Observable<Address>
+    @PATCH("api/addresses/{id}")
+    fun getUpdateById(@Path("id") id: String):Observable<Address>
 }

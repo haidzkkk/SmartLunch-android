@@ -14,6 +14,8 @@ class RemoteDataSource(
 ) {
     companion object{
         public const val BASE_URL = "http://192.168.31.98:3000"
+
+        public const val URL_PROVINCE = "https://vapi.vnappmob.com"
     }
 
     public fun <API> buildApi(apiClass: Class<API>, context: Context): API{
@@ -25,6 +27,17 @@ class RemoteDataSource(
             .build()
             .create(apiClass)
     }
+
+    public fun <API> buildApiProvince(apiClass: Class<API>, context: Context): API{
+        return Retrofit.Builder()
+            .baseUrl(URL_PROVINCE)
+            .client(getHttpClientBuilder(context).build())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(apiClass)
+    }
+
     // build okhttp
     private fun getHttpClientBuilder(context: Context) : OkHttpClient.Builder{
         var builder: OkHttpClient.Builder = OkHttpClient.Builder()

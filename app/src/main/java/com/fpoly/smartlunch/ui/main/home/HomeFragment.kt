@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
@@ -61,12 +62,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     }
 
     private fun updateCart() {
-        withState(userViewModel){
-            val userId = it.asyncCurrentUser.invoke()?._id
-            if (userId != null){
-                productViewModel.handle(ProductAction.GetOneCartById(userId))
-            }
-        }
+        productViewModel.handle(ProductAction.GetOneCartById)
     }
 
     private fun listenEvent() {
@@ -118,6 +114,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         when (it.products) {
             is Success -> {
+                views.floatBottomSheet.isVisible = true
                 adapterver.setData(it.products.invoke()?.docs)
             }
             else -> {

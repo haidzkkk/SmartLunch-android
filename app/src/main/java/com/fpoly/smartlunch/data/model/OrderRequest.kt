@@ -6,12 +6,9 @@ data class OrderRequest(
     var address: String,
     var consignee_name: String,
     var notes: String,
-    var payerId: String,
-    var paymentCode: String,
-    var paymentId: String,
-    var phone: String,
+    var statusPayment: String,
+    var isPayment: Boolean,
     var products: List<ProductCart>,
-    var total: Int,
-    var discount: Int,
-    var userId: String
+    var total: Double,
+    var discount: Double,
 ): Serializable

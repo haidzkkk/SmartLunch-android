@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ui.payment
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
@@ -9,6 +10,7 @@ import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityPaymentBinding
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ultis.addFragmentToBackstack
@@ -18,6 +20,8 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
     UserViewModel.Factory, ProductViewModel.Factory {
 
     private val paymentViewModel: PaymentViewModel by viewModel()
+    private val userViewModel: UserViewModel by viewModel()
+    private val productViewModel : ProductViewModel by viewModel()
 
     @Inject
     lateinit var paymentViewModelFactory: PaymentViewModel.Factory
@@ -34,6 +38,8 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         super.onCreate(savedInstanceState)
         setContentView(views.root)
         listenEvent()
+
+        userViewModel.handle(UserViewAction.GetCurrentUser)
     }
 
     private fun listenEvent() {
@@ -57,7 +63,13 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
                     bundle = event.bundle
                 )
             }
+
+            is PaymentViewEvent.ReturnShowLoading -> showLayoutLoading(event.isVisible)
         }
+    }
+
+    private fun showLayoutLoading(isVisible: Boolean){
+        views.layoutLoading.root.isVisible = isVisible
     }
 
     override fun getBinding(): ActivityPaymentBinding {

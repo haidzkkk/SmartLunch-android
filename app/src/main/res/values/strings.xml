@@ -95,6 +95,7 @@
     <string name="reset_pass_title">Reset Password</string>
     <string name="new_password">New Password</string>
     <!--    end-->
+    <string name="validatePhone">invali format</string>
     <string name="validateEmail">invali format</string>
     <string name="validatePassword">invali password</string>
     <string name="add_product">add_product</string>
@@ -192,4 +193,10 @@ Thanh toán
     <string name="payment_id">no value</string>
     <string name="payment_fail">fail</string>
     <string name="error_500">server error</string>
+    <string name="http200">ok</string>
+    <string name="http400">Loi phia cilent</string>
+    <string name="http401">Chua xac thuc</string>
+    <string name="http403">Khong co quyen</string>
+    <string name="http404">not found</string>
+    <string name="http500">Loi server khi su ly</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.fpoly.smartlunch.di
 
-import android.app.Application
 import android.content.Context
 import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.ViewModelProvider
@@ -11,8 +10,8 @@ import com.fpoly.smartlunch.di.modules.ViewModelModule
 import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.chat.home.HomeChatFragment
 import com.fpoly.smartlunch.ui.main.MainActivity
-import com.fpoly.smartlunch.ui.payment.AddressPaymentFragment
-import com.fpoly.smartlunch.ui.payment.PayFragment
+import com.fpoly.smartlunch.ui.payment.address.AddressPaymentFragment
+import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import com.fpoly.smartlunch.ui.payment.PaymentActivity
 import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment

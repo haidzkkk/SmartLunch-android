@@ -5,7 +5,9 @@ import android.content.Context
 import com.fpoly.smartlunch.data.network.AuthApi
 import com.fpoly.smartlunch.data.network.ChatApi
 import com.fpoly.smartlunch.data.network.ContentDataSource
+import com.fpoly.smartlunch.data.network.OrderApi
 import com.fpoly.smartlunch.data.network.ProductApi
+import com.fpoly.smartlunch.data.network.ProvinceAddressApi
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.data.network.SocketManager
@@ -13,6 +15,7 @@ import com.fpoly.smartlunch.data.network.UserApi
 import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
+import com.fpoly.smartlunch.data.repository.PaymentRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
 import com.fpoly.smartlunch.data.repository.UserRepository
@@ -26,6 +29,11 @@ object NetworkModule {
     fun providerWebRTCClient(
         context: Context,
     ) : WebRTCClient = WebRTCClient(context as Application)
+
+    @Provides
+    fun providerSocketManger(
+    ): SocketManager = SocketManager()
+
     @Provides
     fun providerSessionManager(
         context: Context
@@ -92,7 +100,20 @@ object NetworkModule {
     ): ChatRepository = ChatRepository(chatApi, authApi, socketManager, contentDataSource)
 
     @Provides
-    fun providerSocketManger(
-    ): SocketManager = SocketManager()
+    fun providerApiOrder(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): OrderApi = remoteDataSource.buildApi(OrderApi::class.java, context)
+    @Provides
+    fun providerApiProvince(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): ProvinceAddressApi = remoteDataSource.buildApiProvince(ProvinceAddressApi::class.java, context)
+
+    @Provides
+    fun providerPaymentRepository(
+        OrderApi: OrderApi,
+        provinceAddressApi: ProvinceAddressApi,
+    ): PaymentRepository = PaymentRepository(OrderApi, provinceAddressApi)
 }
 

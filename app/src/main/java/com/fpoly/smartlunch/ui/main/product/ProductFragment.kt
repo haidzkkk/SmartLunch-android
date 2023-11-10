@@ -148,10 +148,8 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             )
         }
         withState(userViewModel) {
-            val userId = it.asyncCurrentUser.invoke()?._id
-            if (userId != null) {
-                productViewModel.handle(ProductAction.CreateCart(userId, newCartProduct!!))
-            }
+            productViewModel.handle(ProductAction.CreateCart(newCartProduct!!))
+
         }
         currentSoldQuantity = 1
         enableAnimation(views.animAddProduct, R.raw.anim_add_to_cart)

@@ -11,6 +11,3 @@ data class CouponsResponse(
     val expiration_date: String,
     val min_purchase_amount: Int
 )
-{
-    var isSelected: Boolean = false
-}

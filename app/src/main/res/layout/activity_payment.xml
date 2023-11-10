@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.payment.PaymentActivity">
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frame_layout"
-        android:name="com.fpoly.smartlunch.ui.payment.CartFragment"
+        android:name="com.fpoly.smartlunch.ui.payment.cart.CartFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         />
-</RelativeLayout>
+
+    <include
+        android:id="@+id/layout_loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone"/>
+
+</FrameLayout>

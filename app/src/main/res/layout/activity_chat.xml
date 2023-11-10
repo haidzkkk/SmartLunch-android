@@ -8,16 +8,9 @@
     tools:context=".ui.chat.ChatActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
-        <fragment
-            android:id="@+id/nav_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_chat"/>
 
     </RelativeLayout>
 
@@ -99,5 +92,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/nav_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="center"
+        app:navGraph="@navigation/nav_chat" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

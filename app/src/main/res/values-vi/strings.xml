@@ -38,6 +38,7 @@
     <string name="signup">Đăng ký</string>
     <string name="notEmpty">Không được để trống</string>
     <string name="validateEmail">Định dạng không hợp lệ</string>
+    <string name="validatePhone">Định dạng không hợp lệ</string>
     <string name="validatePassword">Mật khẩu không hợp lệ</string>
     <string name="login_title">Đăng nhập</string>
     <string name="email_title">Vui lòng nhập địa chỉ email của bạn</string>
@@ -99,4 +100,6 @@
     <string name="birthday">Ngày sinh</string>
     <string name="gender_female">Nữ</string>
     <string name="gender_male">Nam</string>
+    <string name="http200">http200</string>
+    <string name="http400">Loi phia cilent</string>
 </resources>
