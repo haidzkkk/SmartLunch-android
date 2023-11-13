@@ -1,0 +1,38 @@
+Index: app/src/main/java/com/fpoly/smartlunch/data/network/RemoteDataSource.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fpoly.smartlunch.data.network\r\n\r\nimport android.content.Context\r\nimport okhttp3.Interceptor\r\nimport okhttp3.OkHttpClient\r\nimport okhttp3.Request\r\nimport okhttp3.logging.HttpLoggingInterceptor\r\nimport retrofit2.Retrofit\r\nimport retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\n\r\nclass RemoteDataSource(\r\n\r\n) {\r\n    companion object{\r\n        public const val BASE_URL = \"http://192.168.31.98:3000\"\r\n    }\r\n\r\n    public fun <API> buildApi(apiClass: Class<API>, context: Context): API{\r\n        return Retrofit.Builder()\r\n            .baseUrl(BASE_URL)\r\n            .client(getHttpClientBuilder(context).build())\r\n            .addConverterFactory(GsonConverterFactory.create())\r\n            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())\r\n            .build()\r\n            .create(apiClass)\r\n    }\r\n    // build okhttp\r\n    private fun getHttpClientBuilder(context: Context) : OkHttpClient.Builder{\r\n        var builder: OkHttpClient.Builder = OkHttpClient.Builder()\r\n        builder.addInterceptor(getInterceptorHeader(context))\r\n        builder.addInterceptor(getInterceptorLogging())\r\n        return builder\r\n    }\r\n\r\n    // add header\r\n    private fun getInterceptorHeader(context: Context): Interceptor\r\n            = Interceptor {\r\n                var originalRequest: Request = it.request()\r\n                var newRequest : Request = originalRequest.newBuilder()\r\n                    .header(\"Authorization\", SessionManager(context.applicationContext)\r\n                        .fetchAuthTokenAccess().let {token ->\r\n                        if (token.isNullOrEmpty()) \"Basic Y29yZV9jbGllbnQ6c2VjcmV0\" else \"Bearer $token\" }\r\n                    )\r\n                    .build();\r\n                it.proceed(newRequest)\r\n            }\r\n    }\r\n\r\n// log data\r\n    private fun getInterceptorLogging(): HttpLoggingInterceptor\r\n            = HttpLoggingInterceptor().apply {\r\n        level = HttpLoggingInterceptor.Level.BODY\r\n    }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/fpoly/smartlunch/data/network/RemoteDataSource.kt b/app/src/main/java/com/fpoly/smartlunch/data/network/RemoteDataSource.kt
+--- a/app/src/main/java/com/fpoly/smartlunch/data/network/RemoteDataSource.kt	(revision 541ac758da927248ae915b0c1e455e0b733998b0)
++++ b/app/src/main/java/com/fpoly/smartlunch/data/network/RemoteDataSource.kt	(date 1699370173379)
+@@ -13,7 +13,7 @@
+ 
+ ) {
+     companion object{
+-        public const val BASE_URL = "http://192.168.31.98:3000"
++        public const val BASE_URL = "http://192.168.1.44:3000"
+     }
+ 
+     public fun <API> buildApi(apiClass: Class<API>, context: Context): API{
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-feature\r\n        android:name=\"android.hardware.camera\"\r\n        android:required=\"false\" />\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\r\n    <uses-permission android:name=\"android.permission.READ_MEDIA_IMAGES\" />\r\n    <uses-permission android:name=\"android.permission.READ_MEDIA_VIDEO\" />\r\n\r\n    <uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>\r\n    <uses-permission android:name=\"android.permission.CAMERA\"/>\r\n    <uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>\r\n\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.FOREGROUND_SERVICE\" />\r\n    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\" />\r\n\r\n\r\n    <application\r\n        android:name=\".PolyApplication\"\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@drawable/logo_app\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@drawable/logo_app\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.PolyFriend\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        tools:targetApi=\"31\">\r\n        <meta-data\r\n            android:name=\"com.google.android.geo.API_KEY\"\r\n            android:value=\"\" />\r\n        <activity\r\n            android:name=\".ui.payment.PaymentActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ui.chat.ChatActivity\"\r\n            android:exported=\"false\"\r\n            android:screenOrientation=\"portrait\"\r\n            android:windowSoftInputMode=\"adjustResize\" />\r\n        <activity\r\n            android:name=\".ui.main.MainActivity\"\r\n            android:exported=\"false\"\r\n            android:screenOrientation=\"portrait\" />\r\n        <activity\r\n            android:name=\".ui.security.LoginActivity\"\r\n            android:exported=\"false\"\r\n            android:screenOrientation=\"portrait\" />\r\n        <activity\r\n            android:name=\".ui.security.SplashScreenActivity\"\r\n            android:exported=\"true\"\r\n            android:screenOrientation=\"portrait\"\r\n            android:theme=\"@style/Theme.PolyFriend\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <service\r\n            android:name=\".ui.notification.FcmService\"\r\n            android:exported=\"false\">\r\n            <intent-filter>\r\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\" />\r\n            </intent-filter>\r\n        </service>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 541ac758da927248ae915b0c1e455e0b733998b0)
++++ b/app/src/main/AndroidManifest.xml	(date 1698941579027)
+@@ -36,7 +36,7 @@
+         tools:targetApi="31">
+         <meta-data
+             android:name="com.google.android.geo.API_KEY"
+-            android:value="" />
++            android:value="AIzaSyDLGnA0iUrnteqE1NsqqcKRu5eqj5NERXQ" />
+         <activity
+             android:name=".ui.payment.PaymentActivity"
+             android:exported="false" />

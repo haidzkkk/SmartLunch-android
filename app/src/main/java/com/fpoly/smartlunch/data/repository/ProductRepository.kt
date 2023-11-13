@@ -53,7 +53,7 @@ class ProductRepository @Inject constructor(
     fun updateIsPaymentOrder(id: String, isPayment: Boolean)=api.updateIsPaymentOrder(id, isPayment).subscribeOn(Schedulers.io())
     fun getCoupons(): Observable<ArrayList<CouponsResponse>> = api.getAllCoupons().subscribeOn(Schedulers.io())
     fun applyCoupon(coupons:CouponsRequest): Observable<CartResponse> = api.applyCoupon(coupons).subscribeOn(Schedulers.io())
-    fun getAllOrderByUserId(userId: String,statusId: String): Observable<ArrayList<OrderResponse>> = api.getAllOrderByUserId(userId,statusId).subscribeOn(Schedulers.io())
+    fun getAllOrderByUserId(statusId: String): Observable<ArrayList<OrderResponse>> = api.getAllOrderByUserId(statusId).subscribeOn(Schedulers.io())
 
     fun getCurrentOrder(id: String): Observable<OrderResponse> = api.getCurrentOrder(id).subscribeOn(Schedulers.io())
     fun getTopViewedProducts(): Observable<ArrayList<Product>> = api.getTopViewedProducts().subscribeOn(Schedulers.io())

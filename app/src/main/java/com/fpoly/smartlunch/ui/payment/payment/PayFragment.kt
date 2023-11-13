@@ -67,7 +67,6 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
     private var strNote: String = ""
 
     var addOrder: OrderResponse? = null
-//    lateinit var orderRequest: OrderRequest
 
     private var myCreateOrderActions: CreateOrderActions? = null
 
@@ -175,7 +174,6 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
         if (myCart != null && myAddress != null && myAddress?._id != null) {
             val orderRequest = OrderRequest(
                 myAddress?._id!!,
-                myAddress?.recipientName ?: "Tên người nhận",
                 strNote,
                 idStatus,
                 false,
