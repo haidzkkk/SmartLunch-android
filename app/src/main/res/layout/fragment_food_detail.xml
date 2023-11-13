@@ -27,7 +27,8 @@
                     <ImageView
                         android:id="@+id/image_food_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="234dp" />
+                        android:layout_height="234dp"
+                        android:scaleType="centerCrop"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -120,6 +121,56 @@
                                 tools:listitem="@layout/layout_size" />
 
                         </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp">
+
+                            <TextView
+                                android:id="@+id/tv_title_commemt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/start"
+                                android:text="4.8 (1.2k đơn hàng)"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_see_all_comment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Xem tất cả "
+                                android:drawableEnd="@drawable/icon_right"
+                                android:textColor="@color/red"
+                                android:layout_alignParentEnd="true"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rcv_comment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                android:layout_below="@+id/tv_title_commemt"/>
+
+                            <TextView
+                                android:id="@+id/tv_see_all_comment2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Thêm tạm comment "
+                                android:drawableEnd="@drawable/icon_right"
+                                android:textColor="@color/red"
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@+id/rcv_comment"
+                                />
+
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_height="100dp"
+                                android:layout_below="@+id/tv_see_all_comment2"/>
+
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -129,8 +180,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginBottom="24dp">
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="20dp"
+                android:background="@color/background">
 
                 <LinearLayout
                     android:id="@+id/linear_quanlity"

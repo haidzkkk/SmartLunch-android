@@ -4,6 +4,7 @@ import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.Uninitialized
 import com.fpoly.smartlunch.data.model.CartResponse
+import com.fpoly.smartlunch.data.model.Comment
 import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.District
 import com.fpoly.smartlunch.data.model.Menu

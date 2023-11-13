@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.data.network
 
+import com.fpoly.smartlunch.data.model.Banner
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.CategoryResponse
@@ -73,6 +74,8 @@ interface ProductApi {
     ): Observable<ArrayList<OrderResponse>>
     @GET("/api/order/{id}")
     fun getCurrentOrder(@Path("id") id: String): Observable<OrderResponse>
+    @GET("/api/banner")
+    fun getBanner(): Observable<ArrayList<Banner>>
 
 
 

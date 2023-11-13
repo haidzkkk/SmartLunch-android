@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.home.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,21 +12,21 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.databinding.ItemCartBinding
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ultis.formatCash
 
 interface ItemTouchHelperAdapter {
     fun onItemSwiped(position: Int)
 }
 
+@SuppressLint("NotifyDataSetChanged")
 class AdapterCart(
     private val onClickLisstenner: ItemClickLisstenner
-) :
-    RecyclerView.Adapter<AdapterCart.CartViewHolder>(), ItemTouchHelperAdapter {
+) : RecyclerView.Adapter<AdapterCart.CartViewHolder>(), ItemTouchHelperAdapter {
+
     private var listProductCart: ArrayList<ProductCart> = arrayListOf()
     fun setData(list: ArrayList<ProductCart>?) {
-        if (list != null) {
-            listProductCart = list
-            notifyDataSetChanged()
-        }
+        listProductCart = list ?: arrayListOf()
+        notifyDataSetChanged()
     }
 
     fun changeData(productCart: ProductCart?){
@@ -43,22 +44,24 @@ class AdapterCart(
         RecyclerView.ViewHolder(binding.root) {
 
         val image = binding.image
-        val name = binding.nameProductSheet
-        val price = binding.priceProductSheet
-        val quanlity = binding.someIdQuanlitySheet
+        val name = binding.tvName
+        val price = binding.tvPrice
+        val quanlity = binding.tvQuantity
+        val tvSize = binding.tvSize
         val quantily_tru = binding.linearMinu1Sheet
         val quantily_cong = binding.linearMinu2Sheet
 
         fun bind(currentProduct: ProductCart) {
             Glide.with(context).load(currentProduct.image).placeholder(R.drawable.loading_img)
                 .into(image)
-            name.text = currentProduct.product_name.toString()
-            price.text = currentProduct.product_price.toString()
+            name.text = currentProduct.product_name
+            price.text = currentProduct.product_price.toDouble().formatCash()
             quanlity.text = currentProduct.purchase_quantity.toString()
+            tvSize.text = "L"
             var currentSoldQuantity = currentProduct.purchase_quantity
 
-            binding.image.setOnClickListener {
-                onClickLisstenner.onClickItem(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
+            binding.root.setOnClickListener {
+                onClickLisstenner.onClickItem(currentProduct.productId)
             }
 
             quantily_cong.setOnClickListener {
@@ -107,7 +110,7 @@ class AdapterCart(
     }
 
     abstract class ItemClickLisstenner() {
-        open fun onClickItem(idProductAdapter: String, currentSoldQuantity: Int, currentSizeID: String) {}
+        open fun onClickItem(idProductAdapter: String) {}
         open fun onChangeQuantity(idProductAdapter: String, currentSoldQuantity: Int, currentSizeID: String) {}
         open fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {}
 

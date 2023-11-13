@@ -32,12 +32,19 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.payment.PaymentViewModel
 import com.fpoly.smartlunch.ultis.formatCash
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @SuppressLint("SetTextI18n")
 class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>() {
+    private var myDelayJob: Job? = null
     private var isSwipeLoading = false
 
+    private val productViewModel: ProductViewModel by activityViewModel()
     private val paymentViewModel: PaymentViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
@@ -74,6 +81,8 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         views.tvTong.text = ((currentCartResponse?.total ?: 0.0) - (currentCartResponse?.totalCoupon ?: 0.0)).formatCash()
 
         adapter = AdapterProduct {
+            productViewModel.handle(ProductAction.GetDetailProduct(it))
+            paymentViewModel.returnDetailProductFragment()
         }
 
         adapterCoupons = AdapterCoupons {
@@ -83,15 +92,29 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         }
 
         adapterCart = AdapterCart(object : AdapterCart.ItemClickLisstenner(){
+            override fun onClickItem(
+                idProductAdapter: String,
+            ) {
+                super.onClickItem(idProductAdapter)
+                productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
+                paymentViewModel.returnDetailProductFragment()
+            }
+
             override fun onChangeQuantity(
                 idProductAdapter: String,
                 currentSoldQuantity: Int,
                 currentSizeID: String
             ) {
                 super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID)
-                paymentViewModel.handle(
-                    PaymentViewAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
-                )
+                myDelayJob?.cancel()
+                myDelayJob = CoroutineScope(Dispatchers.Main).launch {
+                    delay(500)
+                    paymentViewModel.handle(
+                        PaymentViewAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
+                    )
+                }
+
             }
         })
 

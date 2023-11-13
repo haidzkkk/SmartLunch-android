@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="do thanh hai"
+        android:layout_toEndOf="@+id/img_avatar"
+        android:layout_marginStart="10dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_toEndOf="@+id/img_avatar"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/start_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/start"/>
+
+        <ImageView
+            android:id="@+id/start_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/start"/>
+
+        <ImageView
+            android:id="@+id/start_3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/start" />
+
+        <ImageView
+            android:id="@+id/start_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/start"/>
+
+        <ImageView
+            android:id="@+id/start_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/start"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_start"
+        android:text="Phân loại: "/>
+
+    <TextView
+        android:id="@+id/tv_message_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tv_size"
+        android:layout_below="@+id/layout_start"
+        android:text="Size L"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_message_size"
+        android:textColor="@color/black"
+        android:text="Sản phẩm oke, đò ăn quá ngon nên không thể cưỡng lại được. sao ngon đến vậy ;>"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_message"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rcv_img"
+        android:textSize="12sp"
+        android:text="19-8-2021 12:38"/>
+
+</RelativeLayout>

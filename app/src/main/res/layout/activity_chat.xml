@@ -23,7 +23,7 @@
         android:layout_margin="10dp"
         android:padding="10dp"
         android:backgroundTint="@color/grey_light"
-        android:background="@drawable/background_boder_radius"
+        android:background="@drawable/background_border_radius"
         android:visibility="gone"
         >
 
@@ -37,7 +37,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:src="@mipmap/ic_launcher"
-                android:background="@drawable/background_boder_radius_circle"
+                android:background="@drawable/background_border_radius_circle"
                 android:clipToOutline="true"
                 android:layout_centerVertical="true"
                 />

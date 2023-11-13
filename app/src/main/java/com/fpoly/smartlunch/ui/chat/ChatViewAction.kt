@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ui.chat
 
 import com.fpoly.smartlunch.core.PolyViewAction
+import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.Room
 import com.fpoly.smartlunch.data.model.User
@@ -15,7 +16,7 @@ sealed class ChatViewAction : PolyViewAction{
     data class setCurrentChat(val room: Room): ChatViewAction()
     object removeCurrentChat: ChatViewAction()
 
-    data class postMessage(val message: Message, val files: List<File>?): ChatViewAction()
+    data class postMessage(val message: Message, val images: List<Gallery>?): ChatViewAction()
     object removePostMessage: ChatViewAction()
 
     object returnConnectSocket: ChatViewAction()

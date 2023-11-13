@@ -33,6 +33,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchChatFragment : PolyBaseFragment<FragmentSearchChatBinding>(){
+    var myDelayJob: Job? = null
 
     lateinit var adapter: SearchChatAdapter
 
@@ -85,7 +86,11 @@ class SearchChatFragment : PolyBaseFragment<FragmentSearchChatBinding>(){
             views.imgLoading.isVisible = text.toString().length != 0
 
             if (text.toString().isNotEmpty()){
-                chatViewModel.handle(ChatViewAction.searchUserByName(text.toString()))
+                myDelayJob?.cancel()
+                myDelayJob = CoroutineScope(Dispatchers.Main).launch{
+                    delay(500)
+                    chatViewModel.handle(ChatViewAction.searchUserByName(text.toString()))
+                }
             }
         }
 

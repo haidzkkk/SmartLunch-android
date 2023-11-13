@@ -5,29 +5,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.core.PolyDialog
 import com.fpoly.smartlunch.data.model.CartRequest
+import com.fpoly.smartlunch.data.model.Comment
+import com.fpoly.smartlunch.data.model.CommentRequest
+import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.databinding.DialogAddCommentBinding
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
+import com.fpoly.smartlunch.ui.chat.room.GalleryBottomSheetFragment
+import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
+import kotlinx.coroutines.Job
 
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
-    private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
-    private var adapterSize: AdapterSize? = null
+    private lateinit var adapterSize: AdapterSize
+    private lateinit var commentAdapter: CommentAdapter
+
+    private var currentSizeId: String? = null
     private var currentProduct: Product? = null
     private var currentSoldQuantity: Int? = 1
     private var sizeId: String? = null
@@ -56,9 +71,14 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private fun initUiSize() {
         adapterSize = AdapterSize { idSize ->
+            currentSizeId = idSize
             productViewModel.handle(ProductAction.GetSizeById(idSize))
         }
         views.rcvSize.adapter = adapterSize
+
+        commentAdapter = CommentAdapter()
+        views.rcvComment.adapter = commentAdapter
+        views.rcvComment.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
     }
 
     private fun listenEvent() {
@@ -66,6 +86,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             activity?.supportFragmentManager?.popBackStack()
         }
         views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetListCommentsLimit(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
             productViewModel.handle(ProductAction.GetDetailProduct(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
             productViewModel.handle(ProductAction.GetListSize)
         }
@@ -78,6 +99,12 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
         views.buttonAddCart.setOnClickListener {
             addCart()
+        }
+        views.tvSeeAllComment2.setOnClickListener{
+            addTamCommentDialog()
+        }
+        views.tvSeeAllComment.setOnClickListener{
+            productViewModel.returnCommentFragment()
         }
 
         views.btnLike.setOnClickListener {
@@ -122,7 +149,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
         })
     }
-
     private fun initUi(product: Product) {
         currentProduct = product
         views.apply {
@@ -149,7 +175,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
         withState(userViewModel) {
             productViewModel.handle(ProductAction.CreateCart(newCartProduct!!))
-
         }
         currentSoldQuantity = 1
         enableAnimation(views.animAddProduct, R.raw.anim_add_to_cart)
@@ -185,7 +210,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
+        productViewModel.returnVisibleBottomNav(false)
     }
 
     override fun getBinding(
@@ -200,7 +225,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         when (it.asynGetAllSize) {
             is Success -> {
                 it.asynGetAllSize.invoke()?.let {
-                    adapterSize?.setData(it)
+                    adapterSize.setData(it)
                 }
             }
 
@@ -228,7 +253,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         when (it.asyncGetFavourite) {
             is Success -> {
                 enableLike()
-                productViewModel.handleRemoveAsyncGetFavourite()
+                it.asyncGetFavourite = Uninitialized
             }
 
             is Fail -> {
@@ -237,6 +262,118 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
             else -> {}
         }
+
+        when(it.asyncCommentsLimit){
+            is Success ->{
+                commentAdapter.setData(it.asyncCommentsLimit.invoke())
+//                it.asyncCommentsLimit = Uninitialized
+            }
+            else ->{
+
+            }
+        }
+
+        when(it.asyncAddComment){
+            is Success ->{
+                it.asyncAddComment = Uninitialized
+                Toast.makeText(requireContext(), "Thêm thành công", Toast.LENGTH_SHORT).show()
+            }
+            is Fail ->{
+                it.asyncAddComment = Uninitialized
+                Toast.makeText(requireContext(), "Có thể thiếu size hoặc đã comment", Toast.LENGTH_SHORT).show()
+            }
+            else ->{
+
+            }
+        }
     }
+    private fun addTamCommentDialog() {
+        val dialog = PolyDialog
+            .Builder(requireContext(), DialogAddCommentBinding.inflate(layoutInflater))
+            .build()
+        dialog.show()
+
+        val bindingDialog = dialog.binding
+        var rate = 5
+        var listImage: ArrayList<Gallery>? = null
+
+        bindingDialog.tvGalarey.setOnClickListener{
+            var bottomGallery = GalleryBottomSheetFragment {
+                listImage = it
+                bindingDialog.tvGalarey.text = it.size.toString()
+            }
+            bottomGallery.show(requireActivity().supportFragmentManager, "TAG")
+        }
+
+        bindingDialog.btnSend.setOnClickListener{
+            var commentAdd = CommentRequest(currentProduct?._id, currentSizeId, "653768e1e6054414ddfd3fca",
+            bindingDialog.edtDesc.text.toString(), rate)
+            productViewModel.handle(ProductAction.AddComment(commentAdd, listImage))
+            dialog.dismiss()
+        }
+
+        bindingDialog.start1.setOnClickListener{
+            rate = 1
+            handleClickStartComment(bindingDialog, 1)
+        }
+
+        bindingDialog.start2.setOnClickListener{
+            rate = 2
+            handleClickStartComment(bindingDialog, 2)
+        }
+
+        bindingDialog.start3.setOnClickListener{
+            rate = 3
+            handleClickStartComment(bindingDialog, 3)
+        }
+
+        bindingDialog.start4.setOnClickListener{
+            rate = 4
+            handleClickStartComment(bindingDialog, 4)
+        }
+
+        bindingDialog.start5.setOnClickListener{
+            rate = 5
+            handleClickStartComment(bindingDialog, 5)
+        }
+
+    }
+
+    fun handleClickStartComment(binding: DialogAddCommentBinding, index: Int){
+        binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        binding.start4.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+        binding.start5.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
+
+        when (index){
+            1 ->{
+                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+            2 ->{
+                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+            3 ->{
+                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+            4 ->{
+                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start4.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+            5 ->{
+                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start4.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.start5.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
+            }
+        }
+    }
+
 
 }

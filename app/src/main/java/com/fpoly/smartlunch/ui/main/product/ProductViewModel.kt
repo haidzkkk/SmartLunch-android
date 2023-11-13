@@ -9,10 +9,15 @@ import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
+import com.fpoly.smartlunch.data.model.Comment
+import com.fpoly.smartlunch.data.model.CommentRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
+import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.repository.ProductRepository
+import com.fpoly.smartlunch.ui.main.comment.CommentFragment
+import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import com.fpoly.smartlunch.ultis.Status.CONFIRMED_STATUS
 import com.fpoly.smartlunch.ultis.Status.DELIVERING_STATUS
 import com.fpoly.smartlunch.ultis.Status.UNCONFIRMED_STATUS
@@ -61,6 +66,13 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetAllOrderByUserId -> handleGetAllOrderByUserId()
             is ProductAction.GetCurrentOrder -> handleGetCurrentOrder(action.id)
             is ProductAction.LikeProduct -> handleLikeProduct(action.product)
+
+            is ProductAction.GetListComments -> handleGetListComments(action.productId)
+            is ProductAction.GetListCommentsLimit -> handleGetListCommentsLimit(action.productId)
+            is ProductAction.AddComment -> handleAddComments(action.comment, action.images)
+
+            else ->{
+            }
         }
     }
 
@@ -147,6 +159,30 @@ class ProductViewModel @AssistedInject constructor(
         }
     }
 
+
+    private fun handleGetListComments(idProduct: String) {
+        setState { copy(asyncComments = Loading()) }
+        repository.getCommentProduct(idProduct)
+            .execute {
+                copy(asyncComments = it)
+            }
+    }
+    private fun handleGetListCommentsLimit(idProduct: String) {
+        setState { copy(asyncCommentsLimit = Loading()) }
+        repository.getCommentProductLimit(idProduct, 2)
+            .execute {
+                copy(asyncCommentsLimit = it)
+            }
+    }
+
+    private fun handleAddComments(comment: CommentRequest, images: List<Gallery>?) {
+        setState { copy(asyncAddComment = Loading()) }
+        repository.postMessage(comment, images)
+            .execute {
+                copy(asyncAddComment = it)
+            }
+    }
+
     private fun handleGetAllSize() {
         setState { copy(asynGetAllSize = Loading()) }
         repository.getSize().execute {
@@ -174,18 +210,28 @@ class ProductViewModel @AssistedInject constructor(
     }
 
     private fun handleGetOneCartById() {
-        setState { copy(getOneCartById = Loading()) }
+//        setState { copy(getOneCartById = Loading()) }
+//        repository.getOneCartById()
+//            .execute {
+//                copy(getOneCartById = it)
+//            }
+        setState { copy(curentCartResponse = Loading()) }
         repository.getOneCartById()
             .execute {
-                copy(getOneCartById = it)
+                copy(curentCartResponse = it)
             }
     }
 
     private fun handleGetClearCartById() {
-        setState { copy(getClearCart = Loading()) }
+//        setState { copy(getClearCart = Loading()) }
+//        repository.getClearCart()
+//            .execute {
+//                copy(getClearCart = it)
+//            }
+        setState { copy(curentCartResponse = Loading()) }
         repository.getClearCart()
             .execute {
-                copy(getClearCart = it)
+                copy(curentCartResponse = it)
             }
     }
 
@@ -193,18 +239,28 @@ class ProductViewModel @AssistedInject constructor(
         idProduct: String,
         changeQuantityRequest: ChangeQuantityRequest
     ) {
-        setState { copy(getChangeQuantity = Loading()) }
+//        setState { copy(getChangeQuantity = Loading()) }
+//        repository.getChangeQuantityCart(idProduct, changeQuantityRequest)
+//            .execute {
+//                copy(getChangeQuantity = it)
+//            }
+        setState { copy(curentCartResponse = Loading()) }
         repository.getChangeQuantityCart(idProduct, changeQuantityRequest)
             .execute {
-                copy(getChangeQuantity = it)
+                copy(curentCartResponse = it)
             }
     }
 
     private fun handleRemoveProductCart(idProduct: String, sizeId: String) {
-        setState { copy(getRemoveProductByIdCart = Loading()) }
-        repository.getRemoveGetOneProductCart(idProduct, sizeId)
-            .execute {
-                copy(getRemoveProductByIdCart = it)
+//        setState { copy(getRemoveProductByIdCart = Loading()) }
+//        repository.getRemoveGetOneProductCart(idProduct, sizeId)
+//            .execute {
+//                copy(getRemoveProductByIdCart = it)
+//            }
+        setState { copy(curentCartResponse = Loading()) }
+            repository.getRemoveGetOneProductCart(idProduct, sizeId)
+                .execute {
+                    copy(curentCartResponse = it)
             }
     }
 
@@ -221,6 +277,10 @@ class ProductViewModel @AssistedInject constructor(
             copy(getAllProductByIdCategory = it)
         }
     }
+
+
+    fun returnVisibleBottomNav(isVisible: Boolean){
+        _viewEvents.post(ProductEvent.ReturnVisibleBottomNav(isVisible))
 
     fun handleRemoveAsyncClearCart() {
         setState { copy(getClearCart = Uninitialized) }
@@ -242,8 +302,8 @@ class ProductViewModel @AssistedInject constructor(
         setState { copy(asyncGetFavourite = Uninitialized) }
     }
 
-    fun handleUpdateCart() {
-        _viewEvents.post(ProductEvent.UpdateCart)
+    fun returnCommentFragment(){
+        _viewEvents.post(ProductEvent.ReturnFragment(CommentFragment::class.java))
     }
 
     @AssistedFactory
