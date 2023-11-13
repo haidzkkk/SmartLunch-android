@@ -177,9 +177,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 R.raw.animation_successfully
             )
         ){
-            val bundle= Bundle()
-            bundle.putSerializable("order_detail",result)
-            homeViewModel.returnOrderDetailFragment(bundle)
+            homeViewModel.returnOrderDetailFragment()
         }
     }
 

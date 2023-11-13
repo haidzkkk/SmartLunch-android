@@ -4,7 +4,6 @@ import java.io.Serializable
 
 data class OrderRequest(
     var address: String,
-    var consignee_name: String,
     var notes: String,
     var statusPayment: String,
     var isPayment: Boolean,
