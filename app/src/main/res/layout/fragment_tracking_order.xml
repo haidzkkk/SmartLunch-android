@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/map_view_tracking"
         android:layout_marginTop="-40dp"
-        android:background="@drawable/background_boder_radius_top"
+        android:background="@drawable/background_border_radius_top"
         android:orientation="vertical">
 
         <androidx.core.widget.NestedScrollView

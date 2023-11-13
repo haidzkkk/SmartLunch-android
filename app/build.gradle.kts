@@ -119,7 +119,6 @@ dependencies {
     // webrtc
     implementation ("com.mesibo.api:webrtc:1.0.5")
 
-
     // request permission
     implementation ("com.guolindev.permissionx:permissionx:1.7.1")
 
@@ -133,4 +132,8 @@ dependencies {
 
     // paypal sdk
     implementation("com.paypal.checkout:android-sdk:0.112.2")
+
+    // point banner
+//    implementation("me.relex:circleindicator:2.1.6")
+    implementation("com.tbuonomo:dotsindicator:5.0")
 }

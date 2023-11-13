@@ -31,13 +31,13 @@ class AddressPaymentFragment : PolyBaseFragment<FragmentAddressBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
+        initUI()
         setupAppBar()
         listenEvent()
     }
 
-    override fun onResume() {
+    private fun initUI() {
         userViewModel.handle(UserViewAction.GetListAddress)
-        super.onResume()
     }
 
     private fun listenEvent() {

@@ -1,12 +1,17 @@
 package com.fpoly.smartlunch.data.repository
 
+import com.fpoly.smartlunch.data.model.Banner
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.CategoryResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
+import com.fpoly.smartlunch.data.model.Comment
+import com.fpoly.smartlunch.data.model.CommentRequest
 import com.fpoly.smartlunch.data.model.Favourite
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.CouponsResponse
+import com.fpoly.smartlunch.data.model.Gallery
+import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
@@ -14,17 +19,23 @@ import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.network.CommentApi
 import com.fpoly.smartlunch.data.network.ProductApi
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.io.File
 import javax.inject.Inject
 import kotlin.random.Random
 
 class ProductRepository @Inject constructor(
-    private val api: ProductApi
+    private val api: ProductApi,
+    private val commentApi: CommentApi,
 ) {
     private var number = Random.nextInt()
 
@@ -58,5 +69,29 @@ class ProductRepository @Inject constructor(
     fun getCurrentOrder(id: String): Observable<OrderResponse> = api.getCurrentOrder(id).subscribeOn(Schedulers.io())
     fun getTopViewedProducts(): Observable<ArrayList<Product>> = api.getTopViewedProducts().subscribeOn(Schedulers.io())
 
+    fun getCommentProduct(productId: String): Observable<ArrayList<Comment>> = commentApi.getCommentProduct(productId).subscribeOn(Schedulers.io())
+    fun getCommentProductLimit(productId: String, limitPosition: Int): Observable<ArrayList<Comment>> = commentApi.getCommentProductLimit(productId, limitPosition).subscribeOn(Schedulers.io())
+    fun postMessage(comment: CommentRequest, images: List<Gallery>?): Observable<Comment>{
+
+        val reqBodyProductId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), comment.productId ?: "")
+        val reqBodyOrderId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), comment.orderId ?: "")
+        val reqBodySizeId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), comment.sizeId ?: "" )
+        val reqBodyDescription: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), comment.description ?: "")
+        val reqBodyRate: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), (comment.rating).toString())
+        val reqBodyImages: ArrayList<MultipartBody.Part> = ArrayList()
+
+        if (images != null){
+            val files = images.map { File(it.realPath) }.toList()
+            for (file in files){
+                if (file != null){
+                    val reqBodyImage: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                    val multipartBodyImage: MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, reqBodyImage)
+                    reqBodyImages.add(multipartBodyImage)
+                }
+            }
+        }
+
+        return commentApi.postComment(reqBodyProductId, reqBodyOrderId, reqBodySizeId, reqBodyDescription, reqBodyRate, reqBodyImages).subscribeOn(Schedulers.io())
+    }
 
 }

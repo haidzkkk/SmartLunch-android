@@ -12,6 +12,7 @@ import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
+import com.fpoly.smartlunch.core.PolyViewEvent
 import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.network.SessionManager
@@ -27,6 +28,7 @@ import com.fpoly.smartlunch.ui.main.home.TestViewModelMvRx
 import com.fpoly.smartlunch.ui.main.love.FavouriteFragment
 import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import com.fpoly.smartlunch.ui.main.product.ProductAction
+import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
@@ -83,6 +85,12 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 handleEvent(it)
             }
         }
+
+        productViewModel.observeViewEvents {
+            if (it != null) {
+                handleEvent(it)
+            }
+        }
     }
 
     override fun getBinding(): ActivityMainBinding {
@@ -130,14 +138,26 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
     }
 
-    private fun handleEvent(event: HomeViewEvent) {
-        when (event) {
-            is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
-            is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, bundle = event.bundle)}
-            is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
-            is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
-            else -> {}
+    private fun handleEvent(event: PolyViewEvent) {
+        when(event){
+            is HomeViewEvent ->{
+                when (event) {
+                    is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
+                    is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, bundle = event.bundle)}
+                    is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
+                    is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
+                    else -> {}
+                }
+            }
+
+            is ProductEvent ->{
+                when(event){
+                    is ProductEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
+                    is ProductEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
+                }
+            }
         }
+
     }
 
     private fun handleDarkMode(checkedDarkMode: Boolean) {
@@ -166,7 +186,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     }
 
     private fun handlePaymentSuccess(result: OrderResponse) {
-        productViewModel.handleUpdateCart()
         productViewModel.handle(ProductAction.GetClearCart)
         productViewModel.handle(ProductAction.GetCurrentOrder(result._id))
         showUtilDialogWithCallback(

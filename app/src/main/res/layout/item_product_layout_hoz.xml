@@ -2,24 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="6dp"
+    android:layout_marginStart="12dp"
     android:layout_marginBottom="12dp"
     android:id="@+id/Liner_hoz"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp">
-    <ImageView
-        android:scaleType="centerCrop"
-        android:id="@+id/image"
+    <RelativeLayout
         android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:maxHeight="200dp"
-        android:src="@drawable/img_3"/>
-    </androidx.cardview.widget.CardView>
+        android:layout_height="215dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxHeight="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_3"
+            app:shapeAppearanceOverlay="@style/roundedCornersImageView"/>
+
+        <RelativeLayout
+            android:id="@+id/sale"
+            android:layout_width="62dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/sale"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/off"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="25%"
+                android:textAppearance="@style/off"
+                android:textColor="@color/red"
+                android:textFontWeight="1000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,34 +69,40 @@
                 android:paddingBottom="5dp"
                 android:text="Burger khổng lồ bà Năm "
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textFontWeight="1000"
+                android:textSize="16sp" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_below="@id/name_product"
                 android:id="@+id/price_product"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:text="24 000 đ"
                 android:textColor="@color/red"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
             <RelativeLayout
                 android:layout_below="@id/price_product"
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_height="wrap_content">
-                <com.google.android.material.textview.MaterialTextView
+
+                <TextView
                     android:id="@+id/time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="15:08, 28-08-2021"
-                    android:textColor="@color/black"
+                    android:text=" 4.1 (1.2k)"
+                    android:drawableStart="@drawable/icon_vote"
+                    android:textAppearance="@style/type_16"
                     android:textSize="14sp" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/favorite"
-android:layout_alignParentRight="true"                   />
+                    android:layout_alignParentRight="true"/>
+
             </RelativeLayout>
         </RelativeLayout>
 

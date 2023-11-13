@@ -33,7 +33,7 @@ class ChatRepository @Inject constructor(
     fun getRoomWithUserId(withUserId: String): Observable<Room> = chatApi.getRoomWithUserId(withUserId).subscribeOn(Schedulers.io())
     fun getMessage(idRoom: String): Observable<ArrayList<Message>> = chatApi.getMessage(idRoom).subscribeOn(Schedulers.io())
 
-    fun postMessage(message: Message, files: List<File>?): Observable<Message>{
+    fun postMessage(message: Message, images: List<Gallery>?): Observable<Message>{
         if (message.roomId == null) return Observable.just(null)
 
         val reqBodyRoomId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), message.roomId)
@@ -42,7 +42,8 @@ class ChatRepository @Inject constructor(
         val reqBodyType: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), (message.type ?: 0).toString())
         val reqBodyImages: ArrayList<MultipartBody.Part> = ArrayList()
 
-        if (files != null){
+        if (images != null){
+            val files = images.map { File(it.realPath) }.toList()
             for (file in files){
                 if (file != null){
                     val reqBodyImage: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)

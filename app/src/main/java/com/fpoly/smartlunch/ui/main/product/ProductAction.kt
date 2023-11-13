@@ -3,9 +3,12 @@ package com.fpoly.smartlunch.ui.main.product
 import com.fpoly.smartlunch.core.PolyViewAction
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
+import com.fpoly.smartlunch.data.model.Comment
+import com.fpoly.smartlunch.data.model.CommentRequest
 import retrofit2.http.Body
 import retrofit2.http.Query
 import com.fpoly.smartlunch.data.model.CouponsRequest
+import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
 
@@ -28,5 +31,7 @@ sealed class ProductAction : PolyViewAction {
     data class GetCurrentOrder( val id : String) : ProductAction()
     data class GetAllOrderByUserId(val userId : String) : ProductAction()
 
-
+    data class GetListCommentsLimit(val productId : String) : ProductAction()
+    data class GetListComments(val productId : String) : ProductAction()
+    data class AddComment(val comment: CommentRequest, val images: List<Gallery>?) : ProductAction()
 }

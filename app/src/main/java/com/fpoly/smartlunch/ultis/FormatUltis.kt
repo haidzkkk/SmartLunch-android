@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ultis
 
 import android.annotation.SuppressLint
+import com.fpoly.smartlunch.ultis.StringUltis.dateIso8601Format
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -19,11 +20,21 @@ object StringUltis {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy")
     val dateMonthFormat = SimpleDateFormat("MMM yyyy")
     val dateDayTimeFormat = SimpleDateFormat("EEE dd/MM/yy\nHH:mm:ss")
+    val dateDay2TimeFormat = SimpleDateFormat("EEE dd/MM/yy HH:mm")
 }
 
 fun String.convertToStringFormat(inputDateFormat: SimpleDateFormat, outputDateFormat: SimpleDateFormat): String =
     try {
         val date = inputDateFormat.parse(this)
+        date?.let {
+            outputDateFormat.format(it)
+        } ?: this
+    } catch (e: Exception) {
+        this
+    }
+fun String.convertIsoToStringFormat(outputDateFormat: SimpleDateFormat): String =
+    try {
+        val date = dateIso8601Format.parse(this)
         date?.let {
             outputDateFormat.format(it)
         } ?: this

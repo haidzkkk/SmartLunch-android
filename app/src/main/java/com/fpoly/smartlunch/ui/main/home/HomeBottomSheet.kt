@@ -25,8 +25,15 @@ import com.fpoly.smartlunch.ui.payment.PaymentActivity
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
+import com.fpoly.smartlunch.ultis.formatCash
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
+    private var myDelayJob: Job? = null
 
     private val productViewModel: ProductViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
@@ -132,6 +139,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     }
 
     private fun initUi() {
+        productViewModel.handle(ProductAction.GetOneCartById)
         adapterCart = AdapterCart(object : AdapterCart.ItemClickLisstenner(){
             override fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {
                 sizeId = currentSizeID
@@ -145,9 +153,18 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                 currentSizeID: String
             ) {
                 super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID)
-                productViewModel.handle(
-                    ProductAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
-                )
+
+                myDelayJob?.cancel() // Hủy bỏ công việc trước nếu có
+                myDelayJob = CoroutineScope(Dispatchers.Main).launch {
+                    delay(500) // Chờ đợi một khoảng thời gian
+                    // Sau khi chờ đợi, thực hiện cuộc gọi với trạng thái cuối cùng
+                    productViewModel.handle(
+                        ProductAction.GetChangeQuantity(
+                            idProductAdapter,
+                            ChangeQuantityRequest(currentSoldQuantity, currentSizeID)
+                        )
+                    )
+                }
             }
         })
         views.rcvCart.adapter = adapterCart
@@ -155,11 +172,15 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     fun updateDataUI(cartResponse: CartResponse){
         adapterCart.setData(cartResponse.products)
         views.quantityProduct.text = cartResponse.products.size.toString()
-        views.buttonThanh.text = "Thanh toán ${cartResponse.total} VND"
+        views.buttonThanh.text = "Thanh toán ${cartResponse.total.formatCash()}"
     }
 
     override fun onPause() {
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     override fun getBinding(
@@ -168,65 +189,75 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     ): BottomsheetFragmentHomeBinding = BottomsheetFragmentHomeBinding.inflate(layoutInflater)
 
     override fun invalidate(): Unit = withState(productViewModel) {
-        when (it.getOneCartById) {
+
+        when (it.curentCartResponse) {
             is Success -> {
-                val cartGetOne =  it.getOneCartById.invoke()
+                val cartGetOne =  it.curentCartResponse.invoke()
                 if (cartGetOne != null) updateDataUI(cartGetOne)
                 else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
-
-                it.getOneCartById = Uninitialized
             }
 
             is Fail ->{
                 Toast.makeText(requireContext(), "getOneCartById Lỗi", Toast.LENGTH_SHORT).show()
             }
-
             else -> {
-                it.getOneCartById = Uninitialized
             }
         }
-        when (it.getClearCart) {
-            is Success -> {
-                adapterCart.setData(it.getOneCartById.invoke()?.products)
-                productViewModel.handleRemoveAsyncClearCart()
-                productViewModel.handleUpdateCart()
-
-                it.getClearCart = Uninitialized
-            }
-
-            else -> {
-                it.getClearCart = Uninitialized
-            }
-        }
-        when (it.getRemoveProductByIdCart) {
-            is Success -> {
-                adapterCart.setData(it.getOneCartById.invoke()?.products)
-                productViewModel.handleRemoveAsyncProductCart()
-                productViewModel.handleUpdateCart()
-                it.getRemoveProductByIdCart = Uninitialized
-            }
-
-            else -> {
-                it.getRemoveProductByIdCart = Uninitialized
-            }
-        }
-        when (it.getChangeQuantity) {
-
-            is Success -> {
-                var cartChangeQuantity = it.getChangeQuantity.invoke()
-                if (cartChangeQuantity != null) updateDataUI(cartChangeQuantity)
-                else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
-
-                it.getChangeQuantity = Uninitialized
-            }
-
-            is Fail -> {
-                Toast.makeText(requireContext(), "Không thay đổi được số lượng", Toast.LENGTH_SHORT).show()
-                it.getOneCartById = Uninitialized
-            }
-
-            else -> {}
-        }
+//
+//        when (it.getOneCartById) {
+//            is Success -> {
+//                val cartGetOne =  it.getOneCartById.invoke()
+//                if (cartGetOne != null) updateDataUI(cartGetOne)
+//                else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            is Fail ->{
+//                Toast.makeText(requireContext(), "getOneCartById Lỗi", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            else -> {
+//                it.getOneCartById = Uninitialized
+//            }
+//        }
+//        when (it.getClearCart) {
+//            is Success -> {
+//                adapterCart.setData(it.getOneCartById.invoke()?.products)
+//                Toast.makeText(requireContext(), "Xóa thành công", Toast.LENGTH_SHORT).show()
+//                it.getClearCart = Uninitialized
+//            }
+//
+//            else -> {
+//                it.getClearCart = Uninitialized
+//            }
+//        }
+//        when (it.getRemoveProductByIdCart) {
+//            is Success -> {
+//                productViewModel.handle(ProductAction.GetOneCartById)
+//                adapterCart.setData(it.getOneCartById.invoke()?.products)
+////                productViewModel.handleRemoveAsyncProductCart()
+//                it.getRemoveProductByIdCart = Uninitialized
+//            }
+//
+//            else -> {
+//                it.getRemoveProductByIdCart = Uninitialized
+//            }
+//        }
+//        when (it.getChangeQuantity) {
+//            is Success -> {
+//                var cartChangeQuantity = it.getChangeQuantity.invoke()
+//                if (cartChangeQuantity != null) updateDataUI(cartChangeQuantity)
+//                else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
+//
+//                it.getChangeQuantity = Uninitialized
+//            }
+//
+//            is Fail -> {
+//                Toast.makeText(requireContext(), "Không thay đổi được số lượng", Toast.LENGTH_SHORT).show()
+//                it.getOneCartById = Uninitialized
+//            }
+//
+//            else -> {}
+//        }
     }
 
 

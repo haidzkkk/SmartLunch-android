@@ -20,6 +20,7 @@
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">true</item>
 <!--        -->
+        <item name="fontFamily">@font/sf_pro_text_regular</item>
     </style>
 
     <style name="Theme.PolyFriend" parent="Base.Theme.PolyFriend" />
@@ -31,7 +32,7 @@
     <style name="UnBorderRadiusBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog"></style>
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/background_boder_radius_top</item>
+        <item name="android:background">@drawable/background_border_radius_top</item>
     </style>
 
 </resources>

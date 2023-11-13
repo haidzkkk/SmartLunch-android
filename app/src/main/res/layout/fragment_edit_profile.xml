@@ -123,7 +123,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/birthday"
-                    android:background="@drawable/background_boder_radio_button"
+                    android:background="@drawable/background_border_radio_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="14dp"
@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
                         android:layout_weight="1"
-                        android:background="@drawable/background_boder_radio_button"
+                        android:background="@drawable/background_border_radio_button"
                         android:checked="true"
                         android:text="@string/gender_male" />
 
@@ -167,7 +167,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/background_boder_radio_button"
+                        android:background="@drawable/background_border_radio_button"
                         android:text="@string/gender_female" />
                 </RadioGroup>
             </LinearLayout>
