@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.mvrx.Fail
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
+import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.OrderResponse
@@ -15,12 +18,9 @@ import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
-
+    private var currentOrder: OrderResponse? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val currentOrder: OrderResponse =
-            arguments?.getSerializable("order_detail") as OrderResponse
-        setupUI(currentOrder)
         listenEvent()
     }
 
@@ -44,7 +44,6 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             pickupTimeValue.text =currentOrder.updatedAt
             orderCodeValue.text = currentOrder._id
             location.text = currentOrder.address.addressLine
-
             phoneNumber.text = currentOrder.address.phoneNumber
         }
     }
@@ -61,7 +60,16 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         return FragmentOrderDetailBinding.inflate(inflater, container, false)
     }
 
-    override fun invalidate() {
+    override fun invalidate():Unit= withState(productViewModel) {
+        when(it.addOrder){
+            is Success -> {
+                currentOrder= it.addOrder.invoke()
+                currentOrder?.let { currentOrder -> setupUI(currentOrder) }
+            }
+            is Fail -> {
+            }
+            else -> {}
+        }
     }
 
 }

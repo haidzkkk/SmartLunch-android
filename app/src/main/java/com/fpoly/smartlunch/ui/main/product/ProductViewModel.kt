@@ -18,6 +18,9 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
+import com.fpoly.smartlunch.ultis.Status.CONFIRMED_STATUS
+import com.fpoly.smartlunch.ultis.Status.DELIVERING_STATUS
+import com.fpoly.smartlunch.ultis.Status.UNCONFIRMED_STATUS
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -33,6 +36,7 @@ class ProductViewModel @AssistedInject constructor(
         handleGetAllSize()
         handleGetAllFavouriteProduct()
         handleGetTopProduct()
+        handleGetAllOrderByUserId()
     }
 
     override fun handle(action: ProductAction) {
@@ -48,11 +52,18 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.CreateCart -> handleCreateCart(action.cart)
             is ProductAction.GetOneCartById -> handleGetOneCartById()
             is ProductAction.GetClearCart -> handleGetClearCartById()
-            is ProductAction.GetChangeQuantity -> handleChangeQuantity(action.idProduct, action.changeQuantityRequest)
-            is ProductAction.GetRemoveProductByIdCart -> handleRemoveProductCart(action.idProduct, action.sizeId)
+            is ProductAction.GetChangeQuantity -> handleChangeQuantity(
+                action.idProduct,
+                action.changeQuantityRequest
+            )
+
+            is ProductAction.GetRemoveProductByIdCart -> handleRemoveProductCart(
+                action.idProduct,
+                action.sizeId
+            )
 
             is ProductAction.GetAllProductByIdCategory -> handleAllProductByIdCategory(action.id)
-            is ProductAction.GetAllOrderByUserId -> handleGetAllOrderByUserId(action.userId)
+            is ProductAction.GetAllOrderByUserId -> handleGetAllOrderByUserId()
             is ProductAction.GetCurrentOrder -> handleGetCurrentOrder(action.id)
             is ProductAction.LikeProduct -> handleLikeProduct(action.product)
 
@@ -97,15 +108,30 @@ class ProductViewModel @AssistedInject constructor(
             }
     }
 
-    private fun handleGetAllOrderByUserId(userId: String) {
-        setState { copy(asyncOrders = Loading(), asyncOrderings = Loading()) }
-        repository.getAllOrderByUserId(userId, "")
+    private fun handleGetAllOrderByUserId() {
+        setState {
+            copy(
+                asyncOrders = Loading(),
+                asyncUnconfirmed = Loading(),
+                asyncConfirmed = Loading(),
+                asyncDelivering = Loading()
+            )
+        }
+        repository.getAllOrderByUserId("")
             .execute {
                 copy(asyncOrders = it)
             }
-        repository.getAllOrderByUserId(userId, "65264bc32d9b3bb388078974")
+        repository.getAllOrderByUserId(UNCONFIRMED_STATUS)
             .execute {
-                copy(asyncOrderings = it)
+                copy(asyncUnconfirmed = it)
+            }
+        repository.getAllOrderByUserId(CONFIRMED_STATUS)
+            .execute {
+                copy(asyncConfirmed = it)
+            }
+        repository.getAllOrderByUserId(DELIVERING_STATUS)
+            .execute {
+                copy(asyncDelivering = it)
             }
     }
 
@@ -252,8 +278,28 @@ class ProductViewModel @AssistedInject constructor(
         }
     }
 
+
     fun returnVisibleBottomNav(isVisible: Boolean){
         _viewEvents.post(ProductEvent.ReturnVisibleBottomNav(isVisible))
+
+    fun handleRemoveAsyncClearCart() {
+        setState { copy(getClearCart = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncProductCart() {
+        setState { copy(getRemoveProductByIdCart = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncOneSize() {
+        setState { copy(asyncGetOneSize = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncChangeQuantity() {
+        setState { copy(getChangeQuantity = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncGetFavourite() {
+        setState { copy(asyncGetFavourite = Uninitialized) }
     }
 
     fun returnCommentFragment(){

@@ -16,8 +16,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
     private lateinit var tabLayout: TabLayout
-    private val productViewModel: ProductViewModel by activityViewModel()
-    private val userViewModel: UserViewModel by activityViewModel()
 
     companion object {
         const val TAG = "OrderFragment"
@@ -25,12 +23,6 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userId = withState(userViewModel){
-            it.asyncCurrentUser.invoke()?._id
-        }
-        if (userId!=null){
-            productViewModel.handle(ProductAction.GetAllOrderByUserId(userId))
-        }
     }
     override fun invalidate() {
         tabLayout = views.tabLayout

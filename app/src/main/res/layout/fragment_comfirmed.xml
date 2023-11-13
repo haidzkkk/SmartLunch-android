@@ -3,7 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.order.ComfirmedFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcy_order"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_order" />
 </FrameLayout>

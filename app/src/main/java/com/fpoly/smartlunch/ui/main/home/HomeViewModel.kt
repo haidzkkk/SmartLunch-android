@@ -91,8 +91,8 @@ class HomeViewModel @AssistedInject constructor(
     fun returnTrackingOrderFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(TrackingOrderFragment::class.java))
     }
-    fun returnOrderDetailFragment(bundle: Bundle){
-        _viewEvents.post(HomeViewEvent.ReturnFragmentWithArgument(OrderDetailFragment::class.java,bundle))
+    fun returnOrderDetailFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(OrderDetailFragment::class.java))
     }
 
     @AssistedFactory

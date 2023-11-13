@@ -29,7 +29,7 @@ sealed class ProductAction : PolyViewAction {
     data class GetRemoveProductByIdCart(val idProduct : String, val sizeId : String): ProductAction()
     data class GetAllProductByIdCategory(val id : String): ProductAction()
     data class GetCurrentOrder( val id : String) : ProductAction()
-    data class GetAllOrderByUserId(val userId : String) : ProductAction()
+    object GetAllOrderByUserId : ProductAction()
 
     data class GetListCommentsLimit(val productId : String) : ProductAction()
     data class GetListComments(val productId : String) : ProductAction()

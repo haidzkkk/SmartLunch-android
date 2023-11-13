@@ -13,12 +13,12 @@ class OrderViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecyc
 
     override fun createFragment(position: Int): Fragment {
         when(position){
-            0 -> return CurrentOrdersFragment()
-            1 -> return WaitingComfirmOrderFragment()
-            2 -> return ComfirmedFragment()
+            0 -> return WaitingConfirmOrderFragment()
+            1 -> return ConfirmedFragment()
+            2 -> return CurrentOrdersFragment()
             3 -> return HistoryOrderFragment()
         }
-        return CurrentOrdersFragment();
+        return WaitingConfirmOrderFragment();
     }
 
 }
