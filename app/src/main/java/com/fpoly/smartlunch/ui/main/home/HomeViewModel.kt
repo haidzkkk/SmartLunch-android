@@ -3,10 +3,12 @@ package com.fpoly.smartlunch.ui.main.home
 import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.repository.HomeRepository
+import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
 import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
 //import com.fpoly.smartlunch.ui.main.order.CartFragment
@@ -23,13 +25,21 @@ import dagger.assisted.AssistedInject
 
 class HomeViewModel @AssistedInject constructor(
     @Assisted state: HomeViewState,
-    private val repo: HomeRepository
+    private val placesRepository: PlacesRepository
 ) : PolyBaseViewModel<HomeViewState, HomeViewAction, HomeViewEvent>(state) {
 
     override fun handle(action: HomeViewAction) {
         when(action){
-            else -> {}
+            is HomeViewAction.GetCurrentLocation -> handleGetCurrentLocation(action.lat,action.lon)
         }
+    }
+
+    private fun handleGetCurrentLocation(lat: Double, lon: Double) {
+        setState { copy(asyncGetCurrentLocation = Loading()) }
+        placesRepository.getLocationName(lat,lon)
+            .execute {
+                copy(asyncGetCurrentLocation = it)
+            }
     }
 
     fun returnDetailProductFragment(){

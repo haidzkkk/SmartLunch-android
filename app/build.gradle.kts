@@ -104,6 +104,7 @@ dependencies {
 
     // map
     implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.libraries.places:places:2.5.0")
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
