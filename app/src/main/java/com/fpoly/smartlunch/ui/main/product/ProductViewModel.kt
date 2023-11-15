@@ -279,27 +279,8 @@ class ProductViewModel @AssistedInject constructor(
     }
 
 
-    fun returnVisibleBottomNav(isVisible: Boolean){
+    fun returnVisibleBottomNav(isVisible: Boolean) {
         _viewEvents.post(ProductEvent.ReturnVisibleBottomNav(isVisible))
-
-    fun handleRemoveAsyncClearCart() {
-        setState { copy(getClearCart = Uninitialized) }
-    }
-
-    fun handleRemoveAsyncProductCart() {
-        setState { copy(getRemoveProductByIdCart = Uninitialized) }
-    }
-
-    fun handleRemoveAsyncOneSize() {
-        setState { copy(asyncGetOneSize = Uninitialized) }
-    }
-
-    fun handleRemoveAsyncChangeQuantity() {
-        setState { copy(getChangeQuantity = Uninitialized) }
-    }
-
-    fun handleRemoveAsyncGetFavourite() {
-        setState { copy(asyncGetFavourite = Uninitialized) }
     }
 
     fun returnCommentFragment(){

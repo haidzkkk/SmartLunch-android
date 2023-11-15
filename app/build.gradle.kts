@@ -137,7 +137,6 @@ dependencies {
 
 
     // point banner
-//    implementation("me.relex:circleindicator:2.1.6")
     implementation("com.tbuonomo:dotsindicator:5.0")
 
     //    gg maps util for clustering
