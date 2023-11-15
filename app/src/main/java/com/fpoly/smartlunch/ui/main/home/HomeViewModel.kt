@@ -5,10 +5,14 @@ import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
+import com.fpoly.smartlunch.data.model.Banner
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.PlacesRepository
+import com.fpoly.smartlunch.ui.chat.ChatViewAction
+import com.fpoly.smartlunch.ui.main.comment.CommentFragment
 import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
 import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
 //import com.fpoly.smartlunch.ui.main.order.CartFragment
@@ -22,15 +26,27 @@ import com.fpoly.smartlunch.ui.main.profile.LanguageFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import io.reactivex.Observable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.http.GET
 
 class HomeViewModel @AssistedInject constructor(
     @Assisted state: HomeViewState,
-    private val placesRepository: PlacesRepository
+    private val placesRepository: PlacesRepository,
+    private val repo: HomeRepository
 ) : PolyBaseViewModel<HomeViewState, HomeViewAction, HomeViewEvent>(state) {
 
+    init {
+        handleGetBanner()
+    }
     override fun handle(action: HomeViewAction) {
         when(action){
             is HomeViewAction.GetCurrentLocation -> handleGetCurrentLocation(action.lat,action.lon)
+            is HomeViewAction.getBanner -> handleGetBanner()
+            is HomeViewAction.getDataGallery -> getDataGallery()
+            else -> {}
         }
     }
 
@@ -40,6 +56,22 @@ class HomeViewModel @AssistedInject constructor(
             .execute {
                 copy(asyncGetCurrentLocation = it)
             }
+    }
+
+    private fun handleGetBanner() {
+        setState { copy(asyncBanner = Loading()) }
+        repo.getBanner().execute {
+            copy(asyncBanner = it)
+        }
+    }
+
+    private fun getDataGallery() {
+        setState { copy(galleries = Loading()) }
+        CoroutineScope(Dispatchers.Main).launch{
+            val data = repo.getDataFromGallery()
+            val sortData= data.sortedByDescending { it.date }.toCollection(ArrayList())
+            setState { copy(galleries =  Success(sortData)) }
+        }
     }
 
     fun returnDetailProductFragment(){

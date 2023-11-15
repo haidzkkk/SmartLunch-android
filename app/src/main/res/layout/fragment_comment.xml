@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.main.comment.CommentFragment">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include android:id="@+id/layout_header"
+                layout="@layout/toolbar_header"/>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            android:id="@+id/tv_select_all"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:text="Tất cả"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:padding="3dp"
+                            android:layout_margin="1dp"
+                            android:background="@drawable/backgound_retangle_chip"/>
+
+                        <TextView
+                            android:id="@+id/tv_select_image"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:text="Có hình ảnh"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:padding="3dp"
+                            android:layout_margin="1dp"
+                            android:background="@drawable/backgound_retangle_chip"/>
+
+                        <LinearLayout
+                            android:id="@+id/layout_select_rate"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_margin="1dp"
+                            android:background="@drawable/backgound_retangle_chip">
+
+                            <TextView
+                                android:id="@+id/tv_select_rate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Sao"
+                                android:textColor="@color/black"
+                                android:paddingEnd="1dp"
+                                android:textSize="12dp"
+                                android:gravity="center"
+                                android:padding="3dp"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/start"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_down"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_select_size"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_margin="1dp"
+                            android:background="@drawable/backgound_retangle_chip">
+
+                            <TextView
+                                android:id="@+id/tv_select_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Size"
+                                android:textColor="@color/black"
+                                android:paddingEnd="1dp"
+                                android:textSize="12dp"
+                                android:gravity="center"
+                                android:padding="3dp"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_down"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        />
+                </LinearLayout>
+
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

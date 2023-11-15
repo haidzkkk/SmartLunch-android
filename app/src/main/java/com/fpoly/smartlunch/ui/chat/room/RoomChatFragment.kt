@@ -3,13 +3,11 @@ package com.fpoly.smartlunch.ui.chat.room
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -196,7 +194,9 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 if (it) {
                     checkResutlPerGallery(it)
                 } else {
-                    activity?.startToDetailPermission()
+                    showSnackbar(views.root, "Bạn chưa cho quyền truy cập ảnh", false, "Đến cài đặt"){
+                        activity?.startToDetailPermission()
+                    }
                 }
             }
         }
@@ -258,8 +258,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 MessageType.TYPE_IMAGE,
                 null
             )
-            val files = listSelectGallery.map { File(it.realPath) }.toList()
-            chatViewmodel.handle(ChatViewAction.postMessage(message, files))
+            chatViewmodel.handle(ChatViewAction.postMessage(message, listSelectGallery))
 
             listSelectGallery.clear()
             views.btnSendImage.isVisible = listSelectGallery.size > 0
@@ -284,7 +283,6 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
             .withBackgroundColorResource(R.color.black)
             .withHiddenStatusBar(true)
             .show()
-
     }
 
     override fun onDestroy() {

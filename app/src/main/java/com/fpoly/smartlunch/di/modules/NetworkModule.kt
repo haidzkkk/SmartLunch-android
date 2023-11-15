@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.fpoly.smartlunch.data.network.AuthApi
 import com.fpoly.smartlunch.data.network.ChatApi
+import com.fpoly.smartlunch.data.network.CommentApi
 import com.fpoly.smartlunch.data.network.ContentDataSource
 import com.fpoly.smartlunch.data.network.OrderApi
 import com.fpoly.smartlunch.data.network.PlacesApi
@@ -51,8 +52,9 @@ object NetworkModule {
 
     @Provides
     fun providerHomeRepository(
-        api: ProductApi
-    ): HomeRepository = HomeRepository(api)
+        api: ProductApi,
+        contentDataSource: ContentDataSource
+    ): HomeRepository = HomeRepository(api, contentDataSource)
 
     @Provides
     fun providerApiPlaces(
@@ -84,8 +86,9 @@ object NetworkModule {
 
     @Provides
     fun providerProductRepository(
-        api: ProductApi
-    ): ProductRepository = ProductRepository(api)
+        api: ProductApi,
+        commentApi: CommentApi
+    ): ProductRepository = ProductRepository(api, commentApi)
 
     @Provides
     fun providerApiAuth(
@@ -128,5 +131,11 @@ object NetworkModule {
         OrderApi: OrderApi,
         provinceAddressApi: ProvinceAddressApi,
     ): PaymentRepository = PaymentRepository(OrderApi, provinceAddressApi)
+
+    @Provides
+    fun providerApiComment(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): CommentApi = remoteDataSource.buildApi(CommentApi::class.java, context)
 }
 

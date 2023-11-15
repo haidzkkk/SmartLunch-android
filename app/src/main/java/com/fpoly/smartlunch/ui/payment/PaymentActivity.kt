@@ -2,12 +2,15 @@ package com.fpoly.smartlunch.ui.payment
 
 import android.os.Bundle
 import androidx.core.view.isVisible
+import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityPaymentBinding
+import com.fpoly.smartlunch.ui.main.home.HomeViewModel
+import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
@@ -46,6 +49,13 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         paymentViewModel.observeViewEvents {
             if (it != null) {
                 handleEvent(it)
+            }
+        }
+
+        productViewModel.observeViewEvents {
+            when(it){
+                is ProductEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, it.fragmentClass) }
+                else -> {}
             }
         }
     }

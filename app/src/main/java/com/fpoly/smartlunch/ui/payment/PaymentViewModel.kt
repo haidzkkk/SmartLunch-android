@@ -92,7 +92,7 @@ class PaymentViewModel @AssistedInject constructor(
                     if (throwable is HttpException){
                         setState { copy(catchError = when(throwable.code()){
                             400 ->{
-                                "Lỗi không sử dụng được phiếu giảm giá"
+                                "Không thể sử dụng mã"
                             }
                             else -> {""}
                         }, asyncCurentCart = Fail(throwable))}

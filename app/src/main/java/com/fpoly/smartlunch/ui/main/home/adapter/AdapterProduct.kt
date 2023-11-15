@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemProductLayoutHozBinding
-
+import com.fpoly.smartlunch.ultis.formatCash
 
 
 class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterProduct.ProductViewHolder>() {
@@ -34,8 +34,8 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.loading_img)
                 .into(image)
-            name.text = currentProduct.product_name.toString()
-            price.text = currentProduct.product_price.toString()
+            name.text = currentProduct.product_name
+            price.text = currentProduct.product_price.toDouble().formatCash()
             Liner_hoz.setOnClickListener {
                 onClickItem(currentProduct._id)
             }

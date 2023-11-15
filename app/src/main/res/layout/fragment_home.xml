@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingHorizontal="24dp">
+    android:orientation="vertical">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_loading"
@@ -20,7 +19,8 @@
             <RelativeLayout
                 android:id="@+id/layout_header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp">
 
                 <TextView
                     android:id="@+id/current_location"
@@ -66,27 +66,38 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:id="@+id/banner_tran"
+                        android:id="@+id/layout_banner"
                         android:layout_width="match_parent"
                         android:layout_height="175dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:paddingHorizontal="12dp">
 
-                        <View
-                            android:id="@+id/rectangle_2"
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/vp_banner"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:background="@drawable/img_2_home" />
+                            android:layout_height="148dp"
+                            android:layout_alignParentTop="true"/>
 
+                        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                            android:id="@+id/dots_banner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            app:dotsSize="8dp"
+                            app:dotsSpacing="4dp"
+                            app:selectedDotColor="@color/red"
+                            app:dotsColor="@color/grey"
+                            />
                     </RelativeLayout>
-
 
                     <GridLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:columnCount="4"
-                        android:rowCount="1">
+                        android:rowCount="1"
+                        android:paddingHorizontal="12dp">
 
                         <LinearLayout
                             android:id="@+id/cuaHang"
@@ -98,7 +109,7 @@
                             <ImageView
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
-                                android:layout_gravity="start"
+                                android:layout_gravity="center"
                                 android:background="@drawable/pizza" />
 
                             <TextView
@@ -183,7 +194,8 @@
                         android:id="@+id/nh_gi_cao1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp">
+                        android:layout_marginTop="24dp"
+                        android:paddingHorizontal="12dp">
 
                         <TextView
                             android:id="@+id/nh_gi_cao"
@@ -193,7 +205,7 @@
                             android:textAppearance="@style/ph_bi_n"
                             android:textColor="@color/black"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textFontWeight="1000" />
                     </RelativeLayout>
 
 
@@ -201,16 +213,17 @@
                         android:id="@+id/recycler_view_hoz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_product_layout_hoz" />
+                        tools:listitem="@layout/item_product_layout_hoz"/>
 
                     <RelativeLayout
                         android:id="@+id/nh_gi_cao3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:paddingHorizontal="12dp">
 
                         <TextView
                             android:id="@+id/nh_gi_cao2"
@@ -219,25 +232,27 @@
                             android:text="@string/nh_gi_cao"
                             android:textColor="@color/black"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textFontWeight="1000"/>
 
                         <TextView
                             android:id="@+id/xem_th_m1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="25dp"
-                            android:text="@string/xem_th_m" />
+                            android:text="xem thêm "
+                            android:drawableEnd="@drawable/icon_right"
+                            android:textColor="@color/red"/>
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_ver"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_new_layout_ver" />
+                        tools:listitem="@layout/item_new_layout_ver"
+                        android:paddingHorizontal="12dp" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -245,14 +260,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp">
 
                 <RelativeLayout
                     android:id="@+id/layout_order"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_margin="8dp"
-                    android:background="@drawable/background_boder_radius_circle"
+                    android:background="@drawable/background_border_radius_circle"
                     android:orientation="horizontal"
                     android:visibility="gone">
 
@@ -275,7 +291,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:backgroundTint="@color/blue_while"
-                        android:paddingHorizontal="24dp"
+                        android:paddingHorizontal="12dp"
                         android:text="Xem chi tiết"
                         android:textColor="@color/blue_light"
                         android:textSize="12sp" />
@@ -287,11 +303,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/background_boder_radio_button"
+                    android:background="@drawable/background_border_radio_button"
                     android:orientation="horizontal"
                     android:layout_margin="8dp"
                     android:padding="8dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:paddingHorizontal="12dp">
 
                     <TextView
                         android:id="@+id/float_BottomSheet"

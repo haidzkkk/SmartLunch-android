@@ -11,6 +11,7 @@ import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.core.example.ChatViewState
+import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.RequireCall
 import com.fpoly.smartlunch.data.model.RequireCallType
@@ -49,7 +50,7 @@ class ChatViewmodel @AssistedInject constructor(
             is ChatViewAction.setCurrentChat -> setCurentChat(action.room)
             is ChatViewAction.removeCurrentChat -> removeCurentChat()
 
-            is ChatViewAction.postMessage -> postMessage(action.message, action.files)
+            is ChatViewAction.postMessage -> postMessage(action.message, action.images)
             is ChatViewAction.removePostMessage -> removePostMessage()
             is ChatViewAction.returnOffEventMessageSocket -> repo.offReceiveMessage(action.roomId)
             is ChatViewAction.returnConnectSocket -> repo.connectSocket()
@@ -111,9 +112,9 @@ class ChatViewmodel @AssistedInject constructor(
     }
 
     // post message
-    private fun postMessage(message: Message, files: List<File>?) {
+    private fun postMessage(message: Message, images: List<Gallery>?) {
         setState { copy(messageSent = Loading()) }
-        repo.postMessage(message, files).execute{
+        repo.postMessage(message, images).execute{
             copy(messageSent = it)
         }
     }
