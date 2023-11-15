@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ultis
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -17,17 +18,20 @@ fun Activity.startToDetailPermission() {
 }
 
 fun Fragment.checkPermissionGallery(isAllow: (Boolean) -> Unit) {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU){
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
         PermissionX.init(this)
             .permissions(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             .request { allGranded, _, _ ->
-                    isAllow(allGranded)
+                isAllow(allGranded)
             }
-    }else{
+    } else {
         PermissionX.init(this)
-            .permissions(android.Manifest.permission.READ_MEDIA_IMAGES, android.Manifest.permission.READ_MEDIA_VIDEO)
+            .permissions(
+                android.Manifest.permission.READ_MEDIA_IMAGES,
+                android.Manifest.permission.READ_MEDIA_VIDEO
+            )
             .request { allGranded, _, _ ->
-                    isAllow(allGranded)
+                isAllow(allGranded)
             }
     }
 }
@@ -40,5 +44,15 @@ fun Fragment.checkPermisionCallVideo(isAllow: (Boolean) -> Unit) {
         )
         .request { allGranded, _, _ ->
             isAllow(allGranded)
+        }
+}
+
+fun Fragment.checkRequestPermissions(isAllow: (Boolean) -> Unit) {
+    PermissionX.init(this)
+        .permissions(
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        .request { allGranted, _, _ ->
+            isAllow(allGranted)
         }
 }

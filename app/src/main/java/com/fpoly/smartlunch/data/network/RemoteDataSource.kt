@@ -13,8 +13,8 @@ class RemoteDataSource(
 
 ) {
     companion object{
-        public const val BASE_URL = "http://192.168.1.8:3000"
-
+        public const val BASE_URL = "http://192.168.2.210:3000"
+        public const val OPEN_STREET_MAP_URL = "https://nominatim.openstreetmap.org/"
         public const val URL_PROVINCE = "https://vapi.vnappmob.com"
     }
 
@@ -31,6 +31,16 @@ class RemoteDataSource(
     public fun <API> buildApiProvince(apiClass: Class<API>, context: Context): API{
         return Retrofit.Builder()
             .baseUrl(URL_PROVINCE)
+            .client(getHttpClientBuilder(context).build())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(apiClass)
+    }
+
+    public fun <API> buildApiOpenStreetMap(apiClass: Class<API>, context: Context): API{
+        return Retrofit.Builder()
+            .baseUrl(OPEN_STREET_MAP_URL)
             .client(getHttpClientBuilder(context).build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

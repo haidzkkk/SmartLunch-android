@@ -1,12 +1,17 @@
 package com.fpoly.smartlunch.ui.main.order
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import androidx.fragment.app.Fragment
+import android.os.Looper
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.app.ActivityCompat
+import androidx.navigation.fragment.findNavController
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
@@ -14,253 +19,243 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.ClusterMarker
+import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.UserLocation
 import com.fpoly.smartlunch.databinding.FragmentTrackingOrderBinding
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.MyClusterManagerRenderer
-import com.fpoly.smartlunch.ultis.Status.MAPVIEW_BUNDLE_KEY
+import com.fpoly.smartlunch.ultis.Status.avatar_shipper_default
 import com.fpoly.smartlunch.ultis.Status.collection_user_locations
+import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
+import com.fpoly.smartlunch.ultis.startToDetailPermission
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.DocumentReference
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.clustering.ClusterManager
 
 class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), OnMapReadyCallback {
     private val productViewModel: ProductViewModel by activityViewModel()
-
     private lateinit var mGoogleMap: GoogleMap
     private var mMapBoundary: LatLngBounds? = null
-    private var mUserPosition: UserLocation? = null
+    private var clusterMarker: ClusterMarker? = null
+    private var mClusterManager: ClusterManager<ClusterMarker>? = null
     private var currentOrder: OrderResponse? = null
+    private var currentShipperId: String? = null
     private lateinit var mDb: FirebaseFirestore
     private var supportMapFragment: SupportMapFragment? = null
-    private var mClusterManager: ClusterManager<ClusterMarker>? = null
     private var mClusterManagerRenderer: MyClusterManagerRenderer? = null
-    private var mClusterMarkers: ArrayList<ClusterMarker> = ArrayList()
+    private val displaySize = DisplayMetrics()
+    private lateinit var bottomBehavior: BottomSheetBehavior<LinearLayout>
 
-    private val mHandler: Handler = Handler()
-    private var mRunnable: Runnable? = null
-    private var mUserLocations = ArrayList<UserLocation>()
-
-    companion object {
-        private const val LOCATION_UPDATE_INTERVAL: Long = 3000
-        private const val TAG = "TrackingOrderFragment"
+    private val locationUpdateInterval: Long = 3000
+    private val locationUpdateHandler = Handler(Looper.getMainLooper())
+    private val locationUpdateRunnable = object : Runnable {
+        override fun run() {
+            currentShipperId?.let { getShipperLocation(it) }
+            locationUpdateHandler.postDelayed(this, locationUpdateInterval)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initGoogleMap(savedInstanceState)
+        initGoogleMap()
+        setupAppBar()
+        setupBottomSheetBehavior()
+        listenEvent()
     }
 
-    private fun initGoogleMap(savedInstanceState: Bundle?) {
-        var mapViewBundle: Bundle? = null
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+    private fun listenEvent() {
+        views.appBar.btnBackToolbar.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
         }
+    }
+
+    private fun setupAppBar() {
+        views.appBar.apply {
+            btnBackToolbar.visibility=View.VISIBLE
+            tvTitleToolbar.text="Theo dõi đơn hàng"
+        }
+    }
+
+    private fun setupBottomSheetBehavior() {
+        requireActivity().windowManager.defaultDisplay.getMetrics(displaySize)
+        bottomBehavior = BottomSheetBehavior.from(views.layoutTrackingOrder).apply {
+            this.state = BottomSheetBehavior.STATE_COLLAPSED
+            this.isHideable = false
+            this.peekHeight = (displaySize.heightPixels * 0.1).toInt()
+        }
+    }
+
+    private fun initGoogleMap() {
         supportMapFragment =
             childFragmentManager.findFragmentById(R.id.map_view_tracking) as SupportMapFragment?
         supportMapFragment?.getMapAsync(this)
         mDb = FirebaseFirestore.getInstance()
     }
 
-    private fun setUserPosition() {
-        if (mUserPosition == null && currentOrder?.shipperId != null) {
-            val locationRef: DocumentReference = mDb
-                .collection(collection_user_locations)
-                .document(currentOrder!!._id)
-
-            locationRef.get()
-                .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        // Dữ liệu tồn tại, bạn có thể giải mã và sử dụng nó
-                        mUserPosition = documentSnapshot.toObject(UserLocation::class.java)
-                        mUserLocations.add(mUserPosition!!)
-                    } else {
-                        // Tài liệu không tồn tại
-                        Log.d("TAG", "Tài liệu không tồn tại")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    // Xử lý lỗi nếu có
-                    Log.e("TAG", "Lỗi khi đọc dữ liệu từ Firestore", exception)
-                }
-        }
-    }
-
-
-    private fun startUserLocationsRunnable() {
-        mHandler.postDelayed(Runnable {
-            retrieveUserLocations()
-            mHandler.postDelayed(mRunnable!!, LOCATION_UPDATE_INTERVAL)
-        }.also { mRunnable = it }, LOCATION_UPDATE_INTERVAL)
-    }
-
-    private fun stopLocationUpdates() {
-        mHandler.removeCallbacks(mRunnable!!)
-    }
-
-    private fun retrieveUserLocations() {
-        try {
-            for (clusterMarker in mClusterMarkers) {
-                val userLocationRef = FirebaseFirestore.getInstance()
-                    .collection(collection_user_locations)
-                    .document(clusterMarker.user._id)
-                userLocationRef.get().addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val updatedUserLocation = task.result.toObject(
-                            UserLocation::class.java
-                        )
-                        // update the location
-                        for (i in mClusterMarkers.indices) {
-                            try {
-                                if (mClusterMarkers[i].user._id == updatedUserLocation!!.user!!._id) {
-                                    val updatedLatLng = LatLng(
-                                        updatedUserLocation.geoPoint!!.latitude,
-                                        updatedUserLocation.geoPoint!!.longitude
-                                    )
-                                    mClusterMarkers[i].position = updatedLatLng
-                                    mClusterManagerRenderer?.setUpdateMarker(mClusterMarkers[i])
-                                }
-                            } catch (e: java.lang.NullPointerException) {
-                                Log.e(
-                                    TAG,
-                                    "retrieveUserLocations: NullPointerException: " + e.message
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (e: IllegalStateException) {
-            Log.e(
-                TAG,
-                "retrieveUserLocations: Fragment was destroyed during Firestore query. Ending query." + e.message
-            )
-        }
-    }
-
-    private fun addMapMarkers() {
-        if (mClusterManager == null) {
-            mClusterManager =
-                ClusterManager<ClusterMarker>(requireActivity().applicationContext, mGoogleMap)
-        }
-        if (mClusterManagerRenderer == null) {
-            mClusterManagerRenderer = MyClusterManagerRenderer(
-                requireActivity(),
-                mGoogleMap,
-                mClusterManager!!
-            )
-            mClusterManager?.renderer = mClusterManagerRenderer
-        }
-        for (userLocation in mUserLocations) {
-            Log.d(TAG, "addMapMarkers: location: " + userLocation.geoPoint.toString())
-            try {
-                val snippet =
-                    "Determine route to " + userLocation.user!!.first_name + "?"
-                var avatar: String? = ""
-                try {
-                    avatar = userLocation.user!!.avatar!!.url
-                } catch (e: NumberFormatException) {
-                    Log.d(
-                        TAG,
-                        "addMapMarkers: no avatar for " + userLocation.user!!.first_name + ", setting default."
-                    )
-                }
-                val newClusterMarker = ClusterMarker(
-                    LatLng(
-                        userLocation.geoPoint!!.latitude,
-                        userLocation.geoPoint!!.longitude
-                    ),
-                    userLocation.user!!.first_name,
-                    snippet,
-                    avatar!!,
-                    userLocation.user!!
-                )
-                mClusterManager?.addItem(newClusterMarker)
-                mClusterMarkers.add(newClusterMarker)
-            } catch (e: NullPointerException) {
-                Log.e(TAG, "addMapMarkers: NullPointerException: " + e.message)
-            }
-        }
-        mClusterManager?.cluster()
-
-    }
-
-    private fun handleSetAnimationCamera(latLng: LatLng) {
-        mGoogleMap.clear()
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17F))
-        mGoogleMap.addMarker(MarkerOptions().position(latLng))
-    }
-
     override fun onResume() {
         super.onResume()
-        supportMapFragment!!.onResume()
-        startUserLocationsRunnable()
+        supportMapFragment?.onResume()
+        if (checkPermissionRound2()) {
+            onStartTracking()
+        }
     }
 
-    override fun onStart() {
-        super.onStart()
-        supportMapFragment!!.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        supportMapFragment!!.onStop()
+    private fun checkPermissionRound2(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            activity?.showUtilDialogWithCallback(
+                Notify(
+                    "Yêu cầu quyền",
+                    "bạn chưa cho phép quyền sử dụng vị trí",
+                    "Vào cài đặt để cấp quyền",
+                    R.raw.animation_successfully
+                )
+            ) {
+                activity?.startToDetailPermission()
+            }
+            return false
+        }
+        return true
     }
 
     override fun onPause() {
-        supportMapFragment!!.onPause()
+        supportMapFragment?.onPause()
         super.onPause()
+        onStopTracking()
     }
 
     override fun onDestroy() {
-        supportMapFragment!!.onDestroy()
+        supportMapFragment?.onDestroy()
         super.onDestroy()
-        stopLocationUpdates()
+        onStopTracking()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        supportMapFragment!!.onLowMemory()
-    }
-
-    override fun getBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentTrackingOrderBinding {
+    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentTrackingOrderBinding {
         return FragmentTrackingOrderBinding.inflate(inflater, container, false)
     }
 
-    override fun invalidate(): Unit = withState(productViewModel) {
-        when (it.addOrder) {
-            is Success -> {
-                currentOrder = it.addOrder.invoke()
-                setUserPosition()
+    override fun invalidate() {
+        withState(productViewModel) {
+            when (it.addOrder) {
+                is Success -> {
+                    currentOrder = it.addOrder.invoke()
+                    currentOrder?.shipperId?.let { shipperId ->
+                        currentShipperId = shipperId
+                        getShipperLocation(shipperId)
+                    }
+                }
+                is Fail -> {}
+                else -> {}
             }
-
-            is Fail -> {
-            }
-
-            else -> {}
         }
     }
 
-    override fun onMapReady(p0: GoogleMap) {
-        mGoogleMap = p0
-        addMapMarkers()
-        handleSetAnimationCamera(
-            LatLng(
-                22.7615314,
-                105.34824599999999
-            )
-        )
+    private fun getShipperLocation(shipperId: String) {
+        val userLocationCollection = mDb.collection(collection_user_locations).document(shipperId)
+        userLocationCollection.get()
+            .addOnSuccessListener { document ->
+                val shipperLocation = document.toObject(UserLocation::class.java)
+                shipperLocation?.let {
+                    updateMarkerWithNewLocation(it)
+                    updateShipperContactLayout(it)
+                }
+            }
+            .addOnFailureListener { }
     }
 
+    private fun updateShipperContactLayout(shipperLocation: UserLocation) {
+        views.apply {
+            shipperName.text = "${shipperLocation.user?.last_name} ${shipperLocation.user?.first_name}"
+            phone.text = "${shipperLocation.user?.phone}"
+            trackingToolbar.progressView3.visibility = View.GONE
+            trackingToolbar.deliveredIcon.visibility = View.GONE
+        }
+    }
+
+    private fun updateMarkerWithNewLocation(userLocation: UserLocation) {
+        mClusterManager?.let { clusterManager ->
+            userLocation.geoPoint?.let { geoPoint ->
+                val latLng = LatLng(geoPoint.latitude, geoPoint.longitude)
+                clusterMarker = userLocation.user?.let {
+                    ClusterMarker(
+                        latLng,
+                        it.first_name ?: "",
+                        it.email ?: "",
+                        it.avatar?.url ?: avatar_shipper_default,
+                        it
+                    )
+                }
+                clusterManager.clearItems()
+                clusterMarker?.let {
+                    clusterManager.addItem(it)
+                }
+                clusterManager.cluster()
+
+                if (mMapBoundary == null) {
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                }
+                setCameraView(userLocation)
+            }
+        }
+    }
+
+    private fun setCameraView(mUserPosition: UserLocation) {
+        val latLng = mUserPosition.geoPoint?.let { LatLng(it.latitude, it.longitude) }
+        val offset = 0.01
+        val bottomBoundary = latLng?.latitude?.minus(offset)
+        val leftBoundary = latLng?.longitude?.minus(offset)
+        val topBoundary = latLng?.latitude?.plus(offset)
+        val rightBoundary = latLng?.longitude?.plus(offset)
+
+        mMapBoundary = LatLngBounds(
+            LatLng(bottomBoundary!!, leftBoundary!!),
+            LatLng(topBoundary!!, rightBoundary!!)
+        )
+
+        if (mGoogleMap.cameraPosition.zoom < 14) {
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary!!, 0))
+        }
+    }
+
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mGoogleMap = googleMap
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        mGoogleMap.isMyLocationEnabled = true
+        mClusterManager = ClusterManager(context, mGoogleMap)
+        mGoogleMap.setOnCameraIdleListener(mClusterManager)
+
+        if (mClusterManagerRenderer == null) {
+            mClusterManagerRenderer =
+                MyClusterManagerRenderer(requireContext(), mGoogleMap, mClusterManager!!)
+            mClusterManager?.renderer = mClusterManagerRenderer
+        }
+    }
+
+    private fun onStartTracking() {
+        locationUpdateHandler.postDelayed(locationUpdateRunnable, locationUpdateInterval)
+    }
+
+    private fun onStopTracking() {
+        locationUpdateHandler.removeCallbacks(locationUpdateRunnable)
+    }
 }

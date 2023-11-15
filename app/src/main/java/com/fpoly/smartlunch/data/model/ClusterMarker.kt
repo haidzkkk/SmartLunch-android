@@ -5,20 +5,11 @@ import com.google.maps.android.clustering.ClusterItem
 
 class ClusterMarker(
     private var position: LatLng,
-    private var title: String, snippet: String, iconPicture: String, user: User
-) :
-    ClusterItem {
-    private var snippet
-            : String
-    var iconPicture: String
+    private var title: String,
+    private var snippet: String,
+    var iconPicture: String,
     var user: User
-
-    init {
-        title = title
-        this.snippet = snippet
-        this.iconPicture = iconPicture
-        this.user = user
-    }
+) : ClusterItem {
 
     fun setPosition(position: LatLng) {
         this.position = position
@@ -32,19 +23,10 @@ class ClusterMarker(
         this.snippet = snippet
     }
 
-    override fun getPosition(): LatLng {
-        return position
-    }
+    override fun getPosition(): LatLng = position
 
-    override fun getTitle(): String {
-        return title
-    }
+    override fun getTitle(): String = title
 
-    override fun getSnippet(): String {
-        return snippet
-    }
-
-    override fun getZIndex(): Float {
-        return 0f
-    }
+    override fun getSnippet(): String = snippet
+    override fun getZIndex(): Float = 0f
 }

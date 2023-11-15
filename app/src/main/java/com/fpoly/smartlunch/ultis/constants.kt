@@ -1,10 +1,8 @@
 package com.fpoly.smartlunch.ultis
 
 object Status {
-    const val ERROR_DIALOG_REQUEST = 9001
-    const val PERMISSIONS_REQUEST_ENABLE_GPS =9002
-    const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
     const val collection_user_locations = "User Locations"
+    const val avatar_shipper_default = "https://cdn-icons-png.flaticon.com/512/1580/1580325.png"
     const val UNCONFIRMED_STATUS: String = "65264bc32d9b3bb388078974"
     const val CONFIRMED_STATUS: String = "65264c102d9b3bb388078976"
     const val DELIVERING_STATUS: String = "65264c672d9b3bb388078978"
