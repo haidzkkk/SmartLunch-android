@@ -25,7 +25,9 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.databinding.FragmentEditProfileBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
+import com.fpoly.smartlunch.ultis.checkPermissionGallery
 import com.fpoly.smartlunch.ultis.showDatePickerDialog
+import com.fpoly.smartlunch.ultis.showPermissionDeniedToast
 import com.fpoly.smartlunch.ultis.showUtilDialog
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -82,10 +84,7 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
             onSubmitForm()
         }
         views.updateAvatar.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            resultLauncher.launch(intent)
+            selectImageFromGallery()
         }
         views.birthday.setOnClickListener {
             activity?.showDatePickerDialog {
@@ -147,19 +146,26 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
         views.editSubmit.isEnabled = isSendButtonEnabled
     }
 
-    var resultLauncher = registerForActivityResult<Intent, ActivityResult>(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result != null) {
-            val intent = result.data
-            if (intent!!.data != null && result.resultCode == Activity.RESULT_OK) {
-                val selectedImageUri = intent.data
-                if (selectedImageUri != null) {
-                    val imageFile = File(uriToFilePath(selectedImageUri))
-                    viewModel.handle(UserViewAction.UploadAvatar(imageFile))
-                }
+    private fun selectImageFromGallery() {
+        checkPermissionGallery { isAllowed ->
+            if (isAllowed) {
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                resultLauncher.launch(intent)
+            } else {
+                showPermissionDeniedToast()
             }
         }
+    }
+
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val selectedImageUri: Uri? = result.data?.data
+            selectedImageUri?.let { handleGalleryImageSelection(it) }
+        }
+    }
+    private fun handleGalleryImageSelection(uri: Uri) {
+        val imageFile = File(uriToFilePath(uri))
+        viewModel.handle(UserViewAction.UploadAvatar(imageFile))
     }
 
     private fun uriToFilePath(uri: Uri): String {

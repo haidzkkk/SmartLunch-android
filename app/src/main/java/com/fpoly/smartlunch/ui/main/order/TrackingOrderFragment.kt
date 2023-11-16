@@ -168,6 +168,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
             when (it.addOrder) {
                 is Success -> {
                     currentOrder = it.addOrder.invoke()
+                    handleStateProgress()
                     currentOrder?.shipperId?.let { shipperId ->
                         currentShipperId = shipperId
                         getShipperLocation(shipperId)
