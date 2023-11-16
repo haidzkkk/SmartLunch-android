@@ -29,7 +29,6 @@ import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.MyClusterManagerRenderer
 import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.Status
-import com.fpoly.smartlunch.ultis.Status.MAPVIEW_BUNDLE_KEY
 import com.fpoly.smartlunch.ultis.Status.avatar_shipper_default
 import com.fpoly.smartlunch.ultis.Status.collection_user_locations
 import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
@@ -80,11 +79,12 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         views.appBar.btnBackToolbar.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
-        views.btnChat.setOnClickListener{
+        views.btnChat.setOnClickListener {
             val intent = Intent(requireContext(), ChatActivity::class.java).apply {
                 putExtras(Bundle().apply {
                     putString("type", MyConfigNotifi.TYPE_CHAT)
-                    putString("idUrl", currentOrder?.shipperId ?: "") }
+                    putString("idUrl", currentOrder?.shipperId ?: "")
+                }
                 )
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
@@ -94,8 +94,8 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
 
     private fun setupAppBar() {
         views.appBar.apply {
-            btnBackToolbar.visibility=View.VISIBLE
-            tvTitleToolbar.text="Theo dõi đơn hàng"
+            btnBackToolbar.visibility = View.VISIBLE
+            tvTitleToolbar.text = "Theo dõi đơn hàng"
         }
     }
 
@@ -156,7 +156,10 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         onStopTracking()
     }
 
-    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentTrackingOrderBinding {
+    override fun getBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentTrackingOrderBinding {
         return FragmentTrackingOrderBinding.inflate(inflater, container, false)
     }
 
@@ -170,6 +173,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
                         getShipperLocation(shipperId)
                     }
                 }
+
                 is Fail -> {}
                 else -> {}
             }
@@ -191,10 +195,9 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
 
     private fun updateShipperContactLayout(shipperLocation: UserLocation) {
         views.apply {
-            shipperName.text = "${shipperLocation.user?.last_name} ${shipperLocation.user?.first_name}"
+            shipperName.text =
+                "${shipperLocation.user?.last_name} ${shipperLocation.user?.first_name}"
             phone.text = "${shipperLocation.user?.phone}"
-            trackingToolbar.progressView3.visibility = View.GONE
-            trackingToolbar.deliveredIcon.visibility = View.GONE
         }
     }
 
@@ -243,13 +246,6 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         }
     }
 
-    override fun invalidate(): Unit = withState(productViewModel) {
-        when (it.addOrder) {
-            is Success -> {
-                currentOrder = it.addOrder.invoke()
-                setUserPosition()
-                handleStateProgress()
-            }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
@@ -320,10 +316,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
             }
         }
     }
-}
-
     private fun onStopTracking() {
         locationUpdateHandler.removeCallbacks(locationUpdateRunnable)
     }
 }
-
