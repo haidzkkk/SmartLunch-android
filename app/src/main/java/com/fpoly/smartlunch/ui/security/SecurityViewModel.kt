@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.security
 
+import android.util.Log
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
@@ -90,12 +91,16 @@ class SecurityViewModel @AssistedInject constructor(
     }
 
     private fun handleLogin(userName:String,password: String){
-        setState {
-            copy(asyncLogin= Loading())
+         withState {
+             setState {
+                 copy(asyncLogin= Loading())
+             }
+             repository.login(userName,password).execute {
+                 copy(asyncLogin=it)
+             }
         }
-        repository.login(userName,password).execute {
-            copy(asyncLogin=it)
-        }
+
+
     }
     private fun handleSignup(user:UserRequest){
         setState {

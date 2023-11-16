@@ -283,6 +283,27 @@ class ProductViewModel @AssistedInject constructor(
         _viewEvents.post(ProductEvent.ReturnVisibleBottomNav(isVisible))
     }
 
+    fun handleRemoveAsyncClearCart() {
+        setState { copy(getClearCart = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncProductCart() {
+        setState { copy(getRemoveProductByIdCart = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncOneSize() {
+        setState { copy(asyncGetOneSize = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncChangeQuantity() {
+        setState { copy(getChangeQuantity = Uninitialized) }
+    }
+
+    fun handleRemoveAsyncGetFavourite() {
+        setState { copy(asyncGetFavourite = Uninitialized) }
+
+    }
+
     fun returnCommentFragment(){
         _viewEvents.post(ProductEvent.ReturnFragment(CommentFragment::class.java))
     }

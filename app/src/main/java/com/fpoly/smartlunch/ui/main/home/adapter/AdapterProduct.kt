@@ -9,6 +9,7 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemProductLayoutHozBinding
 import com.fpoly.smartlunch.ultis.formatCash
+import com.fpoly.smartlunch.ultis.setMargins
 
 
 class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterProduct.ProductViewHolder>() {
@@ -20,15 +21,13 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
             products = list
             notifyDataSetChanged()
         }
-
     }
    inner class ProductViewHolder(private val binding: ItemProductLayoutHozBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
         val image = binding.image
         val Liner_hoz = binding.LinerHoz
         val name = binding.nameProduct
         val price = binding.priceProduct
-        fun bind(currentProduct : Product ) {
-
+        fun bind(currentProduct : Product, position: Int ) {
             Glide.with(context)
                 .load( if(currentProduct.images.isNotEmpty()) currentProduct.images[0].url else "")
                 .placeholder(R.drawable.loading_img)
@@ -39,6 +38,9 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
             Liner_hoz.setOnClickListener {
                 onClickItem(currentProduct._id)
             }
+
+            if (position == products.size -1 ) binding.layoutMain.setMargins(0, 0, 30, 0)
+            else binding.layoutMain.setMargins(0, 0, 0, 0)
         }
 
     }
@@ -51,7 +53,7 @@ class AdapterProduct(private val onClickItem: (id: String) -> Unit) : RecyclerVi
     }
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val currentProduct: Product = products[position]
-      holder.bind(currentProduct)
+        holder.bind(currentProduct, position)
 
     }
 

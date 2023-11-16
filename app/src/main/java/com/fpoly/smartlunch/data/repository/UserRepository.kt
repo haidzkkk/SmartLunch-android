@@ -3,6 +3,7 @@ package com.fpoly.smartlunch.data.repository
 import com.fpoly.smartlunch.data.model.Address
 import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.ChangePassword
+import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.data.model.User
@@ -45,4 +46,6 @@ class UserRepository(
         api.getAddressById(id).subscribeOn(Schedulers.io())
     fun getUpdateById(id: String): Observable<Address> =
         api.getUpdateById(id).subscribeOn(Schedulers.io())
+    fun logout(): Observable<User> =  api.logoutUser().subscribeOn(Schedulers.io())
+
 }

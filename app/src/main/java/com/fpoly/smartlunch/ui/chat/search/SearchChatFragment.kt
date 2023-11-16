@@ -59,7 +59,7 @@ class SearchChatFragment : PolyBaseFragment<FragmentSearchChatBinding>(){
 
         adapter = SearchChatAdapter{
             findNavController().navigate(R.id.roomChatFragment)
-            chatViewModel.handle(ChatViewAction.findRoomSearch(it))
+            chatViewModel.handle(ChatViewAction.findRoomSearch(it._id))
         }
         views.rcv.adapter = adapter
         views.rcv.layoutManager = LinearLayoutManager(requireContext())

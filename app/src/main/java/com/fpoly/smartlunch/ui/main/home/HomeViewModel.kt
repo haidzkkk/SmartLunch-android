@@ -9,11 +9,13 @@ import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.Banner
+import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
 import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
+import com.fpoly.smartlunch.ui.main.order.ProductReviewFragment
 import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
 //import com.fpoly.smartlunch.ui.main.order.CartFragment
 //import com.fpoly.smartlunch.ui.main.order.PayFragment
@@ -40,6 +42,12 @@ class HomeViewModel @AssistedInject constructor(
 
     init {
         handleGetBanner()
+
+        repo.getTokenDevice{
+            repo.addTokenDevice(TokenDevice(it)).execute {
+                copy()
+            }
+        }
     }
     override fun handle(action: HomeViewAction) {
         when(action){
@@ -100,6 +108,9 @@ class HomeViewModel @AssistedInject constructor(
     }
     fun returnTrackingOrderFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(TrackingOrderFragment::class.java))
+    }
+    fun returnProductReviewFragment(){
+        _viewEvents.post(HomeViewEvent.ReturnFragment(ProductReviewFragment::class.java))
     }
     fun returnOrderDetailFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(OrderDetailFragment::class.java))

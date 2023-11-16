@@ -4,9 +4,11 @@ import com.fpoly.smartlunch.data.model.Address
 import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.ChangePassword
 import com.fpoly.smartlunch.data.model.Image
+import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.data.model.User
+import io.reactivex.Completable
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -40,4 +42,6 @@ interface UserApi {
     fun getAddressById(@Path("id") id: String):Observable<Address>
     @PATCH("api/addresses/{id}")
     fun getUpdateById(@Path("id") id: String):Observable<Address>
+    @POST("api/logout/mobile")
+    fun logoutUser():Observable<User>
 }

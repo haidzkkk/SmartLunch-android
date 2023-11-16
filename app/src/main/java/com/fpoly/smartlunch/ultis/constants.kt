@@ -1,5 +1,17 @@
 package com.fpoly.smartlunch.ultis
 
+object MyConfigNotifi{
+    const val CHANNEL_ID = "MY_CHANNEL_ID"
+    const val CHANNEL_ID_CHAT = "MY_CHANNEL_ID_CHAT"
+    const val CHANNEL_ID_CALL = "MY_CHANNEL_ID_CALL"
+
+    // type để nhận biết loại thông báo muốn giử
+    var TYPE_ALL = "TYPE_ALL"
+    var TYPE_CHAT = "TYPE_CHAT"
+    var TYPE_CALL = "TYPE_CALL"
+
+}
+
 object Status {
     const val collection_user_locations = "User Locations"
     const val avatar_shipper_default = "https://cdn-icons-png.flaticon.com/512/1580/1580325.png"

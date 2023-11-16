@@ -45,17 +45,87 @@
                     android:text="Tài xế đang chờ lấy hàng"
                     android:textSize="14dp" />
 
-                <include
-                    layout="@layout/tracking_toolbar"
-                    android:id="@+id/tracking_toolbar"/>
-
-                <TextView
-                    android:id="@+id/followOrderText"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Theo dõi >"
-                    android:textAlignment="textEnd"
-                    android:textColor="#F44849" />
+                    android:layout_marginVertical="16dp">
+
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:theme="@style/colorProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:max="3"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="40dp" />
+
+                    <LinearLayout
+                        android:id="@+id/orderStatusProgressLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <ImageView
+                            android:id="@+id/img_status_1"
+                            android:layout_width="0dp"
+                            android:layout_height="28dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_waiting_order_unselect"
+                            />
+
+                        <ImageView
+                            android:id="@+id/img_status_2"
+                            android:layout_width="0dp"
+                            android:layout_height="28dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_cooking_unselect" />
+
+                        <ImageView
+                            android:id="@+id/img_status_3"
+                            android:layout_width="0dp"
+                            android:layout_height="28dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_delivering_unselect" />
+
+                        <ImageView
+                            android:id="@+id/img_status_4"
+                            android:layout_width="0dp"
+                            android:layout_height="28dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/icon_delivered_unselect" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/green_light" />
+
+                    <TextView
+                        android:id="@+id/followOrderText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="Theo dõi "
+                        android:paddingStart="20dp"
+                        android:drawableEnd="@drawable/icon_right"
+                        android:textAlignment="textEnd"
+                        android:textColor="#F44849"/>
+
+                </RelativeLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -273,7 +343,7 @@
                     <TextView
                         android:id="@+id/location"
                         android:layout_width="match_parent"
-                        android:layout_height="43dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="315,  Trường Chinh, Khương Mai, Đống Đa, Hà Nội"
                         android:textAlignment="textEnd"
@@ -325,8 +395,10 @@
                 android:id="@+id/btnConfirmReceived"
                 android:layout_width="327dp"
                 android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
                 android:layout_gravity="center"
-                android:text="Đã nhận được hàng"
+                android:text="Đánh giá"
+                android:enabled="false"
                 android:textAlignment="center" />
         </LinearLayout>
 

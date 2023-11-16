@@ -8,12 +8,14 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -62,11 +64,11 @@ fun Context.hideKeyboard(view: View) {
 }
 
 @SuppressLint("ShowToast", "ResourceAsColor")
-public fun showSnackbar(view: View, message: String, isSuccess: Boolean, btnStr: String?, onClick: () -> Unit){
+public fun showSnackbar(view: View, message: String, isSuccess: Boolean, btnStr: String?, onClick: (() -> Unit)?){
     val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
     snackbar.view.setBackgroundColor(ContextCompat.getColor(view.context!!, if (isSuccess) R.color.green_light else R.color.red_light))
     snackbar.setActionTextColor(Color.WHITE)
-    snackbar.setAction(btnStr){ onClick() }
+    snackbar.setAction(btnStr){ if (onClick != null) { onClick() } }
     snackbar.show()
 }
 
@@ -127,6 +129,9 @@ fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
     return Uri.parse(path)
 }
+
+fun Int.toBitMap(resources: Resources) =  BitmapFactory.decodeResource(resources, this)
+
 fun<T> checkStatusApiRes(err: Fail<T>): Int {
     return when(err.error.message!!.trim()){
         "HTTP 200" ->{
@@ -152,3 +157,12 @@ fun<T> checkStatusApiRes(err: Fail<T>): Int {
         }
     }
 }
+
+fun View.setMargins(left: Int, top: Int, right: Int, bottom: Int){
+    if (this.layoutParams is ViewGroup.MarginLayoutParams) {
+        val marginLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+        marginLayoutParams.setMargins(left, top, right, bottom)
+        this.requestLayout()
+    }
+}
+

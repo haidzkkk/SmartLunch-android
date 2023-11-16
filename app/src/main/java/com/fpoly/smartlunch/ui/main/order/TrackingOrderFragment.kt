@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.order
 
+import android.content.Intent
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -23,8 +24,12 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.UserLocation
 import com.fpoly.smartlunch.databinding.FragmentTrackingOrderBinding
+import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.MyClusterManagerRenderer
+import com.fpoly.smartlunch.ultis.MyConfigNotifi
+import com.fpoly.smartlunch.ultis.Status
+import com.fpoly.smartlunch.ultis.Status.MAPVIEW_BUNDLE_KEY
 import com.fpoly.smartlunch.ultis.Status.avatar_shipper_default
 import com.fpoly.smartlunch.ultis.Status.collection_user_locations
 import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
@@ -46,6 +51,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
     private var clusterMarker: ClusterMarker? = null
     private var mClusterManager: ClusterManager<ClusterMarker>? = null
     private var currentOrder: OrderResponse? = null
+
     private var currentShipperId: String? = null
     private lateinit var mDb: FirebaseFirestore
     private var supportMapFragment: SupportMapFragment? = null
@@ -73,6 +79,16 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
+        }
+        views.btnChat.setOnClickListener{
+            val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                putExtras(Bundle().apply {
+                    putString("type", MyConfigNotifi.TYPE_CHAT)
+                    putString("idUrl", currentOrder?.shipperId ?: "") }
+                )
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
         }
     }
 
@@ -227,6 +243,13 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         }
     }
 
+    override fun invalidate(): Unit = withState(productViewModel) {
+        when (it.addOrder) {
+            is Success -> {
+                currentOrder = it.addOrder.invoke()
+                setUserPosition()
+                handleStateProgress()
+            }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
@@ -255,7 +278,52 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         locationUpdateHandler.postDelayed(locationUpdateRunnable, locationUpdateInterval)
     }
 
+
+    fun handleStateProgress(){
+        if (currentOrder == null) return
+
+        var index = when(currentOrder!!.status._id){
+            Status.UNCONFIRMED_STATUS -> 0
+            Status.CONFIRMED_STATUS -> 1
+            Status.DELIVERING_STATUS -> 2
+            Status.SUCCESS_STATUS -> 3
+            else -> 0
+        }
+
+        views.apply {
+            progress.progress = index
+            when(index){
+                0 -> {
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking_unselect)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering_unselect)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
+                }
+                1 ->{
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering_unselect)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
+                }
+                2 ->{
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
+                }
+                3 ->{
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered)
+                }
+            }
+        }
+    }
+}
+
     private fun onStopTracking() {
         locationUpdateHandler.removeCallbacks(locationUpdateRunnable)
     }
 }
+
