@@ -7,6 +7,7 @@ import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import java.io.File
 
 sealed class UserViewAction: PolyViewAction {
+    object LogOutUser: UserViewAction()
     object GetCurrentUser: UserViewAction()
     data class GetUserById(val id: String): UserViewAction()
     data class DeleteAddressById(val id: String): UserViewAction()

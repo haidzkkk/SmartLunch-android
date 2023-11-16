@@ -13,7 +13,7 @@ class RemoteDataSource(
 
 ) {
     companion object{
-        public const val BASE_URL = "http://192.168.1.8:3000"
+        public const val BASE_URL = "http://192.168.31.98:3000"
 
         public const val URL_PROVINCE = "https://vapi.vnappmob.com"
     }

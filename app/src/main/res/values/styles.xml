@@ -130,4 +130,8 @@
         <item name="cornerSizeTopLeft">8dp</item>
         <item name="cornerSizeTopRight">8dp</item>
     </style>
+
+    <style name="colorProgress">
+        <item name="colorAccent">@color/red</item>
+    </style>
 </resources>

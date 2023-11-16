@@ -6,8 +6,8 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -33,13 +33,13 @@ import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.chat.ChatViewmodel
 import com.fpoly.smartlunch.ultis.checkPermissionGallery
 import com.fpoly.smartlunch.ultis.hideKeyboard
+import com.fpoly.smartlunch.ultis.setMargins
 import com.fpoly.smartlunch.ultis.showSnackbar
 import com.fpoly.smartlunch.ultis.startToDetailPermission
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.stfalcon.imageviewer.StfalconImageViewer
-import java.io.File
 
 
 class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
@@ -47,7 +47,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
     val displaySize = DisplayMetrics()
     lateinit var bottomBehavior: BottomSheetBehavior<LinearLayout>
 
-    var adapter: RoomChatAdapter? = null
+    lateinit var adapter: RoomChatAdapter
     var adapterGallery: GalleryBottomChatAdapter? = null
     val chatViewmodel: ChatViewmodel by activityViewModel()
 
@@ -76,9 +76,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
     }
 
     private fun setupRcv() {
-        var user: User? = withState(chatViewmodel) { it.curentUser.invoke() }
-        if (user != null) {
-            adapter = RoomChatAdapter(user, object : RoomChatAdapter.IOnClickLisstenner {
+            adapter = RoomChatAdapter(object : RoomChatAdapter.IOnClickLisstenner {
                 @SuppressLint("ClickableViewAccessibility", "ResourceType")
                 override fun onClickItem(message: Message) {
                     handleBottomGallery(false)
@@ -93,17 +91,11 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 override fun onLongClickItem(message: Message) {
 
                 }
-
             })
-        }
 
-        if (adapter != null) {
             views.rcvChat.adapter = adapter
             views.rcvChat.recycledViewPool.clear()
             views.rcvChat.layoutManager = LinearLayoutManager(requireContext())
-        } else {
-            showSnackbar(views.root, "Không có thông tin của bạn", false, "Quay lại") {}
-        }
     }
 
     private fun setupBottomSheetBihavior() {
@@ -211,10 +203,10 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
     private fun handleBottomGallery(isVisible: Boolean) {
         // nếu kh hiện
         if (isVisible) {
-            setMargins(views.layoutBody, 0, 0, 0, (displaySize.heightPixels * 0.3).toInt())
+            views.layoutBody.setMargins(0, 0, 0, (displaySize.heightPixels * 0.3).toInt())
             views.layoutBehavior.isVisible = true
         } else {
-            setMargins(views.layoutBody, 0, 0, 0, 0)
+            views.layoutBody.setMargins(0, 0, 0, 0)
             views.layoutBehavior.isVisible = false
         }
 
@@ -265,13 +257,6 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
         }
     }
 
-    fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
-        if (view.layoutParams is MarginLayoutParams) {
-            val marginLayoutParams = view.layoutParams as MarginLayoutParams
-            marginLayoutParams.setMargins(left, top, right, bottom)
-            view.requestLayout()
-        }
-    }
 
     private fun setupViewModel() {
     }
@@ -297,11 +282,12 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
     override fun invalidate(): Unit = withState(chatViewmodel) {
         when (it.curentRoom) {
             is Success -> {
+                adapter.setDataRoom(it.curentRoom.invoke())
                 views.layoutHeader.tvTitleToolbar.text = "${it.curentRoom.invoke().shopUserId?.last_name} ${it.curentRoom.invoke().shopUserId?.first_name}"
             }
             is Fail -> {
-                showSnackbar(views.root, "Không có your user", false, "Quay lại") {
-                }
+                Toast.makeText(requireContext(), "Không tim thấy phòng", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
             }
             else -> {
             }
@@ -309,10 +295,8 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
 
         when (it.curentMessage) {
             is Success -> {
-                if (adapter != null) {
-                    adapter!!.setData(it.curentMessage.invoke())
-                    views.rcvChat.scrollToPosition(it.curentMessage.invoke().size - 1)
-                }
+                adapter.setDataMessage(it.curentMessage.invoke())
+                views.rcvChat.scrollToPosition(it.curentMessage.invoke().size - 1)
             }
 
             else -> {
@@ -323,18 +307,18 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
             is Success -> {
                 if (adapter != null) {
                     views.imgSending.isVisible = false
-                    setMargins(views.rcvChat, 0, 0, 0, 0)
+                    views.rcvChat.setMargins(0, 0, 0, 0)
                 }
             }
 
             is Fail -> {
                 views.imgSending.isVisible = false
-                setMargins(views.rcvChat, 0, 0, 0, 0)
+                views.rcvChat.setMargins(0, 0, 0, 0)
                 showSnackbar(views.root, "Giu không thành công", false, null) {}
             }
 
             is Loading -> {
-                setMargins(views.rcvChat, 0, 0, 0, 30)
+                views.rcvChat.setMargins(0, 0, 0, 30)
                 views.imgSending.isVisible = true
             }
 

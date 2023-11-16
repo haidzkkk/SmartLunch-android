@@ -3,6 +3,7 @@ package com.fpoly.smartlunch.data.network
 import com.fpoly.smartlunch.data.model.Data
 import com.fpoly.smartlunch.data.model.LoginRequest
 import com.fpoly.smartlunch.data.model.ResetPasswordRequest
+import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.data.model.UserRequest
@@ -39,4 +40,6 @@ interface AuthApi {
     fun getUserById(@Path("id") id: String):Observable<User>
     @GET("api/users/search/{text}")
     fun searchUserByName(@Path("text") text: String):Observable<ArrayList<User>>
+    @POST("api/update/tokendevice")
+    fun updateTokenDevice(@Body tokenDevice: TokenDevice):Observable<User>
 }

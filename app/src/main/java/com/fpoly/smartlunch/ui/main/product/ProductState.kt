@@ -27,10 +27,10 @@ data class ProductState(
     var asyncCreateCart: Async<CartResponse> = Uninitialized,
 
     var curentCartResponse: Async<CartResponse> = Uninitialized,
-//    var getOneCartById : Async<CartResponse> = Uninitialized,
-//    var getClearCart : Async<CartResponse> = Uninitialized,
-//    var getChangeQuantity : Async<CartResponse> = Uninitialized,
-//    var getRemoveProductByIdCart : Async<CartResponse> = Uninitialized,
+    var getOneCartById : Async<CartResponse> = Uninitialized,
+    var getClearCart : Async<CartResponse> = Uninitialized,
+    var getChangeQuantity : Async<CartResponse> = Uninitialized,
+    var getRemoveProductByIdCart : Async<CartResponse> = Uninitialized,
     var applyCoupons : Async<CartResponse> = Uninitialized,
 
     var asyncCommentsLimit: Async<ArrayList<Comment>> = Uninitialized,

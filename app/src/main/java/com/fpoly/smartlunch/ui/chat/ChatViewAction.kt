@@ -13,7 +13,7 @@ sealed class ChatViewAction : PolyViewAction{
     object getRoomChat : ChatViewAction()
 
     data class setCurrentUserChat(val user: User): ChatViewAction()
-    data class setCurrentChat(val room: Room): ChatViewAction()
+    data class setCurrentChat(val roomId: String?): ChatViewAction()
     object removeCurrentChat: ChatViewAction()
 
     data class postMessage(val message: Message, val images: List<Gallery>?): ChatViewAction()
@@ -26,5 +26,5 @@ sealed class ChatViewAction : PolyViewAction{
     object getDataGallery: ChatViewAction()
 
     data class searchUserByName(val text: String): ChatViewAction()
-    data class findRoomSearch(val user: User): ChatViewAction()
+    data class findRoomSearch(val userId: String?): ChatViewAction()
 }

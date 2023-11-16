@@ -52,50 +52,62 @@
                         android:text="Tài xế sẽ tới chỗ bạn trong 5 phút nữa"
                         android:textSize="16sp" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="28dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/traking_toolbar"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp">
 
-                        <ImageView
-                            android:layout_width="28dp"
+                        <ProgressBar
+                            android:id="@+id/progress"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:theme="@style/colorProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:max="3"
+                            android:layout_centerVertical="true"
+                            android:layout_marginHorizontal="40dp" />
+
+                        <LinearLayout
+                            android:id="@+id/orderStatusProgressLayout"
+                            android:layout_width="match_parent"
                             android:layout_height="28dp"
-                            android:src="@drawable/icon_waiting_order" />
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="4">
 
-                        <View
-                            android:layout_width="80dp"
-                            android:layout_height="5dp"
-                            android:background="@color/red" />
+                            <ImageView
+                                android:id="@+id/img_status_1"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/icon_waiting_order_unselect"
+                                />
 
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/icon_cooking" />
+                            <ImageView
+                                android:id="@+id/img_status_2"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/icon_cooking_unselect" />
 
-                        <View
-                            android:layout_width="80dp"
-                            android:layout_height="5dp"
-                            android:background="@color/red" />
+                            <ImageView
+                                android:id="@+id/img_status_3"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/icon_delivering_unselect" />
 
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/icon_delivering" />
+                            <ImageView
+                                android:id="@+id/img_status_4"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/icon_delivered_unselect" />
 
-                        <View
-                            android:layout_width="80dp"
-                            android:layout_height="5dp"
-                            android:background="@color/red" />
+                        </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/icon_delivered" />
-
-                    </LinearLayout>
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -138,12 +150,14 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/btn_chat"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginLeft="20dp"
                         android:src="@drawable/icon_chat" />
 
                     <ImageView
+                        android:id="@+id/btn_call"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginLeft="20dp"

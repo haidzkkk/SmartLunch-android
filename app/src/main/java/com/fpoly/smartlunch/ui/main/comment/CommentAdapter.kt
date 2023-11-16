@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,10 +35,13 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>(){
             binding.tvDate.text = comment.createdAt.convertIsoToStringFormat(dateDay2TimeFormat)
 
             if (!comment.images.isNullOrEmpty()){
+                binding.rcvImg.isVisible = true
                 var adapter = ImageAdapter()
                 adapter.setData(comment.images)
                 binding.rcvImg.adapter = adapter
                 binding.rcvImg.layoutManager = GridLayoutManager(binding.root.context, 4)
+            }else{
+                binding.rcvImg.isVisible = false
             }
         }
     }

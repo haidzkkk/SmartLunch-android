@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.order
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -17,8 +18,11 @@ import com.fpoly.smartlunch.data.model.ClusterMarker
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.UserLocation
 import com.fpoly.smartlunch.databinding.FragmentTrackingOrderBinding
+import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.MyClusterManagerRenderer
+import com.fpoly.smartlunch.ultis.MyConfigNotifi
+import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.Status.MAPVIEW_BUNDLE_KEY
 import com.fpoly.smartlunch.ultis.Status.collection_user_locations
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,6 +43,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
     private var mMapBoundary: LatLngBounds? = null
     private var mUserPosition: UserLocation? = null
     private var currentOrder: OrderResponse? = null
+
     private lateinit var mDb: FirebaseFirestore
     private var supportMapFragment: SupportMapFragment? = null
     private var mClusterManager: ClusterManager<ClusterMarker>? = null
@@ -57,6 +62,20 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initGoogleMap(savedInstanceState)
+        lisstenEvent()
+    }
+
+    private fun lisstenEvent() {
+        views.btnChat.setOnClickListener{
+            val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                putExtras(Bundle().apply {
+                    putString("type", MyConfigNotifi.TYPE_CHAT)
+                    putString("idUrl", currentOrder?.shipperId ?: "") }
+                )
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+        }
     }
 
     private fun initGoogleMap(savedInstanceState: Bundle?) {
@@ -243,6 +262,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
             is Success -> {
                 currentOrder = it.addOrder.invoke()
                 setUserPosition()
+                handleStateProgress()
             }
 
             is Fail -> {
@@ -263,4 +283,45 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         )
     }
 
+    fun handleStateProgress(){
+        if (currentOrder == null) return
+
+        var index = when(currentOrder!!.status._id){
+            Status.UNCONFIRMED_STATUS -> 0
+            Status.CONFIRMED_STATUS -> 1
+            Status.DELIVERING_STATUS -> 2
+            Status.SUCCESS_STATUS -> 3
+            else -> 0
+        }
+
+        views.apply {
+            progress.progress = index
+            when(index){
+                0 -> {
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking_unselect)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering_unselect)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
+                }
+                1 ->{
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering_unselect)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
+                }
+                2 ->{
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
+                }
+                3 ->{
+                    imgStatus1.setImageResource(R.drawable.icon_waiting_order)
+                    imgStatus2.setImageResource(R.drawable.icon_cooking)
+                    imgStatus3.setImageResource(R.drawable.icon_delivering)
+                    imgStatus4.setImageResource(R.drawable.icon_delivered)
+                }
+            }
+        }
+    }
 }

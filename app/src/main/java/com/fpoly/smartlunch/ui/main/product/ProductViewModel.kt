@@ -279,8 +279,9 @@ class ProductViewModel @AssistedInject constructor(
     }
 
 
-    fun returnVisibleBottomNav(isVisible: Boolean){
+    fun returnVisibleBottomNav(isVisible: Boolean) {
         _viewEvents.post(ProductEvent.ReturnVisibleBottomNav(isVisible))
+    }
 
     fun handleRemoveAsyncClearCart() {
         setState { copy(getClearCart = Uninitialized) }

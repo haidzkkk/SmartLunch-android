@@ -37,22 +37,35 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDLGnA0iUrnteqE1NsqqcKRu5eqj5NERXQ" />
+
         <activity
             android:name=".ui.payment.PaymentActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.main.MainActivity" />
+
         <activity
             android:name=".ui.chat.ChatActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+
+            android:parentActivityName=".ui.main.MainActivity"
+        />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+
+            android:parentActivityName=".ui.security.SplashScreenActivity"/>
+
         <activity
             android:name=".ui.security.LoginActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+
+            android:parentActivityName=".ui.security.SplashScreenActivity" />
+
         <activity
             android:name=".ui.security.SplashScreenActivity"
             android:exported="true"
@@ -67,11 +80,14 @@
 
         <service
             android:name=".ui.notification.FcmService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/icon_app" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/black" />
+
     </application>
 
 </manifest>

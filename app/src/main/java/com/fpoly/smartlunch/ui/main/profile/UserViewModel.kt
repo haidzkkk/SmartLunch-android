@@ -31,6 +31,7 @@ class UserViewModel @AssistedInject constructor(
 
     override fun handle(action: UserViewAction) {
         when (action) {
+            is UserViewAction.LogOutUser -> handleLogoutUser()
             is UserViewAction.GetCurrentUser -> handleCurrentUser()
             is UserViewAction.GetUserById -> handleGetUserById(action.id)
             is UserViewAction.ChangePasswordUser -> handleChangePassword(action.changePassword)
@@ -43,8 +44,12 @@ class UserViewModel @AssistedInject constructor(
             is UserViewAction.DeleteAddressById -> handleDeleteAddressById(action.id)
         }
     }
-
-
+    private fun handleLogoutUser() {
+        setState { copy(asyncLogout = Loading()) }
+        repository.logout().execute {
+            copy(asyncLogout = it)
+        }
+    }
     private fun handleDeleteAddressById(id: String) {
         setState { copy(asyncDeleteAddress = Loading()) }
         repository.deleteAddress(id).execute {

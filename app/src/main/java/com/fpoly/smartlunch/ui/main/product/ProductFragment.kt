@@ -101,7 +101,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             addCart()
         }
         views.tvSeeAllComment2.setOnClickListener{
-            addTamCommentDialog()
+            productViewModel.returnCommentFragment()
         }
         views.tvSeeAllComment.setOnClickListener{
             productViewModel.returnCommentFragment()
@@ -272,108 +272,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
             }
         }
-
-        when(it.asyncAddComment){
-            is Success ->{
-                it.asyncAddComment = Uninitialized
-                Toast.makeText(requireContext(), "Thêm thành công", Toast.LENGTH_SHORT).show()
-            }
-            is Fail ->{
-                it.asyncAddComment = Uninitialized
-                Toast.makeText(requireContext(), "Có thể thiếu size hoặc đã comment", Toast.LENGTH_SHORT).show()
-            }
-            else ->{
-
-            }
-        }
     }
-    private fun addTamCommentDialog() {
-        val dialog = PolyDialog
-            .Builder(requireContext(), DialogAddCommentBinding.inflate(layoutInflater))
-            .build()
-        dialog.show()
-
-        val bindingDialog = dialog.binding
-        var rate = 5
-        var listImage: ArrayList<Gallery>? = null
-
-        bindingDialog.tvGalarey.setOnClickListener{
-            var bottomGallery = GalleryBottomSheetFragment {
-                listImage = it
-                bindingDialog.tvGalarey.text = it.size.toString()
-            }
-            bottomGallery.show(requireActivity().supportFragmentManager, "TAG")
-        }
-
-        bindingDialog.btnSend.setOnClickListener{
-            var commentAdd = CommentRequest(currentProduct?._id, currentSizeId, "653768e1e6054414ddfd3fca",
-            bindingDialog.edtDesc.text.toString(), rate)
-            productViewModel.handle(ProductAction.AddComment(commentAdd, listImage))
-            dialog.dismiss()
-        }
-
-        bindingDialog.start1.setOnClickListener{
-            rate = 1
-            handleClickStartComment(bindingDialog, 1)
-        }
-
-        bindingDialog.start2.setOnClickListener{
-            rate = 2
-            handleClickStartComment(bindingDialog, 2)
-        }
-
-        bindingDialog.start3.setOnClickListener{
-            rate = 3
-            handleClickStartComment(bindingDialog, 3)
-        }
-
-        bindingDialog.start4.setOnClickListener{
-            rate = 4
-            handleClickStartComment(bindingDialog, 4)
-        }
-
-        bindingDialog.start5.setOnClickListener{
-            rate = 5
-            handleClickStartComment(bindingDialog, 5)
-        }
-
-    }
-
-    fun handleClickStartComment(binding: DialogAddCommentBinding, index: Int){
-        binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        binding.start4.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-        binding.start5.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey), android.graphics.PorterDuff.Mode.SRC_IN)
-
-        when (index){
-            1 ->{
-                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-            }
-            2 ->{
-                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-            }
-            3 ->{
-                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-            }
-            4 ->{
-                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start4.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-            }
-            5 ->{
-                binding.start1.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start2.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start3.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start4.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-                binding.start5.setColorFilter(ContextCompat.getColor(requireContext(), R.color.yellow), android.graphics.PorterDuff.Mode.SRC_IN)
-            }
-        }
-    }
-
 
 }

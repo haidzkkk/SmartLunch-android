@@ -107,8 +107,7 @@
                     <ImageView
                         android:id="@+id/imgMassage"
                         android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:maxHeight="500dp"
+                        android:layout_height="300dp"
                         android:scaleType="matrix"
                         android:src="@mipmap/ic_launcher"
                         android:layout_alignParentRight="true"

@@ -20,6 +20,7 @@ import com.fpoly.smartlunch.data.repository.PaymentRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
 import com.fpoly.smartlunch.data.repository.UserRepository
+import com.google.rpc.context.AttributeContext.Auth
 import dagger.Module
 import dagger.Provides
 
@@ -50,9 +51,10 @@ object NetworkModule {
 
     @Provides
     fun providerHomeRepository(
-        api: ProductApi,
+        userApi: AuthApi,
+        productApi: ProductApi,
         contentDataSource: ContentDataSource
-    ): HomeRepository = HomeRepository(api, contentDataSource)
+    ): HomeRepository = HomeRepository(userApi, productApi, contentDataSource)
 
     @Provides
     fun providerApiUser(
