@@ -105,6 +105,7 @@ dependencies {
 
     // map
     implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.libraries.places:places:2.5.0")
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
@@ -137,7 +138,6 @@ dependencies {
 
 
     // point banner
-//    implementation("me.relex:circleindicator:2.1.6")
     implementation("com.tbuonomo:dotsindicator:5.0")
 
     //    gg maps util for clustering

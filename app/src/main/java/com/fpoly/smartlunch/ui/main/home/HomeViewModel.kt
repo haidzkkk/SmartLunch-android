@@ -11,6 +11,7 @@ import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.Banner
 import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.repository.HomeRepository
+import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
 import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
@@ -35,6 +36,7 @@ import retrofit2.http.GET
 
 class HomeViewModel @AssistedInject constructor(
     @Assisted state: HomeViewState,
+    private val placesRepository: PlacesRepository,
     private val repo: HomeRepository
 ) : PolyBaseViewModel<HomeViewState, HomeViewAction, HomeViewEvent>(state) {
 
@@ -49,10 +51,19 @@ class HomeViewModel @AssistedInject constructor(
     }
     override fun handle(action: HomeViewAction) {
         when(action){
+            is HomeViewAction.GetCurrentLocation -> handleGetCurrentLocation(action.lat,action.lon)
             is HomeViewAction.getBanner -> handleGetBanner()
             is HomeViewAction.getDataGallery -> getDataGallery()
             else -> {}
         }
+    }
+
+    private fun handleGetCurrentLocation(lat: Double, lon: Double) {
+        setState { copy(asyncGetCurrentLocation = Loading()) }
+        placesRepository.getLocationName(lat,lon)
+            .execute {
+                copy(asyncGetCurrentLocation = it)
+            }
     }
 
     private fun handleGetBanner() {
@@ -70,7 +81,6 @@ class HomeViewModel @AssistedInject constructor(
             setState { copy(galleries =  Success(sortData)) }
         }
     }
-
 
     fun returnDetailProductFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(ProductFragment::class.java))

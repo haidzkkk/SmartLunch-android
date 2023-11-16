@@ -301,6 +301,7 @@ class ProductViewModel @AssistedInject constructor(
 
     fun handleRemoveAsyncGetFavourite() {
         setState { copy(asyncGetFavourite = Uninitialized) }
+
     }
 
     fun returnCommentFragment(){

@@ -7,6 +7,7 @@ import com.fpoly.smartlunch.data.network.ChatApi
 import com.fpoly.smartlunch.data.network.CommentApi
 import com.fpoly.smartlunch.data.network.ContentDataSource
 import com.fpoly.smartlunch.data.network.OrderApi
+import com.fpoly.smartlunch.data.network.PlacesApi
 import com.fpoly.smartlunch.data.network.ProductApi
 import com.fpoly.smartlunch.data.network.ProvinceAddressApi
 import com.fpoly.smartlunch.data.network.RemoteDataSource
@@ -17,6 +18,7 @@ import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.PaymentRepository
+import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
 import com.fpoly.smartlunch.data.repository.UserRepository
@@ -55,6 +57,17 @@ object NetworkModule {
         productApi: ProductApi,
         contentDataSource: ContentDataSource
     ): HomeRepository = HomeRepository(userApi, productApi, contentDataSource)
+
+    @Provides
+    fun providerApiPlaces(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): PlacesApi = remoteDataSource.buildApiOpenStreetMap(PlacesApi::class.java, context)
+
+    @Provides
+    fun providerPlacesRepository(
+        api: PlacesApi
+    ): PlacesRepository = PlacesRepository(api)
 
     @Provides
     fun providerApiUser(
