@@ -56,3 +56,14 @@ fun Fragment.checkRequestPermissions(isAllow: (Boolean) -> Unit) {
             isAllow(allGranted)
         }
 }
+
+fun Fragment.showPermissionDeniedToast() {
+    showSnackbar(
+        requireView(),
+        "Camera permission denied, please allow permission",
+        false,
+        ""
+    ) {
+        activity?.startToDetailPermission()
+    }
+}
