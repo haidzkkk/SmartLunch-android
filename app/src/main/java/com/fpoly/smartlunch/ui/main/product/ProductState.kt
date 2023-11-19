@@ -21,8 +21,9 @@ data class ProductState(
     var category: Async<CategoryResponse> = Uninitialized,
     var coupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
     var asyncUserCurrent: Async<ProductsResponse> = Uninitialized,
+
     var asyncProduct: Async<Product> = Uninitialized,
-    var asynGetAllSize: Async<ArrayList<Size>> =  Uninitialized,
+    var asynGetSizeProduct: Async<ArrayList<Size>> =  Uninitialized,
     var asyncGetOneSize: Async<Size> =  Uninitialized,
 
     var asyncCreateCart: Async<CartResponse> = Uninitialized,

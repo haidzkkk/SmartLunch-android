@@ -31,8 +31,8 @@ interface ProductApi {
     fun getOneProduct(@Path("id")id: String): Observable<Product>
     @GET("/api/size/{id}")
     fun getOneSize(@Path("id")id: String): Observable<Size>
-    @GET("/api/size")
-    fun getAllSize(): Observable<ArrayList<Size>>
+    @GET("/api/size/product/{id}")
+    fun getSizeProduct(@Path("id") id : String): Observable<ArrayList<Size>>
     @POST("/api/carts/create")
     fun getCreateCart(@Body cart: CartRequest): Observable<CartResponse>
     @GET("/api/carts")

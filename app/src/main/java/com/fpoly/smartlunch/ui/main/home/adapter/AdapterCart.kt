@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.activityViewModel
 import com.bumptech.glide.Glide
@@ -37,7 +38,6 @@ class AdapterCart(
             listProductCart[indexFind] = productCart!!
             notifyItemChanged(indexFind)
         }
-
     }
 
     inner class CartViewHolder(private val binding: ItemCartBinding, val context: Context) :
@@ -52,31 +52,33 @@ class AdapterCart(
         val quantily_cong = binding.linearMinu2Sheet
 
         fun bind(currentProduct: ProductCart) {
-            Glide.with(context).load(currentProduct.image).placeholder(R.drawable.loading_img)
+            Glide.with(context).load(currentProduct.productId.images[0].url).placeholder(R.drawable.loading_img)
                 .into(image)
-            name.text = currentProduct.product_name
-            price.text = currentProduct.product_price.toDouble().formatCash()
+            name.text = currentProduct.productId.product_name
+            price.text = currentProduct.sizeId.size_price.formatCash()
             quanlity.text = currentProduct.purchase_quantity.toString()
-            tvSize.text = "L"
+            tvSize.text = currentProduct.sizeId.size_name
             var currentSoldQuantity = currentProduct.purchase_quantity
 
             binding.root.setOnClickListener {
-                onClickLisstenner.onClickItem(currentProduct.productId)
+                onClickLisstenner.onClickItem(currentProduct.productId._id)
             }
 
             quantily_cong.setOnClickListener {
                 currentSoldQuantity++
                 quanlity.text = currentSoldQuantity.toString()
-                onClickLisstenner.onChangeQuantity(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
+                onClickLisstenner.onChangeQuantity(currentProduct.productId._id, currentSoldQuantity, currentProduct.sizeId._id)
             }
 
             quantily_tru.setOnClickListener {
                 if (currentSoldQuantity > 1) {
                     currentSoldQuantity--
                     quanlity.text = currentSoldQuantity.toString()
-                    onClickLisstenner.onChangeQuantity(currentProduct.productId, currentSoldQuantity, currentProduct.sizeId)
+                    onClickLisstenner.onChangeQuantity(currentProduct.productId._id, currentSoldQuantity, currentProduct.sizeId._id)
                 }
             }
+
+            binding.layoutIsActive.isVisible = !currentProduct.productId.isActive
         }
 
     }
@@ -103,9 +105,9 @@ class AdapterCart(
     override fun onItemSwiped(position: Int) {
         val currentProduct = listProductCart[position]
         onClickLisstenner.onSwipeItem(
-            currentProduct.productId,
+            currentProduct.productId._id,
             currentProduct.purchase_quantity,
-            currentProduct.sizeId
+            currentProduct.sizeId._id
         )
     }
 

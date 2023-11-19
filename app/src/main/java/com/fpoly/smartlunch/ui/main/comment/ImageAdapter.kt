@@ -10,6 +10,7 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Image
 import com.fpoly.smartlunch.databinding.ItemGalleryChatBinding
 import com.fpoly.smartlunch.databinding.ItemImageBinding
+import com.paypal.pyplcheckout.common.extensions.activity
 import com.stfalcon.imageviewer.StfalconImageViewer
 
 class ImageAdapter() : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
@@ -38,6 +39,7 @@ class ImageAdapter() : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
                     .withStartPosition(position)
                     .withBackgroundColorResource(R.color.black)
                     .withHiddenStatusBar(true)
+                    .build()
                     .show()
             }
         }

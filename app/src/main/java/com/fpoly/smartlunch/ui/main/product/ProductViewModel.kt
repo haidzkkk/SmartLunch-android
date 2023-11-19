@@ -35,7 +35,7 @@ class ProductViewModel @AssistedInject constructor(
     init {
 //        handleGetAllCategory()
         handleGetListProduct()
-        handleGetAllSize()
+//        handleGetAllSize()
         handleGetAllFavouriteProduct()
         handleGetTopProduct()
         handleGetAllOrderByUserId()
@@ -49,7 +49,7 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetAllCategory -> handleGetAllCategory()
             is ProductAction.GetAllFavouriteProduct -> handleGetAllFavouriteProduct()
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
-            is ProductAction.GetListSize -> handleGetAllSize()
+            is ProductAction.GetListSizeProduct -> handleGetSizeProduct(action.idProduct)
             is ProductAction.GetSizeById -> handleGetSizeById(action.id)
 
             is ProductAction.CreateCart -> handleCreateCart(action.cart)
@@ -207,10 +207,10 @@ class ProductViewModel @AssistedInject constructor(
             }
     }
 
-    private fun handleGetAllSize() {
-        setState { copy(asynGetAllSize = Loading()) }
-        repository.getSize().execute {
-            copy(asynGetAllSize = it)
+    private fun handleGetSizeProduct(idProduct: String) {
+        setState { copy(asynGetSizeProduct = Loading()) }
+        repository.getSizeProduct(idProduct).execute {
+            copy(asynGetSizeProduct = it)
         }
     }
 

@@ -177,9 +177,6 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 strNote,
                 idStatus,
                 false,
-                myCart!!.products,
-                myCart!!.total - (myCart!!.totalCoupon ?: 0.0),
-                myCart!!.totalCoupon ?: 0.0,
             )
             paymentViewModel.handle(PaymentViewAction.CreateOder(orderRequest!!))
         } else {

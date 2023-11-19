@@ -7,19 +7,22 @@
     android:background="@drawable/card_sell_o">
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/image"
         android:layout_width="86dp"
         android:layout_height="86dp"
-        android:src="@drawable/img_6" />
+        android:src="@drawable/img_6"
+        android:scaleType="centerCrop"
+        android:background="@drawable/background_border_radius_2"
+        android:clipToOutline="true"
+        />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="230dp"
-        android:layout_height="24dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="11dp"
         android:layout_toRightOf="@+id/image"
-        android:gravity="top"
+        android:layout_above="@+id/tv_size"
         android:lineSpacingExtra="5sp"
         android:text="@string/pizza_th_gi"
         android:textAppearance="@style/pizza_th_gi"
@@ -27,65 +30,50 @@
 
     <TextView
         android:id="@+id/tv_size"
-        android:layout_width="67dp"
-        android:layout_height="24dp"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="11dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginBottom="8dp"
         android:layout_toRightOf="@+id/image"
         android:lineSpacingExtra="5sp"
+        android:text="Nhân theeit cà"
         android:textAppearance="@style/some_id"
         android:translationY="-2.45sp" />
 
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="67dp"
-        android:layout_height="24dp"
-        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_size"
         android:layout_marginLeft="11dp"
-        android:layout_marginTop="-10dp"
         android:layout_marginBottom="8dp"
         android:layout_toRightOf="@+id/image"
-        android:gravity="right|top"
         android:lineSpacingExtra="5sp"
-        android:text="@string/some_id"
+        android:text="sadsadsad"
+        android:maxLength="15"
         android:textAppearance="@style/some_id"
         android:translationY="-2.45sp" />
 
     <RelativeLayout
         android:id="@+id/group_11"
-        android:layout_width="110dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="1dp">
-
+        android:layout_marginEnd="20dp">
 
         <RelativeLayout
             android:id="@+id/linear_minu1_sheet"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:background="@drawable/clip">
+            android:layout_centerVertical="true"
+            android:background="@drawable/clip"
+            android:padding="5dp">
 
-
-            <View
+            <ImageView
                 android:id="@+id/vuesax_line1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="9dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/tru"
                 android:gravity="center" />
 
@@ -93,40 +81,48 @@
 
         <TextView
             android:id="@+id/tv_quantity"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@+id/linear_minu1_sheet"
-            android:gravity="center_horizontal|top"
-            android:lineSpacingExtra="5sp"
-            android:text="2"
-            android:textAppearance="@style/some_id"
-            android:translationY="-2.27sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:maxLength="3" />
 
         <RelativeLayout
             android:id="@+id/linear_minu2_sheet"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/tv_quantity"
-            android:background="@drawable/clip">
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/clip"
+            android:padding="5dp">
 
-
-            <View
+            <ImageView
                 android:id="@+id/vuesax_line2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/cong"
                 android:gravity="center" />
 
         </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_isActive"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_transparent2"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sản phầm không hoạt động"
+            android:background="@drawable/backgound_retangle_chip_select"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textFontWeight="1000"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            />
     </RelativeLayout>
 
 </RelativeLayout>
