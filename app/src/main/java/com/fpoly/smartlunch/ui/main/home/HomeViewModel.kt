@@ -14,6 +14,7 @@ import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
+import com.fpoly.smartlunch.ui.main.notification.NotificationFragment
 import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
 import com.fpoly.smartlunch.ui.main.order.ProductReviewFragment
 import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
@@ -114,6 +115,9 @@ class HomeViewModel @AssistedInject constructor(
     }
     fun returnOrderDetailFragment(){
         _viewEvents.post(HomeViewEvent.ReturnFragment(OrderDetailFragment::class.java))
+    }
+    fun returnNotificationFragment() {
+        _viewEvents.post(HomeViewEvent.ReturnFragment(NotificationFragment::class.java))
     }
 
     @AssistedFactory

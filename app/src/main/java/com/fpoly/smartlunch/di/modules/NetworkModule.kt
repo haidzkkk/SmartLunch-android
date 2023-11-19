@@ -6,6 +6,7 @@ import com.fpoly.smartlunch.data.network.AuthApi
 import com.fpoly.smartlunch.data.network.ChatApi
 import com.fpoly.smartlunch.data.network.CommentApi
 import com.fpoly.smartlunch.data.network.ContentDataSource
+import com.fpoly.smartlunch.data.network.NotificationApi
 import com.fpoly.smartlunch.data.network.OrderApi
 import com.fpoly.smartlunch.data.network.PlacesApi
 import com.fpoly.smartlunch.data.network.ProductApi
@@ -17,6 +18,7 @@ import com.fpoly.smartlunch.data.network.UserApi
 import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
+import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.PaymentRepository
 import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
@@ -47,7 +49,6 @@ object NetworkModule {
         context: Context
     ) : ContentDataSource = ContentDataSource(context.contentResolver)
 
-
     @Provides
     fun providerRemoteDateSource(): RemoteDataSource = RemoteDataSource()
 
@@ -68,6 +69,17 @@ object NetworkModule {
     fun providerPlacesRepository(
         api: PlacesApi
     ): PlacesRepository = PlacesRepository(api)
+
+    @Provides
+    fun providerApiNotification(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): NotificationApi = remoteDataSource.buildApi(NotificationApi::class.java, context)
+
+    @Provides
+    fun providerNotificationRepository(
+        api: NotificationApi
+    ): NotificationRepository = NotificationRepository(api)
 
     @Provides
     fun providerApiUser(

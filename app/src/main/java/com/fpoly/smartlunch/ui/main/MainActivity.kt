@@ -1,7 +1,10 @@
 package com.fpoly.smartlunch.ui.main
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
@@ -36,6 +39,7 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.security.SecurityViewModel
 import com.fpoly.smartlunch.ui.security.SecurityViewState
+import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.addFragmentToBackstack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
@@ -77,6 +81,9 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         handleViewModel()
         changeMode(sessionManager.fetchDarkMode())
         changeLanguage(sessionManager.fetchLanguage())
+        handleReceiveDataNotify()
+        val intentFilter = IntentFilter("com.fpoly.smartlunch.NEW_DATA_AVAILABLE")
+        registerReceiver(broadcastReceiver, intentFilter)
     }
 
     private fun handleViewModel() {
@@ -91,6 +98,17 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 handleEvent(it)
             }
         }
+    }
+
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            productViewModel.handle(ProductAction.GetAllNotification)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
     }
 
     override fun getBinding(): ActivityMainBinding {
@@ -154,6 +172,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 when(event){
                     is ProductEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
                     is ProductEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
+                    else -> {}
                 }
             }
         }
@@ -197,6 +216,15 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
             )
         ){
             homeViewModel.returnOrderDetailFragment()
+        }
+    }
+
+    private fun handleReceiveDataNotify() {
+        val type = intent.extras?.getString("type")
+        when(type){
+            MyConfigNotifi.TYPE_ORDER ->{
+                homeViewModel.returnNotificationFragment()
+            }
         }
     }
 
