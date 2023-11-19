@@ -1,26 +1,33 @@
 package com.fpoly.smartlunch.ui.main.home.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fpoly.smartlunch.R
+import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.databinding.LayoutSizeBinding
 
-class AdapterSize(private val onClickItem: (id: String) -> Unit) :
+@SuppressLint("NotifyDataSetChanged")
+class AdapterSize(private val onClickItem: (id: String) -> Unit):
     RecyclerView.Adapter<AdapterSize.SizeViewHolder>() {
 
+    private var sizeSelect: Size? = null
     private var listSize: List<Size> = ArrayList()
 
     fun setData(list: List<Size>?) {
-        if (list != null) {
-            listSize = list
-            notifyDataSetChanged()
-        }
+        if (list.isNullOrEmpty()) return
+
+        listSize = list
+        sizeSelect = list[0]
+        onClickItem(list[0]._id)
+        notifyDataSetChanged()
     }
 
-    class SizeViewHolder(private val binding: LayoutSizeBinding) :
+        class SizeViewHolder(private val binding: LayoutSizeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val size = binding.NameSize
         val liner = binding.linerSize
@@ -35,27 +42,24 @@ class AdapterSize(private val onClickItem: (id: String) -> Unit) :
     override fun onBindViewHolder(holder: SizeViewHolder, position: Int) {
         val currentProduct: Size = listSize[position]
         holder.size.text = currentProduct.size_name
-        updateUI(holder, currentProduct.isSelected)
-        holder.liner.setOnClickListener {
-            listSize.forEach { it.isSelected = false }
-            currentProduct.isSelected = true
-            onClickItem(currentProduct._id)
-            notifyDataSetChanged()
-        }
-    }
 
-    override fun getItemCount(): Int {
-        return listSize.size
-    }
-
-    private fun updateUI(holder: SizeViewHolder, isSelected: Boolean) {
-        if (isSelected) {
+        if (currentProduct._id == sizeSelect?._id) {
             holder.size.setBackgroundResource(R.drawable.chips)
             holder.size.setTextColor(Color.RED)
         } else {
             holder.size.setBackgroundResource(R.drawable.chips1)
             holder.size.setTextColor(Color.BLACK)
         }
+
+        holder.liner.setOnClickListener {
+            sizeSelect = currentProduct
+            notifyDataSetChanged()
+            onClickItem(currentProduct._id)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return listSize.size
     }
 
 }

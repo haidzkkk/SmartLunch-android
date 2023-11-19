@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.databinding.ItemOrderBinding
+import com.fpoly.smartlunch.ultis.formatCash
 
 class OrderAdapter(private val onClickItem: (String) -> Unit): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     private var orders: List<OrderResponse> = listOf()
@@ -36,8 +37,8 @@ class OrderAdapter(private val onClickItem: (String) -> Unit): RecyclerView.Adap
             }
             itemOrderBinding.idOrder.text = order._id
             itemOrderBinding.status.text = order.status.status_name
-            itemOrderBinding.nameProduct.text = order.products[0].product_name
-            itemOrderBinding.price.text = "${order.total} đ"
+            itemOrderBinding.nameProduct.text = if(order.products.isNotEmpty()) order.products[0].product_name else ""
+            itemOrderBinding.price.text = order.discount.formatCash()
             itemOrderBinding.quanlity.text = order.products.size.toString()
         }
     }

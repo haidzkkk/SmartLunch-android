@@ -21,6 +21,7 @@ import com.fpoly.smartlunch.data.model.CommentRequest
 import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.ProductCart
+import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.databinding.DialogAddCommentBinding
 import com.fpoly.smartlunch.databinding.FragmentProductReviewBinding
 import com.fpoly.smartlunch.databinding.ItemProductReviewBinding
@@ -96,7 +97,7 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
         }
     }
 
-    private fun addTamCommentDialog(orderResponse: OrderResponse, productCart: ProductCart) {
+    private fun addTamCommentDialog(orderResponse: OrderResponse, productOrder: ProductOrder) {
         val dialog = PolyDialog
             .Builder(requireContext(), DialogAddCommentBinding.inflate(layoutInflater))
             .build()
@@ -115,7 +116,7 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
         }
 
         bindingDialog.btnSend.setOnClickListener{
-            val commentAdd = CommentRequest(productCart.productId, productCart.sizeId, orderResponse._id,
+            val commentAdd = CommentRequest(productOrder.productId, productOrder.sizeId, orderResponse._id,
                 bindingDialog.edtDesc.text.toString(), rate)
             productViewModel.handle(ProductAction.AddComment(commentAdd, listImage))
             dialog.dismiss()

@@ -7,7 +7,4 @@ data class OrderRequest(
     var notes: String,
     var statusPayment: String,
     var isPayment: Boolean,
-    var products: List<ProductCart>,
-    var total: Double,
-    var discount: Double,
 ): Serializable

@@ -47,7 +47,7 @@ class ProductRepository @Inject constructor(
     fun getProducts(): Observable<ProductsResponse> = api.getAllProduct().subscribeOn(Schedulers.io())
     fun getOneProducts(id : String): Observable<Product> = api.getOneProduct(id).subscribeOn(Schedulers.io())
     fun getOneSize(id : String): Observable<Size> = api.getOneSize(id).subscribeOn(Schedulers.io())
-    fun getSize(): Observable<ArrayList<Size>> = api.getAllSize().subscribeOn(Schedulers.io())
+    fun getSizeProduct(id : String): Observable<ArrayList<Size>> = api.getSizeProduct(id).subscribeOn(Schedulers.io())
     fun getCreateCart(cart: CartRequest): Observable<CartResponse> = api.getCreateCart(cart).subscribeOn(Schedulers.io())
     fun getOneCartById(): Observable<CartResponse> = api.getOneCartById().subscribeOn(Schedulers.io())
     fun getClearCart(): Observable<CartResponse> = api.getClearCart().subscribeOn(Schedulers.io())

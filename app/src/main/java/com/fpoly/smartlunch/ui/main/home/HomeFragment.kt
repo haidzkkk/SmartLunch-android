@@ -155,6 +155,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         private fun onItemProductClickListener(productId: String) {
             productViewModel.handle(ProductAction.GetDetailProduct(productId))
+            productViewModel.handle(ProductAction.GetListSizeProduct(productId))
             productViewModel.handle(ProductAction.GetListCommentsLimit(productId))
             homeViewModel.returnDetailProductFragment()
         }

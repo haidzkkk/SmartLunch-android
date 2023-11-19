@@ -72,11 +72,18 @@
                         android:layout_marginTop="10dp"
                         android:paddingHorizontal="12dp">
 
-                        <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/vp_banner"
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="148dp"
-                            android:layout_alignParentTop="true"/>
+                            android:layout_alignParentTop="true"
+                            app:cardCornerRadius="8dp">
+
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/vp_banner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+
+                        </androidx.cardview.widget.CardView>
 
                         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                             android:id="@+id/dots_banner"

@@ -1,13 +1,20 @@
 package com.fpoly.smartlunch.ui.main.product
 
 import android.animation.Animator
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
@@ -31,6 +38,8 @@ import com.fpoly.smartlunch.ui.chat.room.GalleryBottomSheetFragment
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
+import com.fpoly.smartlunch.ui.main.home.adapter.BannerAdapter
+import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import kotlinx.coroutines.Job
 
@@ -41,6 +50,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private lateinit var adapterSize: AdapterSize
     private lateinit var commentAdapter: CommentAdapter
+    private lateinit var imageSlideAdapter: ImageSlideAdapter
 
     private var currentSizeId: String? = null
     private var currentProduct: Product? = null
@@ -51,8 +61,18 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAppBar()
-        initUiSize()
+        initUi()
         listenEvent()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        productViewModel.returnVisibleBottomNav(false)
+    }
+    override fun onPause() {
+        super.onPause()
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     private fun setupAppBar() {
@@ -69,16 +89,29 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
     }
 
-    private fun initUiSize() {
+    private fun initUi() {
         adapterSize = AdapterSize { idSize ->
             currentSizeId = idSize
             productViewModel.handle(ProductAction.GetSizeById(idSize))
         }
-        views.rcvSize.adapter = adapterSize
 
+        imageSlideAdapter = ImageSlideAdapter{
+
+        }
         commentAdapter = CommentAdapter()
+
+        views.viewpagerImg.adapter = imageSlideAdapter
+        views.rcvSize.adapter = adapterSize
         views.rcvComment.adapter = commentAdapter
         views.rcvComment.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+
+        views.viewpagerImg.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                views.tvPositionImg.text = "${position + 1}/${(views.viewpagerImg.adapter as RecyclerView.Adapter).itemCount}"
+            }
+        })
     }
 
     private fun listenEvent() {
@@ -88,7 +121,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.swipeLoading.setOnRefreshListener {
             productViewModel.handle(ProductAction.GetListCommentsLimit(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
             productViewModel.handle(ProductAction.GetDetailProduct(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
-            productViewModel.handle(ProductAction.GetListSize)
+            productViewModel.handle(ProductAction.GetListSizeProduct(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""} ))
         }
         views.linearMinu2.setOnClickListener {
             increaseQuantity()
@@ -149,16 +182,16 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
         })
     }
-    private fun initUi(product: Product) {
+    private fun initUiProduct(product: Product) {
         currentProduct = product
         views.apply {
-            Glide.with(requireContext()).load(if(currentProduct?.images?.isNotEmpty() == true) currentProduct?.images!![0].url else "")
-                .placeholder(R.drawable.loading_img).error(R.drawable.loading_img)
-                .into(imageFoodDetail)
+            imageSlideAdapter.setData(product.images)
             NameDetailFood.text = currentProduct?.product_name
             priceDetailFood.text = "${currentProduct?.product_price.toString()} đ"
             descFood.text = currentProduct?.description
             someIdQuality.text = "1"
+            cvPositionImg.isVisible = product.images.size > 1
+            views.tvPositionImg.text = "1/${product.images.size}"
         }
     }
 
@@ -208,11 +241,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.btnLike.setImageResource(R.drawable.like_emty)
     }
 
-    override fun onResume() {
-        super.onResume()
-        productViewModel.returnVisibleBottomNav(false)
-    }
-
     override fun getBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentFoodDetailBinding {
@@ -220,13 +248,15 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     }
 
     override fun invalidate(): Unit = withState(productViewModel) {
-        views.swipeLoading.isRefreshing = it.asyncTopProduct is Loading || it.asynGetAllSize is Loading
+        views.swipeLoading.isRefreshing = it.asyncTopProduct is Loading || it.asynGetSizeProduct is Loading
 
-        when (it.asynGetAllSize) {
+        when (it.asynGetSizeProduct) {
             is Success -> {
-                it.asynGetAllSize.invoke()?.let {
+                it.asynGetSizeProduct.invoke()?.let {
                     adapterSize.setData(it)
                 }
+
+                it.asynGetSizeProduct = Uninitialized
             }
 
             else -> {}
@@ -237,6 +267,8 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                     sizeId = it._id
                     views.buttonAddCart.isEnabled = true
                 }
+
+                it.asyncGetOneSize = Uninitialized
             }
 
             else -> {}
@@ -244,7 +276,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         when (it.asyncProduct) {
             is Success -> {
                 it.asyncProduct.invoke()?.let { product ->
-                    initUi(product)
+                    initUiProduct(product)
                 }
             }
 
