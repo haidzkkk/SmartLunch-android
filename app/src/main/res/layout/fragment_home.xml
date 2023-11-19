@@ -28,17 +28,38 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="16dp"
                     android:drawableStart="@drawable/location_black"
-                    android:text="35 Tô Vĩnh Diện, Thanh Xuân"
+                    android:ellipsize="end"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:text=" Đang tải..."
                     android:textColor="@color/title"
                     android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="28dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginVertical="16dp"
-                    android:src="@drawable/notification" />
+                    android:layout_marginVertical="16dp">
+
+                    <ImageView
+                        android:id="@+id/notification"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/notification" />
+
+                    <TextView
+                        android:id="@+id/unread_noti"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/background_border_radius"
+                        android:backgroundTint="@color/red_light"
+                        android:gravity="center"
+                        android:maxLength="3"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_search"
@@ -76,7 +97,7 @@
                             android:id="@+id/vp_banner"
                             android:layout_width="match_parent"
                             android:layout_height="148dp"
-                            android:layout_alignParentTop="true"/>
+                            android:layout_alignParentTop="true" />
 
                         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                             android:id="@+id/dots_banner"
@@ -84,11 +105,10 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
+                            app:dotsColor="@color/grey"
                             app:dotsSize="8dp"
                             app:dotsSpacing="4dp"
-                            app:selectedDotColor="@color/red"
-                            app:dotsColor="@color/grey"
-                            />
+                            app:selectedDotColor="@color/red" />
                     </RelativeLayout>
 
                     <GridLayout
@@ -96,8 +116,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:columnCount="4"
-                        android:rowCount="1"
-                        android:paddingHorizontal="12dp">
+                        android:paddingHorizontal="12dp"
+                        android:rowCount="1">
 
                         <LinearLayout
                             android:id="@+id/cuaHang"
@@ -204,8 +224,8 @@
                             android:text="@string/ph_bi_n"
                             android:textAppearance="@style/ph_bi_n"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:textFontWeight="1000" />
+                            android:textFontWeight="1000"
+                            android:textSize="18sp" />
                     </RelativeLayout>
 
 
@@ -216,7 +236,7 @@
                         android:layout_marginTop="8dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_product_layout_hoz"/>
+                        tools:listitem="@layout/item_product_layout_hoz" />
 
                     <RelativeLayout
                         android:id="@+id/nh_gi_cao3"
@@ -231,17 +251,17 @@
                             android:layout_height="28dp"
                             android:text="@string/nh_gi_cao"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:textFontWeight="1000"/>
+                            android:textFontWeight="1000"
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/xem_th_m1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="xem thêm "
                             android:drawableEnd="@drawable/icon_right"
-                            android:textColor="@color/red"/>
+                            android:text="xem thêm "
+                            android:textColor="@color/red" />
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -250,9 +270,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_new_layout_ver"
-                        android:paddingHorizontal="12dp" />
+                        tools:listitem="@layout/item_new_layout_ver" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -303,12 +323,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:layout_alignParentBottom="true"
+                    android:layout_margin="8dp"
                     android:background="@drawable/background_border_radio_button"
                     android:orientation="horizontal"
-                    android:layout_margin="8dp"
                     android:padding="8dp"
-                    android:visibility="gone"
-                    android:paddingHorizontal="12dp">
+                    android:paddingHorizontal="12dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/float_BottomSheet"

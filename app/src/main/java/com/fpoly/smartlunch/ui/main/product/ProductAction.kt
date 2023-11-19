@@ -20,6 +20,7 @@ sealed class ProductAction : PolyViewAction {
     object GetAllCategory : ProductAction()
     object GetAllFavouriteProduct : ProductAction()
     data class GetDetailProduct(val id : String) : ProductAction()
+    data class GetReadNotification(val id : String) : ProductAction()
     data class GetSizeById(val id : String?) : ProductAction()
     object GetListSize : ProductAction()
     data class CreateCart(val cart : CartRequest) : ProductAction()
@@ -34,4 +35,6 @@ sealed class ProductAction : PolyViewAction {
     data class GetListCommentsLimit(val productId : String) : ProductAction()
     data class GetListComments(val productId : String) : ProductAction()
     data class AddComment(val comment: CommentRequest, val images: List<Gallery>?) : ProductAction()
+
+    object GetAllNotification: ProductAction()
 }

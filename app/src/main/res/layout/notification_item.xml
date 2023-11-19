@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F6F8FE"
+    android:layout_marginTop="16dp"
+    android:padding="12dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_notification"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ellipse" />
+
+    <LinearLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/img_notification"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="Đặt hàng thành công"
+            android:textColor="@color/black"
+            android:textFontWeight="800"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:paddingLeft="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20/10/2023 | 20:00"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/layout_title"
+        android:id="@+id/content"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You have canceled an order at Hut. We apologize for your inconvenience. We will try to improve our service next time 🥲"
+        android:textSize="16sp" />
+
+</RelativeLayout>
