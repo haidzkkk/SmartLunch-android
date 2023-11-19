@@ -12,11 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
-import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseFragment
@@ -34,7 +32,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.GeoPoint
 import javax.inject.Inject
 
-class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>() {
+class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>(){
     companion object {
         const val TAG = "HomeFragment"
     }
@@ -134,6 +132,9 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
             views.floatBottomSheet.setOnClickListener {
                 openCartBottomSheet()
+            }
+            views.notification.setOnClickListener {
+                homeViewModel.returnNotificationFragment()
             }
         }
 
@@ -278,6 +279,20 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                         views.layoutCart.visibility = View.VISIBLE
                     }else{
                         views.layoutCart.visibility = View.GONE
+                    }
+                }
+                else -> {
+                    views.layoutCart.visibility = View.GONE
+                }
+            }
+            when (it.asyncUnreadNotifications) {
+                is Success -> {
+                    if (it.asyncUnreadNotifications.invoke()?.size!! > 0) {
+                        views.unreadNoti.visibility = View.VISIBLE
+                        views.unreadNoti.text=
+                            it.asyncUnreadNotifications.invoke()?.size.toString()
+                    }else{
+                        views.unreadNoti.visibility = View.GONE
                     }
                 }
                 else -> {

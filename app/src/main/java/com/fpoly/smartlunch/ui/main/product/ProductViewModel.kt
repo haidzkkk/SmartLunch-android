@@ -15,6 +15,7 @@ import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
@@ -27,7 +28,8 @@ import dagger.assisted.AssistedInject
 
 class ProductViewModel @AssistedInject constructor(
     @Assisted state: ProductState,
-    private val repository: ProductRepository
+    private val repository: ProductRepository,
+    private val notificationRepository: NotificationRepository
 ) : PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state) {
 
     init {
@@ -37,6 +39,7 @@ class ProductViewModel @AssistedInject constructor(
         handleGetAllFavouriteProduct()
         handleGetTopProduct()
         handleGetAllOrderByUserId()
+        handleGetAllNotification()
     }
 
     override fun handle(action: ProductAction) {
@@ -71,9 +74,30 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetListCommentsLimit -> handleGetListCommentsLimit(action.productId)
             is ProductAction.AddComment -> handleAddComments(action.comment, action.images)
 
-            else ->{
-            }
+            is ProductAction.GetAllNotification -> handleGetAllNotification()
+            is ProductAction.GetReadNotification -> handleReadNotification(action.id)
+            else -> {}
         }
+    }
+
+    private fun handleReadNotification(id: String) {
+        setState { copy(asyncReadNotification = Loading()) }
+        notificationRepository.getReadNotification(id)
+            .execute {
+                copy(asyncReadNotification = it)
+            }
+    }
+
+    private fun handleGetAllNotification() {
+        setState { copy(asyncNotifications = Loading(), asyncUnreadNotifications = Loading()) }
+        notificationRepository.getAllNotification()
+            .execute {
+                copy(asyncNotifications = it)
+            }
+        notificationRepository.getAllNotificationWithQuery(false)
+            .execute {
+                copy(asyncUnreadNotifications = it)
+            }
     }
 
     private fun handleGetTopProduct() {
@@ -301,7 +325,6 @@ class ProductViewModel @AssistedInject constructor(
 
     fun handleRemoveAsyncGetFavourite() {
         setState { copy(asyncGetFavourite = Uninitialized) }
-
     }
 
     fun returnCommentFragment(){

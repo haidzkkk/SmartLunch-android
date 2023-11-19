@@ -10,6 +10,7 @@ import com.fpoly.smartlunch.data.model.CategoryResponse
 import com.fpoly.smartlunch.data.model.Comment
 import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.Favourite
+import com.fpoly.smartlunch.data.model.Notification
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
@@ -50,6 +51,9 @@ data class ProductState(
     var asyncGetFavourite: Async<Favourite> = Uninitialized,
     var asyncFavourites: Async<ArrayList<Product>> = Uninitialized,
     var asyncTopProduct: Async<ArrayList<Product>> = Uninitialized,
+    var asyncNotifications: Async<List<Notification>> = Uninitialized,
+    var asyncUnreadNotifications: Async<List<Notification>> = Uninitialized,
+    var asyncReadNotification: Async<Notification> = Uninitialized,
     ): MvRxState {
 
         var isSwipeLoading = products is Loading || asyncTopProduct is Loading
