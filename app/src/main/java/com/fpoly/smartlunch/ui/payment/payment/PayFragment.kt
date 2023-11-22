@@ -285,7 +285,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                                 PurchaseUnit(
                                     amount = Amount(
                                         currencyCode = CurrencyCode.USD,
-                                        value = (addOrder?.total.toString().toInt() / 24).toString()
+                                        value = ((addOrder?.total ?: 0.0) / 24).toInt().toString()
                                     ),
                                 )
                             ),

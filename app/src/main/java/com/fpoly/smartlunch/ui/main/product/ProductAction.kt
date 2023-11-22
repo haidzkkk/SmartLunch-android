@@ -11,6 +11,7 @@ import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 
 
 sealed class ProductAction : PolyViewAction {
@@ -20,6 +21,7 @@ sealed class ProductAction : PolyViewAction {
     object GetAllCategory : ProductAction()
     object GetAllFavouriteProduct : ProductAction()
     data class GetDetailProduct(val id : String) : ProductAction()
+    data class GetDetailCoupons(val id : String) : ProductAction()
     data class GetListSizeProduct(val idProduct : String) : ProductAction()
     data class GetReadNotification(val id : String) : ProductAction()
     data class GetSizeById(val id : String?) : ProductAction()
@@ -31,6 +33,8 @@ sealed class ProductAction : PolyViewAction {
     data class GetAllProductByIdCategory(val id : String): ProductAction()
     data class GetCurrentOrder( val id : String) : ProductAction()
     object GetAllOrderByUserId : ProductAction()
+    data class ApplyCoupon(val coupons: CouponsRequest) : ProductAction()
+
 
     data class GetListCommentsLimit(val productId : String) : ProductAction()
     data class GetListComments(val productId : String) : ProductAction()

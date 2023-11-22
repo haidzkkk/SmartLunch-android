@@ -1,30 +1,30 @@
 package com.fpoly.smartlunch.ui.main.product
 
 import com.airbnb.mvrx.ActivityViewModelContext
+import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
-import com.fpoly.smartlunch.data.model.Comment
 import com.fpoly.smartlunch.data.model.CommentRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Gallery
-import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
-import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import com.fpoly.smartlunch.ultis.Status.CONFIRMED_STATUS
 import com.fpoly.smartlunch.ultis.Status.DELIVERING_STATUS
 import com.fpoly.smartlunch.ultis.Status.UNCONFIRMED_STATUS
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import retrofit2.HttpException
 
 class ProductViewModel @AssistedInject constructor(
     @Assisted state: ProductState,
@@ -33,13 +33,13 @@ class ProductViewModel @AssistedInject constructor(
 ) : PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state) {
 
     init {
-//        handleGetAllCategory()
+        handleGetAllCategory()
         handleGetListProduct()
-//        handleGetAllSize()
         handleGetAllFavouriteProduct()
         handleGetTopProduct()
         handleGetAllOrderByUserId()
         handleGetAllNotification()
+        handleGetListCoupons()
     }
 
     override fun handle(action: ProductAction) {
@@ -49,6 +49,7 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetAllCategory -> handleGetAllCategory()
             is ProductAction.GetAllFavouriteProduct -> handleGetAllFavouriteProduct()
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
+            is ProductAction.GetDetailCoupons -> handleGetDetailCoupons(action.id)
             is ProductAction.GetListSizeProduct -> handleGetSizeProduct(action.idProduct)
             is ProductAction.GetSizeById -> handleGetSizeById(action.id)
 
@@ -76,8 +77,50 @@ class ProductViewModel @AssistedInject constructor(
 
             is ProductAction.GetAllNotification -> handleGetAllNotification()
             is ProductAction.GetReadNotification -> handleReadNotification(action.id)
+            is ProductAction.ApplyCoupon -> handleApplyCoupon(action.coupons)
             else -> {}
         }
+    }
+
+    private fun handleApplyCoupon(coupons: CouponsRequest) {
+        setState { copy(asyncCurentCart = Loading()) }
+        repository.applyCoupon(coupons)
+            .subscribe(
+                { response ->
+                    setState { copy(asyncCurentCart = Success(response)) }
+                }, { throwable ->
+                    if (throwable is HttpException) {
+                        setState {
+                            copy(
+                                catchError = when (throwable.code()) {
+                                    400 -> {
+                                        "Không thể sử dụng mã"
+                                    }
+
+                                    else -> {
+                                        ""
+                                    }
+                                }, asyncCurentCart = Fail(throwable)
+                            )
+                        }
+                    }
+                })
+    }
+
+    private fun handleGetDetailCoupons(id: String) {
+        setState { copy(asyncOneCoupons = Loading()) }
+        repository.getOneCoupons(id)
+            .execute {
+                copy(asyncOneCoupons = it)
+            }
+    }
+
+    private fun handleGetListCoupons() {
+        setState { copy(asyncCoupons = Loading()) }
+        repository.getCoupons()
+            .execute {
+                copy(asyncCoupons = it)
+            }
     }
 
     private fun handleReadNotification(id: String) {

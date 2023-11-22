@@ -84,13 +84,11 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     }
 
     private fun initUi() {
-        //setup rcyH
         adapter = AdapterProduct {
             onItemProductClickListener(it)
         }
         views.recyclerViewHoz.adapter = adapter
 
-        //setup rcyV
         adapterver = AdapterProductVer {
             onItemProductClickListener(it)
         }

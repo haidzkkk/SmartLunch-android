@@ -150,8 +150,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp">
-
                             <TextView
+                                android:id="@+id/lable_comment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:lineSpacingExtra="5sp"
+                                android:text="Bình luận"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_below="@+id/lable_comment"
                                 android:id="@+id/tv_title_commemt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
