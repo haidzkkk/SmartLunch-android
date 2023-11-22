@@ -68,6 +68,8 @@ interface ProductApi {
     fun updateIsPaymentOrder(@Path("id") id: String, @Query("isPayment") isPayment: Boolean): Observable<OrderResponse>
     @GET("/api/coupons")
     fun getAllCoupons(): Observable<ArrayList<CouponsResponse>>
+    @GET("/api/coupons/{id}")
+    fun getOneCoupons(@Path("id") id: String): Observable<CouponsResponse>
     @GET("/api/userId/order")
     fun getAllOrderByUserId(
         @Query("statusId") statusId: String

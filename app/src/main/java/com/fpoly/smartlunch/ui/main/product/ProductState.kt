@@ -17,9 +17,12 @@ import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 
 data class ProductState(
+    var catchError: String? = null,
     var products: Async<ProductsResponse> = Uninitialized,
     var category: Async<CategoryResponse> = Uninitialized,
-    var coupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
+    var asyncCoupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
+    var asyncOneCoupons: Async<CouponsResponse> = Uninitialized,
+    var asyncCurentCart : Async<CartResponse> = Uninitialized,
     var asyncUserCurrent: Async<ProductsResponse> = Uninitialized,
 
     var asyncProduct: Async<Product> = Uninitialized,
