@@ -41,4 +41,6 @@ sealed class ProductAction : PolyViewAction {
     data class AddComment(val comment: CommentRequest, val images: List<Gallery>?) : ProductAction()
 
     object GetAllNotification: ProductAction()
+    data class SearchProductByName(val text: String): ProductAction()
+
 }

@@ -15,9 +15,11 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseFragment
 
 import com.fpoly.smartlunch.databinding.FragmentProductListBinding
+import com.fpoly.smartlunch.ui.main.home.HomeBottomSheet
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCategory
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterListProduct
+import com.fpoly.smartlunch.ui.main.product.filter.OptionPriceBottomSheetFragment
 import javax.inject.Inject
 
 
@@ -44,6 +46,17 @@ class ProductListFragment : PolyBaseFragment<FragmentProductListBinding>() {
        views.appBar.btnBackToolbar.setOnClickListener {
            activity?.supportFragmentManager?.popBackStack()
        }
+        views.btnNew.setOnClickListener {  }
+        views.btnBestSeller.setOnClickListener {  }
+        views.btnTopRating.setOnClickListener {  }
+        views.btnPrice.setOnClickListener {
+            openPriceOptionSortBottomSheet()
+        }
+    }
+
+    private fun openPriceOptionSortBottomSheet() {
+        val bottomSheetFragment = OptionPriceBottomSheetFragment()
+        bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
     }
 
     private fun initUiProduct() {

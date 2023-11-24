@@ -78,7 +78,15 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetAllNotification -> handleGetAllNotification()
             is ProductAction.GetReadNotification -> handleReadNotification(action.id)
             is ProductAction.ApplyCoupon -> handleApplyCoupon(action.coupons)
+            is ProductAction.SearchProductByName -> handleSearchProductByName(action.text)
             else -> {}
+        }
+    }
+
+    private fun handleSearchProductByName(text: String) {
+        setState { copy(currentProductsSearch = Loading()) }
+        repository.searchProductByName(text).execute {
+            copy(currentProductsSearch = it)
         }
     }
 

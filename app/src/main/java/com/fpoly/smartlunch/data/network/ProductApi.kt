@@ -13,6 +13,7 @@ import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -78,6 +79,9 @@ interface ProductApi {
     fun getCurrentOrder(@Path("id") id: String): Observable<OrderResponse>
     @GET("/api/banner")
     fun getBanner(): Observable<ArrayList<Banner>>
+
+    @GET("api/products/search/{text}")
+    fun searchProductByName(@Path("text") text: String):Observable<ArrayList<Product>>
 
 
 
