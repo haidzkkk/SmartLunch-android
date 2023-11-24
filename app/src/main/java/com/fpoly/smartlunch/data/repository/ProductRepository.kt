@@ -95,4 +95,6 @@ class ProductRepository @Inject constructor(
         return commentApi.postComment(reqBodyProductId, reqBodyOrderId, reqBodySizeId, reqBodyDescription, reqBodyRate, reqBodyImages).subscribeOn(Schedulers.io())
     }
 
+    fun searchProductByName(text:String):Observable<ArrayList<Product>> = api.searchProductByName(text).subscribeOn(Schedulers.io())
+
 }
