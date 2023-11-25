@@ -4,6 +4,7 @@
     <string name="app_name">Smart Lunch</string>
     <string name="hello_blank_fragment">Chào fragment trống</string>
     <string name="home">Trang chủ</string>
+    <string name="notification">Notification</string>
     <string name="favourite">Yêu thích</string>
     <string name="card">Thẻ</string>
     <string name="cart">Giỏ hàng</string>

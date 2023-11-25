@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.home.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +11,11 @@ import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemNewLayoutVerBinding
+import com.fpoly.smartlunch.ultis.formatCash
+import com.fpoly.smartlunch.ultis.formatRate
+import com.fpoly.smartlunch.ultis.formatView
 
+@SuppressLint("SetTextI18n")
 class AdapterProductVer(private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterProductVer.ProductViewHolder>() {
 
     private var products: List<Product> = listOf()
@@ -23,23 +28,22 @@ class AdapterProductVer(private val onClickItem: (id: String) -> Unit) : Recycle
     }
 
     inner class ProductViewHolder(private val binding: ItemNewLayoutVerBinding,val context: Context) : RecyclerView.ViewHolder(binding.root) {
-        val image = binding.image
-        val name = binding.nameProduct
-        val price = binding.priceProduct
-        val linearLayout = binding.layoutItemProduct
         fun bind(currentProduct: Product){
+            binding.apply {
+                Glide.with(context)
+                    .load( if(currentProduct.images.isNotEmpty()) currentProduct.images[0].url else "")
+                    .placeholder(R.drawable.loading_img)
+                    .error(R.drawable.loading_img)
+                    .into(image)
 
-            Glide.with(context)
-                .load( if(currentProduct.images.isNotEmpty()) currentProduct.images[0].url else "")
-                .placeholder(R.drawable.loading_img)
-                .error(R.drawable.loading_img)
-                .into(image)
+                nameProduct.text = currentProduct.product_name
+                priceProduct.text = currentProduct.product_price.formatCash()
+                tvRate.text = " ${currentProduct.rate.formatRate()} đánh giá"
+                tvBuy.text = "đã bán ${currentProduct.bought.formatView()}"
 
-            name.text = currentProduct.product_name.toString()
-            price.text = "${currentProduct.product_price} đ"
-
-            linearLayout.setOnClickListener {
-                onClickItem(currentProduct._id)
+                layoutItemProduct.setOnClickListener {
+                    onClickItem(currentProduct._id)
+                }
             }
         }
     }
@@ -61,8 +65,8 @@ class AdapterProductVer(private val onClickItem: (id: String) -> Unit) : Recycle
     }
 
     override fun getItemCount(): Int {
-        return products.size
+        if (products.size < 5)
+            return products.size
+        return 5
     }
-
-
 }

@@ -30,7 +30,8 @@ class HistoryOrderFragment :  PolyBaseFragment<FragmentHistoryOrderBinding>(){
             is Success -> {
                 val adapter = OrderAdapter{id->
                     productViewModel.handle(ProductAction.GetCurrentOrder(id))
-                    homeViewModel.returnOrderDetailFragment()}
+                    homeViewModel.returnOrderDetailFragment()
+                }
                 views.rcyOrder.adapter = adapter
                 adapter.setData(it.asyncOrders.invoke())
             }

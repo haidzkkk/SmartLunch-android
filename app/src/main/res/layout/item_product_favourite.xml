@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="12dp"
     android:layout_marginBottom="12dp"
     android:id="@+id/Liner_hoz"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/layout_main"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="215dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -28,6 +27,7 @@
             android:layout_height="22dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="12dp"
+            android:visibility="gone"
             android:background="@drawable/sale"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true">
@@ -97,16 +97,13 @@
                     android:text=" 4.1 (1.2k)"
                     android:drawableStart="@drawable/icon_vote"
                     android:textAppearance="@style/type_16"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_buy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="đã bán 25.1k"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/favorite"
+                    android:layout_alignParentRight="true"/>
 
             </RelativeLayout>
         </RelativeLayout>

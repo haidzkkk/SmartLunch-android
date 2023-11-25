@@ -159,10 +159,17 @@
 
 
                     <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="#F3F4F6"
+                        android:layout_marginVertical="16dp"
+                        android:layout_marginTop="24dp"
+                        />
+
+                    <RelativeLayout
                         android:id="@+id/nh_gi_cao1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
                         android:paddingHorizontal="12dp">
 
                         <TextView
@@ -174,8 +181,17 @@
                             android:textColor="@color/black"
                             android:textFontWeight="1000"
                             android:textSize="18sp" />
-                    </RelativeLayout>
 
+                        <TextView
+                            android:id="@+id/tv_see_more_top"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:drawableEnd="@drawable/icon_right"
+                            android:text="xem tất cả "
+                            android:textColor="@color/red" />
+
+                    </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_hoz"
@@ -187,10 +203,17 @@
                         tools:listitem="@layout/item_product_layout_hoz" />
 
                     <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="#F3F4F6"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginVertical="16dp"
+                        />
+
+                    <RelativeLayout
                         android:id="@+id/nh_gi_cao3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:paddingHorizontal="12dp">
 
                         <TextView
@@ -208,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/icon_right"
-                            android:text="xem thêm "
+                            android:text="xem tất cả "
                             android:textColor="@color/red" />
                     </RelativeLayout>
 
@@ -221,6 +244,31 @@
                         android:paddingHorizontal="12dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_new_layout_ver" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="#F3F4F6"
+                        android:layout_marginVertical="16dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:text="Gợi ý hôm nay"
+                        android:textColor="@color/black"
+                        android:textFontWeight="1000"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="12dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_product_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp" />
+
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 

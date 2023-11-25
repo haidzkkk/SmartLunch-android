@@ -17,6 +17,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -166,3 +167,10 @@ fun View.setMargins(left: Int, top: Int, right: Int, bottom: Int){
     }
 }
 
+fun TextView.setTextColor(isSuccess: Boolean){
+    if (isSuccess){
+        this.setTextColor(this.context.getColor(R.color.green))
+    }else{
+        this.setTextColor(this.context.getColor(R.color.red))
+    }
+}

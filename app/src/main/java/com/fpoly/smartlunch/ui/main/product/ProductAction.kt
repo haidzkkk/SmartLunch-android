@@ -10,14 +10,16 @@ import retrofit2.http.Query
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.OrderRequest
+import com.fpoly.smartlunch.data.model.PagingRequestProduct
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 
 
 sealed class ProductAction : PolyViewAction {
     data class LikeProduct(val product: Product):ProductAction()
-    object GetListProduct : ProductAction()
-    object GetListTopProduct : ProductAction()
+    data class GetListProductRate(val paging: PagingRequestProduct) : ProductAction()
+    data class GetListProduct(val paging: PagingRequestProduct)  : ProductAction()
+    data class GetListTopProduct(val paging: PagingRequestProduct)  : ProductAction()
     object GetAllCategory : ProductAction()
     object GetAllFavouriteProduct : ProductAction()
     data class GetDetailProduct(val id : String) : ProductAction()
@@ -35,6 +37,8 @@ sealed class ProductAction : PolyViewAction {
     object GetAllOrderByUserId : ProductAction()
     data class ApplyCoupon(val coupons: CouponsRequest) : ProductAction()
 
+
+    data class UpdateOder(val idOder: String, val oder: OrderRequest) : ProductAction()
 
     data class GetListCommentsLimit(val productId : String) : ProductAction()
     data class GetListComments(val productId : String) : ProductAction()

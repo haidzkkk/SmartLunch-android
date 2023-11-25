@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="215dp"
+    android:layout_marginBottom="12dp"
+    android:id="@+id/Liner_hoz"
+   >
+
+    <ImageView
+        android:id="@+id/img_main"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/icon_right"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:background="@drawable/background_circle_select"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_main"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Xem tất cả"
+        android:textColor="@color/red"/>
+
+
+</RelativeLayout>

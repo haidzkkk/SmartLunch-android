@@ -74,7 +74,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Cơm lứt bò sốt tiêu"
                                 android:textColor="@color/black"
-                                android:textSize="20sp"
+                                android:textSize="22sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -82,17 +82,37 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:text="200.000đ"
+                                android:layout_centerVertical="true"
                                 android:textColor="@color/red"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_bought"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/grey"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/sf_pro_text_light"/>
+
+                            <com.google.android.material.divider.MaterialDivider
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="10dp"
+                                android:layout_below="@+id/tv_bought"/>
+
+
                         </RelativeLayout>
 
                         <LinearLayout
                             android:id="@+id/lin2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/lin"
                             android:layout_marginTop="24dp"
                             android:orientation="vertical">
 
@@ -100,21 +120,29 @@
                                 android:id="@+id/m_t_"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Mô tả"
+                                android:text="Mô tả sản phẩm"
                                 android:textColor="@color/black"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-
+                                android:textSize="16sp"
                                 />
 
                             <TextView
-                                android:id="@+id/desc_food"
+                                android:id="@+id/tv_desc"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:gravity="top"
-                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl. Viverra vulputate sodales quis etdui, lacus. Iaculis eu egestas leo egestas vel. Ultrices "
-                                android:textSize="14sp" />
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                             />
+
+                            <TextView
+                                android:id="@+id/tv_see_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Xem thêm"
+                                android:paddingBottom="15dp"
+                                android:paddingRight="15dp"
+                                android:textSize="12sp"
+                                android:textColor="@color/grey"/>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -132,7 +160,7 @@
                                 android:lineSpacingExtra="5sp"
                                 android:text="@string/k_ch_c_"
                                 android:textColor="@color/black"
-                                android:textSize="20sp"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -145,6 +173,12 @@
                                 tools:listitem="@layout/layout_size" />
 
                         </LinearLayout>
+
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -183,28 +217,27 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:layout_below="@+id/tv_title_commemt"/>
 
                             <TextView
-                                android:id="@+id/tv_see_all_comment2"
+                                android:id="@+id/tv_no_comment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Xem thêm "
-                                android:drawableEnd="@drawable/icon_right"
-                                android:textColor="@color/red"
+                                android:text="Không có đánh giá nào"
+                                android:textColor="@color/grey"
                                 android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/rcv_comment"
+                                android:layout_below="@+id/tv_title_commemt"
                                 />
 
-                            <View
-                                android:layout_width="wrap_content"
-                                android:layout_height="100dp"
-                                android:layout_below="@+id/tv_see_all_comment2"/>
-
                         </RelativeLayout>
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:layout_alignParentBottom="true"/>
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -255,31 +288,34 @@
                     android:layout_width="181dp"
                     android:layout_height="52dp"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/button"
-                    android:text="@string/h4" />
+                    android:background="@drawable/button" />
             </RelativeLayout>
 
             <include
                 android:id="@+id/appBar"
-                layout="@layout/toolbar_header" />
+                layout="@layout/toolbar_header"/>
+
             <ImageView
+                android:id="@+id/btn_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/like_emty"
                 android:padding="10dp"
-                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/background_icon"
+                android:layout_toStartOf="@+id/btn_share"/>
+
+            <ImageView
+                android:id="@+id/btn_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_share_24"
+                android:padding="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/background_icon"
                 android:layout_alignParentEnd="true"
-                android:id="@+id/btn_like"/>
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:id="@+id/anim_like"
-                android:visibility="gone"
-                app:lottie_loop="false"
-                android:layout_alignParentEnd="true"
-                />
+                app:tint="@color/white" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"

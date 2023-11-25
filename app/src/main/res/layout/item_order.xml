@@ -46,7 +46,7 @@
         <!-- Product Name -->
         <TextView
             android:id="@+id/name_product"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/status"
             android:layout_marginTop="4dp"

@@ -121,11 +121,15 @@ class HomeViewModel @AssistedInject constructor(
     fun returnNotificationFragment() {
         _viewEvents.post(HomeViewEvent.ReturnFragment(NotificationFragment::class.java))
     }
+    fun setBadgeBottomNav(idItemMenu: Int, position: Int?) {
+        _viewEvents.post(HomeViewEvent.SetBadgeBottomNav(idItemMenu, position))
+
     fun returnCouponsDetailFragment() {
         _viewEvents.post(HomeViewEvent.ReturnFragment(CouponsDetailFragment::class.java))
     }
     fun returnSearchFragment() {
         _viewEvents.post(HomeViewEvent.ReturnFragment(SearchFragment::class.java))
+
     }
 
     @AssistedFactory

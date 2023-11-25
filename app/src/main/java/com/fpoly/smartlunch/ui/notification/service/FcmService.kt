@@ -101,7 +101,7 @@ class FcmService : FirebaseMessagingService() {
             .setContentText(body)
             .setSmallIcon(R.drawable.logoapp)
             .setColor(resources.getColor(R.color.black, applicationContext.theme))
-            .setSound(Uri.parse("android.resource://" + packageName + "/" + R.raw.sound_messager))
+            .setSound(Uri.parse("android.resource://" + packageName + "/" + R.raw.sound_notifi))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
