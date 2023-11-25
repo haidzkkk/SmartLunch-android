@@ -42,7 +42,6 @@ class ProductViewModel @AssistedInject constructor(
 //        handleGetAllCategory()
 //        handleGetAllSize()
         handleGetAllCategory()
-        handleGetListProduct()
         handleGetAllFavouriteProduct()
         handleGetTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null))
         handleGetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null))

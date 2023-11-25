@@ -123,7 +123,7 @@ class HomeViewModel @AssistedInject constructor(
     }
     fun setBadgeBottomNav(idItemMenu: Int, position: Int?) {
         _viewEvents.post(HomeViewEvent.SetBadgeBottomNav(idItemMenu, position))
-
+    }
     fun returnCouponsDetailFragment() {
         _viewEvents.post(HomeViewEvent.ReturnFragment(CouponsDetailFragment::class.java))
     }
