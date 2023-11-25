@@ -1,7 +1,7 @@
 package com.fpoly.smartlunch.data.model
 
 data class ProductsResponse(
-    val docs: List<Product>,
+    val docs: ArrayList<Product>,
     val hasNextPage: Boolean,
     val hasPrevPage: Boolean,
     val limit: Int,

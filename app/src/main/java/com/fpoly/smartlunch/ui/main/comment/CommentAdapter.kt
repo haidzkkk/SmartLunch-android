@@ -30,7 +30,7 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>(){
             binding.tvName.text = comment.userId?._id
             handleRateVote(binding, comment)
 
-            binding.tvMessageSize.text = comment.sizeId?.size_name
+            binding.tvMessageSize.text = comment.sizeName
             binding.tvMessage.text = comment.description
             binding.tvDate.text = comment.createdAt.convertIsoToStringFormat(dateDay2TimeFormat)
 

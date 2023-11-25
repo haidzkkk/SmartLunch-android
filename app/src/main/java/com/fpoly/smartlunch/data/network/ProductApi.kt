@@ -26,7 +26,12 @@ import retrofit2.http.Query
 
 interface ProductApi {
     @GET("/api/products")
-    fun getAllProduct(): Observable<ProductsResponse>
+    fun getAllProduct(@Query("_limit") _limit: Int?,
+                      @Query("_sort") _sort: String?,
+                      @Query("_order") _order: String?,
+                      @Query("_page") _page: Int?,
+                      @Query("q") query: String?,
+                      ): Observable<ProductsResponse>
     @GET("/api/products/{id}")
     fun getOneProduct(@Path("id")id: String): Observable<Product>
     @GET("/api/size/{id}")
@@ -62,8 +67,8 @@ interface ProductApi {
     fun likeProduct(@Body product: Product): Observable<Favourite>
     @POST("/api/order")
     fun createOrder( @Body order: OrderRequest): Observable<OrderResponse>
-    @PATCH("/api/order")
-    fun updateOrder(@Body order: OrderRequest): Observable<OrderResponse>
+    @PATCH("/api/order/{id}")
+    fun updateOrder(@Path("id") id: String, @Body order: OrderRequest): Observable<OrderResponse>
     @PATCH("/api/order/payment/{id}")
     fun updateIsPaymentOrder(@Path("id") id: String, @Query("isPayment") isPayment: Boolean): Observable<OrderResponse>
     @GET("/api/coupons")

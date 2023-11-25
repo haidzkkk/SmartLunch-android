@@ -7,10 +7,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
@@ -98,6 +100,17 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 handleEvent(it)
             }
         }
+
+        productViewModel.subscribe(this){
+            if (it.asyncUnconfirmed is Success && it.asyncConfirmed is Success && it.asyncDelivering is Success){
+                var position =( it.asyncUnconfirmed.invoke()?.size ?: 0) + (it.asyncConfirmed.invoke()?.size ?: 0) + (it.asyncConfirmed.invoke()?.size ?: 0)
+                if (position == 0){
+                    handleSetBadgeBottomnav(R.id.menu_order, null)
+                }else{
+                    handleSetBadgeBottomnav(R.id.menu_order, 0)
+                }
+            }
+        }
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
@@ -161,9 +174,10 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
             is HomeViewEvent ->{
                 when (event) {
                     is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
-                    is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, bundle = event.bundle)}
+                    is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, allowStateLoss = false,  bundle = event.bundle)}
                     is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
                     is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
+                    is HomeViewEvent.SetBadgeBottomNav ->  handleSetBadgeBottomnav(event.id, event.position)
                     else -> {}
                 }
             }
@@ -177,6 +191,19 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
             }
         }
 
+    }
+
+    private fun handleSetBadgeBottomnav(idMenu: Int, position: Int?) {
+        if (position != null) {
+            if (position <= 0){
+                views.bottomNav.showBadge(idMenu)
+            }else{
+                views.bottomNav.showBadge(idMenu, position)
+            }
+        }
+        else{
+            views.bottomNav.dismissBadge(idMenu)
+        }
     }
 
     private fun handleDarkMode(checkedDarkMode: Boolean) {

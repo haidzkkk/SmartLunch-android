@@ -66,7 +66,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_start"
-        android:text="Phân loại: "/>
+        android:text="Phân loại: "
+        android:textColor="@color/grey"/>
 
     <TextView
         android:id="@+id/tv_message_size"
@@ -99,6 +100,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rcv_img"
         android:textSize="12sp"
-        android:text="19-8-2021 12:38"/>
+        android:textColor="@color/grey"/>
 
 </RelativeLayout>

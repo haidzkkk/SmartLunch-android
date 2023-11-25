@@ -17,10 +17,13 @@ import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 
 data class ProductState(
-    var products: Async<ProductsResponse> = Uninitialized,
     var category: Async<CategoryResponse> = Uninitialized,
     var coupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
+
+    var productsRate: Async<ProductsResponse> = Uninitialized,
     var asyncUserCurrent: Async<ProductsResponse> = Uninitialized,
+    var asyncTopProduct: Async<ProductsResponse> = Uninitialized,
+    var asyncProducts: Async<ProductsResponse> = Uninitialized,
 
     var asyncProduct: Async<Product> = Uninitialized,
     var asynGetSizeProduct: Async<ArrayList<Size>> =  Uninitialized,
@@ -40,6 +43,7 @@ data class ProductState(
     var asyncAddComment: Async<Comment> = Uninitialized,
 
     var getAllProductByIdCategory : Async<ArrayList<Product>> = Uninitialized,
+
     var addOrder: Async<OrderResponse> = Uninitialized,
     var asyncOrders: Async<ArrayList<OrderResponse>> = Uninitialized,
     var asyncUnconfirmed: Async<List<OrderResponse>> = Uninitialized,
@@ -47,14 +51,15 @@ data class ProductState(
     var asyncDelivering: Async<List<OrderResponse>> = Uninitialized,
     var asyncCancelled: Async<List<OrderResponse>> = Uninitialized,
     var asyncCompleted: Async<List<OrderResponse>> = Uninitialized,
+    var asyncUpdateOrder: Async<OrderResponse> = Uninitialized,
+
     var asyncLikeProduct: Async<Favourite> = Uninitialized,
     var asyncGetFavourite: Async<Favourite> = Uninitialized,
     var asyncFavourites: Async<ArrayList<Product>> = Uninitialized,
-    var asyncTopProduct: Async<ArrayList<Product>> = Uninitialized,
     var asyncNotifications: Async<List<Notification>> = Uninitialized,
     var asyncUnreadNotifications: Async<List<Notification>> = Uninitialized,
     var asyncReadNotification: Async<Notification> = Uninitialized,
     ): MvRxState {
 
-        var isSwipeLoading = products is Loading || asyncTopProduct is Loading
+        var isSwipeLoading = productsRate is Loading || asyncTopProduct is Loading
 }

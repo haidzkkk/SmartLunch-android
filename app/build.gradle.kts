@@ -106,6 +106,9 @@ dependencies {
     // map
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.libraries.places:places:2.5.0")
+    //    gg maps util for clustering
+    implementation ("com.google.maps.android:android-maps-utils:3.4.0")
+    implementation ("com.google.maps.android:maps-utils-ktx:3.4.0")
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
@@ -136,12 +139,6 @@ dependencies {
     // paypal sdk
     implementation("com.paypal.checkout:android-sdk:0.112.2")
 
-
     // point banner
     implementation("com.tbuonomo:dotsindicator:5.0")
-
-    //    gg maps util for clustering
-    implementation ("com.google.maps.android:android-maps-utils:3.4.0")
-    implementation ("com.google.maps.android:maps-utils-ktx:3.4.0")
-
 }

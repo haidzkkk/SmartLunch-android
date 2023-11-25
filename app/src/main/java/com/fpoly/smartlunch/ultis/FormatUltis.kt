@@ -78,6 +78,22 @@ fun Double.formatCash(): String {
     return "${formatter.format(this)} đ"
 }
 
+fun Double.formatRate(): String{
+    return DecimalFormat("#.#").format(this)
+}
+
+
+fun Int.formatView(): String{
+    if (this < 1000) {
+        return this.toString();
+    } else if (this < 1000000) {
+        return DecimalFormat("#.#").format(this.toDouble() / 1000) + "k";
+    } else if (this < 1000000000) {
+        return DecimalFormat("#.#").format(this.toDouble() / 1000000) + "M";
+    }else{
+        return DecimalFormat("#.#").format(this.toDouble() / 1000000000) + "B";
+    }
+}
 
 
 

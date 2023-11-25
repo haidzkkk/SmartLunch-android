@@ -80,10 +80,19 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         views.tvTam.text = (currentCartResponse?.total ?: 0.0).formatCash()
         views.tvTong.text = ((currentCartResponse?.total ?: 0.0) - (currentCartResponse?.totalCoupon ?: 0.0)).formatCash()
 
-        adapter = AdapterProduct {
-            productViewModel.handle(ProductAction.GetDetailProduct(it))
-            paymentViewModel.returnDetailProductFragment()
-        }
+        adapter = AdapterProduct(object: AdapterProduct.OnClickListenner{
+            override fun onCLickItem(id: String) {
+                productViewModel.handle(ProductAction.GetListSizeProduct(id))
+                productViewModel.handle(ProductAction.GetListCommentsLimit(id))
+                productViewModel.handle(ProductAction.GetDetailProduct(id))
+                paymentViewModel.returnDetailProductFragment()
+            }
+
+            override fun onCLickSeeMore() {
+
+            }
+
+        })
 
         adapterCoupons = AdapterCoupons {
             paymentViewModel.handle(
@@ -96,8 +105,9 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
                 idProductAdapter: String,
             ) {
                 super.onClickItem(idProductAdapter)
-                productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
+                productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
                 paymentViewModel.returnDetailProductFragment()
             }
 
@@ -207,7 +217,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
                     adapterCoupons?.setData(it.asyncCoupons.invoke())
                     resetCostInCard()
 
-                    it.asyncCoupons = Uninitialized
+//                    it.asyncCoupons = Uninitialized
                 }
                 else -> {}
             }

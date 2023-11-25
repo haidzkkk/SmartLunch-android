@@ -3,25 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:layout_marginTop="10dp"
     android:background="@color/background">
-
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="Đã giao"
-        android:textAlignment="textEnd"
-        android:textColor="@color/green_light" />
 
     <ImageView
         android:id="@+id/img_img"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@color/green_light"
-        android:scaleType="centerCrop"
-        android:layout_below="@+id/tv_status"/>
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/tv_name"
@@ -30,7 +19,6 @@
         android:text="Nước trà vải thơm ngon"
         android:textSize="16sp"
         android:textColor="@color/black"
-        android:layout_below="@+id/tv_status"
         android:layout_toEndOf="@+id/img_img"
         android:layout_marginStart="10dp"/>
 
@@ -81,31 +69,5 @@
         android:layout_below="@+id/tv_quantity"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey_light"
-        android:layout_below="@+id/tv_all_price"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="th3 23/11/2032"
-        android:layout_below="@+id/tv_all_price"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"/>
-
-    <Button
-        android:id="@+id/btn_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_all_price"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:text="Đánh giá"/>
 
 </RelativeLayout>

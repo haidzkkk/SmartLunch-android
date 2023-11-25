@@ -211,8 +211,8 @@ class WebRTCClient @Inject constructor(
     }
 
     fun startCall(){
-//        localVideoTrack?.setEnabled(true)
-//        localAudioTrack?.setEnabled(true)
+        localVideoTrack?.setEnabled(true)
+        localAudioTrack?.setEnabled(true)
 
 //        peerConnection?.connectionState()
     }
@@ -220,8 +220,8 @@ class WebRTCClient @Inject constructor(
         localVideoTrack?.setEnabled(false)
         localAudioTrack?.setEnabled(false)
         videoCapturer?.stopCapture()
-
-        peerConnection?.removeStream(localStream)
+//        peerConnection?.removeStream(localStream)
+//        eglContext.release()
 //        peerConnection?.close()
     }
 

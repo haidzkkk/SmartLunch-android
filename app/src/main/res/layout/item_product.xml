@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="8dp"
     android:id="@+id/layout_item_product"
-   >
+    >
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,8 +14,8 @@
             android:scaleType="centerCrop"
             android:src="@drawable/img_3_home"
             android:id="@+id/image"
-            android:layout_width="115dp"
-            android:layout_height="115dp"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
     </androidx.cardview.widget.CardView>
 
     <RelativeLayout
@@ -26,22 +26,48 @@
         android:layout_height="wrap_content">
 
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="top"
+            android:lineSpacingExtra="3sp"
+            android:text="@string/pizza_th_gi"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textFontWeight="1000"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price_product"
+            android:layout_below="@id/name_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="48.000 đ"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <RelativeLayout
             android:id="@+id/promotion"
             android:layout_width="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_height="22dp">
+            android:layout_height="22dp"
+            android:layout_below="@+id/price_product">
 
             <TextView
                 android:id="@+id/tv_rate"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="top"
                 android:drawableStart="@drawable/start"
                 android:text=" 4.6"
+                android:textSize="12sp"
                 android:textAppearance="@style/type_16"
-             />
+                />
 
             <RelativeLayout
                 android:id="@+id/sale"
@@ -65,62 +91,18 @@
                     android:textSize="12sp" />
             </RelativeLayout>
 
-
         </RelativeLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/name_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/promotion"
-            android:layout_marginTop="12dp"
-            android:gravity="top"
-            android:lineSpacingExtra="3sp"
-            android:text="@string/pizza_th_gi"
-            android:ellipsize="end"
-            android:textColor="@color/black"
-            android:textFontWeight="1000"
-            android:textSize="16sp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/price_product"
-            android:layout_below="@id/name_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="48.000 đ"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/red"
-            android:textSize="18sp"
-            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/price_product"
+            android:layout_marginTop="12dp"
             android:layout_alignParentEnd="true"
             android:text="đã bán 25.1k"
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_below="@id/price_product"
-            android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_height="wrap_content">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-              />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/time"
-                android:layout_marginStart="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/title"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
