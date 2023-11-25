@@ -23,6 +23,7 @@ sealed class ProductAction : PolyViewAction {
     object GetAllCategory : ProductAction()
     object GetAllFavouriteProduct : ProductAction()
     data class GetDetailProduct(val id : String) : ProductAction()
+    data class GetDetailCoupons(val id : String) : ProductAction()
     data class GetListSizeProduct(val idProduct : String) : ProductAction()
     data class GetReadNotification(val id : String) : ProductAction()
     data class GetSizeById(val id : String?) : ProductAction()
@@ -34,6 +35,8 @@ sealed class ProductAction : PolyViewAction {
     data class GetAllProductByIdCategory(val id : String): ProductAction()
     data class GetCurrentOrder( val id : String) : ProductAction()
     object GetAllOrderByUserId : ProductAction()
+    data class ApplyCoupon(val coupons: CouponsRequest) : ProductAction()
+
 
     data class UpdateOder(val idOder: String, val oder: OrderRequest) : ProductAction()
 
@@ -42,4 +45,6 @@ sealed class ProductAction : PolyViewAction {
     data class AddComment(val comment: CommentRequest, val images: List<Gallery>?) : ProductAction()
 
     object GetAllNotification: ProductAction()
+    data class SearchProductByName(val text: String): ProductAction()
+
 }

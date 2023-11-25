@@ -72,6 +72,7 @@ class ProductRepository @Inject constructor(
     fun updateOrder(id: String, order: OrderRequest)= api.updateOrder(id, order).subscribeOn(Schedulers.io())
     fun updateIsPaymentOrder(id: String, isPayment: Boolean)=api.updateIsPaymentOrder(id, isPayment).subscribeOn(Schedulers.io())
     fun getCoupons(): Observable<ArrayList<CouponsResponse>> = api.getAllCoupons().subscribeOn(Schedulers.io())
+    fun getOneCoupons(id: String): Observable<CouponsResponse> = api.getOneCoupons(id).subscribeOn(Schedulers.io())
     fun applyCoupon(coupons:CouponsRequest): Observable<CartResponse> = api.applyCoupon(coupons).subscribeOn(Schedulers.io())
     fun getAllOrderByUserId(statusId: String): Observable<ArrayList<OrderResponse>> = api.getAllOrderByUserId(statusId).subscribeOn(Schedulers.io())
 
@@ -102,5 +103,7 @@ class ProductRepository @Inject constructor(
 
         return commentApi.postComment(reqBodyProductId, reqBodyOrderId, reqBodySizeId, reqBodyDescription, reqBodyRate, reqBodyImages).subscribeOn(Schedulers.io())
     }
+
+    fun searchProductByName(text:String):Observable<ArrayList<Product>> = api.searchProductByName(text).subscribeOn(Schedulers.io())
 
 }

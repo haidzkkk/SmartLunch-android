@@ -13,6 +13,7 @@ import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -73,6 +74,8 @@ interface ProductApi {
     fun updateIsPaymentOrder(@Path("id") id: String, @Query("isPayment") isPayment: Boolean): Observable<OrderResponse>
     @GET("/api/coupons")
     fun getAllCoupons(): Observable<ArrayList<CouponsResponse>>
+    @GET("/api/coupons/{id}")
+    fun getOneCoupons(@Path("id") id: String): Observable<CouponsResponse>
     @GET("/api/userId/order")
     fun getAllOrderByUserId(
         @Query("statusId") statusId: String
@@ -81,6 +84,9 @@ interface ProductApi {
     fun getCurrentOrder(@Path("id") id: String): Observable<OrderResponse>
     @GET("/api/banner")
     fun getBanner(): Observable<ArrayList<Banner>>
+
+    @GET("api/products/search/{text}")
+    fun searchProductByName(@Path("text") text: String):Observable<ArrayList<Product>>
 
 
 

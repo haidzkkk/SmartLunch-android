@@ -119,93 +119,33 @@
                             app:selectedDotColor="@color/red" />
                     </RelativeLayout>
 
-                    <GridLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="24dp"
-                        android:columnCount="4"
                         android:paddingHorizontal="12dp"
-                        android:rowCount="1">
-
-                        <LinearLayout
-                            android:id="@+id/cuaHang"
-                            android:layout_width="0dp"
+                        android:orientation="horizontal">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/pizza" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Pizza"
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/donHang"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/buger" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Buger"
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/sanPham"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/sushi" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="Sushi"
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
+                            android:id="@+id/rcy_category"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/item_category"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            />
                         <LinearLayout
                             android:id="@+id/btnDefault"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
                             android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
                                 android:layout_gravity="center"
-                                android:background="@drawable/khac" />
+                                android:background="@drawable/icon_default_category" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -215,8 +155,8 @@
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
                         </LinearLayout>
+                    </LinearLayout>
 
-                    </GridLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"

@@ -14,11 +14,12 @@ import com.fpoly.smartlunch.data.repository.HomeRepository
 import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
+import com.fpoly.smartlunch.ui.main.coupons.CouponsDetailFragment
 import com.fpoly.smartlunch.ui.main.notification.NotificationFragment
 import com.fpoly.smartlunch.ui.main.order.OrderDetailFragment
 import com.fpoly.smartlunch.ui.main.order.ProductReviewFragment
 import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
-//import com.fpoly.smartlunch.ui.main.order.CartFragment
+//import com.fpoly.smartlunch.ui.main.order.CouponsFragment
 //import com.fpoly.smartlunch.ui.main.order.PayFragment
 import com.fpoly.smartlunch.ui.main.product.ProductFragment
 import com.fpoly.smartlunch.ui.main.product.ProductListFragment
@@ -26,6 +27,7 @@ import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
 import com.fpoly.smartlunch.ui.main.profile.EditProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.LanguageFragment
+import com.fpoly.smartlunch.ui.main.search.SearchFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -121,6 +123,13 @@ class HomeViewModel @AssistedInject constructor(
     }
     fun setBadgeBottomNav(idItemMenu: Int, position: Int?) {
         _viewEvents.post(HomeViewEvent.SetBadgeBottomNav(idItemMenu, position))
+
+    fun returnCouponsDetailFragment() {
+        _viewEvents.post(HomeViewEvent.ReturnFragment(CouponsDetailFragment::class.java))
+    }
+    fun returnSearchFragment() {
+        _viewEvents.post(HomeViewEvent.ReturnFragment(SearchFragment::class.java))
+
     }
 
     @AssistedFactory

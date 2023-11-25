@@ -87,30 +87,16 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
             homeViewModel.handleChangeThemeMode(isChecked)
         }
 
+        views.layoutNotifies.setOnClickListener {
+            homeViewModel.returnNotificationFragment()
+        }
+
         views.layoutChat.setOnClickListener{
             activity?.startActivity(Intent(requireContext(), ChatActivity::class.java))
         }
 
         views.logout.setOnClickListener {
             userViewModel.handle(UserViewAction.LogOutUser)
-        }
-    }
-
-    private fun showOptionMenu(callBack: (id: String) -> Unit) {
-        val popUpMenu = PopupMenu(requireContext(), views.layoutLanguage)
-        popUpMenu.inflate(R.menu.menu_lang)
-        popUpMenu.show()
-
-        popUpMenu.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_en -> {
-                    callBack("en")
-                }
-                R.id.menu_vi -> {
-                    callBack("vi")
-                }
-            }
-            true
         }
     }
 

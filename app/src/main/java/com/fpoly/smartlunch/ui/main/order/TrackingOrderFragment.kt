@@ -102,7 +102,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
     private fun setupBottomSheetBehavior() {
         requireActivity().windowManager.defaultDisplay.getMetrics(displaySize)
         bottomBehavior = BottomSheetBehavior.from(views.layoutTrackingOrder).apply {
-            this.state = BottomSheetBehavior.STATE_COLLAPSED
+            this.state = BottomSheetBehavior.STATE_EXPANDED
             this.isHideable = false
             this.peekHeight = (displaySize.heightPixels * 0.1).toInt()
         }

@@ -199,4 +199,5 @@ Thanh toán
     <string name="http403">Khong co quyen</string>
     <string name="http404">not found</string>
     <string name="http500">Loi server khi su ly</string>
+    <string name="loading">loading...</string>
 </resources>

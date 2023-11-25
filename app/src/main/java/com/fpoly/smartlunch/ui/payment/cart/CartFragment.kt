@@ -2,7 +2,6 @@ package com.fpoly.smartlunch.ui.payment.cart
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
-import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.databinding.FragmentCartBinding
@@ -27,7 +25,6 @@ import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCoupons
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
-import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.payment.PaymentViewModel
@@ -145,6 +142,9 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         views.btnThem.setOnClickListener {
             activity?.finish()
         }
+        views.moreCoupon.setOnClickListener {
+            paymentViewModel.returnCouponsFragment()
+        }
         views.btnTiepTuc.setOnClickListener {
             sendDataToPayScreen()
         }
@@ -170,7 +170,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
     }
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCartBinding {
-        return FragmentCartBinding.inflate(layoutInflater)
+        return FragmentCartBinding.inflate(inflater, container, false)
     }
 
     override fun invalidate() {

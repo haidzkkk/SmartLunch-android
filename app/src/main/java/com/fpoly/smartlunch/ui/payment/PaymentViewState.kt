@@ -18,6 +18,7 @@ import com.fpoly.smartlunch.data.model.Ward
 
 data class PaymentViewState(
     var catchError: String? = null,
+    var asyncOneCoupons: Async<CouponsResponse> = Uninitialized,
 
     var asyncCurrentUser: Async<User> = Uninitialized,
 

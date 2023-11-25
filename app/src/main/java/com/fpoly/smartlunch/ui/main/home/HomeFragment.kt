@@ -29,6 +29,7 @@ import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
 import com.fpoly.smartlunch.ui.main.home.adapter.BannerAdapter
 import com.fpoly.smartlunch.ui.main.home.adapter.ProductPaginationAdapter
+import com.fpoly.smartlunch.ui.main.home.adapter.CategoryOutsideAdapter
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
@@ -48,6 +49,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
     private val productViewModel: ProductViewModel by activityViewModel()
 
     private lateinit var bannerAdapter: BannerAdapter
+    private lateinit var categoryAdapter: CategoryOutsideAdapter
     private lateinit var adapter: AdapterProduct
     private lateinit var adapterver: AdapterProductVer
     private lateinit var productAdapter: ProductPaginationAdapter
@@ -103,15 +105,19 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
             }
         })
+
         views.recyclerViewHoz.adapter = adapter
 
-        //setup rcyV
         adapterver = AdapterProductVer {
             onItemProductClickListener(it)
         }
+        categoryAdapter = CategoryOutsideAdapter{
+            productViewModel.handle(ProductAction.GetAllProductByIdCategory(it))
+            homeViewModel.returnProductListFragment()
+        }
+        views.rcyCategory.adapter=categoryAdapter
         views.recyclerViewVer.adapter = adapterver
         bannerAdapter = BannerAdapter {
-
         }
         bannerAdapter.setData(null)
         views.vpBanner.adapter = bannerAdapter
@@ -176,6 +182,9 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
             views.notification.setOnClickListener {
                 homeViewModel.returnNotificationFragment()
+            }
+            views.tvSearch.setOnClickListener {
+                homeViewModel.returnSearchFragment()
             }
         }
 
@@ -349,6 +358,13 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                 else -> {
                     views.layoutCart.visibility = View.GONE
                 }
+            }
+            when(it.category){
+                is Success ->{
+                    categoryAdapter.setData(it.category.invoke()?.docs)
+                }
+
+                else -> {}
             }
         }
     }

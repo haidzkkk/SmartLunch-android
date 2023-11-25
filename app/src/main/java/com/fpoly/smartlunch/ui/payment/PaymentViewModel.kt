@@ -23,6 +23,8 @@ import com.fpoly.smartlunch.ui.payment.address.AddAddressFragment
 import com.fpoly.smartlunch.ui.payment.address.AddressPaymentFragment
 import com.fpoly.smartlunch.ui.payment.address.DetailAddressFragment
 import com.fpoly.smartlunch.ui.payment.cart.CartFragment
+import com.fpoly.smartlunch.ui.payment.cart.CouponsDetailFragment
+import com.fpoly.smartlunch.ui.payment.cart.CouponsFragment
 import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -33,10 +35,9 @@ import retrofit2.HttpException
 @SuppressLint("CheckResult")
 class PaymentViewModel @AssistedInject constructor(
     @Assisted state: PaymentViewState,
-    private val userRepository: UserRepository,
     private val productRepository: ProductRepository,
     private val paymentRepo: PaymentRepository,
-): PolyBaseViewModel<PaymentViewState, PaymentViewAction, PaymentViewEvent>(state){
+) : PolyBaseViewModel<PaymentViewState, PaymentViewAction, PaymentViewEvent>(state) {
 
     init {
         handleGetListProduct()
@@ -45,7 +46,7 @@ class PaymentViewModel @AssistedInject constructor(
     }
 
     override fun handle(action: PaymentViewAction) {
-        when(action){
+        when (action) {
             is PaymentViewAction.getListPaymentType -> handleGetListTypePayment()
             is PaymentViewAction.setCurrentPaymentType -> setSelectItemPayment(action.menu)
 
@@ -57,12 +58,16 @@ class PaymentViewModel @AssistedInject constructor(
             is PaymentViewAction.UpdateOder -> handleUpdateOder(action.idOder, action.oder)
             is PaymentViewAction.UpdateIsPaymentOder -> handleUpdateIsPaymentOder(action.id, action.isPayment)
 
+
             is PaymentViewAction.GetListCoupons -> handleGetListCoupons()
             is PaymentViewAction.ApplyCoupon -> handleApplyCoupon(action.coupons)
 
             is PaymentViewAction.GetClearCart -> handleGetClearCartById()
             is PaymentViewAction.GetOneCartById -> handleGetOneCartById()
-            is PaymentViewAction.GetChangeQuantity -> handleChangeQuantity(action.idProduct,action.changeQuantityRequest)
+            is PaymentViewAction.GetChangeQuantity -> handleChangeQuantity(
+                action.idProduct,
+                action.changeQuantityRequest
+            )
 
             is PaymentViewAction.GetProvinceAddress -> handleGetListProvince()
             is PaymentViewAction.GetDistrictAddress -> handleGetListDistrict(action.provinceId)
@@ -82,20 +87,24 @@ class PaymentViewModel @AssistedInject constructor(
     private fun handleApplyCoupon(coupons: CouponsRequest) {
         setState { copy(asyncCurentCart = Loading()) }
         productRepository.applyCoupon(coupons)
-//            .execute {
-//                copy(asyncCurentCart=it)
-//            }
             .subscribe(
                 { response ->
                     setState { copy(asyncCurentCart = Success(response)) }
-                },{ throwable ->
-                    if (throwable is HttpException){
-                        setState { copy(catchError = when(throwable.code()){
-                            400 ->{
-                                "Không thể sử dụng mã"
-                            }
-                            else -> {""}
-                        }, asyncCurentCart = Fail(throwable))}
+                }, { throwable ->
+                    if (throwable is HttpException) {
+                        setState {
+                            copy(
+                                catchError = when (throwable.code()) {
+                                    400 -> {
+                                        "Không thể sử dụng mã"
+                                    }
+
+                                    else -> {
+                                        ""
+                                    }
+                                }, asyncCurentCart = Fail(throwable)
+                            )
+                        }
                     }
                 })
     }
@@ -116,7 +125,7 @@ class PaymentViewModel @AssistedInject constructor(
         }
     }
 
-    private fun setSelectItemPayment(menu: Menu){
+    private fun setSelectItemPayment(menu: Menu) {
         setState {
             copy(curentPaymentType = menu)
         }
@@ -157,7 +166,7 @@ class PaymentViewModel @AssistedInject constructor(
 
     private fun handleGetOneProduct(id: String?) {
         setState { copy(asyncProduct = Loading()) }
-        if(id != null){
+        if (id != null) {
             productRepository.getOneProducts(id)
                 .execute {
                     copy(asyncProduct = it)
@@ -166,7 +175,7 @@ class PaymentViewModel @AssistedInject constructor(
 
     }
 
-    private fun handleGetOneCartById(){
+    private fun handleGetOneCartById() {
         setState { copy(asyncCurentCart = Loading()) }
         productRepository.getOneCartById()
             .execute {
@@ -174,9 +183,12 @@ class PaymentViewModel @AssistedInject constructor(
             }
     }
 
-    private fun handleChangeQuantity(idProduct: String, changeQuantityRequest: ChangeQuantityRequest){
+    private fun handleChangeQuantity(
+        idProduct: String,
+        changeQuantityRequest: ChangeQuantityRequest
+    ) {
         setState { copy(asyncCurentCart = Loading()) }
-        productRepository.getChangeQuantityCart(idProduct,changeQuantityRequest)
+        productRepository.getChangeQuantityCart(idProduct, changeQuantityRequest)
             .execute {
                 copy(asyncCurentCart = it)
             }
@@ -184,13 +196,20 @@ class PaymentViewModel @AssistedInject constructor(
     }
 
 
-    private fun handleGetViewProduct(id : String){
+    private fun handleGetViewProduct(id: String) {
         productRepository.getViewProduct(id).execute {
             copy()
         }
     }
+
     private fun handleGetListProvince() {
-        setState { copy(asyncListProvince = Loading(), asyncListDistrict = Uninitialized, asyncListWard = Uninitialized) }
+        setState {
+            copy(
+                asyncListProvince = Loading(),
+                asyncListDistrict = Uninitialized,
+                asyncListWard = Uninitialized
+            )
+        }
         paymentRepo.getProvince().execute {
             copy(asyncListProvince = it)
         }
@@ -211,33 +230,39 @@ class PaymentViewModel @AssistedInject constructor(
     }
 
 
-    fun handleRemoveAsyncGetCart(){
-        setState { copy(asyncCurentCart = Uninitialized) }
-    }
-    fun handleRemoveAsyncChangeQuantity(){
+    fun handleRemoveAsyncGetCart() {
         setState { copy(asyncCurentCart = Uninitialized) }
     }
 
-    fun returnHomeFragment(){
+    fun handleRemoveAsyncChangeQuantity() {
+        setState { copy(asyncCurentCart = Uninitialized) }
+    }
+
+    fun returnHomeFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(CartFragment::class.java))
     }
 
-    fun returnDetailProductFragment(){
+    fun returnDetailProductFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(ProductFragment::class.java))
     }
-    fun returnAddressFragment(){
+
+    fun returnAddressFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(AddressPaymentFragment::class.java))
     }
-    fun returnAddAddressFragment(){
+
+    fun returnAddAddressFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(AddAddressFragment::class.java))
     }
-    fun returnDetailAddressFragment(){
+
+    fun returnDetailAddressFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(DetailAddressFragment::class.java))
     }
-    fun returnShowLoading(isVisible: Boolean){
+
+    fun returnShowLoading(isVisible: Boolean) {
         _viewEvents.post(PaymentViewEvent.ReturnShowLoading(isVisible))
     }
-    fun returnPayFragment(bundle: Bundle){
+
+    fun returnPayFragment(bundle: Bundle) {
         _viewEvents.post(
             PaymentViewEvent.ReturnFragmentWithArgument(
                 PayFragment::class.java,
@@ -246,10 +271,13 @@ class PaymentViewModel @AssistedInject constructor(
         )
     }
 
+    fun returnCouponsFragment() {
+        _viewEvents.post(PaymentViewEvent.ReturnFragment(CouponsFragment::class.java))
+    }
 
-//    fun handleUpdateCart(){
-//        _viewEvents.post(ProductEvent.UpdateCart)
-//    }
+    fun returnCouponsDetailFragment() {
+        _viewEvents.post(PaymentViewEvent.ReturnFragment(CouponsDetailFragment::class.java))
+    }
 
     @AssistedFactory
     interface Factory {
@@ -257,7 +285,10 @@ class PaymentViewModel @AssistedInject constructor(
     }
 
     companion object : MvRxViewModelFactory<PaymentViewModel, PaymentViewState> {
-        override fun create(viewModelContext: ViewModelContext, state: PaymentViewState): PaymentViewModel {
+        override fun create(
+            viewModelContext: ViewModelContext,
+            state: PaymentViewState
+        ): PaymentViewModel {
             val factory = when (viewModelContext) {
                 is FragmentViewModelContext -> viewModelContext.fragment as? Factory
                 is ActivityViewModelContext -> viewModelContext.activity as? Factory
@@ -266,8 +297,6 @@ class PaymentViewModel @AssistedInject constructor(
                 ?: error("You should let your activity/fragment implements Factory interface")
         }
     }
-
-
 
 
 }

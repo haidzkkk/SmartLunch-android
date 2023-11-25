@@ -21,6 +21,13 @@ data class ProductState(
     var coupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
 
     var productsRate: Async<ProductsResponse> = Uninitialized,
+    var catchError: String? = null,
+    var products: Async<ProductsResponse> = Uninitialized,
+    var category: Async<CategoryResponse> = Uninitialized,
+    var asyncCoupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
+    var asyncOneCoupons: Async<CouponsResponse> = Uninitialized,
+    var asyncCurentCart : Async<CartResponse> = Uninitialized,
+
     var asyncUserCurrent: Async<ProductsResponse> = Uninitialized,
     var asyncTopProduct: Async<ProductsResponse> = Uninitialized,
     var asyncProducts: Async<ProductsResponse> = Uninitialized,
@@ -59,7 +66,7 @@ data class ProductState(
     var asyncNotifications: Async<List<Notification>> = Uninitialized,
     var asyncUnreadNotifications: Async<List<Notification>> = Uninitialized,
     var asyncReadNotification: Async<Notification> = Uninitialized,
+    val currentProductsSearch: Async<ArrayList<Product>> = Uninitialized
     ): MvRxState {
-
         var isSwipeLoading = productsRate is Loading || asyncTopProduct is Loading
 }

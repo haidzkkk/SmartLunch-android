@@ -22,7 +22,7 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
-import com.fpoly.smartlunch.ui.main.card.CardFragment
+import com.fpoly.smartlunch.ui.main.coupons.CouponsFragment
 import com.fpoly.smartlunch.ui.main.order.OrderFragment
 import com.fpoly.smartlunch.ui.main.home.HomeFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
@@ -138,7 +138,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 val fragment: Fragment? = when (itemId) {
                     R.id.menu_home -> fragmentManager.findFragmentByTag(HomeFragment.TAG)
                     R.id.menu_favourite -> fragmentManager.findFragmentByTag(FavouriteFragment.TAG)
-                    R.id.menu_card -> fragmentManager.findFragmentByTag(CardFragment.TAG)
+                    R.id.menu_card -> fragmentManager.findFragmentByTag(CouponsFragment.TAG)
                     R.id.menu_order -> fragmentManager.findFragmentByTag(OrderFragment.TAG)
                     R.id.menu_profile -> fragmentManager.findFragmentByTag(ProfileFragment.TAG)
                     else -> null
@@ -149,7 +149,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                         R.id.menu_home -> transaction.add(R.id.frame_layout, HomeFragment(), HomeFragment.TAG).addToBackStack(HomeFragment.TAG)
                         R.id.menu_favourite -> transaction.add(R.id.frame_layout, FavouriteFragment(), FavouriteFragment.TAG).addToBackStack(FavouriteFragment.TAG)
                         R.id.menu_favourite -> transaction.add(R.id.frame_layout, FavouriteFragment(), FavouriteFragment.TAG).addToBackStack(FavouriteFragment.TAG)
-                        R.id.menu_card -> transaction.add(R.id.frame_layout, CardFragment(), CardFragment.TAG).addToBackStack(CardFragment.TAG)
+                        R.id.menu_card -> transaction.add(R.id.frame_layout, CouponsFragment(), CouponsFragment.TAG).addToBackStack(CouponsFragment.TAG)
                         R.id.menu_order -> transaction.add(R.id.frame_layout, OrderFragment(), OrderFragment.TAG).addToBackStack(OrderFragment.TAG)
                         R.id.menu_profile -> transaction.add(R.id.frame_layout, ProfileFragment(), ProfileFragment.TAG).addToBackStack(ProfileFragment.TAG)
                     }
