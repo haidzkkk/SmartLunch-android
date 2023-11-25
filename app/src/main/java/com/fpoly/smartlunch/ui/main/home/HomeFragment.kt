@@ -132,7 +132,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         var linearLayoutManager = LinearLayoutManager(requireContext())
         productAdapter = ProductPaginationAdapter {
-
+            onItemProductClickListener(it)
         }
         views.rcvProductAll.adapter = productAdapter
         views.rcvProductAll.layoutManager = linearLayoutManager
