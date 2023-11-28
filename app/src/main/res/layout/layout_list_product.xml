@@ -50,7 +50,7 @@
                     android:background="@drawable/start" />
 
                 <TextView
-                    android:id="@+id/type_16"
+                    android:id="@+id/tv_rate"
                     android:layout_width="19dp"
                     android:layout_height="18dp"
                     android:layout_marginLeft="4dp"
@@ -58,6 +58,7 @@
                     android:gravity="top"
                     android:lineSpacingExtra="4sp"
                     android:text="@string/type_16"
+                    android:paddingStart="1dp"
                     android:textAppearance="@style/type_16"
                     android:translationY="-1.84sp" />
             </RelativeLayout>

@@ -42,6 +42,11 @@ class SplashScreenActivity : PolyBaseActivity<ActivitySplashScreenBinding>(),Sec
         val type = intent.extras?.getString("type")
         val idUrl = intent.extras?.getString("idUrl")
 
+        val uriData = intent.data
+        if (uriData != null){
+            Toast.makeText(this, "link: $uriData", Toast.LENGTH_SHORT).show()
+        }
+
         when(type){
             MyConfigNotifi.TYPE_ALL ->{
 

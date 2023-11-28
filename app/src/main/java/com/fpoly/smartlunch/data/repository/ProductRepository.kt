@@ -14,6 +14,7 @@ import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
+import com.fpoly.smartlunch.data.model.PagingRequestProduct
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.ProductOrder
@@ -44,7 +45,15 @@ class ProductRepository @Inject constructor(
         return Observable.just("Repository test: $number")
     }
 
-    fun getProducts(): Observable<ProductsResponse> = api.getAllProduct().subscribeOn(Schedulers.io())
+    fun getProducts(pagingRequestProduct: PagingRequestProduct?): Observable<ProductsResponse>
+    = api.getAllProduct(
+        pagingRequestProduct?.limit,
+        pagingRequestProduct?.sort,
+        pagingRequestProduct?.order,
+        pagingRequestProduct?.page,
+        pagingRequestProduct?.query
+    ).subscribeOn(Schedulers.io())
+
     fun getOneProducts(id : String): Observable<Product> = api.getOneProduct(id).subscribeOn(Schedulers.io())
     fun getOneSize(id : String): Observable<Size> = api.getOneSize(id).subscribeOn(Schedulers.io())
     fun getSizeProduct(id : String): Observable<ArrayList<Size>> = api.getSizeProduct(id).subscribeOn(Schedulers.io())
@@ -60,7 +69,7 @@ class ProductRepository @Inject constructor(
     fun likeProduct(product: Product): Observable<Favourite> = api.likeProduct(product).subscribeOn(Schedulers.io())
     fun getFavourite(id: String): Observable<Favourite> = api.getFavourite(id).subscribeOn(Schedulers.io())
     fun createOrder(order: OrderRequest)=api.createOrder(order).subscribeOn(Schedulers.io())
-    fun updateOrder(order: OrderRequest)=api.updateOrder(order).subscribeOn(Schedulers.io())
+    fun updateOrder(id: String, order: OrderRequest)= api.updateOrder(id, order).subscribeOn(Schedulers.io())
     fun updateIsPaymentOrder(id: String, isPayment: Boolean)=api.updateIsPaymentOrder(id, isPayment).subscribeOn(Schedulers.io())
     fun getCoupons(): Observable<ArrayList<CouponsResponse>> = api.getAllCoupons().subscribeOn(Schedulers.io())
     fun getOneCoupons(id: String): Observable<CouponsResponse> = api.getOneCoupons(id).subscribeOn(Schedulers.io())

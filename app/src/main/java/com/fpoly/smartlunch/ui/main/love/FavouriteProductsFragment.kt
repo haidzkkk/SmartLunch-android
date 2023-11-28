@@ -14,6 +14,7 @@ import com.fpoly.smartlunch.databinding.FragmentFavouriteProductsfragmentBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProduct
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterProductVer
+import com.fpoly.smartlunch.ui.main.love.Adapter.ProductFavouriteAdapter
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
@@ -21,7 +22,7 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfragmentBinding>(){
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
-    private var adapter: AdapterProduct? = null
+    private var adapter: ProductFavouriteAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,7 +32,7 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
     }
 
     private fun initUi() {
-        adapter = AdapterProduct {
+        adapter = ProductFavouriteAdapter {
             onItemProductClickListener(it)
         }
         views.recyclerViewHoz.adapter = adapter

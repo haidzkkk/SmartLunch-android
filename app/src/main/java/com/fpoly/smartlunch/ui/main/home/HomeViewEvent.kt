@@ -12,4 +12,5 @@ sealed class HomeViewEvent : PolyViewEvent {
     data class ReturnFragment<T: Fragment>(val fragmentClass: Class<T>): HomeViewEvent()
     data class NavigateTo<T: Fragment>(val fragmentClass: Class<T>): HomeViewEvent()
     data class ReturnFragmentWithArgument<T: Fragment>(val fragmentClass: Class<T>, val bundle: Bundle): HomeViewEvent()
+    data class SetBadgeBottomNav(val id: Int, val position: Int?): HomeViewEvent()
 }

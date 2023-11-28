@@ -173,12 +173,13 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
     private fun payment(idStatus: String) {
         if (myCart != null && myAddress != null && myAddress?._id != null) {
             val orderRequest = OrderRequest(
-                myAddress?._id!!,
+                myAddress?._id,
                 strNote,
+                null,
                 idStatus,
                 false,
             )
-            paymentViewModel.handle(PaymentViewAction.CreateOder(orderRequest!!))
+            paymentViewModel.handle(PaymentViewAction.CreateOder(orderRequest))
         } else {
             activity?.showUtilDialog(
                 Notify(

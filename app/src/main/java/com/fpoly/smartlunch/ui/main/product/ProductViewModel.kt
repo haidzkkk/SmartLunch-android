@@ -14,10 +14,15 @@ import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.CommentRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Gallery
+import com.fpoly.smartlunch.data.model.OrderRequest
+import com.fpoly.smartlunch.data.model.PagingRequestProduct
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.SortPagingProduct
 import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
+import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
+import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ultis.Status.CONFIRMED_STATUS
 import com.fpoly.smartlunch.ultis.Status.DELIVERING_STATUS
 import com.fpoly.smartlunch.ultis.Status.UNCONFIRMED_STATUS
@@ -33,10 +38,14 @@ class ProductViewModel @AssistedInject constructor(
 ) : PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state) {
 
     init {
+
+//        handleGetAllCategory()
+//        handleGetAllSize()
         handleGetAllCategory()
-        handleGetListProduct()
         handleGetAllFavouriteProduct()
-        handleGetTopProduct()
+        handleGetTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null))
+        handleGetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null))
+        handleGetProducts(PagingRequestProduct(2, null, null, 1, null))
         handleGetAllOrderByUserId()
         handleGetAllNotification()
         handleGetListCoupons()
@@ -44,8 +53,9 @@ class ProductViewModel @AssistedInject constructor(
 
     override fun handle(action: ProductAction) {
         when (action) {
-            is ProductAction.GetListProduct -> handleGetListProduct()
-            is ProductAction.GetListTopProduct -> handleGetTopProduct()
+            is ProductAction.GetListProductRate -> handleGetListProductRate(action.paging)
+            is ProductAction.GetListProduct -> handleGetProducts(action.paging)
+            is ProductAction.GetListTopProduct -> handleGetTopProduct(action.paging)
             is ProductAction.GetAllCategory -> handleGetAllCategory()
             is ProductAction.GetAllFavouriteProduct -> handleGetAllFavouriteProduct()
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
@@ -66,6 +76,8 @@ class ProductViewModel @AssistedInject constructor(
                 action.sizeId
             )
 
+
+            is ProductAction.UpdateOder -> handleUpdateOder(action.idOder, action.oder)
             is ProductAction.GetAllProductByIdCategory -> handleAllProductByIdCategory(action.id)
             is ProductAction.GetAllOrderByUserId -> handleGetAllOrderByUserId()
             is ProductAction.GetCurrentOrder -> handleGetCurrentOrder(action.id)
@@ -151,9 +163,17 @@ class ProductViewModel @AssistedInject constructor(
             }
     }
 
-    private fun handleGetTopProduct() {
+    private fun handleGetProducts(paging: PagingRequestProduct) {
+        setState { copy(asyncProducts = Loading()) }
+        repository.getProducts(paging)
+            .execute {
+                copy(asyncProducts = it)
+            }
+    }
+
+    private fun handleGetTopProduct(paging: PagingRequestProduct) {
         setState { copy(asyncTopProduct = Loading()) }
-        repository.getTopViewedProducts()
+        repository.getProducts(paging)
             .execute {
                 copy(asyncTopProduct = it)
             }
@@ -210,11 +230,11 @@ class ProductViewModel @AssistedInject constructor(
             }
     }
 
-    private fun handleGetListProduct() {
-        setState { copy(products = Loading()) }
-        repository.getProducts()
+    private fun handleGetListProductRate(pagingRequestProduct: PagingRequestProduct) {
+        setState { copy(productsRate = Loading()) }
+        repository.getProducts(pagingRequestProduct)
             .execute {
-                copy(products = it)
+                copy(productsRate = it)
             }
     }
 
@@ -351,6 +371,14 @@ class ProductViewModel @AssistedInject constructor(
         repository.getAllProductByIdCategory(id).execute {
             copy(getAllProductByIdCategory = it)
         }
+    }
+
+    private fun handleUpdateOder(idOrder: String, oder: OrderRequest) {
+        setState { copy(asyncUpdateOrder = Loading()) }
+        repository.updateOrder(idOrder, oder)
+            .execute {
+                copy(asyncUpdateOrder = it)
+            }
     }
 
 

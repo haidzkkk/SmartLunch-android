@@ -1,16 +1,13 @@
 package com.fpoly.smartlunch.ui.main.product
 
 import android.animation.Animator
-import android.content.Context
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -22,26 +19,20 @@ import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
-import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
-import com.fpoly.smartlunch.core.PolyDialog
 import com.fpoly.smartlunch.data.model.CartRequest
-import com.fpoly.smartlunch.data.model.Comment
-import com.fpoly.smartlunch.data.model.CommentRequest
-import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.data.model.Product
-import com.fpoly.smartlunch.data.model.Size
-import com.fpoly.smartlunch.databinding.DialogAddCommentBinding
+import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
-import com.fpoly.smartlunch.ui.chat.room.GalleryBottomSheetFragment
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
-import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
-import com.fpoly.smartlunch.ui.main.home.adapter.BannerAdapter
 import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
-import kotlinx.coroutines.Job
+import com.fpoly.smartlunch.ultis.formatCash
+import com.fpoly.smartlunch.ultis.formatRate
+import com.fpoly.smartlunch.ultis.formatView
+
 
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
@@ -80,6 +71,14 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         productViewModel.returnVisibleBottomNav(true)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        withState(productViewModel){
+            it.asyncCommentsLimit = Uninitialized
+            it.asyncProduct = Uninitialized
+        }
+    }
+
     private fun setupAppBar() {
         views.apply {
             appBar.apply {
@@ -116,6 +115,8 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                 views.tvPositionImg.text = "${position + 1}/${(views.viewpagerImg.adapter as RecyclerView.Adapter).itemCount}"
             }
         })
+
+        initUiProduct()
     }
 
     private fun listenEvent() {
@@ -124,9 +125,9 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {
-            productViewModel.handle(ProductAction.GetListCommentsLimit(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
-            productViewModel.handle(ProductAction.GetDetailProduct(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
-            productViewModel.handle(ProductAction.GetListSizeProduct(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""} ))
+            productViewModel.handle(ProductAction.GetListCommentsLimit(currentProduct?._id ?: ""))
+            productViewModel.handle(ProductAction.GetDetailProduct(currentProduct?._id ?: ""))
+            productViewModel.handle(ProductAction.GetListSizeProduct(currentProduct?._id ?: ""))
         }
         views.linearMinu2.setOnClickListener {
             increaseQuantity()
@@ -144,32 +145,24 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.tvSeeAllComment.setOnClickListener{
             homeViewModel.returnCommentFragment()
         }
+        views.tvSeeMore.setOnClickListener{
+            handleStateDesc()
+        }
+        views.tvDesc.setOnClickListener{
+            handleStateDesc()
+        }
+        views.btnShare.setOnClickListener{
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "${RemoteDataSource.BASE_URL}/api/admin/products/${currentProduct?._id}")
+            requireActivity().startActivity(Intent.createChooser(shareIntent, "Chia sẻ URL qua"))
+        }
 
         views.btnLike.setOnClickListener {
+            views.btnLike.setImageResource(R.drawable.like_full)
             productViewModel.handle(ProductAction.LikeProduct(currentProduct!!))
-            if (isLiked == false) {
-                isLiked = true
-                enableAnimation(views.animLike, R.raw.anim_like)
-            } else {
-                disableLike()
-            }
         }
-        views.animLike.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) {
-            }
 
-            override fun onAnimationEnd(animation: Animator) {
-                views.btnLike.setImageResource(R.drawable.like_full)
-                views.animLike.visibility = View.GONE
-            }
-
-            override fun onAnimationCancel(animation: Animator) {
-            }
-
-            override fun onAnimationRepeat(animation: Animator) {
-            }
-
-        })
         views.animAddProduct.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
             }
@@ -187,16 +180,28 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
         })
     }
-    private fun initUiProduct(product: Product) {
-        currentProduct = product
+
+    private fun handleStateDesc() {
+        if (views.tvDesc.maxLines == 2){
+            views.tvDesc.maxLines = 1000
+            views.tvSeeMore.text = "Ẩn bớt"
+        }else{
+            views.tvDesc.maxLines = 2
+            views.tvSeeMore.text = "Xem thêm"
+        }
+    }
+
+    private fun initUiProduct() {
         views.apply {
-            imageSlideAdapter.setData(product.images)
+            imageSlideAdapter.setData(currentProduct?.images)
             NameDetailFood.text = currentProduct?.product_name
-            priceDetailFood.text = "${currentProduct?.product_price.toString()} đ"
-            descFood.text = currentProduct?.description
+            priceDetailFood.text = currentProduct?.product_price?.formatCash()
+            tvDesc.text = "${currentProduct?.description} \n\n${currentProduct?.views?.formatView()} lượt xem"
             someIdQuality.text = "1"
-            cvPositionImg.isVisible = product.images.size > 1
-            views.tvPositionImg.text = "1/${product.images.size}"
+            tvBought.text = "Đã bán ${currentProduct?.bought?.formatView()}"
+            tvTitleCommemt.text = "${currentProduct?.rate?.formatRate() ?: 0.0} (${currentProduct?.rate_count ?: 0} đánh giá)"
+            cvPositionImg.isVisible = (currentProduct?.images?.size ?: 0) > 1
+            views.tvPositionImg.text = "1/${currentProduct?.images?.size}"
         }
     }
 
@@ -252,6 +257,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         return FragmentFoodDetailBinding.inflate(layoutInflater)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun invalidate(): Unit = withState(productViewModel) {
         views.swipeLoading.isRefreshing = it.asyncTopProduct is Loading || it.asynGetSizeProduct is Loading
 
@@ -268,8 +274,9 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
         when (it.asyncGetOneSize) {
             is Success -> {
-                it.asyncGetOneSize.invoke()?.let {
-                    sizeId = it._id
+                it.asyncGetOneSize.invoke()?.let {size ->
+                    sizeId = size._id
+                    views.buttonAddCart.text = "Thêm ${size.size_price.formatCash()}"
                     views.buttonAddCart.isEnabled = true
                 }
 
@@ -281,8 +288,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         when (it.asyncProduct) {
             is Success -> {
                 it.asyncProduct.invoke()?.let { product ->
-                    initUiProduct(product)
+                    currentProduct = product
+                    initUiProduct()
                 }
+
             }
 
             else -> {}
@@ -303,7 +312,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         when(it.asyncCommentsLimit){
             is Success ->{
                 commentAdapter.setData(it.asyncCommentsLimit.invoke())
-//                it.asyncCommentsLimit = Uninitialized
+                views.tvNoComment.isVisible = it.asyncCommentsLimit.invoke().isNullOrEmpty()
             }
             else ->{
 

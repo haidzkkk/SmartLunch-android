@@ -26,6 +26,7 @@ import com.fpoly.smartlunch.databinding.DialogAddCommentBinding
 import com.fpoly.smartlunch.databinding.FragmentProductReviewBinding
 import com.fpoly.smartlunch.databinding.ItemProductReviewBinding
 import com.fpoly.smartlunch.ui.chat.room.GalleryBottomSheetFragment
+import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 
@@ -34,6 +35,7 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
     lateinit var adapter: ProductReviewAdapter
     var currentOrderResponse: OrderResponse? = null
 
+    private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
 
     override fun getBinding(
@@ -49,13 +51,21 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
         listenEvent()
     }
     private fun initUI() {
-        adapter = ProductReviewAdapter{
-            if (currentOrderResponse != null) {
-                addTamCommentDialog(currentOrderResponse!!, it)
-            }else{
-                Toast.makeText(requireContext(), "Không có order", Toast.LENGTH_SHORT).show()
+        adapter = ProductReviewAdapter(
+            {
+                productViewModel.handle(ProductAction.GetDetailProduct(it.productId))
+                productViewModel.handle(ProductAction.GetListSizeProduct(it.productId))
+                productViewModel.handle(ProductAction.GetListCommentsLimit(it.productId))
+                homeViewModel.returnDetailProductFragment()
+            },
+            {
+                if (currentOrderResponse != null) {
+                    addTamCommentDialog(currentOrderResponse!!, it)
+                }else{
+                    Toast.makeText(requireContext(), "Không có order", Toast.LENGTH_SHORT).show()
+                }
             }
-        }
+        )
         views.rcvProductReview.adapter = adapter
 
         views.layoutHeader.tvTitleToolbar.text = "Đánh giá sản phẩm"
