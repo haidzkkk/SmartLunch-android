@@ -11,7 +11,7 @@ import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentThirdBinding
 import com.fpoly.smartlunch.ui.security.LoginFragment
-import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import javax.inject.Inject
 //done
 class ThirdFragment : PolyBaseFragment<FragmentThirdBinding>() {
@@ -24,7 +24,7 @@ class ThirdFragment : PolyBaseFragment<FragmentThirdBinding>() {
         (requireActivity().application as PolyApplication).polyComponent.inject(this)
         views.next.setOnClickListener {
             (requireActivity() as AppCompatActivity).
-            addFragmentToBackstack(R.id.frame_layout, LoginFragment::class.java)
+            addFragmentToBackStack(R.id.frame_layout, LoginFragment::class.java)
             sessionManager.saveOnBoardingFinished()
         }
     }

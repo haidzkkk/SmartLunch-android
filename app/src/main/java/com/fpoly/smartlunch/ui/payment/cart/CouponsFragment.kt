@@ -32,7 +32,7 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
 
     private fun listenEvent() {
         views.layoutHeader.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
     }
 

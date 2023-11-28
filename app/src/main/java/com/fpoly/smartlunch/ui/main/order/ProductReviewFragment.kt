@@ -64,7 +64,7 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
 
     private fun listenEvent() {
         views.layoutHeader.btnBackToolbar.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+            activity?.onBackPressed()
         }
     }
 

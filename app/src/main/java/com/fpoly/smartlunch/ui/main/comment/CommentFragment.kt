@@ -54,7 +54,7 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
 
     private fun listenEvent() {
         views.layoutHeader.btnBackToolbar.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+            activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {
             productViewModel.handle(ProductAction.GetListComments(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))

@@ -35,7 +35,7 @@ class AddressFragment : PolyBaseFragment<FragmentAddressBinding>() {
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
     }
 
@@ -66,6 +66,11 @@ class AddressFragment : PolyBaseFragment<FragmentAddressBinding>() {
     override fun onResume() {
         super.onResume()
         homeViewModel.returnVisibleBottomNav(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(

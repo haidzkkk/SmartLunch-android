@@ -36,7 +36,7 @@ class ForgotPasswordFragment : PolyBaseFragment<FragmentForgotPasswordBinding>()
             }
         })
         views.btnBack.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.tvSignUp.setOnClickListener {
             viewModel.handleReturnSignUpEvent()

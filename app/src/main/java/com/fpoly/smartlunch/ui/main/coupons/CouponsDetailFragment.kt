@@ -29,7 +29,7 @@ class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
     }
 
@@ -59,6 +59,11 @@ class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
     override fun onResume() {
         super.onResume()
         homeViewModel.returnVisibleBottomNav(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun onDestroyView() {

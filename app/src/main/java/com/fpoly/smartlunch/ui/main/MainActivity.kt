@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,9 +8,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
@@ -37,18 +40,21 @@ import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
+import com.fpoly.smartlunch.ui.security.LoginFragment
 import com.fpoly.smartlunch.ui.security.SecurityViewModel
 import com.fpoly.smartlunch.ui.security.SecurityViewState
+import com.fpoly.smartlunch.ui.security.onboarding.ViewPagerFragment
 import com.fpoly.smartlunch.ultis.MyConfigNotifi
-import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
+import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
 import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
 import javax.inject.Inject
 
 
-
-class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory,SecurityViewModel.Factory, UserViewModel.Factory {
+class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory,
+    ProductViewModel.Factory, SecurityViewModel.Factory, UserViewModel.Factory {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
@@ -61,6 +67,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     @Inject
     lateinit var securityFactory: SecurityViewModel.Factory
+
     @Inject
     lateinit var userViewModelFactory: UserViewModel.Factory
 
@@ -68,8 +75,8 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     lateinit var sessionManager: SessionManager
 
     private val homeViewModel: HomeViewModel by viewModel()
-    private val productViewModel : ProductViewModel by viewModel()
-    private val testViewModel : TestViewModel by lazy{ viewModelProvider.get(TestViewModel::class.java) }
+    private val productViewModel: ProductViewModel by viewModel()
+    private val testViewModel: TestViewModel by lazy { viewModelProvider.get(TestViewModel::class.java) }
     private val testViewModelMvRx: TestViewModelMvRx by viewModel()
 
     var doubleClickBack: Boolean = false
@@ -77,8 +84,8 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as PolyApplication).polyComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setupBottomNavigation()
         handleViewModel()
+        setupMainLayout()
         changeMode(sessionManager.fetchDarkMode())
         changeLanguage(sessionManager.fetchLanguage())
         handleReceiveDataNotify()
@@ -115,63 +122,19 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private fun setupBottomNavigation() {
-        views.bottomNav.apply {
-            this.setItemSelected(R.id.menu_home)
-            this.setOnItemSelectedListener { itemId ->
-                val fragmentManager = supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-
-                val fragment: Fragment? = when (itemId) {
-                    R.id.menu_home -> fragmentManager.findFragmentByTag(HomeFragment.TAG)
-                    R.id.menu_favourite -> fragmentManager.findFragmentByTag(FavouriteFragment.TAG)
-                    R.id.menu_card -> fragmentManager.findFragmentByTag(CouponsFragment.TAG)
-                    R.id.menu_order -> fragmentManager.findFragmentByTag(OrderFragment.TAG)
-                    R.id.menu_profile -> fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    else -> null
-                }
-
-                if (fragment == null) {
-                    when (itemId) {
-                        R.id.menu_home -> transaction.add(R.id.frame_layout, HomeFragment(), HomeFragment.TAG).addToBackStack(HomeFragment.TAG)
-                        R.id.menu_favourite -> transaction.add(R.id.frame_layout, FavouriteFragment(), FavouriteFragment.TAG).addToBackStack(FavouriteFragment.TAG)
-                        R.id.menu_favourite -> transaction.add(R.id.frame_layout, FavouriteFragment(), FavouriteFragment.TAG).addToBackStack(FavouriteFragment.TAG)
-                        R.id.menu_card -> transaction.add(R.id.frame_layout, CouponsFragment(), CouponsFragment.TAG).addToBackStack(CouponsFragment.TAG)
-                        R.id.menu_order -> transaction.add(R.id.frame_layout, OrderFragment(), OrderFragment.TAG).addToBackStack(OrderFragment.TAG)
-                        R.id.menu_profile -> transaction.add(R.id.frame_layout, ProfileFragment(), ProfileFragment.TAG).addToBackStack(ProfileFragment.TAG)
-                    }
-                } else {
-                    transaction.show(fragment)
-                }
-
-                val fragments = fragmentManager.fragments
-                for (f in fragments) {
-                    if (f != fragment) {
-                        transaction.hide(f)
-                    }
-                }
-                transaction.commit()
-            }
-            visibilityBottomNav(true)
+    @SuppressLint("CommitTransaction")
+    private fun setupMainLayout() {
+        supportFragmentManager.commit {
+                add<MainFragment>(R.id.frame_layout).addToBackStack(MainFragment::class.java.simpleName)
         }
     }
 
     private fun handleEvent(event: PolyViewEvent) {
-        when(event){
-            is HomeViewEvent ->{
+        when (event) {
+            is HomeViewEvent -> {
                 when (event) {
-                    is HomeViewEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
-                    is HomeViewEvent.ReturnFragmentWithArgument<*> -> {addFragmentToBackstack(R.id.frame_layout,event.fragmentClass, bundle = event.bundle)}
-                    is HomeViewEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
+                    is HomeViewEvent.NavigateTo<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName)
                     is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
-                    else -> {}
-                }
-            }
-
-            is ProductEvent ->{
-                when(event){
-                    is ProductEvent.ReturnVisibleBottomNav -> visibilityBottomNav(event.isVisibleBottomNav)
-                    is ProductEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, event.fragmentClass) }
                     else -> {}
                 }
             }
@@ -183,10 +146,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         sessionManager.saveDarkMode(checkedDarkMode)
         changeMode(checkedDarkMode)
         changeLanguage(sessionManager.fetchLanguage())
-    }
-
-    fun visibilityBottomNav(isVisible: Boolean){
-        views.bottomNav.isVisible = isVisible
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -214,44 +173,52 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                 "Đơn hàng đã được gửi tới nhà hàng vui lòng chờ trong giây lát",
                 R.raw.animation_successfully
             )
-        ){
+        ) {
             homeViewModel.returnOrderDetailFragment()
         }
     }
 
     private fun handleReceiveDataNotify() {
         val type = intent.extras?.getString("type")
-        when(type){
-            MyConfigNotifi.TYPE_ORDER ->{
+        when (type) {
+            MyConfigNotifi.TYPE_ORDER -> {
                 homeViewModel.returnNotificationFragment()
             }
         }
     }
 
-    override fun onBackPressed() {
+//    override fun onBackPressed() {
+//        popBackStackAndShowPrevious()
+////        if (views.bottomNav.getSelectedItemId() != R.id.menu_home && views.bottomNav.isVisible == true) {
+////            views.bottomNav.setItemSelected(R.id.menu_home)
+////        } else if (views.bottomNav.getSelectedItemId() == R.id.menu_home && views.bottomNav.isVisible == true) {
+////            if (doubleClickBack) {
+////                finishAffinity()
+////            }
+////            this.doubleClickBack = true
+////            Toast.makeText(this, "Ấn Back lần nữa để thoát", Toast.LENGTH_SHORT).show()
+////            Handler().postDelayed({ doubleClickBack = false }, 2000)
+////        } else {
+//            super.onBackPressed()
+////        }
+//    }
 
-        if(views.bottomNav.getSelectedItemId() != R.id.menu_home && views.bottomNav.isVisible == true){
-            views.bottomNav.setItemSelected(R.id.menu_home)
-        }else if(views.bottomNav.getSelectedItemId() == R.id.menu_home && views.bottomNav.isVisible == true){
-            if (doubleClickBack) { finishAffinity() }
-            this.doubleClickBack = true
-            Toast.makeText(this, "Ấn Back lần nữa để thoát", Toast .LENGTH_SHORT).show()
-            Handler().postDelayed({ doubleClickBack = false }, 2000)
-        } else{
-            super.onBackPressed()
-        }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        popBackStackAndShowPrevious()
     }
+
 
     override fun create(initialState: HomeViewState): HomeViewModel {
         return homeViewModelFactory.create(initialState)
     }
-    
+
     override fun create(initialState: ProductState): ProductViewModel {
         return productViewModelFactory.create(initialState)
     }
 
     override fun create(initialState: SecurityViewState): SecurityViewModel {
-      return  securityFactory.create(initialState)
+        return securityFactory.create(initialState)
     }
 
     override fun create(initialState: UserViewState): UserViewModel {

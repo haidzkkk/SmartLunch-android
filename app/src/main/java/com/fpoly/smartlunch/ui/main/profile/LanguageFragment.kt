@@ -44,7 +44,7 @@ class LanguageFragment : PolyBaseFragment<FragmentLanguageBinding>() {
 
     private fun listenEvent() {
         views.btnSaveLanguage.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
     }
 
@@ -70,6 +70,11 @@ class LanguageFragment : PolyBaseFragment<FragmentLanguageBinding>() {
     override fun onResume() {
         super.onResume()
         homeViewModel.returnVisibleBottomNav(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(
