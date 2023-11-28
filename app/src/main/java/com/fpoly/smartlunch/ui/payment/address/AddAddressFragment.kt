@@ -99,7 +99,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
 
     private fun lisstenEvent() {
         views.layoutHeader.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.btnAccept.setOnClickListener{
             handleGetAddressLocation()
@@ -253,7 +253,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             when(it.asyncCreateAddress){
                 is Success ->{
                     Toast.makeText(requireContext(), "Thêm địa chỉ thành công", Toast.LENGTH_SHORT).show()
-                    requireActivity().supportFragmentManager.popBackStack()
+                    activity?.onBackPressed()
                     it.asyncCreateAddress = Uninitialized
                 }
                 is Fail ->{

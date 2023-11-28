@@ -78,7 +78,7 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-           activity?.supportFragmentManager?.popBackStack()
+           activity?.onBackPressed()
         }
         views.editSubmit.setOnClickListener {
             onSubmitForm()
@@ -183,6 +183,11 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
         homeViewModel.returnVisibleBottomNav(false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
+    }
+
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -202,7 +207,7 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
                         R.raw.animation_successfully
                     )
                 )
-                activity?.supportFragmentManager?.popBackStack()
+                activity?.onBackPressed()
                 viewModel.handleRemoveAsyncUpdateUser()
             }
 

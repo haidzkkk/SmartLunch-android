@@ -36,6 +36,7 @@ import com.fpoly.smartlunch.ultis.formatView
 
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
+    private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
@@ -64,6 +65,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     override fun onPause() {
         super.onPause()
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        productViewModel.returnVisibleBottomNav(true)
     }
 
     override fun onDestroy() {
@@ -105,7 +110,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.rcvComment.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
         views.viewpagerImg.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
-
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 views.tvPositionImg.text = "${position + 1}/${(views.viewpagerImg.adapter as RecyclerView.Adapter).itemCount}"
@@ -117,7 +121,8 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            //activity?.onBackPressed()
+            activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {
             productViewModel.handle(ProductAction.GetListCommentsLimit(currentProduct?._id ?: ""))
@@ -134,8 +139,11 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.buttonAddCart.setOnClickListener {
             addCart()
         }
+        views.tvSeeAllComment2.setOnClickListener{
+            homeViewModel.returnCommentFragment()
+        }
         views.tvSeeAllComment.setOnClickListener{
-            productViewModel.returnCommentFragment()
+            homeViewModel.returnCommentFragment()
         }
         views.tvSeeMore.setOnClickListener{
             handleStateDesc()
@@ -161,7 +169,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
             override fun onAnimationEnd(animation: Animator) {
                 views.animAddProduct.visibility = View.GONE
-                activity?.supportFragmentManager?.popBackStack()
+                activity?.onBackPressed()
             }
 
             override fun onAnimationCancel(animation: Animator) {

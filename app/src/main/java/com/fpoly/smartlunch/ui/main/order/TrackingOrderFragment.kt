@@ -77,7 +77,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.btnChat.setOnClickListener {
             val intent = Intent(requireContext(), ChatActivity::class.java).apply {

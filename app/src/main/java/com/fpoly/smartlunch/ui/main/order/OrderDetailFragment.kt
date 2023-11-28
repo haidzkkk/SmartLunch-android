@@ -69,7 +69,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             }
         }
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.followOrderText.setOnClickListener {
             homeViewModel.returnTrackingOrderFragment()
@@ -120,6 +120,16 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         }
 
         handleStateProgress(currentOrder)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.returnVisibleBottomNav(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(

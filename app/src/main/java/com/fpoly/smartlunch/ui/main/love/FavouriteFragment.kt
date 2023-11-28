@@ -34,9 +34,6 @@ class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
 
     private fun setupUI() {
         views.appBar.tvTitleToolbar.text = getText(R.string.favourite)
-    }
-
-    override fun invalidate() {
         tabLayout = views.tabLayout
         val viewPager = views.viewPager
         val adapter = FavouriteViewPagerAdapter(childFragmentManager, this.lifecycle)
@@ -52,6 +49,10 @@ class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
                 }
             }
         }.attach()
+    }
+
+    override fun invalidate() {
+
     }
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteBinding
