@@ -147,7 +147,9 @@
                     android:layout_width="88dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/logo_apple"/>
+                    android:scaleType="fitCenter"
+                    android:padding="8dp"
+                    android:src="@drawable/logo_app"/>
             </LinearLayout>
 
             <TextView

@@ -58,15 +58,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         listenEvent()
     }
 
-    override fun onResume() {
-        super.onResume()
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        productViewModel.returnVisibleBottomNav(false)
-    }
-    override fun onPause() {
-        super.onPause()
-        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    }
     override fun onDestroy() {
         super.onDestroy()
         withState(productViewModel){
@@ -74,9 +65,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             it.asyncProduct = Uninitialized
             it.asynGetSizeProduct = Uninitialized
         }
-        productViewModel.returnVisibleBottomNav(true)
     }
-
 
     private fun setupAppBar() {
         views.apply {
@@ -122,7 +111,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-            //activity?.onBackPressed()
             activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {

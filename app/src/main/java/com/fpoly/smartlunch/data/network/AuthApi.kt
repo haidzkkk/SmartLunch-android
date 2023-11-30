@@ -6,6 +6,7 @@ import com.fpoly.smartlunch.data.model.ResetPasswordRequest
 import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.model.UserRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPResponse
@@ -22,6 +23,11 @@ interface AuthApi {
 //    fun loginWithRefreshToken(@Body credentials: UserCredentials): Call<TokenResponse>
     @POST("api/signin")
     fun login(@Body user: LoginRequest): Observable<TokenResponse>
+
+    @POST("api/signinWithGG")
+    fun loginWithGG(@Body user: UserGGLogin): Observable<TokenResponse>
+    @POST("api/signinWithFb")
+    fun loginWithFb(@Body user: UserGGLogin): Observable<TokenResponse>
     @POST("api/signup")
     fun signUp(@Body user: UserRequest): Observable<VerifyOTPResponse>
     @POST("api/verifyOTP")

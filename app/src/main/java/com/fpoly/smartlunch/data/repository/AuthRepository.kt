@@ -7,6 +7,7 @@ import com.fpoly.smartlunch.data.model.ResetPasswordRequest
 import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.model.UserRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPResponse
@@ -26,6 +27,9 @@ class AuthRepository(
     fun login(email: String, password: String): Observable<TokenResponse> = api.login(
         LoginRequest(email,password)
     ).subscribeOn(Schedulers.io())
+
+    fun loginWithGG(user: UserGGLogin): Observable<TokenResponse> = api.loginWithGG(user).subscribeOn(Schedulers.io())
+    fun loginWithFB(user: UserGGLogin): Observable<TokenResponse> = api.loginWithFb(user).subscribeOn(Schedulers.io())
 
     fun verifyOTP(verifyOTP: VerifyOTPRequest):Observable<User> = api.verifyOTP(verifyOTP).subscribeOn(Schedulers.io())
     fun verifyOTPChangePassword(verifyOTP: VerifyOTPRequest):Observable<User> = api.verifyOTPChangePassword(verifyOTP).subscribeOn(Schedulers.io())

@@ -20,13 +20,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
     private lateinit var tabLayout: TabLayout
-    private val productViewModel: ProductViewModel by activityViewModel()
-    private val userViewModel: UserViewModel by activityViewModel()
-
     companion object{
         const val TAG = "FavouriteFragment"
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
@@ -52,9 +48,7 @@ class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
     }
 
     override fun invalidate() {
-
     }
-
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteBinding
             = FragmentFavouriteBinding.inflate(inflater, container, false)
 }

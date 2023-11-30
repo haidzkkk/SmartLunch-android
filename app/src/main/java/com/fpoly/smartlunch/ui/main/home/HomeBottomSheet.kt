@@ -44,9 +44,7 @@ import kotlinx.coroutines.launch
 class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     lateinit var btnCommit: Button
     var tvQuantity: TextView? = null
-
     private var myDelayJob: Job? = null
-
     var cartResponse: CartResponse? = null
 
     private val productViewModel: ProductViewModel by activityViewModel()
@@ -121,15 +119,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             }
         }).attachToRecyclerView(views.rcvCart)
 
-
-//        btnCommit.setOnClickListener {
-//            activity?.startActivityForResult(
-//                Intent(requireContext(), PaymentActivity::class.java),
-//                PayFragment.ACTIVITY_PAY_REQUEST_CODE
-//            )
-//            dismiss()
-//        }
-
     }
 
     private fun showClearCartConfirmationDialog() {
@@ -168,10 +157,9 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             ) {
                 super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID)
 
-                myDelayJob?.cancel() // Hủy bỏ công việc trước nếu có
+                myDelayJob?.cancel()
                 myDelayJob = CoroutineScope(Dispatchers.Main).launch {
-                    delay(500) // Chờ đợi một khoảng thời gian
-                    // Sau khi chờ đợi, thực hiện cuộc gọi với trạng thái cuối cùng
+                    delay(500)
                     productViewModel.handle(
                         ProductAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
                     )

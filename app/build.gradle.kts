@@ -141,4 +141,11 @@ dependencies {
 
     // point banner
     implementation("com.tbuonomo:dotsindicator:5.0")
+
+    //gg
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    //fb
+    implementation ("com.facebook.android:facebook-android-sdk:[4,5)")
+//    implementation ("com.facebook.android:facebook-login:latest.release")
+
 }

@@ -71,15 +71,7 @@ class ProductListFragment : PolyBaseFragment<FragmentProductListBinding>() {
         views.rcvProduct.adapter = adapterList
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
 
     override fun invalidate(): Unit = withState(productViewModel) {
 

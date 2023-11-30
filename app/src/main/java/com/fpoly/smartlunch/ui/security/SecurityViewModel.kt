@@ -12,6 +12,7 @@ import com.fpoly.smartlunch.data.model.Data
 import com.fpoly.smartlunch.data.model.ResetPasswordRequest
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.model.UserRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPRequest
 import com.fpoly.smartlunch.data.repository.AuthRepository
@@ -32,6 +33,8 @@ class SecurityViewModel @AssistedInject constructor(
     override fun handle(action: SecurityViewAction) {
         when(action){
             is SecurityViewAction.SignupAction->handleSignup(action.user)
+            is SecurityViewAction.LoginGGAction->handleLoginGG(action.user)
+            is SecurityViewAction.LoginFBAction->handleLoginFB(action.user)
             is SecurityViewAction.LoginAction->handleLogin(action.userName,action.password)
             is SecurityViewAction.VerifyOTPAction->handleVerifyOTPCode(action.verifyOTPRequest)
             is SecurityViewAction.VerifyOTPResetPassAction->handleVerifyOTPCodeRessetPassword(action.verifyOTPRequest)
@@ -40,6 +43,20 @@ class SecurityViewModel @AssistedInject constructor(
             is SecurityViewAction.ForgotPassword->handleForgotPassword(action.email)
             is SecurityViewAction.ResetPassword->handleResetPassword(action.resetPasswordRequest)
             else -> {}
+        }
+    }
+
+    private fun handleLoginGG(user: UserGGLogin) {
+        setState {copy(asyncLogin= Loading())}
+        repository.loginWithGG(user).execute {
+            copy(asyncLogin= it)
+        }
+    }
+
+    private fun handleLoginFB(user: UserGGLogin) {
+        setState {copy(asyncLogin= Loading())}
+        repository.loginWithFB(user).execute {
+            copy(asyncLogin= it)
         }
     }
 

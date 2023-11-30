@@ -4,6 +4,7 @@ object MyConfigNotifi{
     const val CHANNEL_ID = "MY_CHANNEL_ID"
     const val CHANNEL_ID_CHAT = "MY_CHANNEL_ID_CHAT"
     const val CHANNEL_ID_CALL = "MY_CHANNEL_ID_CALL"
+    const val RC_SIGN_IN = 1111
 
     // type để nhận biết loại thông báo muốn giử
     var TYPE_ALL = "TYPE_ALL"

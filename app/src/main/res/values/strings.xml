@@ -1,5 +1,12 @@
 <resources>
     <!-- Tiếng Anh -->
+
+    <!--    setting-->
+    <string name="facebook_app_id" translatable="false">1780690795742513</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1780690795742513</string>
+    <string name="facebook_client_token" translatable="false">66bcc28635ac484b60792629ed1bed60</string>
+    <!--    setting-->
+
     <string name="app_name">Smart Lunch</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notification">Notification</string>

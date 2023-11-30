@@ -19,8 +19,6 @@ import javax.inject.Inject
 
 class AddressFragment : PolyBaseFragment<FragmentAddressBinding>() {
     private val userViewModel: UserViewModel by activityViewModel()
-    private val homeViewModel: HomeViewModel by activityViewModel()
-
     private var adapterAddress: AddressAdapter? = null
 
     @Inject
@@ -63,15 +61,7 @@ class AddressFragment : PolyBaseFragment<FragmentAddressBinding>() {
         views.rcyAddress.adapter=adapterAddress
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
 
     override fun getBinding(
         inflater: LayoutInflater,
