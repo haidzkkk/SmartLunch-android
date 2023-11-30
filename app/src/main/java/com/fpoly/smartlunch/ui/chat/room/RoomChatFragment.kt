@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ui.chat.room
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -29,12 +30,15 @@ import com.fpoly.smartlunch.data.model.RequireCall
 import com.fpoly.smartlunch.data.model.RequireCallType
 import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.databinding.FragmentRoomChatBinding
+import com.fpoly.smartlunch.ui.call.CallActivity
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.chat.ChatViewmodel
+import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.checkPermissionGallery
 import com.fpoly.smartlunch.ultis.hideKeyboard
 import com.fpoly.smartlunch.ultis.setMargins
 import com.fpoly.smartlunch.ultis.showSnackbar
+import com.fpoly.smartlunch.ultis.startActivityWithData
 import com.fpoly.smartlunch.ultis.startToDetailPermission
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
@@ -71,7 +75,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
     }
 
     private fun initUI() {
-        chatViewmodel.initObserverPeerConnection()
+//        chatViewmodel.initObserverPeerConnection()
         views.layoutHeader.imgBack.isVisible = true
     }
 
@@ -90,6 +94,18 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
 
                 override fun onLongClickItem(message: Message) {
 
+                }
+
+                override fun onClickItemJoinCall(message: Message) {
+                    val intent = Intent(requireContext(), CallActivity::class.java)
+                    val targetUserId = withState(chatViewmodel){it.curentRoom.invoke()?.shopUserId?._id}
+                    requireActivity().startActivityWithData(intent, MyConfigNotifi.TYPE_CALL_ANSWER, targetUserId)
+                }
+
+                override fun onClickItemCall() {
+                    val idTargetUser: String? = withState(chatViewmodel){ it.curentRoom.invoke()?.shopUserId?._id}
+                    val intent = Intent(requireContext(), CallActivity::class.java)
+                    requireActivity().startActivityWithData(intent, MyConfigNotifi.TYPE_CALL_OFFER, idTargetUser)
                 }
             })
 
@@ -160,7 +176,6 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
 
      }
 
-
         views.rcvGallery.setOnTouchListener { view, motionEvent ->
             context?.hideKeyboard(views.root)
             false
@@ -194,9 +209,17 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
         }
 
         views.imgCall.setOnClickListener{
-            chatViewmodel.setCallVideoWithUser(withState(chatViewmodel){ it.curentRoom.invoke()!!.shopUserId})
-            findNavController().navigate(R.id.callChatFragment)
-            chatViewmodel.sendCallToServer(RequireCall(RequireCallType.START_CALL, null, null, null))
+//            chatViewmodel.setCallVideoWithUser(withState(chatViewmodel){ it.curentRoom.invoke()!!.shopUserId})
+//            findNavController().navigate(R.id.callChatFragment)
+//            chatViewmodel.sendCallToServer(RequireCall(RequireCallType.START_CALL, null, null, null))
+
+            val idTargetUser: String? = withState(chatViewmodel){ it.curentRoom.invoke()?.shopUserId?._id}
+            val intent = Intent(requireContext(), CallActivity::class.java)
+            requireActivity().startActivityWithData(intent, MyConfigNotifi.TYPE_CALL_OFFER, idTargetUser)
+        }
+
+        views.imgCallVideo.setOnClickListener{
+            startActivity(Intent(requireContext(), CallActivity::class.java))
         }
     }
 
@@ -230,7 +253,9 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 null,
                 null,
                 MessageType.TYPE_TEXT,
-                null
+                arrayListOf(),
+                arrayListOf(),
+                null, null
             )
             chatViewmodel.handle(ChatViewAction.postMessage(message, null))
             views.edtMessage.setText("")
@@ -248,6 +273,9 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 null,
                 null,
                 MessageType.TYPE_IMAGE,
+                arrayListOf(),
+                arrayListOf(),
+                null,
                 null
             )
             chatViewmodel.handle(ChatViewAction.postMessage(message, listSelectGallery))

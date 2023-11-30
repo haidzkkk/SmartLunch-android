@@ -16,6 +16,7 @@ import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
 import com.fpoly.smartlunch.ultis.handleLogOut
+import com.fpoly.smartlunch.ultis.startActivityWithData
 import javax.inject.Inject
 
 class SplashScreenActivity : PolyBaseActivity<ActivitySplashScreenBinding>(),SecurityViewModel.Factory{
@@ -53,14 +54,13 @@ class SplashScreenActivity : PolyBaseActivity<ActivitySplashScreenBinding>(),Sec
             }
             MyConfigNotifi.TYPE_CHAT ->{
                 startMainActivityToBackStack()
-                val intent = Intent(this, ChatActivity::class.java).apply {
-                    putExtras(Bundle().apply {
-                        putString("type", type)
-                        putString("idUrl", idUrl) }
-                    )
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                startActivity(intent)
+                var intent = Intent(this, ChatActivity::class.java)
+                startActivityWithData(intent, type, idUrl)
+            }
+            MyConfigNotifi.TYPE_CALL_ANSWER ->{
+                startMainActivityToBackStack()
+                var intent = Intent(this, ChatActivity::class.java)
+                startActivityWithData(intent, type, idUrl)
             }
             else ->{
                 startActivity(Intent(this, MainActivity::class.java))

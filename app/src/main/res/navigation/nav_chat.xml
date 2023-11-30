@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/callChatFragment"
-        android:name="com.fpoly.smartlunch.ui.chat.call.CallChatFragment"
+        android:name="com.fpoly.smartlunch.ui.call.call.CallChatFragment"
         android:label="fragment_call_chat"
         tools:layout="@layout/fragment_call_chat" />
 </navigation>

@@ -1,6 +1,10 @@
 package com.fpoly.smartlunch.ui.payment
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.add
@@ -13,6 +17,7 @@ import com.fpoly.smartlunch.core.PolyBaseActivity
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityPaymentBinding
 import com.fpoly.smartlunch.ui.main.MainFragment
+import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
@@ -23,14 +28,27 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.payment.cart.CartFragment
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
+import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
+import com.fpoly.smartlunch.ultis.addFragmentToBackStack
+import com.fpoly.smartlunch.ultis.startActivityWithData
 import javax.inject.Inject
 
 class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewModel.Factory,
     UserViewModel.Factory, ProductViewModel.Factory {
+    val intentFilterCall = IntentFilter(MyReceiver.actionCall)
 
     private val paymentViewModel: PaymentViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
     private val productViewModel : ProductViewModel by viewModel()
+
+    private val broadcastReceiverCall = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val type = intent?.extras?.getString("type")
+            val idUrl = intent?.extras?.getString("idUrl")
+            var intentCall = Intent(applicationContext, ChatActivity::class.java)
+            startActivityWithData(intentCall, type, idUrl)
+        }
+    }
 
     @Inject
     lateinit var paymentViewModelFactory: PaymentViewModel.Factory
@@ -56,6 +74,22 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         supportFragmentManager.commit {
             add<CartFragment>(R.id.frame_layout).addToBackStack(CartFragment::class.java.simpleName)
         }
+        initUI()
+        listenEvent()
+        userViewModel.handle(UserViewAction.GetCurrentUser)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(broadcastReceiverCall, intentFilterCall)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(broadcastReceiverCall)
+    }
+
+    private fun initUI() {
     }
 
     private fun listenEvent() {

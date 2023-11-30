@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chat.call.CallChatFragment"
+    tools:context=".ui.call.call.CallChatFragment"
     android:background="@color/background1"
     android:keepScreenOn="true">
 
@@ -94,43 +94,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_require_call"
-        android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:paddingHorizontal="20dp"
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:visibility="gone"
-        >
-
-        <ImageView
-            android:id="@+id/btn_refuse"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/baseline_call_end_24"
-            android:background="@drawable/background_border_radius_circle"
-            android:backgroundTint="@color/red_light"
-            android:padding="10dp"
-            android:layout_marginEnd="150dp"
-            app:tint="@color/white"
-            />
-
-        <ImageView
-            android:id="@+id/btn_accept"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/icon_call"
-            android:background="@drawable/background_border_radius_circle"
-            android:backgroundTint="@color/green_light"
-            android:padding="15dp"
-            app:tint="@color/white"
-            />
-
-    </LinearLayout>
-
-
     <ImageView
         android:id="@+id/img_back"
         android:layout_width="44dp"
@@ -179,7 +142,7 @@
             android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="muốn gọi cho bạn"/>
+            android:text="Đang trả lời"/>
 
     </LinearLayout>
 </RelativeLayout>

@@ -21,7 +21,7 @@ import com.fpoly.smartlunch.databinding.DialogOptionRoomBinding
 import com.fpoly.smartlunch.databinding.FragmentHomeChatBinding
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.chat.ChatViewmodel
-import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
+import com.fpoly.smartlunch.ui.call.call.WebRTCClient
 import javax.inject.Inject
 
 class HomeChatFragment : PolyBaseFragment<FragmentHomeChatBinding>() {
@@ -60,7 +60,8 @@ class HomeChatFragment : PolyBaseFragment<FragmentHomeChatBinding>() {
 
     private fun clickUILisstenner() {
         views.layoutHeader.imgBack.setOnClickListener{
-            activity?.onBackPressed()
+//            activity?.onBackPressed()
+            activity?.finish()
         }
 
         views.edtSearch.setOnClickListener{

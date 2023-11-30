@@ -7,6 +7,7 @@ import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.di.modules.FragmentModule
 import com.fpoly.smartlunch.di.modules.NetworkModule
 import com.fpoly.smartlunch.di.modules.ViewModelModule
+import com.fpoly.smartlunch.ui.call.CallActivity
 import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.chat.home.HomeChatFragment
 import com.fpoly.smartlunch.ui.main.MainActivity
@@ -37,6 +38,7 @@ interface PolyComponent {
     fun inject(activity: MainActivity)
     fun inject(activity: LoginActivity)
     fun inject(activity: ChatActivity)
+    fun inject(activity: CallActivity)
     fun inject(activity: PaymentActivity)
     fun inject(fragment: MainFragment)
     fun inject(fragment: ThirdFragment)

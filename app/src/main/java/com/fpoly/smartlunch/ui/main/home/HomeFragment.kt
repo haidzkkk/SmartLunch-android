@@ -175,32 +175,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         views.swipeLoading.setOnRefreshListener {
             productViewModel.handle(ProductAction.GetOneCartById)
-            views.swipeLoading.setOnRefreshListener {
-                productViewModel.handle(ProductAction.GetOneCartById)
-                productViewModel.handle(
-                    ProductAction.GetListProductRate(
-                        PagingRequestProduct(
-                            5,
-                            SortPagingProduct.rate,
-                            null,
-                            null,
-                            null
-                        )
-                    )
-                )
-                productViewModel.handle(
-                    ProductAction.GetListTopProduct(
-                        PagingRequestProduct(
-                            5,
-                            SortPagingProduct.bought,
-                            null,
-                            null,
-                            null
-                        )
-                    )
-                )
-                homeViewModel.handle(HomeViewAction.getBanner)
-            }
+            productViewModel.handle(ProductAction.GetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null)))
+            productViewModel.handle(ProductAction.GetListTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null)))
             homeViewModel.handle(HomeViewAction.getBanner)
         }
 
@@ -304,7 +280,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             is Success -> {
                 it.asyncGetCurrentLocation.invoke()?.let { location ->
                     val currentLocation: String =
-                        " " + location.address.road + ", " + location.address.quarter + ", " + location.address.suburb
+                        " " + location?.address?.road + ", " + location?.address?.quarter + ", " + location?.address?.suburb
                     setupAppBar(currentLocation)
                 }
             }

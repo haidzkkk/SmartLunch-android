@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.chat.call
+package com.fpoly.smartlunch.ui.call.call
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver

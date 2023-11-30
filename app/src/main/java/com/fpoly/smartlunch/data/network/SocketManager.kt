@@ -45,35 +45,21 @@ class SocketManager @Inject constructor() {
             Log.e("SocketManager", "socket: isDisconnect", )
         }
     }
-//    private val socketListeners: MutableMap<String, MutableList<() -> Unit>> = HashMap()
 
     public fun <T> onReceiveEmitSocket(event: String, type: Class<T>, callBack: (data: T?) -> Unit) {
         Log.e("SocketManager", "onReceiveEmitSocket: connected: ${mSocket.connected()} event $event")
         if (mSocket.connected() == true) {
-//            if (!socketListeners.containsKey(event)) {
-//                socketListeners[event] = mutableListOf()
-
-                mSocket.on(event) {
-                    if (!it[0].toString().isNullOrEmpty()) {
-//                        val listeners = socketListeners[event]
-                        CoroutineScope(Dispatchers.Main).launch {
-//                            listeners?.forEach { listener -> listener() }
-
-                            callBack(Gson().fromJson(it[0].toString(), type))
-                        }
-                    } else {
-                        Log.e("SocketManager", "receive: event $event -> null")
+            mSocket.on(event) {
+                if (!it[0].toString().isNullOrEmpty()) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        callBack(Gson().fromJson(it[0].toString(), type))
                     }
+                } else {
+                    Log.e("SocketManager", "receive: event $event -> null")
                 }
-//            }
-//            socketListeners[event]?.add { callBack(null) }
+            }
         }
     }
-
-
-
-
-
 
 
 public fun offReceiEmitSocket(event: String) {

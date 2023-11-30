@@ -22,7 +22,7 @@ import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.PaymentRepository
 import com.fpoly.smartlunch.data.repository.PlacesRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
-import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
+import com.fpoly.smartlunch.ui.call.call.WebRTCClient
 import com.fpoly.smartlunch.data.repository.UserRepository
 import com.google.rpc.context.AttributeContext.Auth
 import dagger.Module

@@ -46,6 +46,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             it.addOrder = Uninitialized
             it.asyncUpdateOrder = Uninitialized
         }
+        homeViewModel.returnVisibleBottomNav(true)
     }
     private fun initUI() {
         productOrderAdapter = ProductOrderAdapter {
