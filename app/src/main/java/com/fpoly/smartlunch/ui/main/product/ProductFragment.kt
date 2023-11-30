@@ -26,6 +26,7 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
+import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
@@ -55,20 +56,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         setupAppBar()
         initUi()
         listenEvent()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        productViewModel.returnVisibleBottomNav(false)
-    }
-    override fun onPause() {
-        super.onPause()
-        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        productViewModel.returnVisibleBottomNav(true)
     }
 
     override fun onDestroy() {
@@ -121,7 +108,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private fun listenEvent() {
         views.appBar.btnBackToolbar.setOnClickListener {
-            //activity?.onBackPressed()
             activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {
@@ -139,9 +125,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.buttonAddCart.setOnClickListener {
             addCart()
         }
-        views.tvSeeAllComment2.setOnClickListener{
-            homeViewModel.returnCommentFragment()
-        }
+
         views.tvSeeAllComment.setOnClickListener{
             homeViewModel.returnCommentFragment()
         }

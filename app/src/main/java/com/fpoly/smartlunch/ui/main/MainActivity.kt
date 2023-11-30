@@ -108,16 +108,16 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
             }
         }
 
-        productViewModel.subscribe(this){
-            if (it.asyncUnconfirmed is Success && it.asyncConfirmed is Success && it.asyncDelivering is Success){
-                var position =( it.asyncUnconfirmed.invoke()?.size ?: 0) + (it.asyncConfirmed.invoke()?.size ?: 0) + (it.asyncConfirmed.invoke()?.size ?: 0)
-                if (position == 0){
-                    handleSetBadgeBottomnav(R.id.menu_order, null)
-                }else{
-                    handleSetBadgeBottomnav(R.id.menu_order, 0)
-                }
-            }
-        }
+//        productViewModel.subscribe(this){
+//            if (it.asyncUnconfirmed is Success && it.asyncConfirmed is Success && it.asyncDelivering is Success){
+//                var position =( it.asyncUnconfirmed.invoke()?.size ?: 0) + (it.asyncConfirmed.invoke()?.size ?: 0) + (it.asyncConfirmed.invoke()?.size ?: 0)
+//                if (position == 0){
+//                    handleSetBadgeBottomnav(R.id.menu_order, null)
+//                }else{
+//                    handleSetBadgeBottomnav(R.id.menu_order, 0)
+//                }
+//            }
+//        }
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
@@ -147,8 +147,8 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
             is HomeViewEvent -> {
                 when (event) {
                     is HomeViewEvent.NavigateTo<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName)
-                    is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
-                    is HomeViewEvent.SetBadgeBottomNav ->  handleSetBadgeBottomnav(event.id, event.position)
+                   // is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
+//                    is HomeViewEvent.SetBadgeBottomNav ->  handleSetBadgeBottomnav(event.id, event.position)
                     else -> {}
                 }
             }
@@ -156,24 +156,20 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     }
 
-    private fun handleSetBadgeBottomnav(idMenu: Int, position: Int?) {
-        if (position != null) {
-            if (position <= 0){
-                views.bottomNav.showBadge(idMenu)
-            }else{
-                views.bottomNav.showBadge(idMenu, position)
-            }
-        }
-        else{
-            views.bottomNav.dismissBadge(idMenu)
-        }
-    }
+//    private fun handleSetBadgeBottomnav(idMenu: Int, position: Int?) {
+//        if (position != null) {
+//            if (position <= 0){
+//                views.bottomNav.showBadge(idMenu)
+//            }else{
+//                views.bottomNav.showBadge(idMenu, position)
+//            }
+//        }
+//        else{
+//            views.bottomNav.dismissBadge(idMenu)
+//        }
+//    }
 
-    private fun handleDarkMode(checkedDarkMode: Boolean) {
-        sessionManager.saveDarkMode(checkedDarkMode)
-        changeMode(checkedDarkMode)
-        changeLanguage(sessionManager.fetchLanguage())
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.payment.PaymentActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <FrameLayout
         android:id="@+id/frame_layout"
-        android:name="com.fpoly.smartlunch.ui.payment.cart.CartFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="0dp"

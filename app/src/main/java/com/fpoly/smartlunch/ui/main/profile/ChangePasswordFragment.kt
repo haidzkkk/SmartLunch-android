@@ -25,7 +25,6 @@ import javax.inject.Inject
 
 class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>(), TextWatcher {
     private val viewModel: UserViewModel by activityViewModel()
-    private val homeViewModel: HomeViewModel by activityViewModel()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -120,15 +119,7 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
 
     override fun getBinding(
         inflater: LayoutInflater,

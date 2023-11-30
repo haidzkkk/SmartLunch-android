@@ -51,6 +51,7 @@ class NotificationFragment : PolyBaseFragment<FragmentNotificationBinding>() {
         when(notification.type){
             MyConfigNotifi.TYPE_ORDER ->{
                 productViewModel.handle(ProductAction.GetReadNotification(notification._id))
+                productViewModel.handle(ProductAction.GetCurrentOrder(notification.idUrl))
                 homeViewModel.returnOrderDetailFragment()
             }
             MyConfigNotifi.TYPE_COUPONS ->{
@@ -60,15 +61,7 @@ class NotificationFragment : PolyBaseFragment<FragmentNotificationBinding>() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
     
     override fun getBinding(
         inflater: LayoutInflater,

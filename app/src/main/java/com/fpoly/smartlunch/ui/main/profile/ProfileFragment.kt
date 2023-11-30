@@ -2,6 +2,7 @@ package com.fpoly.smartlunch.ui.main.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,15 +25,18 @@ import com.fpoly.smartlunch.ui.security.SecurityViewModel
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
 import com.fpoly.smartlunch.ultis.handleLogOut
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import javax.inject.Inject
 
 class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
     private val homeViewModel: HomeViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
     companion object{
         const val TAG = "ProfileFragment"
     }
-
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -58,12 +62,11 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
-
     private fun configData() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         sessionManager.fetchDarkMode().let { views.switchDarkMode.isChecked = it }
     }
 
@@ -85,6 +88,8 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         }
         views.switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
             homeViewModel.handleChangeThemeMode(isChecked)
+            handleDarkMode(isChecked)
+            activity?.recreate()
         }
 
         views.layoutNotifies.setOnClickListener {
@@ -100,6 +105,23 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         }
     }
 
+    private fun handleDarkMode(checkedDarkMode: Boolean) {
+        sessionManager.saveDarkMode(checkedDarkMode)
+        changeMode(checkedDarkMode)
+        activity?.changeLanguage(sessionManager.fetchLanguage())
+        activity?.recreate()
+    }
+
+    private fun logOutGG() {
+        mGoogleSignInClient.signOut()
+            .addOnCompleteListener(requireActivity()) {
+                Log.w("Logout", "Sign out success")
+            }
+            .addOnFailureListener { e ->
+                Log.w("Logout", "Sign out failed", e)
+            }
+    }
+
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -110,12 +132,15 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
             when(it.asyncLogout){
                 is Success ->{
                     activity?.handleLogOut()
+                    logOutGG()
                 }
                 is Fail ->{
                     activity?.handleLogOut()
+                    logOutGG()
                 }
                 else -> { }
             }
         }
     }
+
 }

@@ -39,7 +39,6 @@ import java.io.File
 class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), TextWatcher {
 
     private val viewModel: UserViewModel by activityViewModel()
-    private val homeViewModel: HomeViewModel by activityViewModel()
     private var isSendButtonEnabled = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -178,15 +177,7 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
         return ""
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
 
     override fun getBinding(
         inflater: LayoutInflater,

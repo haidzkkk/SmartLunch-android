@@ -19,7 +19,6 @@ import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 
 class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
     private val productViewModel: ProductViewModel by activityViewModel()
-    private val homeViewModel: HomeViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,21 +53,6 @@ class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
         views.btnApply.setOnClickListener {
             productViewModel.handle(ProductAction.ApplyCoupon(CouponsRequest(currentCoupons._id)))
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(

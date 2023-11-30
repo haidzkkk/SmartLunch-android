@@ -40,11 +40,6 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         listenEvent()
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         withState(productViewModel){
@@ -120,16 +115,6 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         }
 
         handleStateProgress(currentOrder)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(

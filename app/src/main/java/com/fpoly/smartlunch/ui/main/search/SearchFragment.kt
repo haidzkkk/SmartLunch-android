@@ -87,15 +87,7 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
 
     override fun getBinding(
         inflater: LayoutInflater,

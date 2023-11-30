@@ -1,7 +1,10 @@
 package com.fpoly.smartlunch.ui.payment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
@@ -9,6 +12,7 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityPaymentBinding
+import com.fpoly.smartlunch.ui.main.MainFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
@@ -16,7 +20,9 @@ import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
+import com.fpoly.smartlunch.ui.payment.cart.CartFragment
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
+import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
 import javax.inject.Inject
 
 class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewModel.Factory,
@@ -41,8 +47,15 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         super.onCreate(savedInstanceState)
         setContentView(views.root)
         listenEvent()
-
+        setupMainLayout()
         userViewModel.handle(UserViewAction.GetCurrentUser)
+    }
+
+    @SuppressLint("CommitTransaction")
+    private fun setupMainLayout() {
+        supportFragmentManager.commit {
+            add<CartFragment>(R.id.frame_layout).addToBackStack(CartFragment::class.java.simpleName)
+        }
     }
 
     private fun listenEvent() {
@@ -63,23 +76,30 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
     private fun handleEvent(event: PaymentViewEvent) {
         when (event) {
             is PaymentViewEvent.ReturnFragment<*> -> {
-                addFragmentToBackStack(R.id.frame_layout, event.fragmentClass)
+                addFragmentToBackStack(R.id.frame_layout, event.fragmentClass, event.fragmentClass.simpleName)
             }
 
             is PaymentViewEvent.ReturnFragmentWithArgument<*> -> {
                 addFragmentToBackStack(
                     R.id.frame_layout,
                     event.fragmentClass,
-                    bundle = event.bundle
+                    bundle = event.bundle,
+                    tag =  event.fragmentClass.simpleName
                 )
             }
 
             is PaymentViewEvent.ReturnShowLoading -> showLayoutLoading(event.isVisible)
+            else -> {}
         }
     }
 
     private fun showLayoutLoading(isVisible: Boolean){
         views.layoutLoading.root.isVisible = isVisible
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        popBackStackAndShowPrevious()
     }
 
     override fun getBinding(): ActivityPaymentBinding {

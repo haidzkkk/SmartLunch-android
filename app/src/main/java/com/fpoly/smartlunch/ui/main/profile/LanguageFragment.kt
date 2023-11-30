@@ -18,7 +18,6 @@ import com.fpoly.smartlunch.ultis.changeLanguage
 import javax.inject.Inject
 
 class LanguageFragment : PolyBaseFragment<FragmentLanguageBinding>() {
-    private val homeViewModel: HomeViewModel by activityViewModel()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -67,16 +66,6 @@ class LanguageFragment : PolyBaseFragment<FragmentLanguageBinding>() {
         return languages
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
-    }
-
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -85,6 +74,6 @@ class LanguageFragment : PolyBaseFragment<FragmentLanguageBinding>() {
     }
 
     override fun invalidate() {
-
     }
+
 }

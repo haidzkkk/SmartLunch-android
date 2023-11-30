@@ -24,11 +24,9 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
 
     private val productViewModel: ProductViewModel by activityViewModel()
-    private val userViewModel: UserViewModel by activityViewModel()
-
     private lateinit var commentAdapter: CommentAdapter
-
     private var mListComment: ArrayList<Comment>? = null
+
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

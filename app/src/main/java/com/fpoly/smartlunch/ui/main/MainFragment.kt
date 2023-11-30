@@ -9,21 +9,29 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import com.airbnb.mvrx.activityViewModel
+import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.core.PolyViewEvent
+import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentMainBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
+import com.fpoly.smartlunch.ultis.changeLanguage
+import com.fpoly.smartlunch.ultis.changeMode
+import javax.inject.Inject
 
 class MainFragment : PolyBaseFragment<FragmentMainBinding>(){
     private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
         handleViewModel()
         setupBottomNavigation()

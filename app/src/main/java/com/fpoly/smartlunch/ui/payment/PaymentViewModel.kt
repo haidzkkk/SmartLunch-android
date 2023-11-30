@@ -49,7 +49,6 @@ class PaymentViewModel @AssistedInject constructor(
         when (action) {
             is PaymentViewAction.getListPaymentType -> handleGetListTypePayment()
             is PaymentViewAction.setCurrentPaymentType -> setSelectItemPayment(action.menu)
-
             is PaymentViewAction.GetListProduct -> handleGetListProduct()
             is PaymentViewAction.GetDetailProduct -> handleGetOneProduct(action.id)
             is PaymentViewAction.IncrementViewProduct -> handleGetViewProduct(action.id)

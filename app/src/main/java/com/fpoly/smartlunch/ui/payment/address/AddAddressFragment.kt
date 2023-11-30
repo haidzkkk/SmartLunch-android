@@ -163,7 +163,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
     }
 
     private fun handleGetAddressLocation() {
-        var geocoder: Geocoder = Geocoder(requireContext())
+        var geocoder = Geocoder(requireContext())
         var listLocation: List<android.location.Address>? = null
 
         try {

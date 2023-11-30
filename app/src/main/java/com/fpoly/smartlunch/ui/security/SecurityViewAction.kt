@@ -5,11 +5,14 @@ import com.fpoly.smartlunch.data.model.Data
 import com.fpoly.smartlunch.data.model.ResetPasswordRequest
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.model.UserRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPRequest
 
 sealed class SecurityViewAction : PolyViewAction {
     data class LoginAction(val userName: String, var password: String) : SecurityViewAction()
+    data class LoginGGAction(val user : UserGGLogin) : SecurityViewAction()
+    data class LoginFBAction(val user : UserGGLogin) : SecurityViewAction()
     data class SaveTokenAction(val token: TokenResponse) : SecurityViewAction()
     data class SignupAction(val user: UserRequest) : SecurityViewAction()
     data class VerifyOTPAction(val verifyOTPRequest: VerifyOTPRequest) : SecurityViewAction()

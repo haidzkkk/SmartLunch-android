@@ -99,7 +99,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
     private fun initUi() {
         //setup rcyH
-        adapter = AdapterProduct(object: AdapterProduct.OnClickListenner{
+        adapter = AdapterProduct(object : AdapterProduct.OnClickListenner {
             override fun onCLickItem(id: String) {
                 onItemProductClickListener(id)
             }
@@ -139,12 +139,15 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         }
         views.rcvProductAll.adapter = productAdapter
         views.rcvProductAll.layoutManager = linearLayoutManager
-        views.rcvProductAll.addOnScrollListener(object : PaginationScrollListenner(linearLayoutManager){
+        views.rcvProductAll.addOnScrollListener(object :
+            PaginationScrollListenner(linearLayoutManager) {
             override fun loadMoreItems() {
                 productAdapter.isLoadingOk = true
                 productAdapter.curentPage += 1
-                productViewModel.handle(ProductAction.GetListProduct(
-                    PagingRequestProduct(2, null, null, productAdapter.curentPage, null))
+                productViewModel.handle(
+                    ProductAction.GetListProduct(
+                        PagingRequestProduct(2, null, null, productAdapter.curentPage, null)
+                    )
                 )
             }
 
@@ -157,25 +160,13 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
         })
 //        ProductAction.GetListProduct(PagingRequestProduct(2, null, null, productAdapter.curentPage, null))
-        Log.e("TAG", "onViewCreated: productAdapter -> ${productAdapter.curentPage}", )
+        Log.e("TAG", "onViewCreated: productAdapter -> ${productAdapter.curentPage}")
     }
 
-        private fun setupLocation() {
-            mFusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(requireActivity())
-        }
-
-        private fun listenEvent() {
-            productViewModel.observeViewEvents {
-                handleViewEvent(it)
-            }
-
-            views.swipeLoading.setOnRefreshListener {
-                productViewModel.handle(ProductAction.GetOneCartById)
-                productViewModel.handle(ProductAction.GetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null)))
-                productViewModel.handle(ProductAction.GetListTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null)))
-                homeViewModel.handle(HomeViewAction.getBanner)
-            }
+    private fun setupLocation() {
+        mFusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
+    }
 
     private fun listenEvent() {
         productViewModel.observeViewEvents {
@@ -184,8 +175,32 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         views.swipeLoading.setOnRefreshListener {
             productViewModel.handle(ProductAction.GetOneCartById)
-            productViewModel.handle(ProductAction.GetListProduct)
-            productViewModel.handle(ProductAction.GetListTopProduct)
+            views.swipeLoading.setOnRefreshListener {
+                productViewModel.handle(ProductAction.GetOneCartById)
+                productViewModel.handle(
+                    ProductAction.GetListProductRate(
+                        PagingRequestProduct(
+                            5,
+                            SortPagingProduct.rate,
+                            null,
+                            null,
+                            null
+                        )
+                    )
+                )
+                productViewModel.handle(
+                    ProductAction.GetListTopProduct(
+                        PagingRequestProduct(
+                            5,
+                            SortPagingProduct.bought,
+                            null,
+                            null,
+                            null
+                        )
+                    )
+                )
+                homeViewModel.handle(HomeViewAction.getBanner)
+            }
             homeViewModel.handle(HomeViewAction.getBanner)
         }
 
@@ -223,28 +238,12 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         productViewModel.handle(ProductAction.GetDetailProduct(productId))
         productViewModel.handle(ProductAction.GetListSizeProduct(productId))
         productViewModel.handle(ProductAction.GetListCommentsLimit(productId))
-            homeViewModel.returnDetailProductFragment()
-//        activity?.supportFragmentManager?.apply {
-//            val fragments = this.fragments
-//            commit {
-//                for (fragment in fragments) {
-//                    if (!fragment.isRemoving && !fragment.isDetached) {
-//                        this.hide(fragment)
-//                    }
-//                }
-//                replace(
-//                    R.id.frame_layout,
-//                    ProductFragment(),
-//                    ProductFragment::class.java.simpleName
-//                ).addToBackStack(ProductFragment::class.java.simpleName)
-//            }
-//        }
+        homeViewModel.returnDetailProductFragment()
     }
 
     override fun onResume() {
         super.onResume()
         productViewModel.handle(ProductAction.GetOneCartById)
-        homeViewModel.returnVisibleBottomNav(true)
         mHandler.postDelayed(mRunable, 3000)
         if (mLocationPermissionGranted) {
             getLastKnowLocation()
@@ -345,6 +344,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                     productAdapter.setData(it.asyncProducts.invoke()?.docs)
                     it.asyncProducts = Uninitialized
                 }
+
                 else -> {
                 }
             }

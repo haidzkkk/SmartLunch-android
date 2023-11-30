@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.fpoly.smartlunch.ui.main.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/mainFragment"
+        android:name="com.fpoly.smartlunch.ui.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_mainFragment_to_productFragment"
+            app:destination="@id/productFragment" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.fpoly.smartlunch.ui.main.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        android:id="@+id/productFragment"
+        android:name="com.fpoly.smartlunch.ui.main.product.ProductFragment"
+        android:label="fragment_product"
+        >
         <action
-            android:id="@+id/action_profileFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_productFragment_to_commentFragment"
+            app:destination="@id/commentFragment" />
     </fragment>
     <fragment
-        android:id="@+id/viewPagerFragment"
-        android:name="com.fpoly.smartlunch.ui.security.onboarding.ViewPagerFragment"
-        android:label="ViewPagerFragment" />
+        android:id="@+id/commentFragment"
+        android:name="com.fpoly.smartlunch.ui.main.comment.CommentFragment"
+        android:label="fragment_comment"
+        tools:layout="@layout/fragment_comment" />
 </navigation>

@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.airbnb.mvrx.viewModel
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity
@@ -14,6 +16,7 @@ import com.fpoly.smartlunch.ui.security.onboarding.ViewPagerFragment
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
+import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
 import javax.inject.Inject
 
 class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewModel.Factory {
@@ -37,9 +40,9 @@ class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewMode
     private fun setupUi() {
         supportFragmentManager.commit {
             if (sessionManager.getOnBoardingFinished()) {
-                add<LoginFragment>(R.id.frame_layout)
+                add<LoginFragment>(R.id.frame_layout).addToBackStack(LoginFragment::class.java.simpleName)
             } else {
-                add<ViewPagerFragment>(R.id.frame_layout)
+                add<ViewPagerFragment>(R.id.frame_layout).addToBackStack(ViewPagerFragment::class.java.simpleName)
             }
         }
         viewModel.observeViewEvents {
@@ -75,6 +78,11 @@ class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewMode
             }
         }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        popBackStackAndShowPrevious()
     }
 
     override fun getBinding(): ActivityLoginBinding =

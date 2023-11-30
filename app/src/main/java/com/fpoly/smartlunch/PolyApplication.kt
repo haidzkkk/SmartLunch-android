@@ -6,7 +6,8 @@ import android.app.NotificationManager
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
-import android.widget.Toast
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.fpoly.smartlunch.di.DaggerPolyComponent
 import com.fpoly.smartlunch.di.PolyComponent
 import com.fpoly.smartlunch.ultis.MyConfigNotifi
@@ -26,9 +27,14 @@ class PolyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         polyComponent.inject(this)
-
         setupChannelNotifi()
         setupSdkPaypal()
+        setupSdkFb()
+    }
+
+    private fun setupSdkFb() {
+        FacebookSdk.sdkInitialize(applicationContext);
+        AppEventsLogger.activateApp(this);
     }
 
     private fun setupChannelNotifi() {

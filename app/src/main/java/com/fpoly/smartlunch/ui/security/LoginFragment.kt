@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,28 +15,74 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentLoginBinding
 import com.fpoly.smartlunch.ui.main.MainActivity
+import com.fpoly.smartlunch.ultis.MyConfigNotifi.RC_SIGN_IN
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import javax.inject.Inject
+
 
 class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
     private val viewModel: SecurityViewModel by activityViewModel()
     private var isFieldsFilled = false
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     @Inject
     lateinit var sessionManager: SessionManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity().application as PolyApplication).polyComponent.inject(this)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         listenEvent()
         super.onViewCreated(view, savedInstanceState)
     }
+
+
+    private fun signInWithGG() {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
+            Log.d("Login", "handleSignInResult: "+account.id+"\n"+account.givenName+"\n"+account.familyName+"\n"+account.email)
+            viewModel.handle(SecurityViewAction.LoginGGAction(UserGGLogin(account.id,account.givenName,account.familyName,account.email)))
+        } catch (e: ApiException) {
+            Log.w("Login", "signInResult:failed code=" + e.statusCode)
+        }
+    }
+
 
     private fun listenEvent() {
         views.btnLogin.isEnabled = false
         views.btnLogin.setOnClickListener {
             loginSubmit()
+        }
+        views.btnLoginGg.setOnClickListener {
+            signInWithGG()
+        }
+        views.btnLoginFb.setOnClickListener {
+            showButtonFB()
         }
         views.tvSignUp.setOnClickListener {
             viewModel.handleReturnSignUpEvent()
@@ -45,6 +92,11 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
         }
         views.edtPassword.addTextChangedListener(this)
         views.edtEmail.addTextChangedListener(this)
+    }
+
+    private fun showButtonFB() {
+        val bottomSheet = FacebookBottomSheetDialog()
+        bottomSheet.show(requireActivity().supportFragmentManager, "FacebookBottomSheet")
     }
 
     private fun loginSubmit() {
