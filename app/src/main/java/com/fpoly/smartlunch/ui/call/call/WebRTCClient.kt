@@ -1,7 +1,9 @@
-package com.fpoly.smartlunch.ui.chat.call
+package com.fpoly.smartlunch.ui.call.call
 
 import android.app.Application
 import android.util.Log
+import com.fpoly.smartlunch.data.model.Message
+import com.fpoly.smartlunch.data.model.MessageType
 import com.fpoly.smartlunch.data.model.RequireCall
 import com.fpoly.smartlunch.data.model.RequireCallType
 import com.fpoly.smartlunch.data.model.User
@@ -116,7 +118,7 @@ class WebRTCClient @Inject constructor(
             IllegalStateException()
         }
     }
-    fun call(myUser: User, target: User, resultToSocket : (reqCall: RequireCall) -> Unit) {
+    fun call(result: (reqCall: RequireCall) -> Unit) {
         val mediaConstraints = MediaConstraints()
         mediaConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
 
@@ -130,7 +132,7 @@ class WebRTCClient @Inject constructor(
                             "sdp" to desc?.description,                                             // sdp: chứa thông tin của media
                             "type" to desc?.type
                         )
-                        resultToSocket(RequireCall(RequireCallType.CREATE_OFFER, myUser, target, offer))
+                        result(RequireCall(RequireCallType.CREATE_OFFER, null, null, offer))
                     }
 
                     override fun onCreateFailure(p0: String?) {
@@ -150,25 +152,7 @@ class WebRTCClient @Inject constructor(
         }, mediaConstraints)
     }
 
-    fun onRemoteSessionReceived(session: SessionDescription) {
-        peerConnection?.setRemoteDescription(object: SdpObserver{
-            override fun onCreateSuccess(p0: SessionDescription?) {
-
-            }
-
-            override fun onSetSuccess() {
-            }
-
-            override fun onCreateFailure(p0: String?) {
-            }
-
-            override fun onSetFailure(p0: String?) {
-            }
-
-        }, session)
-    }
-
-    fun answer(myUser: User, target: User, resultToSocket : (reqCall: RequireCall) -> Unit) {
+    fun answer(resultToSocket : (reqCall: RequireCall) -> Unit) {
         val constraints = MediaConstraints()
         constraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
 
@@ -182,7 +166,7 @@ class WebRTCClient @Inject constructor(
                             "sdp" to desc?.description,
                             "type" to desc?.type
                         )
-                        resultToSocket(RequireCall(RequireCallType.CREATE_ANSWER, myUser, target, answer))
+                        resultToSocket(RequireCall(RequireCallType.CREATE_ANSWER, null, null, answer))
                     }
 
                     override fun onCreateFailure(p0: String?) {
@@ -205,6 +189,24 @@ class WebRTCClient @Inject constructor(
         }, constraints)
     }
 
+    fun onRemoteSessionReceived(session: SessionDescription) {
+        peerConnection?.setRemoteDescription(object: SdpObserver{
+            override fun onCreateSuccess(p0: SessionDescription?) {
+
+            }
+
+            override fun onSetSuccess() {
+            }
+
+            override fun onCreateFailure(p0: String?) {
+            }
+
+            override fun onSetFailure(p0: String?) {
+            }
+
+        }, session)
+    }
+
     fun addIceCandidate(p0: IceCandidate?) {
         Log.d("WebRTCClient", "CALLCHAT IceCandidate: $p0", )
         peerConnection?.addIceCandidate(p0)
@@ -220,9 +222,9 @@ class WebRTCClient @Inject constructor(
         localVideoTrack?.setEnabled(false)
         localAudioTrack?.setEnabled(false)
         videoCapturer?.stopCapture()
-//        peerConnection?.removeStream(localStream)
-//        eglContext.release()
-//        peerConnection?.close()
+        peerConnection?.removeStream(localStream)
+        eglContext.release()
+        peerConnection?.close()
     }
 
     fun swichVideoCapture(){

@@ -19,7 +19,7 @@ object RequireCallType{
 
 data class RequireCall(
     val type: String? = null,
-    var myUser: User? = null,
-    var targetUser: User? = null,
+    var myUserId: String? = null,
+    var targetUserId: String? = null,
     val data: Any? = null
 )

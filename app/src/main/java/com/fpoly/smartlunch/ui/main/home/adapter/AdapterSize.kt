@@ -12,7 +12,7 @@ import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.databinding.LayoutSizeBinding
 
 @SuppressLint("NotifyDataSetChanged")
-class AdapterSize(private val onClickItem: (id: String) -> Unit):
+class AdapterSize(private val onClickItem: (size: Size) -> Unit):
     RecyclerView.Adapter<AdapterSize.SizeViewHolder>() {
 
     private var sizeSelect: Size? = null
@@ -23,7 +23,7 @@ class AdapterSize(private val onClickItem: (id: String) -> Unit):
 
         listSize = list
         sizeSelect = list[0]
-        onClickItem(list[0]._id)
+        onClickItem(list[0])
         notifyDataSetChanged()
     }
 
@@ -40,10 +40,10 @@ class AdapterSize(private val onClickItem: (id: String) -> Unit):
     }
 
     override fun onBindViewHolder(holder: SizeViewHolder, position: Int) {
-        val currentProduct: Size = listSize[position]
-        holder.size.text = currentProduct.size_name
+        val currentSize: Size = listSize[position]
+        holder.size.text = currentSize.size_name
 
-        if (currentProduct._id == sizeSelect?._id) {
+        if (currentSize._id == sizeSelect?._id) {
             holder.size.setBackgroundResource(R.drawable.chips)
             holder.size.setTextColor(Color.RED)
         } else {
@@ -52,9 +52,9 @@ class AdapterSize(private val onClickItem: (id: String) -> Unit):
         }
 
         holder.liner.setOnClickListener {
-            sizeSelect = currentProduct
+            sizeSelect = currentSize
             notifyDataSetChanged()
-            onClickItem(currentProduct._id)
+            onClickItem(currentSize)
         }
     }
 

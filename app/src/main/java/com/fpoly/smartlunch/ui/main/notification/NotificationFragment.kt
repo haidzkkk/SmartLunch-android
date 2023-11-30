@@ -51,6 +51,7 @@ class NotificationFragment : PolyBaseFragment<FragmentNotificationBinding>() {
         when(notification.type){
             MyConfigNotifi.TYPE_ORDER ->{
                 productViewModel.handle(ProductAction.GetReadNotification(notification._id))
+                productViewModel.handle(ProductAction.GetCurrentOrder(notification.idUrl))
                 homeViewModel.returnOrderDetailFragment()
             }
             MyConfigNotifi.TYPE_COUPONS ->{

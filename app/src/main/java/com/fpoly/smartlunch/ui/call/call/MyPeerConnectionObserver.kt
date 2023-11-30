@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.chat.call
+package com.fpoly.smartlunch.ui.call.call
 
 import org.webrtc.DataChannel
 import org.webrtc.IceCandidate

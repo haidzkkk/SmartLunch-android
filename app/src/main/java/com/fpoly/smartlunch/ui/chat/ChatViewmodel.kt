@@ -18,7 +18,7 @@ import com.fpoly.smartlunch.data.model.RequireCallType
 import com.fpoly.smartlunch.data.model.Room
 import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.data.repository.ChatRepository
-import com.fpoly.smartlunch.ui.chat.call.WebRTCClient
+import com.fpoly.smartlunch.ui.call.call.WebRTCClient
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -34,8 +34,7 @@ import java.io.File
 
 class ChatViewmodel @AssistedInject constructor(
     @Assisted state: ChatViewState,
-    private val repo: ChatRepository,
-    private val webRTCClient: WebRTCClient
+    private val repo: ChatRepository
 ) : PolyBaseViewModel<ChatViewState, ChatViewAction, ChatViewEvent>(state) {
 
     init {
@@ -181,8 +180,8 @@ class ChatViewmodel @AssistedInject constructor(
     }
     fun sendCallToServer(requireCall: RequireCall){
         withState{
-            requireCall.myUser = it.curentUser.invoke()
-            requireCall.targetUser = it.curentCallWithUser ?: it.curentRoom.invoke()?.shopUserId
+            requireCall.myUserId = it.curentUser.invoke()?._id
+            requireCall.targetUserId = it.curentCallWithUser?._id ?: it.curentRoom.invoke()?.shopUserId?._id
             Log.e("ChatViewModel", "RequireCall: ${requireCall}", )
             repo.sendCallToSocket(requireCall)
         }
@@ -195,57 +194,6 @@ class ChatViewmodel @AssistedInject constructor(
     fun setCallVideoWithUser(callWithUser: User?){
         setState { copy(curentCallWithUser = callWithUser) }
     }
-
-    // call video
-    fun initObserverPeerConnection(observer: PeerConnection.Observer)
-    = webRTCClient.observerPeerConnection(observer)
-
-    fun initializeSurfaceView(surface: SurfaceViewRenderer) = webRTCClient.initializeSurfaceView(surface)
-    fun startLocalVideo(localView: SurfaceViewRenderer) = webRTCClient.startLocalVideo(localView)
-    fun callVideo(myUser: User, targetUser: User){
-        webRTCClient.call(myUser, targetUser){
-            repo.sendCallToSocket(it)
-        }
-    }
-    fun onRemoteSessionReceived(session: SessionDescription) = webRTCClient.onRemoteSessionReceived(session)
-    fun answer(myUser: User, targetUser: User) {
-        webRTCClient.answer(myUser, targetUser){
-            repo.sendCallToSocket(it)
-        }
-    }
-
-    fun addIceCandidate(p0: IceCandidate?) {
-        webRTCClient.addIceCandidate(p0)
-    }
-
-    fun addViewToViewWebRTC(p0: MediaStream?){
-        _viewEvents.post(ChatViewEvent.addViewToViewWebRTC(p0))
-    }
-
-    fun initObserverPeerConnection(){
-        _viewEvents.post(ChatViewEvent.initObserverPeerConnection)
-    }
-
-    fun startCall(){
-        webRTCClient.startCall()
-    }
-    fun endCall(){
-        setState { copy(requireCall = null, requireCallIceCandidate = null, curentCallWithUser = null) }
-        webRTCClient.endCall()
-    }
-
-    fun callSwichVideoCapture(){
-        webRTCClient.swichVideoCapture()
-    }
-
-    fun callToggleVideo(isCameraPause: Boolean){
-        webRTCClient.toggleVideo(isCameraPause)
-    }
-
-    fun callToggleAudio(isMute: Boolean){
-        webRTCClient.toggleAudio(isMute)
-    }
-
     @AssistedFactory
     interface Factory {
         fun create(initialState: ChatViewState): ChatViewmodel

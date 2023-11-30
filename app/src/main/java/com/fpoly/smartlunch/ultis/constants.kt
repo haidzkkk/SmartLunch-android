@@ -8,8 +8,10 @@ object MyConfigNotifi{
     // type để nhận biết loại thông báo muốn giử
     var TYPE_ALL = "TYPE_ALL"
     var TYPE_ORDER = "TYPE_ORDER"
-    var TYPE_CHAT = "TYPE_CHAT"
     var TYPE_COUPONS = "TYPE_COUPONS"
+    var TYPE_CHAT = "TYPE_CHAT"
+    var TYPE_CALL_OFFER = "TYPE_CALL_OFFER"
+    var TYPE_CALL_ANSWER = "TYPE_CALL_ANSWER"
 
 }
 

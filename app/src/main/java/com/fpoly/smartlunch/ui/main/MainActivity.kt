@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -22,6 +23,7 @@ import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
+import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.main.coupons.CouponsFragment
 import com.fpoly.smartlunch.ui.main.order.OrderFragment
 import com.fpoly.smartlunch.ui.main.home.HomeFragment
@@ -39,6 +41,7 @@ import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
+import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
 import com.fpoly.smartlunch.ui.security.SecurityViewModel
 import com.fpoly.smartlunch.ui.security.SecurityViewState
 import com.fpoly.smartlunch.ultis.MyConfigNotifi
@@ -46,10 +49,12 @@ import com.fpoly.smartlunch.ultis.addFragmentToBackstack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
 import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
+import com.fpoly.smartlunch.ultis.startActivityWithData
 import javax.inject.Inject
 
 
 
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
 class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory,SecurityViewModel.Factory, UserViewModel.Factory {
 
     @Inject
@@ -74,6 +79,9 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     private val testViewModel : TestViewModel by lazy{ viewModelProvider.get(TestViewModel::class.java) }
     private val testViewModelMvRx: TestViewModelMvRx by viewModel()
 
+    val intentFilterNotify = IntentFilter(MyReceiver.actionNotify)
+    val intentFilterCall = IntentFilter(MyReceiver.actionCall)
+
     var doubleClickBack: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,8 +92,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         changeMode(sessionManager.fetchDarkMode())
         changeLanguage(sessionManager.fetchLanguage())
         handleReceiveDataNotify()
-        val intentFilter = IntentFilter("com.fpoly.smartlunch.NEW_DATA_AVAILABLE")
-        registerReceiver(broadcastReceiver, intentFilter)
+        registerReceiver(broadcastReceiverNotify, intentFilterNotify)
     }
 
     private fun handleViewModel() {
@@ -113,15 +120,34 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
     }
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
+    private val broadcastReceiverNotify = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             productViewModel.handle(ProductAction.GetAllNotification)
         }
     }
 
+    private val broadcastReceiverCall = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val type = intent?.extras?.getString("type")
+            val idUrl = intent?.extras?.getString("idUrl")
+            var intentCall = Intent(applicationContext, ChatActivity::class.java)
+            startActivityWithData(intentCall, type, idUrl)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(broadcastReceiverCall, intentFilterCall)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(broadcastReceiverCall)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(broadcastReceiverNotify)
     }
 
     override fun getBinding(): ActivityMainBinding {
