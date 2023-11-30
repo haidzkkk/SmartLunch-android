@@ -22,7 +22,7 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
-import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.startActivityWithData
 import javax.inject.Inject
 

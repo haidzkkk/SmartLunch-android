@@ -181,16 +181,16 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     }
 
     private fun handleSetBadgeBottomnav(idMenu: Int, position: Int?) {
-        if (position != null) {
-            if (position <= 0){
-                views.bottomNav.showBadge(idMenu)
-            }else{
-                views.bottomNav.showBadge(idMenu, position)
-            }
-        }
-        else{
-            views.bottomNav.dismissBadge(idMenu)
-        }
+//        if (position != null) {
+//            if (position <= 0){
+//                views.bottomNav.showBadge(idMenu)
+//            }else{
+//                views.bottomNav.showBadge(idMenu, position)
+//            }
+//        }
+//        else{
+//            views.bottomNav.dismissBadge(idMenu)
+//        }
     }
 
     private fun handleDarkMode(checkedDarkMode: Boolean) {

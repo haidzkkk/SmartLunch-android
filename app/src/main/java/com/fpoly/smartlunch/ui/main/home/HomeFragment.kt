@@ -165,18 +165,6 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                 LocationServices.getFusedLocationProviderClient(requireActivity())
         }
 
-        private fun listenEvent() {
-            productViewModel.observeViewEvents {
-                handleViewEvent(it)
-            }
-
-            views.swipeLoading.setOnRefreshListener {
-                productViewModel.handle(ProductAction.GetOneCartById)
-                productViewModel.handle(ProductAction.GetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null)))
-                productViewModel.handle(ProductAction.GetListTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null)))
-                homeViewModel.handle(HomeViewAction.getBanner)
-            }
-
     private fun listenEvent() {
         productViewModel.observeViewEvents {
             handleViewEvent(it)
@@ -184,8 +172,8 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
 
         views.swipeLoading.setOnRefreshListener {
             productViewModel.handle(ProductAction.GetOneCartById)
-            productViewModel.handle(ProductAction.GetListProduct)
-            productViewModel.handle(ProductAction.GetListTopProduct)
+            productViewModel.handle(ProductAction.GetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null)))
+            productViewModel.handle(ProductAction.GetListTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null)))
             homeViewModel.handle(HomeViewAction.getBanner)
         }
 
