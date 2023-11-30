@@ -50,8 +50,15 @@ class ChatActivity : PolyBaseActivity<ActivityChatBinding>(), ChatViewmodel.Fact
         override fun onReceive(context: Context?, intent: Intent?) {
             val type = intent?.extras?.getString("type")
             val idUrl = intent?.extras?.getString("idUrl")
-            val intentCall = Intent(applicationContext, ChatActivity::class.java)
-            startActivityWithData(intentCall, type, idUrl)
+
+            val currentFragmentDstiantion = navController.currentDestination
+            if (currentFragmentDstiantion?.id != R.id.roomChatFragment) {
+                navController.navigate(R.id.roomChatFragment)
+            }
+            chatViewmodel.handle(ChatViewAction.findRoomSearch(idUrl))
+
+            val intent = Intent(context, CallActivity::class.java)
+            startActivityWithData(intent, type, idUrl)
         }
     }
 
