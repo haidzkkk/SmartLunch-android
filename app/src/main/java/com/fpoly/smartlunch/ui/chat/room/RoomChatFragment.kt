@@ -315,7 +315,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
             }
             is Fail -> {
                 Toast.makeText(requireContext(), "Không tim thấy phòng", Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.popBackStack()
+                activity?.onBackPressed()
             }
             else -> {
             }

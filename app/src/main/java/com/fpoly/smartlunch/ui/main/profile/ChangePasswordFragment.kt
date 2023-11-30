@@ -52,7 +52,7 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
         views.newPassword.addTextChangedListener(this)
         views.confirmPassword.addTextChangedListener(this)
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.btnSend.setOnClickListener {
             submitForm()
@@ -108,7 +108,7 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
                         R.raw.animation_successfully
                     )
                 )
-                activity?.supportFragmentManager?.popBackStack()
+                activity?.onBackPressed()
                 viewModel.handleRemoveAsyncChangePassword()
             }
 
@@ -123,6 +123,11 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
     override fun onResume() {
         super.onResume()
         homeViewModel.returnVisibleBottomNav(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(

@@ -11,7 +11,7 @@ import com.fpoly.smartlunch.core.PolyBaseActivity
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityLoginBinding
 import com.fpoly.smartlunch.ui.security.onboarding.ViewPagerFragment
-import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
 import javax.inject.Inject
@@ -55,23 +55,23 @@ class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewMode
     private fun handleEvent(event: SecurityViewEvent) {
         when (event) {
             is SecurityViewEvent.ReturnSignUpEvent -> {
-                addFragmentToBackstack(R.id.frame_layout, SignUpFragment::class.java)
+                addFragmentToBackStack(R.id.frame_layout, SignUpFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnResetPassEvent -> {
-                addFragmentToBackstack(R.id.frame_layout, ResetPasswordFragment::class.java)
+                addFragmentToBackStack(R.id.frame_layout, ResetPasswordFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnForgotPassEvent -> {
-                addFragmentToBackstack(R.id.frame_layout, ForgotPasswordFragment::class.java)
+                addFragmentToBackStack(R.id.frame_layout, ForgotPasswordFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnLoginEvent -> {
-                addFragmentToBackstack(R.id.frame_layout, LoginFragment::class.java)
+                addFragmentToBackStack(R.id.frame_layout, LoginFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnVerifyOTPEvent -> {
-                addFragmentToBackstack(R.id.frame_layout, VerifyOTPFragment::class.java)
+                addFragmentToBackStack(R.id.frame_layout, VerifyOTPFragment::class.java)
             }
         }
 

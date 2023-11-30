@@ -45,7 +45,7 @@ class AddressPaymentFragment : PolyBaseFragment<FragmentAddressBinding>() {
             userViewModel.handle(UserViewAction.GetListAddress)
         }
         views.appBar.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.btnAddAddress.setOnClickListener{
             paymentViewModel.returnAddAddressFragment()

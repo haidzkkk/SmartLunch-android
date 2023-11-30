@@ -35,7 +35,7 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
             viewModel.handleReturnLogin()
         }
         views.btnBack.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.firstName.addTextChangedListener(this)
         views.lastName.addTextChangedListener(this)

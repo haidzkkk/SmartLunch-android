@@ -85,7 +85,7 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
 
         productViewModel.observeViewEvents {
             when(it){
-                is ProductEvent.ReturnFragment<*> -> { addFragmentToBackstack(R.id.frame_layout, it.fragmentClass) }
+                is ProductEvent.ReturnFragment<*> -> { addFragmentToBackStack(R.id.frame_layout, it.fragmentClass) }
                 else -> {}
             }
         }
@@ -94,11 +94,11 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
     private fun handleEvent(event: PaymentViewEvent) {
         when (event) {
             is PaymentViewEvent.ReturnFragment<*> -> {
-                addFragmentToBackstack(R.id.frame_layout, event.fragmentClass)
+                addFragmentToBackStack(R.id.frame_layout, event.fragmentClass)
             }
 
             is PaymentViewEvent.ReturnFragmentWithArgument<*> -> {
-                addFragmentToBackstack(
+                addFragmentToBackStack(
                     R.id.frame_layout,
                     event.fragmentClass,
                     bundle = event.bundle

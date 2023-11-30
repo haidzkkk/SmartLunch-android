@@ -65,7 +65,7 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
 
     private fun listenEvent() {
         views.layoutHeader.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.btnAccept.setOnClickListener{
             if (curentAddress != null){
@@ -111,7 +111,7 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
             when(it.asyncDeleteAddress){
                 is Success ->{
                     Toast.makeText(requireContext(), "Xóa địa chỉ thành công", Toast.LENGTH_SHORT).show()
-                    requireActivity().supportFragmentManager.popBackStack()
+                    activity?.onBackPressed()
                     it.asyncDeleteAddress = Uninitialized
                 }
                 is Fail ->{

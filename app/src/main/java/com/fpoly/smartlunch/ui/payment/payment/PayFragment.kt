@@ -136,7 +136,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
             paymentViewModel.handle(PaymentViewAction.GetOneCartById)
         }
         views.toolbarPay.btnBackToolbar.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         views.optionPayment.setOnClickListener {
             PaymentTypeBottomSheet.getInstance().show(childFragmentManager, PaymentTypeBottomSheet.TAG)
@@ -257,7 +257,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 }
                 is Fail ->{
                     Toast.makeText(requireContext(), "Không có giỏ hàng", Toast.LENGTH_SHORT).show()
-                    requireActivity().supportFragmentManager.popBackStack()
+                    activity?.onBackPressed()
                 }
                 else ->{
                 }

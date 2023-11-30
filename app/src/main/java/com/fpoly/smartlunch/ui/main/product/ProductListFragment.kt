@@ -44,7 +44,7 @@ class ProductListFragment : PolyBaseFragment<FragmentProductListBinding>() {
 
     private fun listenEvent() {
        views.appBar.btnBackToolbar.setOnClickListener {
-           activity?.supportFragmentManager?.popBackStack()
+           activity?.onBackPressed()
        }
         views.btnNew.setOnClickListener {  }
         views.btnBestSeller.setOnClickListener {  }
@@ -74,6 +74,11 @@ class ProductListFragment : PolyBaseFragment<FragmentProductListBinding>() {
     override fun onResume() {
         super.onResume()
         homeViewModel.returnVisibleBottomNav(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun invalidate(): Unit = withState(productViewModel) {
