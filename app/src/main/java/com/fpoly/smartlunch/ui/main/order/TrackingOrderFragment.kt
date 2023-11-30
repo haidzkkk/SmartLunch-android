@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import com.airbnb.mvrx.Fail
@@ -80,15 +81,20 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
             activity?.onBackPressed()
         }
         views.btnChat.setOnClickListener {
-            val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-                putExtras(Bundle().apply {
-                    putString("type", MyConfigNotifi.TYPE_CHAT)
-                    putString("idUrl", currentOrder?.shipperId ?: "")
+            if (currentOrder?.shipperId != null){
+                val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                    putExtras(Bundle().apply {
+                        putString("type", MyConfigNotifi.TYPE_CHAT)
+                        putString("idUrl", currentOrder?.shipperId ?: "")
+                    }
+                    )
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 }
-                )
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            }else{
+                Toast.makeText(requireContext(), "Không tìm thấy người giao hàng", Toast.LENGTH_SHORT).show()
             }
-            startActivity(intent)
+
         }
     }
 

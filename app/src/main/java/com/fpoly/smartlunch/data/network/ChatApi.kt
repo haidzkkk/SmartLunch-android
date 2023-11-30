@@ -25,6 +25,9 @@ interface ChatApi {
     @GET("/api/message/{id}")
     fun getMessage(@Path("id") roomId: String): Observable<ArrayList<Message>>
 
+    @GET("/api/message/call/{id}")
+    fun getLastCallMessage(@Path("id") roomId: String): Observable<Message>
+
     @Multipart
     @POST("/api/message")
     fun postMessage(
@@ -34,5 +37,8 @@ interface ChatApi {
         @Part("type") type: RequestBody,
         @Part images: List<MultipartBody.Part>
     ): Observable<Message>
+
+    @POST("/api/message/call")
+    fun postMessageCall(@Body message: Message): Observable<Message>
 
 }

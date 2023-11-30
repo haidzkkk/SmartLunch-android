@@ -94,14 +94,15 @@
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:maxWidth="250dp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="8dp"
                         android:background="@drawable/background_border_radius_chat"
                         android:backgroundTint="@color/red_light"
                         android:textColor="@color/white"
                         android:layout_below="@+id/imgMassage"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
                         android:layout_alignParentRight="true"
                         android:text="Xin chào bạn mình là hải"
+                        android:visibility="gone"
                         />
 
                     <ImageView
@@ -127,6 +128,14 @@
                         android:textColor="@color/white"
                         android:layout_alignParentRight="true"
                         android:visibility="gone"/>
+
+                    <include
+                        android:id="@+id/layout_call"
+                        layout="@layout/item_call"
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgMassage"
+                        android:layout_alignParentRight="true"/>
 
                 </RelativeLayout>
 

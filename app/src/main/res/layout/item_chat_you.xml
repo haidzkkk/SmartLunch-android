@@ -135,6 +135,13 @@
                       android:visibility="gone"
                   />
 
+                  <include
+                      android:id="@+id/layout_call"
+                      layout="@layout/item_call"
+                      android:layout_width="190dp"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@+id/imgMassage"/>
+
               </RelativeLayout>
 
           </RelativeLayout>

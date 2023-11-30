@@ -76,6 +76,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         withState(productViewModel){
             it.asyncCommentsLimit = Uninitialized
             it.asyncProduct = Uninitialized
+            it.asynGetSizeProduct = Uninitialized
         }
     }
 
@@ -95,8 +96,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private fun initUi() {
         adapterSize = AdapterSize { idSize ->
-            currentSizeId = idSize
-            productViewModel.handle(ProductAction.GetSizeById(idSize))
+            currentSizeId = idSize._id
+            sizeId = idSize._id
+            views.buttonAddCart.text = "Thêm ${idSize.size_price.formatCash()}"
+            views.buttonAddCart.isEnabled = true
         }
 
         imageSlideAdapter = ImageSlideAdapter{
@@ -266,8 +269,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                 it.asynGetSizeProduct.invoke()?.let {
                     adapterSize.setData(it)
                 }
-
-                it.asynGetSizeProduct = Uninitialized
             }
 
             else -> {}
@@ -275,9 +276,9 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         when (it.asyncGetOneSize) {
             is Success -> {
                 it.asyncGetOneSize.invoke()?.let {size ->
-                    sizeId = size._id
-                    views.buttonAddCart.text = "Thêm ${size.size_price.formatCash()}"
-                    views.buttonAddCart.isEnabled = true
+//                    sizeId = size._id
+//                    views.buttonAddCart.text = "Thêm ${size.size_price.formatCash()}"
+//                    views.buttonAddCart.isEnabled = true
                 }
 
                 it.asyncGetOneSize = Uninitialized

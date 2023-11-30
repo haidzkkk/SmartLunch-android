@@ -6,16 +6,20 @@ object MessageType{
     const val TYPE_IMAGE = 1
     const val TYPE_PRODUCT = 2
     const val TYPE_REPLY = 3
-    const val TYPE_CALL = 4
+    const val TYPE_CALLING = 11
+    const val TYPE_CALLED = 12
 }
 
 data class Message(
-    val _id: String?,
-    val roomId: String?,
-    val userIdSend: User?,
-    val message: String?,
-    val linkMessage: String?,
+    var _id: String?,
+    var roomId: String?,
+    var userIdSend: User?,
+    var message: String?,
+    var linkMessage: String?,
     val images: Array<Image>?,
-    val type: Int?,
-    val time: String?,
+    var type: Int?,
+    val sdp: ArrayList<String>,
+    val iceCandidate: ArrayList<String>,
+    var createdAt: String?,
+    var updatedAt: String?,
 )

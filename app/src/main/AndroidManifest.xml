@@ -30,6 +30,9 @@
         android:theme="@style/Theme.PolyFriend"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.call.CallActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -50,7 +53,7 @@
             android:exported="false"
             android:parentActivityName=".ui.security.SplashScreenActivity"
             android:screenOrientation="portrait"
-            tools:ignore="AppLinkUrlError"/>
+            tools:ignore="AppLinkUrlError" />
         <activity
             android:name=".ui.security.LoginActivity"
             android:exported="false"
@@ -66,15 +69,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="http"
                     android:host="192.168.31.98:3000"
-                    android:pathPrefix="/api/admin/products"/>
+                    android:pathPrefix="/api/admin/products"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
@@ -85,7 +89,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name=".ui.notification.receiver.MyReceiver"/>
+
+        <receiver android:name=".ui.notification.receiver.MyReceiver" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

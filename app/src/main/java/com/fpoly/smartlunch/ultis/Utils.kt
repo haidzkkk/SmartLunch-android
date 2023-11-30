@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.airbnb.mvrx.Fail
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.network.SessionManager
+import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.security.LoginActivity
 import com.google.android.material.snackbar.Snackbar
 import java.io.ByteArrayOutputStream
@@ -265,4 +266,15 @@ fun TextView.setTextColor(isSuccess: Boolean){
     }else{
         this.setTextColor(this.context.getColor(R.color.red))
     }
+}
+
+fun Activity.startActivityWithData(intent: Intent, type: String?, idUrl: String?){
+    intent.apply {
+        putExtras(Bundle().apply {
+            putString("type", type)
+            putString("idUrl", idUrl) }
+        )
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    startActivity(intent)
 }

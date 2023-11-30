@@ -36,7 +36,7 @@ class ChatRepository @Inject constructor(
     fun postMessage(message: Message, images: List<Gallery>?): Observable<Message>{
         if (message.roomId == null) return Observable.just(null)
 
-        val reqBodyRoomId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), message.roomId)
+        val reqBodyRoomId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), message.roomId!!)
         val reqBodyMessage: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), message.message ?: "")
         val reqBodyLinkMessage: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), message.linkMessage ?: "")
         val reqBodyType: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), (message.type ?: 0).toString())
@@ -55,6 +55,10 @@ class ChatRepository @Inject constructor(
 
         return chatApi.postMessage(reqBodyRoomId, reqBodyMessage, reqBodyLinkMessage, reqBodyType, reqBodyImages).subscribeOn(Schedulers.io())
     }
+
+    fun postMessageCall(message: Message): Observable<Message> = chatApi.postMessageCall(message).subscribeOn(Schedulers.io())
+    fun getLastCallMessage(roomId: String): Observable<Message> = chatApi.getLastCallMessage(roomId).subscribeOn(Schedulers.io())
+
     // socket
     fun connectSocket(){ socketManager.connect() }
     fun disconnectSocket(){ socketManager.disconnect() }
