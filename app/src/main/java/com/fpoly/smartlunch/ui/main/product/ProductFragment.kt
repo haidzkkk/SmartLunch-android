@@ -26,6 +26,7 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
+import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
@@ -68,17 +69,14 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        productViewModel.returnVisibleBottomNav(true)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
         withState(productViewModel){
             it.asyncCommentsLimit = Uninitialized
             it.asyncProduct = Uninitialized
             it.asynGetSizeProduct = Uninitialized
         }
+        productViewModel.returnVisibleBottomNav(true)
     }
+
 
     private fun setupAppBar() {
         views.apply {
@@ -141,9 +139,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
         views.buttonAddCart.setOnClickListener {
             addCart()
-        }
-        views.tvSeeAllComment2.setOnClickListener{
-            homeViewModel.returnCommentFragment()
         }
         views.tvSeeAllComment.setOnClickListener{
             homeViewModel.returnCommentFragment()

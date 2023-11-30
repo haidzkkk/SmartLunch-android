@@ -51,6 +51,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             it.addOrder = Uninitialized
             it.asyncUpdateOrder = Uninitialized
         }
+        homeViewModel.returnVisibleBottomNav(true)
     }
     private fun initUI() {
         productOrderAdapter = ProductOrderAdapter {
@@ -120,16 +121,6 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         }
 
         handleStateProgress(currentOrder)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.returnVisibleBottomNav(false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel.returnVisibleBottomNav(true)
     }
 
     override fun getBinding(
