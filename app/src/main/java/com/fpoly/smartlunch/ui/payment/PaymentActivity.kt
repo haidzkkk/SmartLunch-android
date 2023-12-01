@@ -64,8 +64,9 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         (application as PolyApplication).polyComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(views.root)
-        listenEvent()
         setupMainLayout()
+        initUI()
+        listenEvent()
         userViewModel.handle(UserViewAction.GetCurrentUser)
     }
 
@@ -74,9 +75,6 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         supportFragmentManager.commit {
             add<CartFragment>(R.id.frame_layout).addToBackStack(CartFragment::class.java.simpleName)
         }
-        initUI()
-        listenEvent()
-        userViewModel.handle(UserViewAction.GetCurrentUser)
     }
 
     override fun onResume() {
