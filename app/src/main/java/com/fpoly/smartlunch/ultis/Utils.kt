@@ -104,7 +104,6 @@ inline fun androidx.fragment.app.FragmentManager.commitTransaction(allowStateLos
 fun AppCompatActivity.popBackStackAndShowPrevious() {
     val fragmentManager = supportFragmentManager
     val backStackEntryCount = fragmentManager.backStackEntryCount
-    Log.d("TAG2", "backStackEntryCount: "+backStackEntryCount)
 
     if (backStackEntryCount > 1) {
         val previousFragmentTag = fragmentManager.getBackStackEntryAt(backStackEntryCount -1).name
@@ -118,6 +117,8 @@ fun AppCompatActivity.popBackStackAndShowPrevious() {
         }
         transaction.show(previousFragment!!)
         transaction.commit()
+    }else{
+        finish()
     }
 }
 

@@ -52,7 +52,7 @@ class CallChatFragment : PolyBaseFragment<FragmentCallChatBinding>() {
     private var isSpeakerMode = true
 
     private val handler = Handler(Looper.getMainLooper())
-    private val timeoutMillis: Long = 15000
+    private val timeoutMillis: Long = 60000
     private val timeoutCallbackStopCall = Runnable {
         Toast.makeText(requireContext(), "Cuộc gọi kết thúc, mguoi dùng không trả lời", Toast.LENGTH_SHORT).show()
         callViewModel.sendDataMessageCallToServerSocket(RequireCall(RequireCallType.CREATE_STOP))
