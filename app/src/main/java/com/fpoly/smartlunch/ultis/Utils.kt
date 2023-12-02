@@ -117,10 +117,11 @@ fun AppCompatActivity.popBackStackAndShowPrevious() {
         }
         transaction.show(previousFragment!!)
         transaction.commit()
-    }else if(backStackEntryCount==0){
+    }else{
         finish()
     }
 }
+
 
 fun <T : Fragment> AppCompatActivity.addFragmentToBackStack(
     frameId: Int,
