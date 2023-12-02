@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.airbnb.mvrx.viewModel
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseActivity

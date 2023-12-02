@@ -118,7 +118,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
         views.apply {
             extraCost.text = getString(R.string.min_cost)
             discoutCost.text = (myCart?.totalCoupon ?: 0.0).formatCash()
-            shipCost.text = getString(R.string.min_cost)
+            shipCost.text = (myAddress?.deliveryFee ?: 0.0).toInt().formatCash()
             couponCode.text = myCart?.couponId?._id
             total.text = myCart?.total?.formatCash()
         }

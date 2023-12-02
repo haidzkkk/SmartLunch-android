@@ -71,7 +71,16 @@ fun Long.convertLongToDate(): Date = Date(this)
 fun Double.formatCash(): String {
     val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
     val symbols = formatter.decimalFormatSymbols
-    symbols.groupingSeparator = ','
+    symbols.groupingSeparator = '.'
+    formatter.decimalFormatSymbols = symbols
+
+    if (this < 0) return "So tien am"
+    return "${formatter.format(this)} đ"
+}
+fun Int.formatCash(): String {
+    val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+    val symbols = formatter.decimalFormatSymbols
+    symbols.groupingSeparator = '.'
     formatter.decimalFormatSymbols = symbols
 
     if (this < 0) return "So tien am"
