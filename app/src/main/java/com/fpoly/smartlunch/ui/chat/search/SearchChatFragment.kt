@@ -26,6 +26,7 @@ import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.databinding.FragmentSearchChatBinding
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.chat.ChatViewmodel
+import com.fpoly.smartlunch.ultis.showKeyboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -53,9 +54,7 @@ class SearchChatFragment : PolyBaseFragment<FragmentSearchChatBinding>(){
     }
 
     private fun initUI() {
-        views.edtTitle.requestFocus()
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(views.edtTitle, InputMethodManager.SHOW_IMPLICIT)
+        context?.showKeyboard(views.edtTitle)
 
         adapter = SearchChatAdapter{
             findNavController().navigate(R.id.roomChatFragment)
