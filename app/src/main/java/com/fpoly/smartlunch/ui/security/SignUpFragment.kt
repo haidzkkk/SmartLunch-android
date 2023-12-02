@@ -14,6 +14,8 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.UserRequest
 import com.fpoly.smartlunch.databinding.FragmentSignUpBinding
+import com.fpoly.smartlunch.ultis.checkPhoneNumberValid
+import com.fpoly.smartlunch.ultis.checkValidEmail
 
 class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
 
@@ -104,7 +106,9 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                     email.text?.isNotEmpty() == true &&
                     phone.text?.isNotEmpty() == true &&
                     password.text?.isNotEmpty() == true &&
-                    confirmPassword.text?.isNotEmpty() == true
+                    confirmPassword.text?.isNotEmpty() == true &&
+                    emailTil.checkValidEmail(context?.resources) &&
+                    phoneTil.checkPhoneNumberValid(context?.resources)
         }
 
         isSendButtonEnabled = isFieldsFilled

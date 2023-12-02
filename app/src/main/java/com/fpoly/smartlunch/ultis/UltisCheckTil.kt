@@ -6,6 +6,7 @@ import android.util.Patterns
 import android.widget.EditText
 import com.fpoly.smartlunch.R
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 fun TextInputEditText.checkNull(res : Resources): Boolean{
     if (this.text.toString().trim() == ""){
@@ -25,13 +26,13 @@ fun EditText.checkNull(res : Resources): Boolean{
     return false
 }
 
-fun checkValidEmail(res : Resources , edt : TextInputEditText): Boolean {
-    val strEmail = edt.text.toString().trim()
+fun TextInputLayout.checkValidEmail(res : Resources?): Boolean {
+    val strEmail = this.editText?.text.toString().trim()
     if (TextUtils.isEmpty(strEmail) or !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()){
-        edt.error =   res.getString(R.string.validateEmail)
+        this.error =   res?.getString(R.string.validateEmail)
         return true
     }
-    edt.error = null
+    this.error = null
     return false
 }
 
@@ -46,12 +47,12 @@ fun checkValidEPassword(res : Resources , edt1 : TextInputEditText, edt2 : TextI
     return false
 }
 
-fun TextInputEditText.checkPhoneNumberValid(res : Resources): Boolean {
+fun TextInputLayout.checkPhoneNumberValid(res : Resources?): Boolean {
     val regex = """(0[1-9][0-9]{8,9})""".toRegex()
-    var isCheck = regex.matches(this.text.toString().trim())
+    var isCheck = regex.matches(this.editText?.text.toString().trim())
 
     if (!isCheck){
-        this.error = res.getString(R.string.validatePhone)
+        this.error = res?.getString(R.string.validatePhone)
         return true
     }
     this.error = null

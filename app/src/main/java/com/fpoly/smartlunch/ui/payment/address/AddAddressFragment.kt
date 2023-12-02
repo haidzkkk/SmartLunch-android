@@ -220,7 +220,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
 
     private fun handlePostAddress() {
         if (views.edtName.checkNull(requireActivity().resources)
-            or views.edtPhone.checkNull(requireActivity().resources) or views.edtPhone.checkPhoneNumberValid(requireActivity().resources)
+            or views.edtPhone.checkNull(requireActivity().resources) or views.tilPhone.checkPhoneNumberValid(requireActivity().resources)
             || curenProvince == null || curenDistrict == null
             || ( curenWard == null && views.edtNote.checkNull(requireActivity().resources) )){
             Toast.makeText(requireContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()

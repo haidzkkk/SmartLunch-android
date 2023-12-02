@@ -112,6 +112,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                     }
 
                     builder.setNegativeButton("Hủy") { dialog, which ->
+                        adapterCart.notifyItemChanged(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
                     }
                     builder.show()
@@ -144,6 +145,15 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     private fun initUi() {
         productViewModel.handle(ProductAction.GetOneCartById)
         adapterCart = AdapterCart(object : AdapterCart.ItemClickLisstenner(){
+            override fun onClickItem(idProductAdapter: String) {
+                super.onClickItem(idProductAdapter)
+                productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
+                homeViewModel.returnDetailProductFragment()
+                dismiss()
+            }
+
             override fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {
                 sizeId = currentSizeID
                 idProduct = idProductAdapter

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="24dp"
     tools:context=".ui.main.coupons.CouponsDetailFragment">
 
     <include
@@ -13,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appBar"
+        android:paddingHorizontal="24dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,9 +26,9 @@
             android:layout_marginVertical="12dp"
             android:id="@+id/img_coupons"/>
             <TextView
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/coupon_name"
                 android:text="@string/loading"
                 android:textFontWeight="800"
                 android:maxLines="1"
@@ -37,9 +37,9 @@
                 android:textColor="@color/black"
                 />
             <TextView
+                android:id="@+id/tvCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/coupon_code"
                 android:text="@string/loading"
                 android:textSize="18sp"
                 android:textColor="@color/black"
@@ -59,16 +59,23 @@
                 android:textColor="@color/black"
                 />
             <TextView
+                android:id="@+id/tv_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/coupon_date"
                 android:text="@string/loading"
                 android:textSize="18sp"
                 />
             <TextView
+                android:id="@+id/tv_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/coupon_desc"
+                android:text="@string/loading"
+                android:textSize="18sp"
+                />
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/loading"
                 android:textSize="18sp"
                 />
@@ -80,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="Sử dụng"
+        android:layout_marginHorizontal="24dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"/>
 
