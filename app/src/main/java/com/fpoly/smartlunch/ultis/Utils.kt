@@ -68,6 +68,12 @@ fun Context.hideKeyboard(view: View) {
     view.clearFocus()
 }
 
+fun Context.showKeyboard(view: View) {
+    view.requestFocus()
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+}
+
 @SuppressLint("ShowToast", "ResourceAsColor")
 public fun showSnackbar(
     view: View,
