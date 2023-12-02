@@ -170,7 +170,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         when (event) {
             is HomeViewEvent -> {
                 when (event) {
-                    is HomeViewEvent.NavigateTo<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName)
+                    is HomeViewEvent.NavigateTo<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName, bundle = event.bundle)
                    // is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
 //                    is HomeViewEvent.SetBadgeBottomNav ->  handleSetBadgeBottomnav(event.id, event.position)
                     else -> {}

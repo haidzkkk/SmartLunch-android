@@ -45,7 +45,7 @@ class ProductViewModel @AssistedInject constructor(
         handleGetAllFavouriteProduct()
         handleGetTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null))
         handleGetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null))
-        handleGetProducts(PagingRequestProduct(2, null, null, 1, null))
+        handleGetProducts(PagingRequestProduct(10, null, null, 1, null))
         handleGetAllOrderByUserId()
         handleGetAllNotification()
         handleGetListCoupons()
@@ -56,6 +56,8 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetListProductRate -> handleGetListProductRate(action.paging)
             is ProductAction.GetListProduct -> handleGetProducts(action.paging)
             is ProductAction.GetListTopProduct -> handleGetTopProduct(action.paging)
+            is ProductAction.SearchProductByName -> handleSearchProductByName(action.paging)
+
             is ProductAction.GetAllCategory -> handleGetAllCategory()
             is ProductAction.GetAllFavouriteProduct -> handleGetAllFavouriteProduct()
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
@@ -90,14 +92,13 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetAllNotification -> handleGetAllNotification()
             is ProductAction.GetReadNotification -> handleReadNotification(action.id)
             is ProductAction.ApplyCoupon -> handleApplyCoupon(action.coupons)
-            is ProductAction.SearchProductByName -> handleSearchProductByName(action.text)
             else -> {}
         }
     }
 
-    private fun handleSearchProductByName(text: String) {
+    private fun handleSearchProductByName(paging: PagingRequestProduct) {
         setState { copy(currentProductsSearch = Loading()) }
-        repository.searchProductByName(text).execute {
+        repository.getProducts(paging).execute {
             copy(currentProductsSearch = it)
         }
     }

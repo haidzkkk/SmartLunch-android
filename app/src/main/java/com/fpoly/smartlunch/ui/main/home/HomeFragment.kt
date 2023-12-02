@@ -133,34 +133,33 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
         })
 
-        var linearLayoutManager = LinearLayoutManager(requireContext())
+        val linearLayoutManager = LinearLayoutManager(requireContext())
         productAdapter = ProductPaginationAdapter {
             onItemProductClickListener(it)
         }
         views.rcvProductAll.adapter = productAdapter
         views.rcvProductAll.layoutManager = linearLayoutManager
-        views.rcvProductAll.addOnScrollListener(object :
-            PaginationScrollListenner(linearLayoutManager) {
-            override fun loadMoreItems() {
-                productAdapter.isLoadingOk = true
-                productAdapter.curentPage += 1
-                productViewModel.handle(
-                    ProductAction.GetListProduct(
-                        PagingRequestProduct(2, null, null, productAdapter.curentPage, null)
+        views.rcvProductAll.isNestedScrollingEnabled = false
+
+        // phân trang khi rcv trong scroll
+        views.layoutScroll.viewTreeObserver.addOnScrollChangedListener {
+            val view = views.layoutScroll.getChildAt(views.layoutScroll.childCount - 1)
+            val diff = (view.bottom - (views.layoutScroll.height + views.layoutScroll.scrollY))
+
+            if (diff == 0){
+                if (productAdapter.isLoadingOk || productAdapter.isLastPage){
+                }else{
+                    productAdapter.isLoadingOk = true
+                    productAdapter.curentPage += 1
+                    productViewModel.handle(
+                        ProductAction.GetListProduct(
+                            PagingRequestProduct(10, null, null, productAdapter.curentPage, null)
+                        )
                     )
-                )
+                }
             }
+        }
 
-            override fun isLoading(): Boolean {
-                return productAdapter.isLoadingOk
-            }
-
-            override fun isLastPage(): Boolean {
-                return productAdapter.isLastPage
-            }
-        })
-//        ProductAction.GetListProduct(PagingRequestProduct(2, null, null, productAdapter.curentPage, null))
-        Log.e("TAG", "onViewCreated: productAdapter -> ${productAdapter.curentPage}")
     }
 
     private fun setupLocation() {
@@ -174,10 +173,15 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         }
 
         views.swipeLoading.setOnRefreshListener {
+
             productViewModel.handle(ProductAction.GetOneCartById)
             productViewModel.handle(ProductAction.GetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null)))
             productViewModel.handle(ProductAction.GetListTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null)))
             homeViewModel.handle(HomeViewAction.getBanner)
+
+            productAdapter.resetData()
+            productAdapter.isLoadingOk = true
+            productViewModel.handle(ProductAction.GetListProduct(PagingRequestProduct(10, null, null, productAdapter.curentPage, null)))
         }
 
         views.btnDefault.setOnClickListener {
@@ -191,6 +195,18 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         }
         views.tvSearch.setOnClickListener {
             homeViewModel.returnSearchFragment()
+        }
+        views.tvSeeMoreTop.setOnClickListener{
+            var bundle = Bundle().apply {
+                putString("sort", SortPagingProduct.bought)
+            }
+            homeViewModel.returnSearchFragment(bundle)
+        }
+        views.tvSeeMoreRate.setOnClickListener{
+            var bundle = Bundle().apply {
+                putString("sort", SortPagingProduct.rate)
+            }
+            homeViewModel.returnSearchFragment(bundle)
         }
     }
 

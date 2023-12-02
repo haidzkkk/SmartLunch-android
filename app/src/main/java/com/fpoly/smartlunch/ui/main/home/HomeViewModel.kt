@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.home
 
+import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
@@ -143,8 +144,8 @@ class HomeViewModel @AssistedInject constructor(
     fun returnCouponsDetailFragment() {
         _viewEvents.post(HomeViewEvent.NavigateTo(CouponsDetailFragment::class.java))
     }
-    fun returnSearchFragment() {
-        _viewEvents.post(HomeViewEvent.NavigateTo(SearchFragment::class.java))
+    fun returnSearchFragment(bundle: Bundle? = null) {
+        _viewEvents.post(HomeViewEvent.NavigateTo(SearchFragment::class.java, bundle))
     }
 
     @AssistedFactory

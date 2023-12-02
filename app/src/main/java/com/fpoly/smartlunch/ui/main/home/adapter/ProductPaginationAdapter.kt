@@ -39,6 +39,17 @@ class ProductPaginationAdapter(private val onClickItem: (id: String) -> Unit) : 
         addFooterLoading()
         notifyDataSetChanged()
     }
+
+    fun resetData(){
+        this.products.clear()
+        isLoadingOk = false
+        isLastPage = false
+        curentPage = 1
+        isLoading = false
+
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return products.size
     }

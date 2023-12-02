@@ -99,7 +99,7 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
 
         productViewModel.observeViewEvents {
             when(it){
-                is ProductEvent.ReturnFragment<*> -> { addFragmentToBackStack(R.id.frame_layout, it.fragmentClass) }
+                is ProductEvent.ReturnFragment<*> -> { addFragmentToBackStack(R.id.frame_layout, it.fragmentClass, bundle = it.bundle) }
                 else -> {}
             }
         }

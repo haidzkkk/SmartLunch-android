@@ -145,8 +145,15 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
 
         views.btnLike.setOnClickListener {
-            views.btnLike.setImageResource(R.drawable.like_full)
+            isLiked = !isLiked
+            if (isLiked){
+                views.btnLike.setImageResource(R.drawable.like_full)
+            }
+            else{
+                views.btnLike.setImageResource(R.drawable.like_emty)
+            }
             productViewModel.handle(ProductAction.LikeProduct(currentProduct!!))
+
         }
 
         views.animAddProduct.addAnimatorListener(object : Animator.AnimatorListener {
@@ -227,16 +234,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
     }
 
-    private fun enableLike() {
-        isLiked = true
-        views.btnLike.setImageResource(R.drawable.like_full)
-    }
-
-    private fun disableLike() {
-        isLiked = false
-        views.btnLike.setImageResource(R.drawable.like_emty)
-    }
-
     override fun getBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentFoodDetailBinding {
@@ -282,12 +279,15 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
         when (it.asyncGetFavourite) {
             is Success -> {
-                enableLike()
+                isLiked = true
+                views.btnLike.setImageResource(R.drawable.like_full)
                 it.asyncGetFavourite = Uninitialized
             }
 
             is Fail -> {
-                disableLike()
+                isLiked = false
+                views.btnLike.setImageResource(R.drawable.like_emty)
+                it.asyncGetFavourite = Uninitialized
             }
 
             else -> {}

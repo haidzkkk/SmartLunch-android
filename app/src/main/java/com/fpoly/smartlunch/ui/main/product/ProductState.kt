@@ -65,7 +65,7 @@ data class ProductState(
     var asyncNotifications: Async<List<Notification>> = Uninitialized,
     var asyncUnreadNotifications: Async<List<Notification>> = Uninitialized,
     var asyncReadNotification: Async<Notification> = Uninitialized,
-    val currentProductsSearch: Async<ArrayList<Product>> = Uninitialized
+    var currentProductsSearch: Async<ProductsResponse> = Uninitialized
     ): MvRxState {
         var isSwipeLoading = productsRate is Loading || asyncTopProduct is Loading
 }

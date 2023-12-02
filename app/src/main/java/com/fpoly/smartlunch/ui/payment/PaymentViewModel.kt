@@ -55,7 +55,6 @@ class PaymentViewModel @AssistedInject constructor(
 
             is PaymentViewAction.CreateOder -> handleCreateOrder(action.oder)
             is PaymentViewAction.UpdateOder -> handleUpdateOder(action.idOder, action.oder)
-            is PaymentViewAction.UpdateIsPaymentOder -> handleUpdateIsPaymentOder(action.id, action.isPayment)
 
 
             is PaymentViewAction.GetListCoupons -> handleGetListCoupons()
@@ -143,14 +142,6 @@ class PaymentViewModel @AssistedInject constructor(
         productRepository.updateOrder(idOrder, oder)
             .execute {
                 copy(asyncUpdateOrder = it)
-            }
-    }
-
-    private fun handleUpdateIsPaymentOder(id: String, isPayment: Boolean) {
-        setState { copy(asyncUpdatePaymentOrder = Loading()) }
-        productRepository.updateIsPaymentOrder(id, isPayment)
-            .execute {
-                copy(asyncUpdatePaymentOrder = it)
             }
     }
 

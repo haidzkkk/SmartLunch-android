@@ -68,8 +68,6 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
 
     var addOrder: OrderResponse? = null
 
-    private var myCreateOrderActions: CreateOrderActions? = null
-
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -120,7 +118,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
             discoutCost.text = (myCart?.totalCoupon ?: 0.0).formatCash()
             shipCost.text = getString(R.string.min_cost)
             couponCode.text = myCart?.couponId?._id
-            total.text = myCart?.total?.formatCash()
+            total.text = ((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0)).formatCash()
         }
     }
 
@@ -149,35 +147,59 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
         }
         views.btnPayPaypal.setup(
             createOrder = CreateOrder { createOrderActions ->
-                this.myCreateOrderActions = createOrderActions
-                payment(Status.STATUS_PAYPAL)
+                if (myCart != null && myAddress != null && myAddress?._id != null) {
+                    val orderPaypal = com.paypal.checkout.order.OrderRequest(
+                        intent = OrderIntent.CAPTURE,
+                        appContext = AppContext(userAction = UserAction.PAY_NOW),
+                        purchaseUnitList = listOf(
+                            PurchaseUnit(
+                                amount = Amount(
+                                    currencyCode = CurrencyCode.USD,
+                                    value = (((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0)) / 24).toInt().toString()
+                                ),
+                            )
+                        ),
+                    )
+                    paymentViewModel.returnShowLoading(true)
+                    createOrderActions.create(orderPaypal)
+                } else {
+                    activity?.showUtilDialog(
+                        Notify(
+                            getString(R.string.pay),
+                            getString(R.string.address_not_empty),
+                            "Thieu thong tin nguoi dung",
+                            R.raw.animation_falure
+                        )
+                    )
+                }
             },
             onApprove = OnApprove { approval ->
                 approval.orderActions.capture { captureOrderResult ->
                     Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show()
-                    paymentViewModel.handle(PaymentViewAction.UpdateIsPaymentOder(addOrder?._id!!, true))
-                    // update isPayment của order thành true
+                    payment(Status.STATUS_PAYPAL, true)
                 }
             },
             onCancel = OnCancel {
                 Toast.makeText(requireContext(), "Bạn đã thoát thanh toán", Toast.LENGTH_SHORT).show()
                 Log.e("MainActivity", "OnCancel")
+                paymentViewModel.returnShowLoading(false)
             },
             onError = OnError {
                 Toast.makeText(requireContext(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show()
-                Log.e("MainActivity", "OnError")
+                Log.e("MainActivity", "OnError $it")
+                paymentViewModel.returnShowLoading(false)
             }
         )
     }
 
-    private fun payment(idStatus: String) {
+    private fun payment(idStatus: String, isPayment: Boolean? = false) {
         if (myCart != null && myAddress != null && myAddress?._id != null) {
             val orderRequest = OrderRequest(
                 myAddress?._id,
                 strNote,
                 null,
                 idStatus,
-                false,
+                isPayment,
             )
             paymentViewModel.handle(PaymentViewAction.CreateOder(orderRequest))
         } else {
@@ -263,40 +285,13 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 }
             }
 
-            when (it.asyncUpdatePaymentOrder){
-                is Success -> {
-                    beforeFinish(it.asyncUpdatePaymentOrder.invoke()!!)
-                }
-                is Fail ->{
-                    Log.e("TAG", "invalidate: ${(it.asyncUpdatePaymentOrder as Fail<OrderResponse>).error.message}", )
-                }
-                else ->{}
-            }
-
             when (it.asyncAddOrder) {
                 is Success -> {
                     addOrder = it.asyncAddOrder.invoke()
 
-                    // thanh toán paypal
-                    if (myCreateOrderActions != null && addOrder != null){
-                        val orderPaypal = com.paypal.checkout.order.OrderRequest(
-                            intent = OrderIntent.CAPTURE,
-                            appContext = AppContext(userAction = UserAction.PAY_NOW),
-                            purchaseUnitList = listOf(
-                                PurchaseUnit(
-                                    amount = Amount(
-                                        currencyCode = CurrencyCode.USD,
-                                        value = ((addOrder?.total ?: 0.0) / 24).toInt().toString()
-                                    ),
-                                )
-                            ),
-                        )
-                        paymentViewModel.returnShowLoading(true)
-                        myCreateOrderActions!!.create(orderPaypal)
-                    }else{
-                        beforeFinish(addOrder!!)
-                    }
+                    beforeFinish(addOrder!!)
                     it.asyncAddOrder = Uninitialized
+                    paymentViewModel.returnShowLoading(false)
                 }
 
                 is Fail -> {
@@ -309,6 +304,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                             R.raw.animation_falure
                         )
                     )
+                    paymentViewModel.returnShowLoading(false)
                 }
 
                 else -> {}
