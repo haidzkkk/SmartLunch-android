@@ -20,6 +20,7 @@ sealed class ProductAction : PolyViewAction {
     data class GetListProductRate(val paging: PagingRequestProduct) : ProductAction()
     data class GetListProduct(val paging: PagingRequestProduct)  : ProductAction()
     data class GetListTopProduct(val paging: PagingRequestProduct)  : ProductAction()
+    data class SearchProductByName(val paging: PagingRequestProduct): ProductAction()
     object GetAllCategory : ProductAction()
     object GetAllFavouriteProduct : ProductAction()
     data class GetDetailProduct(val id : String) : ProductAction()
@@ -45,6 +46,5 @@ sealed class ProductAction : PolyViewAction {
     data class AddComment(val comment: CommentRequest, val images: List<Gallery>?) : ProductAction()
 
     object GetAllNotification: ProductAction()
-    data class SearchProductByName(val text: String): ProductAction()
 
 }

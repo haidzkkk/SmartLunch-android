@@ -13,17 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.data.model.PagingRequestProduct
+import com.fpoly.smartlunch.data.model.SortPagingProduct
 import com.fpoly.smartlunch.databinding.FragmentSearchBinding
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.chat.ChatViewmodel
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
+import com.fpoly.smartlunch.ui.main.home.adapter.ProductPaginationAdapter
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.search.adapter.SearchAdapter
+import com.fpoly.smartlunch.ultis.PaginationScrollListenner
+import com.fpoly.smartlunch.ultis.hideKeyboard
+import com.fpoly.smartlunch.ultis.showKeyboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,7 +40,12 @@ import kotlinx.coroutines.launch
 class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     private var myDelayJob: Job? = null
 
-    lateinit var adapter: SearchAdapter
+    private lateinit var productAdapter: ProductPaginationAdapter
+
+    private var strSearch = ""
+    private var strFilter: String? = null
+    private var isSortDesc: Boolean? = null
+
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
 
@@ -44,21 +56,65 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     }
 
     private fun initUI() {
-        views.edtTitle.requestFocus()
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(views.edtTitle, InputMethodManager.SHOW_IMPLICIT)
-
-        adapter = SearchAdapter{
+        productAdapter = ProductPaginationAdapter {
             homeViewModel.returnDetailProductFragment()
-            productViewModel.handle(ProductAction.GetDetailProduct(it._id))
+            productViewModel.handle(ProductAction.GetDetailProduct(it))
         }
-        views.rcv.adapter = adapter
-        views.rcv.layoutManager = LinearLayoutManager(requireContext())
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        views.rcv.addOnScrollListener(object :
+            PaginationScrollListenner(linearLayoutManager) {
+            override fun loadMoreItems() {
+                productAdapter.isLoadingOk = true
+                productAdapter.curentPage += 1
+
+                val pagingSearch = PagingRequestProduct(10, SortPagingProduct.bought, null, productAdapter.curentPage, strSearch)
+                productViewModel.handle(ProductAction.SearchProductByName(pagingSearch))
+            }
+
+            override fun isLoading(): Boolean {
+                return productAdapter.isLoadingOk
+            }
+
+            override fun isLastPage(): Boolean {
+                return productAdapter.isLastPage
+            }
+        })
+        views.rcv.adapter = productAdapter
+        views.rcv.layoutManager = linearLayoutManager
+
+        strFilter = arguments?.getString("sort")
+        if (strFilter != null){
+            fetchData()
+            setFilterRate()
+            context?.hideKeyboard(views.edtTitle)
+        }else{
+            context?.showKeyboard(views.edtTitle)
+        }
     }
 
     private fun listenEvent() {
         views.imgBack.setOnClickListener{
             activity?.onBackPressed()
+        }
+        views.btnSort.setOnClickListener{
+            isSortDesc = isSortDesc != true
+            views.btnSort.setBackgroundResource(R.drawable.chips)
+            fetchData()
+        }
+        views.btnBestSeller.setOnClickListener{
+            strFilter = SortPagingProduct.bought
+            fetchData()
+            setFilterRate()
+        }
+        views.btnTopRating.setOnClickListener{
+            strFilter = SortPagingProduct.rate
+            fetchData()
+            setFilterRate()
+        }
+        views.btnPrice.setOnClickListener{
+            strFilter = SortPagingProduct.price
+            fetchData()
+            setFilterRate()
         }
 
         views.imgClear.setOnClickListener{
@@ -66,28 +122,27 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
         }
 
         views.edtTitle.doOnTextChanged { text, start, before, count ->
-            views.imgClear.isVisible = text.toString().length != 0
+            views.imgClear.isVisible = text.toString().isNotEmpty()
+            views.imgLoading.isVisible = text.toString().isNotEmpty()
 
-            if (text.toString().length == 0){
+            if (text.toString().isEmpty()){
                 views.tvFinding.text = "Hãy tìm kiếm"
             }else{
                 views.tvFinding.text = "Xem kết quả cho: $text"
             }
 
-            views.imgLoading.isVisible = text.toString().length != 0
-
             if (text.toString().isNotEmpty()){
                 myDelayJob?.cancel()
                 myDelayJob = CoroutineScope(Dispatchers.Main).launch{
                     delay(500)
-                    productViewModel.handle(ProductAction.SearchProductByName(text.toString()))
+
+                    strSearch = text.toString()
+                    resetData()
+                    fetchData()
                 }
             }
         }
-
     }
-
-
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -99,19 +154,82 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     override fun invalidate(): Unit = withState(productViewModel){
         when(it.currentProductsSearch){
             is Success ->{
-                adapter.setData(it.currentProductsSearch.invoke())
-                views.tvExists.isVisible = it.currentProductsSearch.invoke().isEmpty()
+                productAdapter.isLoadingOk = false
+                productAdapter.setData(it.currentProductsSearch.invoke()?.docs)
+
+//                views.tvExists.isVisible = it.currentProductsSearch.invoke()?.docs?.isEmpty() ?: true
+                it.currentProductsSearch = Uninitialized
             }
             is Fail ->{
-                adapter.clearData()
-                views.tvExists.isVisible = true
+//                productAdapter.resetData()
+//                views.tvExists.isVisible = true
             }
             is Loading ->{
-                adapter.clearData()
             }
             else -> {}
         }
 
         views.imgLoading.isVisible = it.currentProductsSearch is Loading
+    }
+
+    private fun setFilterSort(str: String){
+        views.btnTopRating.setBackgroundResource(R.drawable.background_border_gray_outline)
+        views.btnBestSeller.setBackgroundResource(R.drawable.background_border_gray_outline)
+        views.btnPrice.setBackgroundResource(R.drawable.background_border_gray_outline)
+
+        when(str){
+            SortPagingProduct.rate ->{
+                views.btnTopRating.setBackgroundResource(R.drawable.chips)
+            }
+            SortPagingProduct.bought ->{
+                views.btnBestSeller.setBackgroundResource(R.drawable.chips)
+            }
+            SortPagingProduct.price ->{
+                views.btnPrice.setBackgroundResource(R.drawable.chips)
+            }
+            else ->{
+
+            }
+        }
+    }
+
+    private fun setFilterRate(){
+        views.btnTopRating.setBackgroundResource(R.drawable.background_border_gray_outline)
+        views.btnBestSeller.setBackgroundResource(R.drawable.background_border_gray_outline)
+        views.btnPrice.setBackgroundResource(R.drawable.background_border_gray_outline)
+
+        when(strFilter){
+            SortPagingProduct.rate ->{
+                views.btnTopRating.setBackgroundResource(R.drawable.chips)
+            }
+            SortPagingProduct.bought ->{
+                views.btnBestSeller.setBackgroundResource(R.drawable.chips)
+            }
+            SortPagingProduct.price ->{
+                views.btnPrice.setBackgroundResource(R.drawable.chips)
+            }
+            else ->{
+            }
+        }
+
+    }
+
+    fun fetchData(){
+        productAdapter.resetData()
+        productAdapter.isLoadingOk = true
+        val strSort = if (isSortDesc == false) "asc" else "desc"
+        val pagingSearch = PagingRequestProduct(10, strFilter, strSort, productAdapter.curentPage, strSearch)
+        productViewModel.handle(ProductAction.SearchProductByName(pagingSearch))
+    }
+
+    private fun resetData() {
+        strFilter = null
+        isSortDesc = null
+
+        setFilterRate()
+        views.btnSort.setBackgroundResource(R.drawable.background_border_gray_outline)
+
+        productAdapter.resetData()
+        productAdapter.isLoadingOk = true
     }
 }

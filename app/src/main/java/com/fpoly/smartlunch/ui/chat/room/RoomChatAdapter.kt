@@ -241,7 +241,7 @@ class RoomChatAdapter(
             binding.layoutCall.tvCallTime.text = handleBetweenTimeCall(message.createdAt!!, message.updatedAt!!)
 
             binding.layoutCall.root.setOnClickListener{
-                onCallBack.onClickItemJoinCall(message)
+                onCallBack.onClickItemCall()
             }
 
         }else{

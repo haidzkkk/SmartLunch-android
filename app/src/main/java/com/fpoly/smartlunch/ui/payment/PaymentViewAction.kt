@@ -21,7 +21,6 @@ sealed class PaymentViewAction : PolyViewAction {
 
     data class CreateOder(val oder: OrderRequest) : PaymentViewAction()
     data class UpdateOder(val idOder: String, val oder: OrderRequest) : PaymentViewAction()
-    data class UpdateIsPaymentOder(val id: String, val isPayment: Boolean) : PaymentViewAction()
 
     object GetListCoupons : PaymentViewAction()
     data class ApplyCoupon(val coupons: CouponsRequest) : PaymentViewAction()

@@ -65,7 +65,7 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            Log.d("Login", "handleSignInResult: "+account.id+"\n"+account.givenName+"\n"+account.familyName+"\n"+account.email)
+            Log.d("Login", "signInResult: "+account.id+"\n"+account.givenName+"\n"+account.familyName+"\n"+account.email)
             viewModel.handle(SecurityViewAction.LoginGGAction(UserGGLogin(account.id,account.givenName,account.familyName,account.email)))
         } catch (e: ApiException) {
             Log.w("Login", "signInResult:failed code=" + e.statusCode)
