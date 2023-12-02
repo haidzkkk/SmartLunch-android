@@ -66,7 +66,7 @@ class SplashScreenActivity : PolyBaseActivity<ActivitySplashScreenBinding>(),Sec
                 startActivity(Intent(this, MainActivity::class.java))
             }
         }
-        finishAffinity()
+        finish()
     }
 
     fun startMainActivityToBackStack(){
