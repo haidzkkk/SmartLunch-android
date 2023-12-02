@@ -298,10 +298,10 @@ class ProductViewModel @AssistedInject constructor(
     }
 
     private fun handleCreateCart(cart: CartRequest) {
-        setState { copy(asyncCreateCart = Loading()) }
+        setState { copy(curentCartResponse = Loading()) }
         repository.getCreateCart(cart)
             .execute {
-                copy(asyncCreateCart = it)
+                copy(curentCartResponse = it)
             }
     }
 
@@ -385,6 +385,11 @@ class ProductViewModel @AssistedInject constructor(
 
     fun returnVisibleBottomNav(isVisible: Boolean) {
         _viewEvents.post(ProductEvent.ReturnVisibleBottomNav(isVisible))
+    }
+
+
+    fun returnCommentFragment(){
+        _viewEvents.post(ProductEvent.ReturnFragment(CommentFragment::class.java))
     }
 
     @AssistedFactory

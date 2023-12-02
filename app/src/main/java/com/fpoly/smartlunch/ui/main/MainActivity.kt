@@ -176,6 +176,13 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                     else -> {}
                 }
             }
+            is ProductEvent ->
+                when(event) {
+                    is ProductEvent.ReturnFragment<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName, bundle = event.bundle)
+                    else ->{
+
+                    }
+                }
         }
 
     }

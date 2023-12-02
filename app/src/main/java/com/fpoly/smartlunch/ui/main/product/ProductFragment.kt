@@ -37,7 +37,6 @@ import com.fpoly.smartlunch.ultis.formatView
 
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
-    private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
@@ -129,7 +128,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             addCart()
         }
         views.tvSeeAllComment.setOnClickListener{
-            homeViewModel.returnCommentFragment()
+            productViewModel.returnCommentFragment()
         }
         views.tvSeeMore.setOnClickListener{
             handleStateDesc()
@@ -209,9 +208,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                 sizeId = sizeId!!
             )
         }
-        withState(userViewModel) {
-            productViewModel.handle(ProductAction.CreateCart(newCartProduct!!))
-        }
+        productViewModel.handle(ProductAction.CreateCart(newCartProduct!!))
         currentSoldQuantity = 1
         enableAnimation(views.animAddProduct, R.raw.anim_add_to_cart)
     }

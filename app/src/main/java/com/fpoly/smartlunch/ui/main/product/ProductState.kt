@@ -35,8 +35,6 @@ data class ProductState(
     var asynGetSizeProduct: Async<ArrayList<Size>> =  Uninitialized,
     var asyncGetOneSize: Async<Size> =  Uninitialized,
 
-    var asyncCreateCart: Async<CartResponse> = Uninitialized,
-
     var curentCartResponse: Async<CartResponse> = Uninitialized,
     var getOneCartById : Async<CartResponse> = Uninitialized,
     var getClearCart : Async<CartResponse> = Uninitialized,

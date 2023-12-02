@@ -10,6 +10,8 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.ItemCouponsBinding
+import com.fpoly.smartlunch.ultis.StringUltis
+import com.fpoly.smartlunch.ultis.convertIsoToStringFormat
 import com.fpoly.smartlunch.ultis.formatCash
 
 @SuppressLint("NotifyDataSetChanged")
@@ -58,7 +60,7 @@ class AdapterCoupons (private val onClickItem: (id: String) -> Unit) : RecyclerV
 
     override fun onBindViewHolder(holder: CouponsViewHolder, position: Int) {
         val coupons: CouponsResponse = listCoupons[position]
-        holder.date.text = coupons.expiration_date
+        holder.date.text = coupons.expiration_date.convertIsoToStringFormat(StringUltis.dateDayFormat)
         holder.free.text = "${coupons.coupon_name} ${coupons.discount_amount}%"
         holder.ship.text = "Tối thiểu ${coupons.min_purchase_amount.toDouble().formatCash()}"
 

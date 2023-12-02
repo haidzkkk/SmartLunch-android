@@ -16,6 +16,9 @@ import com.fpoly.smartlunch.databinding.FragmentCouponsDetailBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ultis.StringUltis
+import com.fpoly.smartlunch.ultis.convertIsoToStringFormat
+import com.fpoly.smartlunch.ultis.formatCash
 
 class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
     private val productViewModel: ProductViewModel by activityViewModel()
@@ -41,14 +44,16 @@ class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
 
     private fun setupUI(currentCoupons: CouponsResponse) {
     views.apply {
-       Glide.with(requireContext()).load(currentCoupons.coupon_image)
-           .placeholder(R.drawable.loading_img)
-           .error(R.drawable.loading_img)
-           .into(imgCoupons)
-        couponName.text=currentCoupons.coupon_name
-        couponCode.text=currentCoupons.coupon_code
-        couponDate.text=currentCoupons.expiration_date
-        couponDesc.text=currentCoupons.coupon_content
+
+        Glide.with(root.context).load(if(currentCoupons.coupon_images.isNotEmpty()) currentCoupons.coupon_images[0].url else "")
+            .placeholder(R.drawable.loading_img)
+            .error(R.drawable.loading_img)
+            .into(imgCoupons)
+        tvName.text= currentCoupons.coupon_name
+        tvCode.text= "${currentCoupons.discount_amount}%"
+        tvAmount.text= "Tối thiểu ${currentCoupons.min_purchase_amount.toDouble().formatCash()}"
+        tvDate.text= currentCoupons.expiration_date.convertIsoToStringFormat(StringUltis.dateDayFormat)
+        tvDesc.text= currentCoupons.coupon_content
     }
         views.btnApply.setOnClickListener {
             productViewModel.handle(ProductAction.ApplyCoupon(CouponsRequest(currentCoupons._id)))

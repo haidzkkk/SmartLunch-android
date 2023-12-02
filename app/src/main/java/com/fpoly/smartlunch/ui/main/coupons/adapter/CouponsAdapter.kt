@@ -1,9 +1,14 @@
 package com.fpoly.smartlunch.ui.main.coupons.adapter
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.databinding.ItemCouponBinding
+import com.fpoly.smartlunch.ultis.StringUltis
+import com.fpoly.smartlunch.ultis.convertIsoToStringFormat
+import com.fpoly.smartlunch.ultis.formatCash
 
 class CouponsAdapter(private val onClickItem: (String) -> Unit) : RecyclerView.Adapter<CouponsAdapter.CouponViewHolder>() {
     private var couponsList: List<CouponsResponse> = listOf()
@@ -27,11 +32,13 @@ class CouponsAdapter(private val onClickItem: (String) -> Unit) : RecyclerView.A
 
     inner class CouponViewHolder(private val binding: ItemCouponBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(coupon: CouponsResponse) {
             binding.apply {
-                couponName.text = coupon.coupon_name
-                couponCode.text = coupon.coupon_code
-                date.text=coupon.expiration_date
+                tvName.text = "${coupon.coupon_name} ${coupon.discount_amount}%"
+                tvCode.text = "Tối thiểu ${coupon.min_purchase_amount.toDouble().formatCash()}"
+                date.text = " ${coupon.expiration_date.convertIsoToStringFormat(StringUltis.dateDayFormat)}"
+                Glide.with(root.context).load(if(coupon.coupon_images.isNotEmpty()) coupon.coupon_images[0].url else "").into(imgCoupon)
             }
             binding.root.setOnClickListener {
                 onClickItem(coupon._id)

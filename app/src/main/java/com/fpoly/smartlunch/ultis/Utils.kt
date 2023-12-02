@@ -123,7 +123,8 @@ fun AppCompatActivity.popBackStackAndShowPrevious() {
         }
         transaction.show(previousFragment!!)
         transaction.commit()
-    }else{
+    }
+    else if(backStackEntryCount == 0){
         finish()
     }
 }

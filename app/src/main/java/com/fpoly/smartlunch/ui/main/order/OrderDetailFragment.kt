@@ -105,6 +105,9 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
                 tvIdCupond.text = currentOrder.couponId
             }
 
+            tvTotal.text = currentOrder.total.formatCash()
+            tvDiscount.text = (currentOrder.total - currentOrder.discount).formatCash()
+            tvDeliverfee.text = currentOrder.deliveryFee.formatCash()
             tvPrice.text = currentOrder.discount.formatCash()
             tvTypePaymentName.text = currentOrder.statusPayment.status_name
             tvIsPayment.text = if (currentOrder.isPayment) "Đã thanh toán" else "Chưa thanh toán"

@@ -31,15 +31,15 @@ class ProductOrderAdapter(private val onPress: (productOrder: ProductOrder) -> U
                 tvQuantity.text = "x${productOrder.purchase_quantity}"
                 tvPrice.text = productOrder.product_price.formatCash()
 
-                if (productOrder.product_discount < productOrder.product_price){
-                    tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    tvDiscount.text = productOrder.product_discount.formatCash()
-                }else{
-                    tvPrice.paintFlags = tvPrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                    tvDiscount.text = ""
-                }
+//                if (productOrder.product_discount < productOrder.product_price){
+//                    tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+//                    tvDiscount.text = productOrder.product_discount.formatCash()
+//                }else{
+//                    tvPrice.paintFlags = tvPrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+//                    tvDiscount.text = ""
+//                }
 
-                tvAllPrice.text = (productOrder.product_discount * productOrder.purchase_quantity).formatCash()
+                tvAllPrice.text = (productOrder.product_price * productOrder.purchase_quantity).formatCash()
                 
                 root.setOnClickListener {
                     onPress(productOrder)
