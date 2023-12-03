@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
@@ -75,6 +76,14 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
 
     private fun listenEvent() {
         views.btnLogin.isEnabled = false
+
+        views.edtPassword.setOnEditorActionListener{v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                views.btnLogin.performClick()
+            }
+            false
+        }
+
         views.btnLogin.setOnClickListener {
             loginSubmit()
         }

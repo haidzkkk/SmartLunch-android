@@ -15,6 +15,7 @@ object StringUltis {
     val dateTimeHourFormat = SimpleDateFormat("HH:mm")
     val dateTimeDayFormat = SimpleDateFormat("hh:mm aa")
     val dateTimeDateFormat = SimpleDateFormat("HH:mm EEE dd/MM")
+    val dateTimeDateFormat2 = SimpleDateFormat("EEE dd MMM - hh:mm aa")
     val dateDayFormat = SimpleDateFormat("EEE dd/MM/yy")
     val dateDay2Format = SimpleDateFormat("EEE dd/MM")
     val dateFormat = SimpleDateFormat("dd/MM/yyyy")

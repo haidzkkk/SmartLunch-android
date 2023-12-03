@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -26,6 +27,7 @@ import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.databinding.FragmentSearchChatBinding
 import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.chat.ChatViewmodel
+import com.fpoly.smartlunch.ultis.hideKeyboard
 import com.fpoly.smartlunch.ultis.showKeyboard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -72,6 +74,15 @@ class SearchChatFragment : PolyBaseFragment<FragmentSearchChatBinding>(){
         views.imgClear.setOnClickListener{
             views.edtTitle.setText("")
         }
+
+        views.edtTitle.setOnEditorActionListener{v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                chatViewModel.handle(ChatViewAction.searchUserByName(views.edtTitle.text.toString()))
+                requireContext().hideKeyboard(views.root)
+            }
+            false
+        }
+
 
         views.edtTitle.doOnTextChanged { text, start, before, count ->
             views.imgClear.isVisible = text.toString().length != 0

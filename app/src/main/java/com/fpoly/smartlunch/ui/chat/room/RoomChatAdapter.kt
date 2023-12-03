@@ -20,6 +20,9 @@ import com.fpoly.smartlunch.ultis.StringUltis
 import com.fpoly.smartlunch.ultis.convertToDateFormat
 import com.fpoly.smartlunch.ultis.convertToStringFormat
 import java.time.Duration
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Date
 
 @SuppressLint("SetTextI18n")
 class RoomChatAdapter(
@@ -104,10 +107,9 @@ class RoomChatAdapter(
     }
 
 
-
     private fun handChatMe(binding: ItemChatMeBinding, message: Message, position: Int) {
 
-        binding.tvTime.text = message.createdAt?.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
+        binding.tvTime.text = handleShowTimeMessage(message.createdAt)
         binding.tvTime.isVisible = checkTimeStamp(position)
 
         if (message.type == MessageType.TYPE_TEXT){
@@ -129,11 +131,6 @@ class RoomChatAdapter(
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(binding.imgMassage)
-
-            if (message.images.size > 1) {
-                binding.tvCountImages.isVisible = true
-                binding.tvCountImages.text = "+${message.images.size - 1}"
-            }else binding.tvCountImages.isVisible = false
 
         }else if (message.type == MessageType.TYPE_CALLING){
             binding.imgMassage.isVisible = false
@@ -163,6 +160,11 @@ class RoomChatAdapter(
         }else{
 
         }
+
+        if (!message.images.isNullOrEmpty() && message.images.size > 1) {
+            binding.tvCountImages.isVisible = true
+            binding.tvCountImages.text = "+${message.images.size - 1}"
+        }else binding.tvCountImages.isVisible = false
 
         binding.imgMassage.setOnClickListener{ onCallBack.onClickItem(message) }
         binding.tvMessage.setOnClickListener{
@@ -186,11 +188,7 @@ class RoomChatAdapter(
             Glide.with(binding.root.context).load(message.userIdSend?.avatar?.url).placeholder(R.mipmap.ic_launcher).into(binding.imgAvatar)
         }
 
-        binding.tvTime.text = message.createdAt?.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
-        binding.tvTime.isVisible = checkTimeStamp(position)
-
-
-        binding.tvTime.text = message.createdAt?.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
+        binding.tvTime.text = handleShowTimeMessage(message.createdAt)
         binding.tvTime.isVisible = checkTimeStamp(position)
 
         if (message.type == MessageType.TYPE_TEXT){
@@ -212,11 +210,6 @@ class RoomChatAdapter(
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(binding.imgMassage)
-
-            if (message.images.size > 1) {
-                binding.tvCountImages.isVisible = true
-                binding.tvCountImages.text = "+${message.images.size - 1}"
-            }else binding.tvCountImages.isVisible = false
 
         }else if (message.type == MessageType.TYPE_CALLING){
             binding.imgMassage.isVisible = false
@@ -248,6 +241,11 @@ class RoomChatAdapter(
 
         }
 
+        if (!message.images.isNullOrEmpty() && message.images.size > 1) {
+            binding.tvCountImages.isVisible = true
+            binding.tvCountImages.text = "+${message.images.size - 1}"
+        }else binding.tvCountImages.isVisible = false
+
         binding.imgMassage.setOnClickListener{ onCallBack.onClickItem(message) }
         binding.tvMessage.setOnClickListener{
             onCallBack.onClickItem(message)
@@ -262,8 +260,26 @@ class RoomChatAdapter(
     private fun checkTimeStamp(position: Int): Boolean {
         return if (position == 0) true else 3600000 < (
                 messages.get(position).createdAt!!.convertToDateFormat(StringUltis.dateIso8601Format)!!.time -
-                messages.get(position - 1).createdAt!!.convertToDateFormat(StringUltis.dateIso8601Format)!!.time
+                        messages.get(position - 1).createdAt!!.convertToDateFormat(StringUltis.dateIso8601Format)!!.time
                 )
+    }
+
+    private fun handleShowTimeMessage(time: String?): String?{
+        val dateSend = time?.convertToDateFormat(StringUltis.dateIso8601Format)
+
+        if (dateSend == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+            return time?.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
+        }
+
+        val localDateTodayToCheck: LocalDate = Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val localDateToCheck: LocalDate = dateSend.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val isToday = localDateToCheck.dayOfMonth == localDateTodayToCheck.dayOfMonth
+
+        if (isToday){
+            return time.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeHourFormat)
+        }else{
+            return time.convertToStringFormat(StringUltis.dateIso8601Format, StringUltis.dateTimeDateFormat2)
+        }
     }
 
     private fun handleBetweenTimeCall(strDate1: String, strDate2: String): String{

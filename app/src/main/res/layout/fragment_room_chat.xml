@@ -86,6 +86,8 @@
                         android:layout_height="wrap_content"
                         android:maxHeight="100dp"
                         android:maxLength="1000"
+                        android:imeOptions="actionSend"
+                        android:inputType="text"
                         android:hint="Nhập tin nhắn..."
                         android:paddingEnd="40dp"
                         android:textSize="14sp" />

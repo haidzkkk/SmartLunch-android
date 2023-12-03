@@ -129,6 +129,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             .setPositiveButton("Yes") { dialog, _ ->
                 clearCart()
                 dialog.dismiss()
+                this.dismiss()
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
@@ -179,6 +180,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         views.rcvCart.adapter = adapterCart
     }
     fun updateDataUI(){
+        if (cartResponse?.products.isNullOrEmpty()) this.dismiss()
         adapterCart.setData(cartResponse?.products)
         tvQuantity?.text = cartResponse?.products?.size.toString()
         btnCommit.text = "Thanh toán ${cartResponse?.total?.formatCash()}"

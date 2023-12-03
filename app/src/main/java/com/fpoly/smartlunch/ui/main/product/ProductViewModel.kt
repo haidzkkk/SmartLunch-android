@@ -298,10 +298,13 @@ class ProductViewModel @AssistedInject constructor(
     }
 
     private fun handleCreateCart(cart: CartRequest) {
-        setState { copy(curentCartResponse = Loading()) }
+        setState { copy(curentAddProductToCartResponse = Loading())}
         repository.getCreateCart(cart)
             .execute {
-                copy(curentCartResponse = it)
+                if (curentAddProductToCartResponse is Success)
+                    copy(curentAddProductToCartResponse = it, curentCartResponse = it)
+                else
+                    copy(curentAddProductToCartResponse = it)
             }
     }
 

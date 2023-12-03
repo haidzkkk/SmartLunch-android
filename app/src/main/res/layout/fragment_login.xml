@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <ScrollView
@@ -45,6 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="#9CA4AB"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
                     android:hint="@string/email"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,12 +57,16 @@
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/PolyInputLayoutLogin">
+                style="@style/PolyInputLayoutLogin"
+                app:endIconMode="password_toggle"
+                app:endIconDrawable="@drawable/custom_password_eyes">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:imeOptions="actionDone"
                     android:hint="@string/password"/>
             </com.google.android.material.textfield.TextInputLayout>
 
