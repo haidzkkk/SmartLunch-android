@@ -18,18 +18,12 @@ import com.fpoly.smartlunch.data.model.RequireCallType
 import com.fpoly.smartlunch.data.model.Room
 import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.data.repository.ChatRepository
-import com.fpoly.smartlunch.ui.call.call.WebRTCClient
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.webrtc.IceCandidate
-import org.webrtc.MediaStream
-import org.webrtc.PeerConnection
-import org.webrtc.SessionDescription
-import org.webrtc.SurfaceViewRenderer
 import java.io.File
 
 class ChatViewmodel @AssistedInject constructor(

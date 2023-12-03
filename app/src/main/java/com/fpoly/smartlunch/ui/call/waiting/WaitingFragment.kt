@@ -58,7 +58,7 @@ class WaitingFragment: PolyBaseFragment<FragmentWaitingBinding>(){
         }
         when(it.requireCall?.type){
             RequireCallType.STOP_RECEIVED ->{
-                Toast.makeText(requireContext(), "Ok rời", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Cuộc gọi đã kết thúc", Toast.LENGTH_SHORT).show()
                 requireActivity().finish()
             }
         }

@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
@@ -30,6 +31,13 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
 
     private fun listenEvent() {
         views.send.isEnabled = false
+        views.confirmPassword.setOnEditorActionListener{v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                views.send.performClick()
+            }
+            false
+        }
+
         views.send.setOnClickListener {
             signupSubmit()
         }

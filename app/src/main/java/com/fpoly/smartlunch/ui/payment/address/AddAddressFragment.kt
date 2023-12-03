@@ -2,6 +2,8 @@ package com.fpoly.smartlunch.ui.payment.address
 
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -188,7 +190,9 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             curentLatitude = null
             curentLongidute = null
             Log.e("AddAddressFragment", "handleGetAddressLocation: $e", )
-            Toast.makeText(requireContext(), "Tim dia chi lỗi", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(requireContext(), "Tim dia chi lỗi", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

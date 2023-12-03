@@ -7,6 +7,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -37,6 +38,7 @@ import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.checkPermissionGallery
 import com.fpoly.smartlunch.ultis.hideKeyboard
 import com.fpoly.smartlunch.ultis.setMargins
+import com.fpoly.smartlunch.ultis.showKeyboard
 import com.fpoly.smartlunch.ultis.showSnackbar
 import com.fpoly.smartlunch.ultis.startActivityWithData
 import com.fpoly.smartlunch.ultis.startToDetailPermission
@@ -158,6 +160,13 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
 
         views.edtMessage.setOnFocusChangeListener { view, b ->
             if (b) handleBottomGallery(false)
+        }
+
+        views.edtMessage.setOnEditorActionListener{v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                views.imgSend.performClick()
+            }
+            true
         }
 
         views.imgSend.setOnClickListener {

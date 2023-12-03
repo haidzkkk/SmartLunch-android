@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -124,9 +125,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.linearMinu1.setOnClickListener {
             reduceQuantity()
         }
-        views.buttonAddCart.setOnClickListener {
-            addCart()
-        }
         views.tvSeeAllComment.setOnClickListener{
             productViewModel.returnCommentFragment()
         }
@@ -155,13 +153,17 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
         }
 
+        views.buttonAddCart.setOnClickListener {
+            addCart()
+        }
+
         views.animAddProduct.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
             }
 
             override fun onAnimationEnd(animation: Animator) {
                 views.animAddProduct.visibility = View.GONE
-                activity?.onBackPressed()
+//                activity?.onBackPressed()
             }
 
             override fun onAnimationCancel(animation: Animator) {
@@ -210,13 +212,17 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
         productViewModel.handle(ProductAction.CreateCart(newCartProduct!!))
         currentSoldQuantity = 1
-        enableAnimation(views.animAddProduct, R.raw.anim_add_to_cart)
     }
 
     private fun enableAnimation(view: LottieAnimationView, raw: Int) {
         view.visibility = View.VISIBLE
         view.setAnimation(raw)
         view.playAnimation()
+    }
+    private fun cancelAnimation(view: LottieAnimationView) {
+        view.visibility = View.GONE
+        view.clearAnimation()
+        view.cancelAnimation()
     }
 
     private fun increaseQuantity() {
@@ -240,7 +246,21 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     @SuppressLint("SetTextI18n")
     override fun invalidate(): Unit = withState(productViewModel) {
         views.swipeLoading.isRefreshing = it.asyncTopProduct is Loading || it.asynGetSizeProduct is Loading
+        if (it.curentAddProductToCartResponse is Loading ) { enableAnimation(views.animAddProduct, R.raw.anim_add_to_cart) }
 
+        when (it.curentAddProductToCartResponse) {
+            is Success -> {
+                Toast.makeText(requireContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show()
+                it.curentAddProductToCartResponse = Uninitialized
+            }
+            is Fail ->{
+                Toast.makeText(requireContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show()
+                it.curentAddProductToCartResponse = Uninitialized
+            }
+
+            else -> {
+            }
+        }
         when (it.asynGetSizeProduct) {
             is Success -> {
                 it.asynGetSizeProduct.invoke()?.let {

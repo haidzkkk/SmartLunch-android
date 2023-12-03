@@ -290,8 +290,8 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                     addOrder = it.asyncAddOrder.invoke()
 
                     beforeFinish(addOrder!!)
-                    it.asyncAddOrder = Uninitialized
                     paymentViewModel.returnShowLoading(false)
+                    it.asyncAddOrder = Uninitialized
                 }
 
                 is Fail -> {
@@ -305,6 +305,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                         )
                     )
                     paymentViewModel.returnShowLoading(false)
+                    it.asyncAddOrder = Uninitialized
                 }
 
                 else -> {}

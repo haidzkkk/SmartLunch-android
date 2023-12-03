@@ -151,12 +151,12 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
     }
 
     private fun sendDataToPayScreen() {
-        if (currentCartResponse != null){
+        if (currentCartResponse != null && currentCartResponse!!.total > 0){
             val bundle = Bundle()
             bundle.putString("strNote", views.note.text.toString().ifEmpty { getString(R.string.note_default)})
             paymentViewModel.returnPayFragment(bundle)
         }else{
-            Toast.makeText(requireContext(), "Không có currentCartResponse", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Giỏ hàng không đủ điều kiện để thanh toán", Toast.LENGTH_SHORT).show()
         }
 
     }
