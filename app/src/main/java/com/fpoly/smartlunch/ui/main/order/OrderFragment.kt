@@ -35,6 +35,7 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
     }
 
     private fun setupUI() {
+        views.appBar.tvTitleToolbar.text = "Đơn hàng"
         tabLayout = views.tabLayout
         val viewPager = views.viewPager
         val adapter = OrderViewPagerAdapter(childFragmentManager, this.lifecycle)

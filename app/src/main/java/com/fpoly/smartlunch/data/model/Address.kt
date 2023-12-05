@@ -9,7 +9,7 @@ data class Address(
     val addressLine: String,
     val isRemove: Boolean,
     val distance: Double,
-    val deliveryFee: Int,
+    val deliveryFee: Double,
     val deliveryTime: Double,
     var isSelected: Boolean,
     val latitude: Double,

@@ -40,7 +40,7 @@ class OrderAdapter(private val onClickItem: (String) -> Unit): RecyclerView.Adap
             itemOrderBinding.idOrder.text = order._id
             itemOrderBinding.status.text = order.status.status_name
             itemOrderBinding.nameProduct.text = if(order.products.isNotEmpty()) order.products[0].product_name else ""
-            itemOrderBinding.price.text = order.discount.formatCash()
+            itemOrderBinding.price.text = order.totalAll.formatCash()
             itemOrderBinding.quanlity.text = order.products.size.toString()
             itemOrderBinding.status.setTextColor(order.status._id == Status.SUCCESS_STATUS)
         }

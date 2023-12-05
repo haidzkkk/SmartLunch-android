@@ -46,6 +46,8 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     private var strFilter: String? = null
     private var isSortDesc: Boolean? = null
 
+    private var isSwipeLoading: Boolean = false
+
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
 
@@ -93,6 +95,10 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     }
 
     private fun listenEvent() {
+        views.swipeLoading.setOnRefreshListener {
+            isSwipeLoading = true
+            fetchData()
+        }
         views.imgBack.setOnClickListener{
             activity?.onBackPressed()
         }
@@ -152,11 +158,13 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     }
 
     override fun invalidate(): Unit = withState(productViewModel){
+        views.swipeLoading.isRefreshing = it.currentProductsSearch is Loading && isSwipeLoading
+
         when(it.currentProductsSearch){
             is Success ->{
+                isSwipeLoading = false
                 productAdapter.isLoadingOk = false
                 productAdapter.setData(it.currentProductsSearch.invoke()?.docs)
-
 //                views.tvExists.isVisible = it.currentProductsSearch.invoke()?.docs?.isEmpty() ?: true
                 it.currentProductsSearch = Uninitialized
             }

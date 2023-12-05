@@ -89,7 +89,7 @@ class RoomChatAdapter(
 
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].userIdSend?._id == currentRoom!!.userUserId!!._id) TYPE_ME else TYPE_YOU
+        return if (messages[position].userIdSend?._id == currentRoom?.userUserId?._id) TYPE_ME else TYPE_YOU
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
