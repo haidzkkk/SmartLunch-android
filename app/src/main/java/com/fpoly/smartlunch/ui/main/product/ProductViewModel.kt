@@ -378,10 +378,10 @@ class ProductViewModel @AssistedInject constructor(
     }
 
     private fun handleUpdateOder(idOrder: String, oder: OrderRequest) {
-        setState { copy(asyncUpdateOrder = Loading()) }
+        setState { copy(asyncUpdateOrder = Loading(), addOrder = Loading()) }
         repository.updateOrder(idOrder, oder)
             .execute {
-                copy(asyncUpdateOrder = it)
+                copy(asyncUpdateOrder = it, addOrder = it)
             }
     }
 

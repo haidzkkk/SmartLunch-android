@@ -10,6 +10,7 @@ data class OrderResponse(
     val deliveryFee: Double,
     val discount: Double,
     val total: Double,
+    val totalAll: Double,
     val status: Status,
     val shipperId: String,
     val address: Address,

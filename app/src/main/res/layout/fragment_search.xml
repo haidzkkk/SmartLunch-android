@@ -7,7 +7,7 @@
     tools:context=".ui.main.search.SearchFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layout_loading"
+        android:id="@+id/swipe_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

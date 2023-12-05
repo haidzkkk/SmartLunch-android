@@ -151,28 +151,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                     android:textSize="16dp"
                     android:textStyle="bold"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_margin="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="24dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Phí giao hàng"
-                    android:textSize="16dp"
-                    android:textColor="#9CA4AB"/>
 
-                <TextView
-                    android:id="@+id/tv_phi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="25.000 đ"
-                    android:textAlignment="textEnd"
-                    android:textSize="16dp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
             <LinearLayout
                 android:layout_margin="16dp"
                 android:layout_width="match_parent"

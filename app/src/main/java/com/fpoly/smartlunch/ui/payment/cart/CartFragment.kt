@@ -73,7 +73,6 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         paymentViewModel.handle(PaymentViewAction.GetOneCartById)
 
         views.tvGiamGia.text = getString(R.string.min_cost)
-        views.tvPhi.text = getString(R.string.min_cost)
         views.tvTam.text = (currentCartResponse?.total ?: 0.0).formatCash()
         views.tvTong.text = ((currentCartResponse?.total ?: 0.0) - (currentCartResponse?.totalCoupon ?: 0.0)).formatCash()
 

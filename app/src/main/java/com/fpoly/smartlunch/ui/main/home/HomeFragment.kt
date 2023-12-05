@@ -105,6 +105,10 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
 
             override fun onCLickSeeMore() {
+                var bundle = Bundle().apply {
+                    putString("sort", SortPagingProduct.bought)
+                }
+                homeViewModel.returnSearchFragment(bundle)
 
             }
         })
