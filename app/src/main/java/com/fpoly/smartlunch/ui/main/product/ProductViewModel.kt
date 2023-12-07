@@ -1,5 +1,6 @@
 package com.fpoly.smartlunch.ui.main.product
 
+import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.FragmentViewModelContext
@@ -63,6 +64,7 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
             is ProductAction.GetDetailCoupons -> handleGetDetailCoupons(action.id)
             is ProductAction.GetListSizeProduct -> handleGetSizeProduct(action.idProduct)
+            is ProductAction.GetListToppingProduct -> handleGetToppingsProduct(action.idProduct)
             is ProductAction.GetSizeById -> handleGetSizeById(action.id)
 
             is ProductAction.CreateCart -> handleCreateCart(action.cart)
@@ -285,6 +287,12 @@ class ProductViewModel @AssistedInject constructor(
             copy(asynGetSizeProduct = it)
         }
     }
+    private fun handleGetToppingsProduct(idProduct: String) {
+        setState { copy(asyncToppingsProduct = Loading()) }
+        repository.getToppingsProduct(idProduct).execute {
+            copy(asyncToppingsProduct = it)
+        }
+    }
 
     private fun handleGetSizeById(id: String?) {
         setState { copy(asyncGetOneSize = Loading()) }
@@ -393,6 +401,10 @@ class ProductViewModel @AssistedInject constructor(
 
     fun returnCommentFragment(){
         _viewEvents.post(ProductEvent.ReturnFragment(CommentFragment::class.java))
+    }
+
+    fun returnDetailProductFragment(){
+        _viewEvents.post(ProductEvent.ReturnFragment(ProductFragment::class.java))
     }
 
     @AssistedFactory

@@ -1,11 +1,14 @@
 package com.fpoly.smartlunch.ui.payment.cart
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
@@ -18,6 +21,7 @@ import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.ProductCart
+import com.fpoly.smartlunch.data.model.SortPagingProduct
 import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.databinding.FragmentCartBinding
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterCart
@@ -45,9 +49,9 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
     private val paymentViewModel: PaymentViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
-    private var adapter: AdapterProduct? = null
-    private var adapterCart: AdapterCart? = null
-    private var adapterCoupons: AdapterCoupons? = null
+    private lateinit var adapter: AdapterProduct
+    private lateinit var adapterCart: AdapterCart
+    private lateinit var adapterCoupons: AdapterCoupons
 
     private var products: ArrayList<ProductCart> = arrayListOf()
     private var currentCartResponse: CartResponse? = null
@@ -79,13 +83,17 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         adapter = AdapterProduct(object: AdapterProduct.OnClickListenner{
             override fun onCLickItem(id: String) {
                 productViewModel.handle(ProductAction.GetListSizeProduct(id))
+                productViewModel.handle(ProductAction.GetListToppingProduct(id))
                 productViewModel.handle(ProductAction.GetListCommentsLimit(id))
                 productViewModel.handle(ProductAction.GetDetailProduct(id))
                 paymentViewModel.returnDetailProductFragment()
             }
 
             override fun onCLickSeeMore() {
-
+                var bundle = Bundle().apply {
+                    putString("sort", SortPagingProduct.bought)
+                }
+                paymentViewModel.returnSearchProductFragment(bundle)
             }
 
         })
@@ -102,22 +110,33 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
             ) {
                 super.onClickItem(idProductAdapter)
                 productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListToppingProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
                 productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
                 paymentViewModel.returnDetailProductFragment()
             }
 
+            override fun onSwipeItem(
+                idProductAdapter: String,
+                currentSoldQuantity: Int?,
+                currentSizeID: String
+            ) {
+                super.onSwipeItem(idProductAdapter, currentSoldQuantity, currentSizeID)
+                paymentViewModel.handle(PaymentViewAction.GetRemoveProductByIdCart(idProductAdapter, currentSizeID))
+            }
+
             override fun onChangeQuantity(
                 idProductAdapter: String,
                 currentSoldQuantity: Int,
-                currentSizeID: String
+                currentSizeID: String,
+                toppingId: String?
             ) {
-                super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID)
+                super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID, toppingId)
                 myDelayJob?.cancel()
                 myDelayJob = CoroutineScope(Dispatchers.Main).launch {
                     delay(500)
                     paymentViewModel.handle(
-                        PaymentViewAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
+                        PaymentViewAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID, toppingId))
                     )
                 }
 
@@ -139,14 +158,45 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
             paymentViewModel.handle(PaymentViewAction.GetOneCartById)
         }
         views.btnThem.setOnClickListener {
-            activity?.finish()
+            paymentViewModel.returnSearchProductFragment()
         }
         views.moreCoupon.setOnClickListener {
             paymentViewModel.returnCouponsFragment()
         }
         views.btnTiepTuc.setOnClickListener {
+            paymentViewModel.handle(PaymentViewAction.GetOneCartById)
             sendDataToPayScreen()
         }
+
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if (direction == ItemTouchHelper.LEFT) {
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle("Xác nhận xóa")
+                    builder.setMessage("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?")
+                    builder.setPositiveButton("Xóa") { dialog, which ->
+                        adapterCart.onItemSwiped(viewHolder.bindingAdapterPosition)
+                        dialog.dismiss()
+                    }
+                    builder.setNegativeButton("Hủy") { dialog, which ->
+                        adapterCart.notifyItemChanged(viewHolder.bindingAdapterPosition)
+                        dialog.dismiss()
+                    }
+                    builder.show()
+                }
+            }
+        }).attachToRecyclerView(views.rcCart)
     }
 
     private fun sendDataToPayScreen() {
@@ -165,7 +215,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
         views.tvGiamGia.text = (currentCartResponse?.totalCoupon ?: 0.0).formatCash()
         views.tvTong.text = ((currentCartResponse?.total ?: 0.0) - (currentCartResponse?.totalCoupon ?: 0.0)).formatCash()
 
-        adapterCoupons?.selectItem(currentCartResponse?.couponId)
+        adapterCoupons.selectItem(currentCartResponse?.couponId)
     }
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCartBinding {
@@ -189,7 +239,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
 
             when (it.asyncProducts) {
                 is Success -> {
-                    adapter?.setData(it.asyncProducts.invoke()?.docs)
+                    adapter.setData(it.asyncProducts.invoke()?.docs)
                 }
                 else -> {}
             }
@@ -198,7 +248,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
                 is Success -> {
                     currentCartResponse = it.asyncCurentCart.invoke()
                     products = currentCartResponse?.products!!
-                    adapterCart?.setData(products)
+                    adapterCart.setData(products)
 
                     resetCostInCard()
 //                    it.asyncCurentCart = Uninitialized

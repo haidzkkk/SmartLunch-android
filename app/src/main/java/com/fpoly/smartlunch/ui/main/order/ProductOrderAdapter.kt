@@ -3,13 +3,17 @@ package com.fpoly.smartlunch.ui.main.order
 
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.ProductOrder
+import com.fpoly.smartlunch.data.model.Topping
 import com.fpoly.smartlunch.databinding.ItemProductOrderBinding
+import com.fpoly.smartlunch.ui.main.home.adapter.ToppingAdapter
 import com.fpoly.smartlunch.ultis.formatCash
 
 
@@ -23,7 +27,7 @@ class ProductOrderAdapter(private val onPress: (productOrder: ProductOrder) -> U
     }
 
     inner class ViewHolder(private val binding: ItemProductOrderBinding): RecyclerView.ViewHolder(binding.root) {
-        fun onBind(productOrder: ProductOrder){
+        fun onBind(productOrder: ProductOrder, position: Int){
             binding.apply{
                 Glide.with(this.root.context).load(productOrder.image).placeholder(R.mipmap.ic_launcher).into(imgImg)
                 tvName.text = productOrder.product_name
@@ -31,19 +35,26 @@ class ProductOrderAdapter(private val onPress: (productOrder: ProductOrder) -> U
                 tvQuantity.text = "x${productOrder.purchase_quantity}"
                 tvPrice.text = productOrder.product_price.formatCash()
 
-//                if (productOrder.product_discount < productOrder.product_price){
-//                    tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-//                    tvDiscount.text = productOrder.product_discount.formatCash()
-//                }else{
-//                    tvPrice.paintFlags = tvPrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-//                    tvDiscount.text = ""
-//                }
+                tvAllPrice.text = productOrder.total.formatCash()
 
-                tvAllPrice.text = (productOrder.product_price * productOrder.purchase_quantity).formatCash()
-                
+                if (productOrder.toppings.isNotEmpty()){
+                    val toppingAdapter = ToppingAdapter(ToppingAdapter.TYPE_ITEM_VIEW, object : ToppingAdapter.OnItenClickLisstenner{
+                        override fun onItemClick(topping: Topping) {
+                        }
+
+                        override fun onChangeQuantity(topping: Topping) {
+                        }
+                    })
+                    toppingAdapter.setData(productOrder.toppings.map { Topping.toTopping(it) })
+                    rcvToping.adapter = toppingAdapter
+                }else{
+                    rcvToping.adapter = null
+                }
+
                 root.setOnClickListener {
                     onPress(productOrder)
                 }
+
             }
         }
     }
@@ -59,7 +70,7 @@ class ProductOrderAdapter(private val onPress: (productOrder: ProductOrder) -> U
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (orderResporn?.products != null){
-            holder.onBind(orderResporn?.products!!.get(position))
+            holder.onBind(orderResporn?.products!![position], position)
         }
     }
 }

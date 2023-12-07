@@ -24,18 +24,21 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.model.Topping
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
+import com.fpoly.smartlunch.ui.main.home.adapter.ToppingAdapter
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ultis.formatCash
 import com.fpoly.smartlunch.ultis.formatRate
 import com.fpoly.smartlunch.ultis.formatView
 
-
+@SuppressLint("SetTextI18n")
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private val productViewModel: ProductViewModel by activityViewModel()
@@ -44,12 +47,12 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     private lateinit var adapterSize: AdapterSize
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var imageSlideAdapter: ImageSlideAdapter
+    private lateinit var toppingAdapter: ToppingAdapter
 
-    private var currentSizeId: String? = null
+    private var currentSize: Size? = null
     private var currentProduct: Product? = null
-    private var currentSoldQuantity: Int? = 1
-    private var sizeId: String? = null
     private var isLiked: Boolean = false
+    private var currentSoldQuantity: Int? = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,11 +86,23 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private fun initUi() {
         adapterSize = AdapterSize { idSize ->
-            currentSizeId = idSize._id
-            sizeId = idSize._id
-            views.buttonAddCart.text = "Thêm ${idSize.size_price.formatCash()}"
+            currentSize = idSize
             views.buttonAddCart.isEnabled = true
+            views.buttonAddCart.text = "Thêm ${(currentSize!!.size_price).formatCash()}"
         }
+        adapterSize.setSelect(currentSize)
+        views.rcvSize.adapter = adapterSize
+
+        toppingAdapter = ToppingAdapter(ToppingAdapter.TYPE_ITEM_MEDIUM, object : ToppingAdapter.OnItenClickLisstenner{
+            override fun onItemClick(topping: Topping) {
+
+            }
+
+            override fun onChangeQuantity(topping: Topping) {
+
+            }
+        })
+        views.rcvTopping.adapter = toppingAdapter
 
         imageSlideAdapter = ImageSlideAdapter{
 
@@ -95,7 +110,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         commentAdapter = CommentAdapter()
 
         views.viewpagerImg.adapter = imageSlideAdapter
-        views.rcvSize.adapter = adapterSize
         views.rcvComment.adapter = commentAdapter
         views.rcvComment.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
@@ -117,6 +131,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             productViewModel.handle(ProductAction.GetListCommentsLimit(currentProduct?._id ?: ""))
             productViewModel.handle(ProductAction.GetDetailProduct(currentProduct?._id ?: ""))
             productViewModel.handle(ProductAction.GetListSizeProduct(currentProduct?._id ?: ""))
+            productViewModel.handle(ProductAction.GetListToppingProduct(currentProduct?._id ?: ""))
         }
         views.linearMinu2.setOnClickListener {
             increaseQuantity()
@@ -150,7 +165,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                 views.btnLike.setImageResource(R.drawable.like_emty)
             }
             productViewModel.handle(ProductAction.LikeProduct(currentProduct!!))
-
         }
 
         views.buttonAddCart.setOnClickListener {
@@ -207,7 +221,8 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                 product_name = it.product_name,
                 product_price = it.product_price,
                 purchase_quantity = currentSoldQuantity!!,
-                sizeId = sizeId!!
+                sizeId = currentSize!!._id,
+                toppings = toppingAdapter.getToppingsSelect()
             )
         }
         productViewModel.handle(ProductAction.CreateCart(newCartProduct!!))
@@ -265,9 +280,9 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             is Success -> {
                 it.asynGetSizeProduct.invoke()?.let {
                     adapterSize.setData(it)
+                    adapterSize.setSelect(currentSize)
                 }
             }
-
             else -> {}
         }
         when (it.asyncGetOneSize) {
@@ -283,13 +298,23 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
             else -> {}
         }
+        when (it.asyncToppingsProduct) {
+            is Success -> {
+                it.asyncToppingsProduct.invoke()?.let {toppings ->
+                    toppingAdapter.setData(toppings)
+                }
+
+                it.asyncGetOneSize = Uninitialized
+            }
+
+            else -> {}
+        }
         when (it.asyncProduct) {
             is Success -> {
                 it.asyncProduct.invoke()?.let { product ->
                     currentProduct = product
                     initUiProduct()
                 }
-
             }
 
             else -> {}

@@ -52,6 +52,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         productOrderAdapter = ProductOrderAdapter {
             productViewModel.handle(ProductAction.GetDetailProduct(it.productId))
             productViewModel.handle(ProductAction.GetListSizeProduct(it.productId))
+            productViewModel.handle(ProductAction.GetListToppingProduct(it.productId))
             productViewModel.handle(ProductAction.GetListCommentsLimit(it.productId))
             homeViewModel.returnDetailProductFragment()
         }

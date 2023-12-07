@@ -2,62 +2,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:background="@color/background">
 
-    <ImageView
-        android:id="@+id/img_img"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@color/green_light"
-        android:scaleType="centerCrop"/>
+    <RelativeLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Nước trà vải thơm ngon"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_toEndOf="@+id/img_img"
-        android:layout_marginStart="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Size L"
-        android:layout_below="@+id/tv_name"
-        android:layout_toEndOf="@+id/img_img"
-        android:layout_marginStart="10dp"/>
+        <ImageView
+            android:id="@+id/img_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@color/green_light"
+            android:scaleType="centerCrop"/>
 
-    <TextView
-        android:id="@+id/tv_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="x1"
-        android:layout_below="@+id/tv_type"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"/>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Nước trà vải thơm ngon"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@+id/img_img"
+            android:layout_marginStart="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="24,000 đ"
-        android:textColor="@color/red"
-        android:layout_below="@+id/tv_type"
-        android:layout_toEndOf="@+id/img_img"
-        android:layout_marginStart="10dp"/>
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Size L"
+            android:layout_below="@+id/tv_name"
+            android:layout_toEndOf="@+id/img_img"
+            android:layout_marginStart="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_all_price"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tv_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x1"
+            android:layout_below="@+id/tv_type"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24,000 đ"
+            android:textColor="@color/red"
+            android:layout_below="@+id/tv_type"
+            android:layout_toEndOf="@+id/img_img"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_all_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="265.000đ"
+            android:textColor="@color/red"
+            android:layout_below="@+id/tv_quantity"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_toping"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="265.000đ"
-        android:textColor="@color/red"
-        android:layout_below="@+id/tv_quantity"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"/>
+        android:layout_below="@+id/layout_main"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </RelativeLayout>

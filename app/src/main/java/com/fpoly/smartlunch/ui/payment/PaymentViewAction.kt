@@ -18,6 +18,7 @@ sealed class PaymentViewAction : PolyViewAction {
     object GetClearCart : PaymentViewAction()
     object GetOneCartById : PaymentViewAction()
     data class GetChangeQuantity(val idProduct: String, val changeQuantityRequest: ChangeQuantityRequest) : PaymentViewAction()
+    data class GetRemoveProductByIdCart(val idProduct : String, val sizeId : String): PaymentViewAction()
 
     data class CreateOder(val oder: OrderRequest) : PaymentViewAction()
     data class UpdateOder(val idOder: String, val oder: OrderRequest) : PaymentViewAction()

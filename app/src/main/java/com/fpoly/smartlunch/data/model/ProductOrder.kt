@@ -13,4 +13,14 @@ data class ProductOrder(
     val product_price: Double,
     val product_discount: Double,
     val total: Double,
+    val toppings: ArrayList<ToppingOrder>
+): Serializable
+
+data class ToppingOrder(
+    val _id: String,
+    val name: String,
+    val price: Double,
+    val productId: String,
+    val _quantity: Int,
+    val total: Double,
 ): Serializable

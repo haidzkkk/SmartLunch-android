@@ -22,7 +22,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 android:id="@+id/layout_toolbar_cart"
                 layout="@layout/toolbar_header"/>
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginLeft="16dp"
                 android:id="@+id/rc_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,11 +48,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:layout_marginLeft="16dp"/>
+                android:layout_marginHorizontal="16dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_product_pb"
-                android:layout_marginLeft="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -65,11 +63,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
                 android:text="Ghi chú đặt hàng"
-
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:layout_marginLeft="16dp"/>
+                android:layout_marginHorizontal="16dp"/>
             <EditText
                 android:id="@+id/note"
                 android:layout_width="match_parent"
@@ -112,7 +109,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_voucher"
-                android:layout_marginLeft="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

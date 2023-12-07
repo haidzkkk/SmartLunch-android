@@ -18,7 +18,9 @@ import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.repository.PaymentRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.data.repository.UserRepository
+import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductFragment
+import com.fpoly.smartlunch.ui.main.search.SearchFragment
 import com.fpoly.smartlunch.ui.payment.address.AddAddressFragment
 import com.fpoly.smartlunch.ui.payment.address.AddressPaymentFragment
 import com.fpoly.smartlunch.ui.payment.address.DetailAddressFragment
@@ -56,7 +58,6 @@ class PaymentViewModel @AssistedInject constructor(
             is PaymentViewAction.CreateOder -> handleCreateOrder(action.oder)
             is PaymentViewAction.UpdateOder -> handleUpdateOder(action.idOder, action.oder)
 
-
             is PaymentViewAction.GetListCoupons -> handleGetListCoupons()
             is PaymentViewAction.ApplyCoupon -> handleApplyCoupon(action.coupons)
 
@@ -65,6 +66,10 @@ class PaymentViewModel @AssistedInject constructor(
             is PaymentViewAction.GetChangeQuantity -> handleChangeQuantity(
                 action.idProduct,
                 action.changeQuantityRequest
+            )
+            is PaymentViewAction.GetRemoveProductByIdCart -> handleRemoveProductCart(
+                action.idProduct,
+                action.sizeId
             )
 
             is PaymentViewAction.GetProvinceAddress -> handleGetListProvince()
@@ -185,6 +190,18 @@ class PaymentViewModel @AssistedInject constructor(
 
     }
 
+    private fun handleRemoveProductCart(idProduct: String, sizeId: String) {
+//        setState { copy(getRemoveProductByIdCart = Loading()) }
+//        repository.getRemoveGetOneProductCart(idProduct, sizeId)
+//            .execute {
+//                copy(getRemoveProductByIdCart = it)
+//            }
+        setState { copy(asyncCurentCart = Loading()) }
+        productRepository.getRemoveGetOneProductCart(idProduct, sizeId)
+            .execute {
+                copy(asyncCurentCart = it)
+            }
+    }
 
     private fun handleGetViewProduct(id: String) {
         productRepository.getViewProduct(id).execute {
@@ -234,6 +251,10 @@ class PaymentViewModel @AssistedInject constructor(
 
     fun returnDetailProductFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(ProductFragment::class.java))
+    }
+
+    fun returnSearchProductFragment(bundle: Bundle? = null) {
+        _viewEvents.post(PaymentViewEvent.ReturnFragmentWithArgument(SearchFragment::class.java, bundle))
     }
 
     fun returnAddressFragment() {

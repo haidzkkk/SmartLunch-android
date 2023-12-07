@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.Fail
@@ -51,10 +53,6 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
     private val userViewModel: UserViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
 
-    private var idProduct: String? = null
-    private var sizeId: String? = null
-    private var purchaseQuantity: Int? = null
-
     private lateinit var adapterCart: AdapterCart
     override val isBorderRadiusTop: Boolean
         get() = true
@@ -91,26 +89,18 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                TODO("Not yet implemented")
+                return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
                     val builder = AlertDialog.Builder(context)
-                    adapterCart.onItemSwiped(viewHolder.bindingAdapterPosition)
                     builder.setTitle("Xác nhận xóa")
                     builder.setMessage("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?")
-
                     builder.setPositiveButton("Xóa") { dialog, which ->
-                        withState(userViewModel) {
-                            val userId = it.asyncCurrentUser.invoke()?._id
-                            if (idProduct != null && sizeId != null) {
-                                productViewModel.handle(ProductAction.GetRemoveProductByIdCart(idProduct!!, sizeId!!))
-                            }
-                        }
+                        adapterCart.onItemSwiped(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
                     }
-
                     builder.setNegativeButton("Hủy") { dialog, which ->
                         adapterCart.notifyItemChanged(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
@@ -150,33 +140,34 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                 super.onClickItem(idProductAdapter)
                 productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListToppingProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
                 homeViewModel.returnDetailProductFragment()
                 dismiss()
             }
 
             override fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {
-                sizeId = currentSizeID
-                idProduct = idProductAdapter
-                purchaseQuantity = currentSoldQuantity
+                productViewModel.handle(ProductAction.GetRemoveProductByIdCart(idProductAdapter, currentSizeID))
             }
 
             override fun onChangeQuantity(
                 idProductAdapter: String,
                 currentSoldQuantity: Int,
-                currentSizeID: String
+                currentSizeID: String,
+                toppingId: String?
             ) {
-                super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID)
+                super.onChangeQuantity(idProductAdapter, currentSoldQuantity, currentSizeID, toppingId)
 
                 myDelayJob?.cancel()
                 myDelayJob = CoroutineScope(Dispatchers.Main).launch {
                     delay(500)
                     productViewModel.handle(
-                        ProductAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID))
+                        ProductAction.GetChangeQuantity(idProductAdapter, ChangeQuantityRequest(currentSoldQuantity, currentSizeID, toppingId))
                     )
                 }
             }
         })
+        views.rcvCart.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         views.rcvCart.adapter = adapterCart
     }
     fun updateDataUI(){

@@ -6,7 +6,6 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -76,6 +75,7 @@
             android:exported="false"
             android:parentActivityName=".ui.security.SplashScreenActivity"
             android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true"
             tools:ignore="AppLinkUrlError" />
         <activity
             android:name=".ui.security.LoginActivity"
@@ -85,6 +85,7 @@
         <activity
             android:name=".ui.security.SplashScreenActivity"
             android:exported="true"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PolyFriend">
             <intent-filter>

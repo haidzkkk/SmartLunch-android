@@ -91,9 +91,27 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
     }
 
     private fun listenEvent() {
-        paymentViewModel.observeViewEvents {
-            if (it != null) {
-                handleEvent(it)
+        paymentViewModel.observeViewEvents { event ->
+            when (event) {
+                is PaymentViewEvent.ReturnFragment<*> -> {
+                    addFragmentToBackStack(
+                        R.id.frame_layout,
+                        event.fragmentClass,
+                        event.fragmentClass.simpleName
+                    )
+                }
+
+                is PaymentViewEvent.ReturnFragmentWithArgument<*> -> {
+                    addFragmentToBackStack(
+                        R.id.frame_layout,
+                        event.fragmentClass,
+                        bundle = event.bundle,
+                        tag = event.fragmentClass.simpleName
+                    )
+                }
+
+                is PaymentViewEvent.ReturnShowLoading -> showLayoutLoading(event.isVisible)
+                else -> {}
             }
         }
 
@@ -105,25 +123,6 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         }
     }
 
-    private fun handleEvent(event: PaymentViewEvent) {
-        when (event) {
-            is PaymentViewEvent.ReturnFragment<*> -> {
-                addFragmentToBackStack(R.id.frame_layout, event.fragmentClass, event.fragmentClass.simpleName)
-            }
-
-            is PaymentViewEvent.ReturnFragmentWithArgument<*> -> {
-                addFragmentToBackStack(
-                    R.id.frame_layout,
-                    event.fragmentClass,
-                    bundle = event.bundle,
-                    tag =  event.fragmentClass.simpleName
-                )
-            }
-
-            is PaymentViewEvent.ReturnShowLoading -> showLayoutLoading(event.isVisible)
-            else -> {}
-        }
-    }
 
     private fun showLayoutLoading(isVisible: Boolean){
         views.layoutLoading.root.isVisible = isVisible
