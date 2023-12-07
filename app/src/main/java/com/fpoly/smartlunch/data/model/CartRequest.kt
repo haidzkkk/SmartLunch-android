@@ -6,6 +6,7 @@ data class CartRequest (
   val  product_price: Double,
   var  image: String? ="aa",
   val  purchase_quantity: Int,
-  val  sizeId: String
+  val  sizeId: String,
+  val  toppings: List<Topping>?
 ){
 }

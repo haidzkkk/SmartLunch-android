@@ -26,6 +26,7 @@ sealed class ProductAction : PolyViewAction {
     data class GetDetailProduct(val id : String) : ProductAction()
     data class GetDetailCoupons(val id : String) : ProductAction()
     data class GetListSizeProduct(val idProduct : String) : ProductAction()
+    data class GetListToppingProduct(val idProduct : String) : ProductAction()
     data class GetReadNotification(val id : String) : ProductAction()
     data class GetSizeById(val id : String?) : ProductAction()
     data class CreateCart(val cart : CartRequest) : ProductAction()

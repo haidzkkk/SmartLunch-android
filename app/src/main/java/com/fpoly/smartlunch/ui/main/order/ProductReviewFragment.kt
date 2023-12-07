@@ -55,12 +55,13 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
             {
                 productViewModel.handle(ProductAction.GetDetailProduct(it.productId))
                 productViewModel.handle(ProductAction.GetListSizeProduct(it.productId))
+                productViewModel.handle(ProductAction.GetListToppingProduct(it.productId))
                 productViewModel.handle(ProductAction.GetListCommentsLimit(it.productId))
                 homeViewModel.returnDetailProductFragment()
             },
             {
                 if (currentOrderResponse != null) {
-                    addTamCommentDialog(currentOrderResponse!!, it)
+                    addCommentDialog(currentOrderResponse!!, it)
                 }else{
                     Toast.makeText(requireContext(), "Không có order", Toast.LENGTH_SHORT).show()
                 }
@@ -94,11 +95,11 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
             when(it.asyncAddComment){
                 is Success ->{
                     it.asyncAddComment = Uninitialized
-                    Toast.makeText(requireContext(), "Tạm thời thành công", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Đánh giá thành công", Toast.LENGTH_SHORT).show()
                 }
                 is Fail ->{
                     it.asyncAddComment = Uninitialized
-                    Toast.makeText(requireContext(), "Bạn không đủ điều kiện đánh giá", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Đánh giá thất bại", Toast.LENGTH_SHORT).show()
                 }
                 else ->{
 
@@ -107,7 +108,7 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
         }
     }
 
-    private fun addTamCommentDialog(orderResponse: OrderResponse, productOrder: ProductOrder) {
+    private fun addCommentDialog(orderResponse: OrderResponse, productOrder: ProductOrder) {
         val dialog = PolyDialog
             .Builder(requireContext(), DialogAddCommentBinding.inflate(layoutInflater))
             .build()

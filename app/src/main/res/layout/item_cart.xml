@@ -1,128 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Rela_card"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:background="@drawable/card_sell_o">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="86dp"
-        android:layout_height="86dp"
-        android:src="@drawable/img_6"
-        android:scaleType="centerCrop"
-        android:background="@drawable/background_border_radius_2"
-        android:clipToOutline="true"
-        />
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:background="@color/red">-->
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_toRightOf="@+id/image"
-        android:layout_above="@+id/tv_size"
-        android:lineSpacingExtra="5sp"
-        android:text="@string/pizza_th_gi"
-        android:textAppearance="@style/pizza_th_gi"
-        android:translationY="-2.45sp" />
-
-    <TextView
-        android:id="@+id/tv_size"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="11dp"
-        android:layout_toRightOf="@+id/image"
-        android:lineSpacingExtra="5sp"
-        android:text="Nhân theeit cà"
-        android:textAppearance="@style/some_id"
-        android:translationY="-2.45sp" />
-
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_size"
-        android:layout_marginLeft="11dp"
-        android:layout_marginBottom="8dp"
-        android:layout_toRightOf="@+id/image"
-        android:lineSpacingExtra="5sp"
-        android:text="sadsadsad"
-        android:maxLength="15"
-        android:textAppearance="@style/some_id"
-        android:translationY="-2.45sp" />
+<!--    </RelativeLayout>-->
 
     <RelativeLayout
-        android:id="@+id/group_11"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp">
-
-        <RelativeLayout
-            android:id="@+id/linear_minu1_sheet"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/clip"
-            android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/vuesax_line1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/tru"
-                android:gravity="center" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:maxLength="3" />
-
-        <RelativeLayout
-            android:id="@+id/linear_minu2_sheet"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/clip"
-            android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/vuesax_line2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/cong"
-                android:gravity="center" />
-
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_isActive"
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grey_transparent2"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="16dp"
+        android:background="@color/background">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layout_product"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="86dp"
+                android:layout_height="86dp"
+                android:src="@drawable/img_6"
+                android:scaleType="centerCrop"
+                android:background="@drawable/background_border_radius_2"
+                android:clipToOutline="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_toRightOf="@+id/image"
+                android:layout_above="@+id/tv_size"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/pizza_th_gi"
+                android:textAppearance="@style/pizza_th_gi"
+                android:translationY="-2.45sp" />
+
+            <TextView
+                android:id="@+id/tv_size"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="11dp"
+                android:layout_toRightOf="@+id/image"
+                android:lineSpacingExtra="5sp"
+                android:text="Nhân theeit cà"
+                android:textAppearance="@style/some_id"
+                android:translationY="-2.45sp" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_size"
+                android:layout_marginLeft="11dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toRightOf="@+id/image"
+                android:lineSpacingExtra="5sp"
+                android:text="sadsadsad"
+                android:maxLength="15"
+                android:textAppearance="@style/some_id"
+                android:translationY="-2.45sp" />
+
+            <RelativeLayout
+                android:id="@+id/group_11"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/btnTru"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/clip"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/vuesax_line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tru"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:maxLength="3" />
+
+                <RelativeLayout
+                    android:id="@+id/btnCong"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/clip"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/vuesax_line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cong"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!--        <View-->
+            <!--            android:id="@+id/layout_isActive"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:background="@color/grey_transparent2"-->
+            <!--            android:visibility="gone"/>-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sản phầm không hoạt động"
-            android:background="@drawable/backgound_retangle_chip_select"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textFontWeight="1000"
-            android:layout_centerInParent="true"
-            android:padding="5dp"
-            />
+            android:layout_below="@+id/layout_product"
+            >
+
+            <TextView
+                android:id="@+id/tv_title_topping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="topping"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_toping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title_topping"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
-</RelativeLayout>
+</FrameLayout>
+

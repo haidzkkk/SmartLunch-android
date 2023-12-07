@@ -6,4 +6,10 @@ data class Size (
     val size_price: Double,
     val productId: String
 ){
+    private var _isSelect: Boolean = false
+    var isSelect: Boolean
+        set(value) {
+            this._isSelect = value
+        }
+        get() = _isSelect
 }

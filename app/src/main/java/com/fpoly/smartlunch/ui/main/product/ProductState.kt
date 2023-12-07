@@ -15,6 +15,7 @@ import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.model.Topping
 
 data class ProductState(
     var coupons: Async<ArrayList<CouponsResponse>> = Uninitialized,
@@ -34,6 +35,8 @@ data class ProductState(
     var asyncProduct: Async<Product> = Uninitialized,
     var asynGetSizeProduct: Async<ArrayList<Size>> =  Uninitialized,
     var asyncGetOneSize: Async<Size> =  Uninitialized,
+
+    var asyncToppingsProduct: Async<ArrayList<Topping>> =  Uninitialized,
 
     var curentCartResponse: Async<CartResponse> = Uninitialized,
     var curentAddProductToCartResponse: Async<CartResponse> = Uninitialized,

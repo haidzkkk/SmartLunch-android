@@ -62,7 +62,7 @@
                 android:layout_below="@+id/layout_cart"
                 android:layout_marginTop="12dp"
                 android:orientation="vertical"
-                android:padding="10dp"
+                android:paddingVertical="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </RelativeLayout>

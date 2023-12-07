@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.activityViewModel
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductCart
+import com.fpoly.smartlunch.data.model.Topping
 import com.fpoly.smartlunch.databinding.ItemCartBinding
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.formatCash
@@ -40,45 +42,57 @@ class AdapterCart(
         }
     }
 
-    inner class CartViewHolder(private val binding: ItemCartBinding, val context: Context) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        val image = binding.image
-        val name = binding.tvName
-        val price = binding.tvPrice
-        val quanlity = binding.tvQuantity
-        val tvSize = binding.tvSize
-        val quantily_tru = binding.linearMinu1Sheet
-        val quantily_cong = binding.linearMinu2Sheet
+    inner class CartViewHolder(val binding: ItemCartBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(currentProduct: ProductCart) {
-            Glide.with(context).load(currentProduct.productId.images[0].url).placeholder(R.drawable.loading_img)
-                .into(image)
-            name.text = currentProduct.productId.product_name
-            price.text = currentProduct.sizeId.size_price.formatCash()
-            quanlity.text = currentProduct.purchase_quantity.toString()
-            tvSize.text = currentProduct.sizeId.size_name
-            var currentSoldQuantity = currentProduct.purchase_quantity
+            with(binding){
+                Glide.with(context).load(currentProduct.productId.images[0].url).placeholder(R.drawable.loading_img)
+                    .into(image)
+                tvName.text = currentProduct.productId.product_name
+                tvPrice.text = currentProduct.sizeId.size_price.formatCash()
+                tvQuantity.text = currentProduct.purchase_quantity.toString()
+                tvSize.text = currentProduct.sizeId.size_name
+                var currentSoldQuantity = currentProduct.purchase_quantity
 
-            binding.root.setOnClickListener {
-                onClickLisstenner.onClickItem(currentProduct.productId._id)
-            }
+                binding.root.setOnClickListener {
+                    onClickLisstenner.onClickItem(currentProduct.productId._id)
+                }
 
-            quantily_cong.setOnClickListener {
-                currentSoldQuantity++
-                quanlity.text = currentSoldQuantity.toString()
-                onClickLisstenner.onChangeQuantity(currentProduct.productId._id, currentSoldQuantity, currentProduct.sizeId._id)
-            }
+                btnCong.setOnClickListener {
+                    currentSoldQuantity++
+                    tvQuantity.text = currentSoldQuantity.toString()
+                    onClickLisstenner.onChangeQuantity(currentProduct.productId._id, currentSoldQuantity, currentProduct.sizeId._id, null)
+                }
 
-            quantily_tru.setOnClickListener {
-                if (currentSoldQuantity > 1) {
-                    currentSoldQuantity--
-                    quanlity.text = currentSoldQuantity.toString()
-                    onClickLisstenner.onChangeQuantity(currentProduct.productId._id, currentSoldQuantity, currentProduct.sizeId._id)
+                btnTru.setOnClickListener {
+                    if (currentSoldQuantity > 1) {
+                        currentSoldQuantity--
+                        tvQuantity.text = currentSoldQuantity.toString()
+                        onClickLisstenner.onChangeQuantity(currentProduct.productId._id, currentSoldQuantity, currentProduct.sizeId._id, null)
+                    }
+                }
+
+                var toppingAdapter = ToppingAdapter(ToppingAdapter.TYPE_ITEM_SMALL, object : ToppingAdapter.OnItenClickLisstenner{
+                    override fun onItemClick(topping: Topping) {
+                    }
+
+                    override fun onChangeQuantity(topping: Topping) {
+                        onClickLisstenner.onChangeQuantity(currentProduct.productId._id, topping.quantity, currentProduct.sizeId._id, topping._id)
+                    }
+                })
+
+
+                toppingAdapter.setData(currentProduct.toppings.map { Topping.toTopping(it) })
+                rcvToping.adapter = toppingAdapter
+
+                tvTitleTopping.isVisible = currentProduct.toppings.isNotEmpty()
+                if (!currentProduct.productId.isActive){
+                    binding.root.foreground = ContextCompat.getDrawable(binding.root.context, R.drawable.background_transparent)
+                }else{
+                    binding.root.foreground = null
                 }
             }
 
-            binding.layoutIsActive.isVisible = !currentProduct.productId.isActive
         }
 
     }
@@ -113,7 +127,11 @@ class AdapterCart(
 
     abstract class ItemClickLisstenner() {
         open fun onClickItem(idProductAdapter: String) {}
-        open fun onChangeQuantity(idProductAdapter: String, currentSoldQuantity: Int, currentSizeID: String) {}
+        open fun onChangeQuantity(idProductAdapter: String,
+                                  currentSoldQuantity: Int,
+                                  currentSizeID: String,
+                                  toppingId: String?
+        ) {}
         open fun onSwipeItem(idProductAdapter: String, currentSoldQuantity: Int?, currentSizeID: String) {}
 
     }

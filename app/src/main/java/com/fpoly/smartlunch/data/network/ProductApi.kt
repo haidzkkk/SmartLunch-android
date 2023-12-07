@@ -13,6 +13,7 @@ import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.model.Topping
 import com.fpoly.smartlunch.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -39,6 +40,8 @@ interface ProductApi {
     fun getOneSize(@Path("id")id: String): Observable<Size>
     @GET("/api/size/product/{id}")
     fun getSizeProduct(@Path("id") id : String): Observable<ArrayList<Size>>
+    @GET("/api/topping/product/{id}")
+    fun getToppingProduct(@Path("id") id : String): Observable<ArrayList<Topping>>
     @POST("/api/carts/create")
     fun getCreateCart(@Body cart: CartRequest): Observable<CartResponse>
     @GET("/api/carts")

@@ -20,6 +20,7 @@ import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
+import com.fpoly.smartlunch.data.model.Topping
 import com.fpoly.smartlunch.data.network.CommentApi
 import com.fpoly.smartlunch.data.network.ProductApi
 import io.reactivex.Completable
@@ -57,6 +58,7 @@ class ProductRepository @Inject constructor(
     fun getOneProducts(id : String): Observable<Product> = api.getOneProduct(id).subscribeOn(Schedulers.io())
     fun getOneSize(id : String): Observable<Size> = api.getOneSize(id).subscribeOn(Schedulers.io())
     fun getSizeProduct(id : String): Observable<ArrayList<Size>> = api.getSizeProduct(id).subscribeOn(Schedulers.io())
+    fun getToppingsProduct(id : String): Observable<ArrayList<Topping>> = api.getToppingProduct(id).subscribeOn(Schedulers.io())
     fun getCreateCart(cart: CartRequest): Observable<CartResponse> = api.getCreateCart(cart).subscribeOn(Schedulers.io())
     fun getOneCartById(): Observable<CartResponse> = api.getOneCartById().subscribeOn(Schedulers.io())
     fun getClearCart(): Observable<CartResponse> = api.getClearCart().subscribeOn(Schedulers.io())

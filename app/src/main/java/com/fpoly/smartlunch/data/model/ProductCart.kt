@@ -6,4 +6,10 @@ data class ProductCart(
     val productId: Product,
     val purchase_quantity : Int,
     val sizeId: Size,
+    val toppings: ArrayList<ToppingCart>
+):Serializable
+
+data class ToppingCart(
+    val _id: Topping,
+    val _quantity : Int
 ):Serializable

@@ -167,18 +167,39 @@
                                 android:id="@+id/rcv_size"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:listitem="@layout/layout_size" />
 
                         </LinearLayout>
 
-
-                        <com.google.android.material.divider.MaterialDivider
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/layout_topping"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="10dp"/>
+                            android:layout_marginTop="24dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_title_topping"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:lineSpacingExtra="5sp"
+                                android:text="Topping"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rcv_topping"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                />
+
+                        </LinearLayout>
+
 
                         <RelativeLayout
                             android:layout_width="match_parent"

@@ -49,7 +49,6 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
     private var isSwipeLoading: Boolean = false
 
     private val productViewModel: ProductViewModel by activityViewModel()
-    private val homeViewModel: HomeViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,8 +58,11 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
 
     private fun initUI() {
         productAdapter = ProductPaginationAdapter {
-            homeViewModel.returnDetailProductFragment()
             productViewModel.handle(ProductAction.GetDetailProduct(it))
+            productViewModel.handle(ProductAction.GetListSizeProduct(it))
+            productViewModel.handle(ProductAction.GetListToppingProduct(it))
+            productViewModel.handle(ProductAction.GetListCommentsLimit(it))
+            productViewModel.returnDetailProductFragment()
         }
         val linearLayoutManager = LinearLayoutManager(requireContext())
         views.rcv.addOnScrollListener(object :

@@ -15,16 +15,27 @@ import com.fpoly.smartlunch.databinding.LayoutSizeBinding
 class AdapterSize(private val onClickItem: (size: Size) -> Unit):
     RecyclerView.Adapter<AdapterSize.SizeViewHolder>() {
 
-    private var sizeSelect: Size? = null
     private var listSize: List<Size> = ArrayList()
 
     fun setData(list: List<Size>?) {
         if (list.isNullOrEmpty()) return
-
         listSize = list
-        sizeSelect = list[0]
-        onClickItem(list[0])
         notifyDataSetChanged()
+    }
+
+    fun setSelect(size: Size?){
+        var curenSize = size
+
+        if(listSize.isNotEmpty()){
+            if (curenSize == null ){
+                curenSize = listSize[0]
+            }
+            listSize.forEach{
+                it.isSelect = it._id == curenSize._id
+            }
+            onClickItem(curenSize)
+            notifyDataSetChanged()
+        }
     }
 
         class SizeViewHolder(private val binding: LayoutSizeBinding) :
@@ -43,7 +54,7 @@ class AdapterSize(private val onClickItem: (size: Size) -> Unit):
         val currentSize: Size = listSize[position]
         holder.size.text = currentSize.size_name
 
-        if (currentSize._id == sizeSelect?._id) {
+        if (currentSize.isSelect) {
             holder.size.setBackgroundResource(R.drawable.chips)
             holder.size.setTextColor(Color.RED)
         } else {
@@ -52,9 +63,7 @@ class AdapterSize(private val onClickItem: (size: Size) -> Unit):
         }
 
         holder.liner.setOnClickListener {
-            sizeSelect = currentSize
-            notifyDataSetChanged()
-            onClickItem(currentSize)
+            setSelect(currentSize)
         }
     }
 
