@@ -12,7 +12,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
@@ -21,7 +20,6 @@ import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
-import com.fpoly.smartlunch.data.model.Address
 import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.District
 import com.fpoly.smartlunch.data.model.Province
@@ -110,7 +108,6 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
 
         views.layoutSpinnerTinh.spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                paymentViewModel.handle(PaymentViewAction.GetDistrictAddress(listProvince.get(position).province_id))
                 handleResetSpinner(false, true, true)
                 views.edtNote.setText("")
 
@@ -273,7 +270,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             when(it.asyncListProvince){
                 is Success ->{
                     var listProvinceState = it.asyncListProvince.invoke()?.results
-                    if (listProvinceState != null){
+                    if (listProvinceState != null && listProvinceState.isNotEmpty()){
                         this.listProvince.addAll(listProvinceState)
                         adapterSpinnerProvince.notifyDataSetChanged()
                         it.asyncListProvince = Uninitialized
@@ -300,7 +297,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             when(it.asyncListWard){
                 is Success ->{
                     var listWardState = it.asyncListWard.invoke()?.results
-                    if (listWardState != null){
+                    if (listWardState != null && listWardState.isNotEmpty()){
                         this.listWard.addAll(listWardState)
                         adapterSpinnerWard.notifyDataSetChanged()
                         it.asyncListWard = Uninitialized

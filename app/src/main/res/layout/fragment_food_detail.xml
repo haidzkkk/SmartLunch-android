@@ -96,16 +96,9 @@
                                 android:id="@+id/tv_bought"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/grey"
                                 android:layout_marginTop="10dp"
-                                android:fontFamily="@font/sf_pro_text_light"/>
-
-                            <com.google.android.material.divider.MaterialDivider
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginVertical="10dp"
-                                android:layout_below="@+id/tv_bought"/>
-
+                                android:fontFamily="@font/sf_pro_text_light"
+                                android:textColor="@color/grey" />
 
                         </RelativeLayout>
 
@@ -113,7 +106,7 @@
                             android:id="@+id/lin2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="18dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -122,26 +115,24 @@
                                 android:layout_height="wrap_content"
                                 android:text="Mô tả sản phẩm"
                                 android:textColor="@color/black"
-                                android:textSize="16sp"
-                                />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/tv_desc"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:maxLines="2"
                                 android:ellipsize="end"
-                             />
+                                android:maxLines="2" />
 
                             <TextView
                                 android:id="@+id/tv_see_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Xem thêm"
-                                android:paddingBottom="15dp"
                                 android:paddingRight="15dp"
-                                android:textSize="12sp"
-                                android:textColor="@color/grey"/>
+                                android:paddingBottom="15dp"
+                                android:text="Xem thêm"
+                                android:textColor="@color/grey"
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -195,8 +186,7 @@
                                 android:id="@+id/rcv_topping"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                />
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                         </LinearLayout>
 
@@ -205,6 +195,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp">
+
                             <TextView
                                 android:id="@+id/lable_comment"
                                 android:layout_width="match_parent"
@@ -215,75 +206,76 @@
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
+
                             <TextView
-                                android:layout_below="@+id/lable_comment"
                                 android:id="@+id/tv_title_commemt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/lable_comment"
                                 android:drawableStart="@drawable/start"
-                                android:text="4.8 (1.2k đơn hàng)"
-                                />
+                                android:text="4.8 (1.2k đơn hàng)" />
 
                             <TextView
                                 android:id="@+id/tv_see_all_comment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Xem tất cả "
+                                android:layout_alignParentEnd="true"
                                 android:drawableEnd="@drawable/icon_right"
-                                android:textColor="@color/red"
-                                android:layout_alignParentEnd="true"/>
+                                android:text="Xem tất cả "
+                                android:textColor="@color/red" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rcv_comment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_title_commemt"
                                 android:layout_marginTop="5dp"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                android:layout_below="@+id/tv_title_commemt"/>
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                             <TextView
                                 android:id="@+id/tv_no_comment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_title_commemt"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
                                 android:text="Không có đánh giá nào"
-                                android:textColor="@color/grey"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/tv_title_commemt"
-                                />
+                                android:textColor="@color/grey" />
 
                         </RelativeLayout>
 
                         <View
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
-                            android:layout_alignParentBottom="true"/>
+                            android:layout_alignParentBottom="true" />
 
                     </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:paddingHorizontal="24dp"
-                android:paddingVertical="20dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:gravity="center_vertical"
                 android:background="@color/background">
 
                 <LinearLayout
                     android:id="@+id/linear_quanlity"
                     android:layout_width="110dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
+                    android:layout_height="50dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
 
                     <ImageView
                         android:id="@+id/linear_minu1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/icon_btn_minus" />
 
@@ -299,18 +291,57 @@
 
                     <ImageView
                         android:id="@+id/linear_minu2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp"
                         android:src="@drawable/icon_btn_plus" />
                 </LinearLayout>
 
-                <Button
+                <LinearLayout
                     android:id="@+id/button_add_cart"
-                    android:layout_width="181dp"
-                    android:layout_height="52dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_toStartOf="@+id/button_pay"
+                    android:layout_toEndOf="@+id/linear_quanlity"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/chips"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:src="@drawable/cart_plus_figma" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thêm vào giỏ hàng"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="7sp"
+                        />
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/button_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/button" />
-            </RelativeLayout>
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="mua ngay"
+                    android:ellipsize="end"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
 
             <include
                 android:id="@+id/appBar"

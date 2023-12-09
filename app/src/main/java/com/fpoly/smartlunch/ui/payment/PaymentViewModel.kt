@@ -11,6 +11,7 @@ import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
+import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Menu

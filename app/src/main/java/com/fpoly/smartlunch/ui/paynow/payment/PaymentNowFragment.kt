@@ -1,4 +1,4 @@
-package com.fpoly.smartlunch.ui.payment.payment
+package com.fpoly.smartlunch.ui.paynow.payment
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -31,6 +31,9 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.payment.PaymentViewModel
+import com.fpoly.smartlunch.ui.payment.payment.PaymentTypeBottomSheet
+import com.fpoly.smartlunch.ui.paynow.PayNowViewAction
+import com.fpoly.smartlunch.ui.paynow.PayNowViewModel
 import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.formatCash
 import com.fpoly.smartlunch.ultis.formatPaypal
@@ -52,10 +55,11 @@ import com.paypal.checkout.order.AppContext
 import com.paypal.checkout.order.PurchaseUnit
 import javax.inject.Inject
 
-class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
+class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
 
     var mGoogleMap: GoogleMap? = null
 
+    private val payNowViewModel: PayNowViewModel by activityViewModel()
     private val paymentViewModel: PaymentViewModel by activityViewModel()
     private val userViewModel: UserViewModel by activityViewModel()
 
@@ -107,8 +111,6 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
             addMarker(MarkerOptions().position(myAddress!!.toLatLng()))
         }
     }
-
-    @SuppressLint("SetTextI18n")
     private fun setupUi() {
         views.apply {
             extraCost.text = myCart?.total?.formatCash()
@@ -118,7 +120,6 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
             total.text = ((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0) + (myAddress?.deliveryFee ?: 0.0)).formatCash()
         }
     }
-
     private fun setupMap() {
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.map_view_payment) as SupportMapFragment?
@@ -127,8 +128,8 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
 
     private fun listenEvent() {
         views.swipeLoading.setOnRefreshListener {
+            payNowViewModel.handle(PayNowViewAction.CheckUpdateCartLocal(myCart))
             userViewModel.handle(UserViewAction.GetListAddress)
-            paymentViewModel.handle(PaymentViewAction.GetOneCartById)
         }
         views.toolbarPay.btnBackToolbar.setOnClickListener {
             activity?.onBackPressed()
@@ -198,7 +199,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 idStatus,
                 isPayment,
             )
-            paymentViewModel.handle(PaymentViewAction.CreateOder(orderRequest))
+            payNowViewModel.handle(PayNowViewAction.CreateOder(myCart, orderRequest))
         } else {
             activity?.showUtilDialog(
                 Notify(
@@ -265,20 +266,20 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
             }
         }
 
-        withState(paymentViewModel) {
-            paymentViewModel.returnShowLoading(it.asyncAddOrder is Loading || it.asyncUpdatePaymentOrder is Loading)
-            setupButtonPayment(it.paymentTypies ,it.curentPaymentType)
+        withState(payNowViewModel) {
 
-            when(it.asyncCurentCart){
-                is Success ->{
-                    myCart = it.asyncCurentCart.invoke()
+            when (it.curentCart) {
+                is Success -> {
+                    myCart = it.curentCart.invoke()
                     setupUi()
                 }
-                is Fail ->{
+
+                is Fail -> {
                     Toast.makeText(requireContext(), "Không có giỏ hàng", Toast.LENGTH_SHORT).show()
                     activity?.onBackPressed()
                 }
-                else ->{
+
+                else -> {
                 }
             }
 
@@ -307,6 +308,11 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
 
                 else -> {}
             }
+        }
+
+        withState(paymentViewModel) {
+            paymentViewModel.returnShowLoading(it.asyncAddOrder is Loading || it.asyncUpdatePaymentOrder is Loading)
+            setupButtonPayment(it.paymentTypies ,it.curentPaymentType)
         }
     }
 

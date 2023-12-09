@@ -15,7 +15,7 @@ import com.fpoly.smartlunch.ultis.convertIsoToStringFormat
 import com.fpoly.smartlunch.ultis.formatCash
 
 @SuppressLint("NotifyDataSetChanged")
-class AdapterCoupons (private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterCoupons.CouponsViewHolder>() {
+class AdapterCoupons (private val onClickItem: (coupon: CouponsResponse) -> Unit) : RecyclerView.Adapter<AdapterCoupons.CouponsViewHolder>() {
 
     var couponSelect: CouponsResponse? = null
     var listCoupons: List<CouponsResponse> = listOf()
@@ -75,7 +75,7 @@ class AdapterCoupons (private val onClickItem: (id: String) -> Unit) : RecyclerV
         holder.linner.setOnClickListener{
             couponSelect = if (couponSelect == coupons) null else coupons
             notifyDataSetChanged()
-            onClickItem(coupons._id)
+            onClickItem(coupons)
         }
 
     }

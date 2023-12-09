@@ -1,6 +1,6 @@
 package com.fpoly.smartlunch.data.repository
 
-import com.fpoly.smartlunch.data.model.Banner
+import com.fpoly.smartlunch.data.model.CartLocalRequest
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.CategoryResponse
@@ -11,13 +11,10 @@ import com.fpoly.smartlunch.data.model.Favourite
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.Gallery
-import com.fpoly.smartlunch.data.model.Message
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.PagingRequestProduct
 import com.fpoly.smartlunch.data.model.Product
-import com.fpoly.smartlunch.data.model.ProductCart
-import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.data.model.Topping
@@ -29,8 +26,6 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Path
-import retrofit2.http.Query
 import java.io.File
 import javax.inject.Inject
 import kotlin.random.Random
@@ -63,6 +58,8 @@ class ProductRepository @Inject constructor(
     fun getOneCartById(): Observable<CartResponse> = api.getOneCartById().subscribeOn(Schedulers.io())
     fun getClearCart(): Observable<CartResponse> = api.getClearCart().subscribeOn(Schedulers.io())
     fun getChangeQuantityCart(idProduct : String , changeQuantityRequest: ChangeQuantityRequest) : Observable<CartResponse> = api.getChangeQuantityCart(idProduct,changeQuantityRequest).subscribeOn(Schedulers.io())
+    fun getChangeQuantityCartLocal(idProduct : String , cartLocalRequest: CartLocalRequest<ChangeQuantityRequest>) : Observable<CartResponse> = api.getChangeQuantityCartLocal(idProduct,cartLocalRequest).subscribeOn(Schedulers.io())
+    fun getCheckUpdateCartLocal(cartLocalRequest: CartLocalRequest<ChangeQuantityRequest>) : Observable<CartResponse> = api.getCheckUpdateCartLocal(cartLocalRequest).subscribeOn(Schedulers.io())
     fun getRemoveGetOneProductCart(idProduct : String, sizeId : String) : Observable<CartResponse> = api.getRemoveGetOneProductCart(idProduct,sizeId).subscribeOn(Schedulers.io())
     fun getAllCategory(): Observable<CategoryResponse> = api.getAllCategory().subscribeOn(Schedulers.io())
     fun getAllProductByIdCategory(id : String): Observable<ArrayList<Product>> = api.getAllProductByIdCategory(id).subscribeOn(Schedulers.io())
@@ -71,11 +68,13 @@ class ProductRepository @Inject constructor(
     fun likeProduct(product: Product): Observable<Favourite> = api.likeProduct(product).subscribeOn(Schedulers.io())
     fun getFavourite(id: String): Observable<Favourite> = api.getFavourite(id).subscribeOn(Schedulers.io())
     fun createOrder(order: OrderRequest)=api.createOrder(order).subscribeOn(Schedulers.io())
+    fun createOrderCartLocal(cartLocalRequest: CartLocalRequest<OrderRequest>)=api.createOrderCartLocal(cartLocalRequest).subscribeOn(Schedulers.io())
     fun updateOrder(id: String, order: OrderRequest)= api.updateOrder(id, order).subscribeOn(Schedulers.io())
     fun updateIsPaymentOrder(id: String, isPayment: Boolean)=api.updateIsPaymentOrder(id, isPayment).subscribeOn(Schedulers.io())
     fun getCoupons(): Observable<ArrayList<CouponsResponse>> = api.getAllCoupons().subscribeOn(Schedulers.io())
     fun getOneCoupons(id: String): Observable<CouponsResponse> = api.getOneCoupons(id).subscribeOn(Schedulers.io())
     fun applyCoupon(coupons:CouponsRequest): Observable<CartResponse> = api.applyCoupon(coupons).subscribeOn(Schedulers.io())
+    fun applyCouponLocal(cartLocalRequest: CartLocalRequest<CouponsRequest>): Observable<CartResponse> = api.applyCouponLocal(cartLocalRequest).subscribeOn(Schedulers.io())
     fun getAllOrderByUserId(statusId: String): Observable<ArrayList<OrderResponse>> = api.getAllOrderByUserId(statusId).subscribeOn(Schedulers.io())
 
     fun getCurrentOrder(id: String): Observable<OrderResponse> = api.getCurrentOrder(id).subscribeOn(Schedulers.io())

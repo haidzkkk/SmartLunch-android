@@ -91,6 +91,9 @@ fun Int.formatCash(): String {
 fun Double.formatRate(): String{
     return DecimalFormat("#.#").format(this)
 }
+fun Double.formatPaypal(): String{
+    return DecimalFormat("#.##").format(this)
+}
 
 
 fun Int.formatView(): String{

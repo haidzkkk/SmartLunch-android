@@ -19,7 +19,6 @@ import com.fpoly.smartlunch.databinding.FragmentOrderDetailBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
-import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.StringUltis
 import com.fpoly.smartlunch.ultis.convertIsoToStringFormat

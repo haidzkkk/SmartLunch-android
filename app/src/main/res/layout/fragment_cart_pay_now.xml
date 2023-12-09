@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include
+
+                    android:id="@+id/layout_toolbar_cart"
+                    layout="@layout/toolbar_header"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rc_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Ghi chú đặt hàng"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="16dp"/>
+                <EditText
+                    android:id="@+id/note"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:hint="Nhập nội dung"
+                    android:paddingTop="15dp"
+                    android:paddingStart="15dp"
+                    android:textColorHint="#D1D8DD"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|start"
+                    android:scrollbars="vertical"
+                    android:maxLines="10"
+                    android:background="@drawable/khung"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:text="Thêm khuyến mãi"
+                        android:textColor="#000000"
+                        android:textSize="16dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/more_coupon"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:text="Xem thêm"
+                        android:textAlignment="textEnd"
+                        android:textColor="#F44849"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_voucher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Chi tiết thanh toán"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="16dp"/>
+                <LinearLayout
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tạm tính"
+                        android:textSize="16dp"
+                        android:textColor="#9CA4AB"/>
+
+                    <TextView
+                        android:id="@+id/tv_tam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="200.000 đ"
+                        android:textAlignment="textEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Giảm giá"
+                        android:textSize="16dp"
+                        android:textColor="#9CA4AB"/>
+
+                    <TextView
+                        android:id="@+id/tv_giam_gia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="30.000 đ"
+                        android:textAlignment="textEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tổng"
+                        android:textSize="16dp"
+                        android:textColor="#9CA4AB"/>
+
+                    <TextView
+                        android:id="@+id/tv_tong"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="30.000 đ"
+                        android:textAlignment="textEnd"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="#F44849"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btn_tiep_tuc"
+                    android:layout_width="match_parent"
+                    android:layout_margin="16dp"
+                    android:layout_height="56dp"
+                    android:text="Tiếp tục"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

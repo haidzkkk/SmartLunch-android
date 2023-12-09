@@ -1,7 +1,8 @@
 package com.fpoly.smartlunch.data.model
 
+import java.io.Serializable
+
 data class CouponsResponse(
-    val __v: Int,
     val _id: String,
     val coupon_code: String,
     val coupon_content: String,
@@ -11,4 +12,4 @@ data class CouponsResponse(
     val discount_amount: Int,
     val expiration_date: String,
     val min_purchase_amount: Int
-)
+): Serializable

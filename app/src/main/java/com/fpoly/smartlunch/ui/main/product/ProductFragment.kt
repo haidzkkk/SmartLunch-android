@@ -23,9 +23,12 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.CartRequest
+import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.ProductCart
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.data.model.Topping
+import com.fpoly.smartlunch.data.model.ToppingCart
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
@@ -34,9 +37,15 @@ import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
 import com.fpoly.smartlunch.ui.main.home.adapter.ToppingAdapter
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
+import com.fpoly.smartlunch.ui.payment.PaymentActivity
+import com.fpoly.smartlunch.ui.payment.payment.PayFragment
+import com.fpoly.smartlunch.ui.paynow.PayNowActivity
+import com.fpoly.smartlunch.ultis.StringUltis
+import com.fpoly.smartlunch.ultis.convertDateToStringFormat
 import com.fpoly.smartlunch.ultis.formatCash
 import com.fpoly.smartlunch.ultis.formatRate
 import com.fpoly.smartlunch.ultis.formatView
+import java.util.Date
 
 @SuppressLint("SetTextI18n")
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
@@ -88,7 +97,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         adapterSize = AdapterSize { idSize ->
             currentSize = idSize
             views.buttonAddCart.isEnabled = true
-            views.buttonAddCart.text = "Thêm ${(currentSize!!.size_price).formatCash()}"
+            views.priceDetailFood.text = (currentSize!!.size_price).formatCash()
         }
         adapterSize.setSelect(currentSize)
         views.rcvSize.adapter = adapterSize
@@ -170,7 +179,14 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         views.buttonAddCart.setOnClickListener {
             addCart()
         }
+        views.buttonPay.setOnClickListener{
+//            activity?.startActivityForResult(
+//                Intent(requireContext(), PaymentActivity::class.java),
+//                PayFragment.ACTIVITY_PAY_REQUEST_CODE
+//            )
+            sendCart()
 
+        }
         views.animAddProduct.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
             }
@@ -229,6 +245,48 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         currentSoldQuantity = 1
     }
 
+    private fun sendCart() {
+        var total = 0.0
+
+        val toppingCarts = arrayListOf<ToppingCart>()
+            toppingAdapter.getToppingsSelect()?.forEach{
+                toppingCarts.add(ToppingCart.toToppingCart(it))
+                total += it.price * it.quantity
+            }
+
+        val productCarts = arrayListOf<ProductCart>().apply {
+            add(currentProduct.let {
+                ProductCart(
+                    _id = "",
+                    productId = it!!,
+                    purchase_quantity = currentSoldQuantity!!,
+                    sizeId = currentSize!!,
+                    toppings = toppingCarts
+                )
+            })
+        }
+        total += (currentSize!!.size_price * currentSoldQuantity!!)
+
+        val cartResponse: CartResponse? = currentProduct?.let {
+            CartResponse(
+                _id = "",
+                userId = null,
+                couponId = null,
+                products = productCarts,
+                total = total,
+                totalCoupon = null,
+                createdAt = Date().convertDateToStringFormat(StringUltis.dateIso8601Format),
+                updatedAt = Date().convertDateToStringFormat(StringUltis.dateIso8601Format),
+            )
+        }
+
+        val intent = Intent(requireContext(), PayNowActivity::class.java)
+        intent.putExtras(Bundle().apply {
+            this.putSerializable("data", cartResponse)
+        })
+        startActivity(intent)
+    }
+
     private fun enableAnimation(view: LottieAnimationView, raw: Int) {
         view.visibility = View.VISIBLE
         view.setAnimation(raw)
@@ -265,7 +323,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
         when (it.curentAddProductToCartResponse) {
             is Success -> {
-                Toast.makeText(requireContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show()
                 it.curentAddProductToCartResponse = Uninitialized
             }
             is Fail ->{

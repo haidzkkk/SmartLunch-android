@@ -4,7 +4,7 @@ import java.io.Serializable
 data class ProductCart(
     val _id: String,
     val productId: Product,
-    val purchase_quantity : Int,
+    var purchase_quantity : Int,
     val sizeId: Size,
     val toppings: ArrayList<ToppingCart>
 ):Serializable
@@ -12,4 +12,13 @@ data class ProductCart(
 data class ToppingCart(
     val _id: Topping,
     val _quantity : Int
-):Serializable
+):Serializable{
+    companion object{
+        fun toToppingCart(topping: Topping): ToppingCart{
+            return ToppingCart(
+                topping,
+                topping.quantity
+            )
+        }
+    }
+}
