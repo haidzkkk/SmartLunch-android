@@ -1,12 +1,14 @@
 package com.fpoly.smartlunch.data.model
 
+import java.io.Serializable
+
 data class Topping(
     val _id: String,
     val name: String,
     val price: Double,
     val productId: String,
     val isActive: Boolean
-){
+): Serializable{
     private var _quantity: Int = 0
     val quantity: Int
         get() {

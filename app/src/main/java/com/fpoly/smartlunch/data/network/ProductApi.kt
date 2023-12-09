@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.data.network
 
 import com.fpoly.smartlunch.data.model.Banner
+import com.fpoly.smartlunch.data.model.CartLocalRequest
 import com.fpoly.smartlunch.data.model.CartRequest
 import com.fpoly.smartlunch.data.model.CartResponse
 import com.fpoly.smartlunch.data.model.CategoryResponse
@@ -14,7 +15,6 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.data.model.Topping
-import com.fpoly.smartlunch.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -50,10 +50,16 @@ interface ProductApi {
     fun getClearCart(): Observable<CartResponse>
     @PUT("/api/carts/change")
     fun getChangeQuantityCart(@Query("idProduct") idProduct: String,@Body changeQuantityRequest: ChangeQuantityRequest): Observable<CartResponse>
+    @PUT("/api/carts/local/change")
+    fun getChangeQuantityCartLocal(@Query("idProduct") idProduct: String,@Body cartLocalRequest: CartLocalRequest<ChangeQuantityRequest>): Observable<CartResponse>
+    @PUT("/api/carts/local/update")
+    fun getCheckUpdateCartLocal(@Body cartLocalRequest: CartLocalRequest<ChangeQuantityRequest>): Observable<CartResponse>
     @DELETE("/api/carts/remove")
     fun getRemoveGetOneProductCart(@Query("idProduct") idProduct: String,@Query("sizeId") sizeId: String ): Observable<CartResponse>
     @PATCH("/api/carts/apply")
     fun applyCoupon(@Body coupons: CouponsRequest): Observable<CartResponse>
+    @PATCH("/api/carts/local/apply")
+    fun applyCouponLocal(@Body cartLocalRequest: CartLocalRequest<CouponsRequest>): Observable<CartResponse>
 
     @GET("/api/category")
     fun getAllCategory(): Observable<CategoryResponse>
@@ -71,6 +77,8 @@ interface ProductApi {
     fun likeProduct(@Body product: Product): Observable<Favourite>
     @POST("/api/order")
     fun createOrder( @Body order: OrderRequest): Observable<OrderResponse>
+    @POST("/api/order/local")
+    fun createOrderCartLocal( @Body cartLocalRequest: CartLocalRequest<OrderRequest>): Observable<OrderResponse>
     @PATCH("/api/order/{id}")
     fun updateOrder(@Path("id") id: String, @Body order: OrderRequest): Observable<OrderResponse>
     @PATCH("/api/order/payment/{id}")

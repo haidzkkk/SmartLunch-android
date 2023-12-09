@@ -151,7 +151,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="200.000 đ"
                         android:textAlignment="textEnd"
                         android:textSize="16dp"
                         android:textStyle="bold" />
@@ -175,7 +174,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="25.000 đ"
                         android:textAlignment="textEnd"
                         android:textSize="16dp"
                         android:textStyle="bold" />
@@ -199,7 +197,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="30.000 đ"
                         android:textAlignment="textEnd"
                         android:textSize="16dp"
                         android:textStyle="bold" />
@@ -246,7 +243,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="30.000 đ"
                         android:textAlignment="textEnd"
                         android:textColor="#F44849"
                         android:textSize="16dp"

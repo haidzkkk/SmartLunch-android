@@ -1,13 +1,11 @@
 package com.fpoly.smartlunch.ui.main.product
 
-import android.os.Bundle
 import com.airbnb.mvrx.ActivityViewModelContext
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.Success
-import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
 import com.fpoly.smartlunch.data.model.CartRequest
@@ -22,8 +20,6 @@ import com.fpoly.smartlunch.data.model.SortPagingProduct
 import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
-import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
-import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ultis.Status.CONFIRMED_STATUS
 import com.fpoly.smartlunch.ultis.Status.DELIVERING_STATUS
 import com.fpoly.smartlunch.ultis.Status.UNCONFIRMED_STATUS

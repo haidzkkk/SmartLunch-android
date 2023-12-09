@@ -27,6 +27,16 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/id_order"
+            android:maxLength="15"
+            android:ellipsize="end"
+            android:textSize="10sp" />
+
+        <TextView
             android:textColor="@color/black"
             android:id="@+id/lable_status"
             android:layout_width="wrap_content"

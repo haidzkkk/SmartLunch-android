@@ -1,5 +1,7 @@
 package com.fpoly.smartlunch.data.model
 
+import java.io.Serializable
+
 data class Product(
     val _id: String,
     val categoryId: String,
@@ -16,4 +18,6 @@ data class Product(
     val rate_count: Int,
     val isActive: Boolean,
     val deleted: Boolean,
-)
+): Serializable{
+
+}
