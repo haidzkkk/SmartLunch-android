@@ -110,7 +110,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 handleResetSpinner(false, true, true)
                 views.edtNote.setText("")
-
+                paymentViewModel.handle(PaymentViewAction.GetDistrictAddress(listProvince.get(position).province_id))
                 if (position > 0){
                     curenProvince = listProvince.get(position)
                     handleGetAddressLocation()
@@ -270,7 +270,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             when(it.asyncListProvince){
                 is Success ->{
                     var listProvinceState = it.asyncListProvince.invoke()?.results
-                    if (listProvinceState != null && listProvinceState.isNotEmpty()){
+                    if (listProvinceState != null){
                         this.listProvince.addAll(listProvinceState)
                         adapterSpinnerProvince.notifyDataSetChanged()
                         it.asyncListProvince = Uninitialized
@@ -297,7 +297,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             when(it.asyncListWard){
                 is Success ->{
                     var listWardState = it.asyncListWard.invoke()?.results
-                    if (listWardState != null && listWardState.isNotEmpty()){
+                    if (listWardState != null){
                         this.listWard.addAll(listWardState)
                         adapterSpinnerWard.notifyDataSetChanged()
                         it.asyncListWard = Uninitialized
