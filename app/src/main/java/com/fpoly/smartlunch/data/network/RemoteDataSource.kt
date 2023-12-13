@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.data.network
 
 import android.content.Context
+import com.fpoly.smartlunch.data.model.ZaloPayInfo
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -13,7 +14,7 @@ class RemoteDataSource(
 
 ) {
     companion object{
-        public const val BASE_URL = "http://192.168.31.98:3000"
+        public const val BASE_URL = "http://192.168.1.4:3000"
 
         public const val OPEN_STREET_MAP_URL = "https://nominatim.openstreetmap.org/"
         public const val URL_PROVINCE = "https://vapi.vnappmob.com"
@@ -42,6 +43,16 @@ class RemoteDataSource(
     public fun <API> buildApiOpenStreetMap(apiClass: Class<API>, context: Context): API{
         return Retrofit.Builder()
             .baseUrl(OPEN_STREET_MAP_URL)
+            .client(getHttpClientBuilder(context).build())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(apiClass)
+    }
+
+    public fun <API> buildApiOrderZalopay(apiClass: Class<API>, context: Context): API{
+        return Retrofit.Builder()
+            .baseUrl(ZaloPayInfo.URL_CREATE_ORDER)
             .client(getHttpClientBuilder(context).build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

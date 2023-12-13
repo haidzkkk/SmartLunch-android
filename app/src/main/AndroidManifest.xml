@@ -8,6 +8,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
@@ -46,17 +47,39 @@
         <activity
             android:name=".ui.call.CallActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ui.paynow.PayNowActivity"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".ui.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="demozpdkpaynow"
+                    android:host="app" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.payment.PaymentActivity"
-            android:exported="false"
+            android:exported="true"
             android:parentActivityName=".ui.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="demozpdkpayment"
+                    android:host="app" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ui.chat.ChatActivity"
             android:exported="false"

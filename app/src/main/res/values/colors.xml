@@ -38,6 +38,7 @@
     <color name="grey_transparent2">#45AAAAAA</color>
     <color name="dark_grey">#ff424242</color>
     <color name="grey_white">#F3F3F3</color>
+    <color name="grey_black">#667070</color>
 
     <color name="background">@color/white</color>
     <color name="background1">#aaa/</color>
@@ -47,5 +48,4 @@
 
     <color name="selected_tab_color">#ff464f</color>
     <color name="unselected_tab_color">#CCCCCC</color>
-
 </resources>

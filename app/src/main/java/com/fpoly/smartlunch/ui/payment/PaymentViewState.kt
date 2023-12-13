@@ -9,6 +9,7 @@ import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.District
 import com.fpoly.smartlunch.data.model.Menu
 import com.fpoly.smartlunch.data.model.OrderResponse
+import com.fpoly.smartlunch.data.model.OrderZaloPayReponse
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Province
@@ -39,5 +40,7 @@ data class PaymentViewState(
     var asyncListProvince: Async<ProvinceAddress<Province>> =Uninitialized,
     var asyncListDistrict: Async<ProvinceAddress<District>> =Uninitialized,
     var asyncListWard: Async<ProvinceAddress<Ward>> =Uninitialized,
+
+    var asyncOrderZaloPayReponse: Async<OrderZaloPayReponse> =Uninitialized,
 ): MvRxState {
 }

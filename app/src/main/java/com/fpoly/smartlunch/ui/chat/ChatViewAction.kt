@@ -16,7 +16,7 @@ sealed class ChatViewAction : PolyViewAction{
     data class setCurrentChat(val roomId: String?): ChatViewAction()
     object removeCurrentChat: ChatViewAction()
 
-    data class postMessage(val message: Message, val images: List<Gallery>?): ChatViewAction()
+    data class postMessage(val message: Message, val images: List<Gallery>? = null, val pathPhoto: String? = null): ChatViewAction()
     object removePostMessage: ChatViewAction()
 
     object returnConnectSocket: ChatViewAction()

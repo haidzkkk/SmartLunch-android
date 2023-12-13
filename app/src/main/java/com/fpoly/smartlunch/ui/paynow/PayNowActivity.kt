@@ -29,6 +29,7 @@ import com.fpoly.smartlunch.ui.paynow.cart.CartPayNowFragment
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
 import com.fpoly.smartlunch.ultis.startActivityWithData
+import vn.zalopay.sdk.ZaloPaySDK
 import javax.inject.Inject
 
 class PayNowActivity : PolyBaseActivity<ActivityPayNowBinding>(),
@@ -77,6 +78,11 @@ class PayNowActivity : PolyBaseActivity<ActivityPayNowBinding>(),
     override fun onPause() {
         super.onPause()
         unregisterReceiver(broadcastReceiverCall)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
     }
 
 
