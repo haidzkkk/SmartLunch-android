@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +27,8 @@ import com.fpoly.smartlunch.data.model.Menu
 import com.fpoly.smartlunch.data.model.Notify
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
+import com.fpoly.smartlunch.data.model.OrderZaloPayRequest
+import com.fpoly.smartlunch.data.model.ZaloPayInfo
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentPayBinding
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
@@ -50,7 +54,12 @@ import com.paypal.checkout.error.OnError
 import com.paypal.checkout.order.Amount
 import com.paypal.checkout.order.AppContext
 import com.paypal.checkout.order.PurchaseUnit
+import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPayError
+import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.listeners.PayOrderListener
 import javax.inject.Inject
+
 
 class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
 
@@ -187,6 +196,17 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 paymentViewModel.returnShowLoading(false)
             }
         )
+
+        views.btnPayZalopay.setOnClickListener{
+            paymentViewModel.returnShowLoading(true)
+
+            val policy = ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            ZaloPaySDK.init(ZaloPayInfo.APP_ID, Environment.SANDBOX)
+
+            val amount = ((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0) + (myAddress?.deliveryFee ?: 0.0)).formatPaypal()
+            paymentViewModel.handle(PaymentViewAction.CreateOrderZaloPay(OrderZaloPayRequest.createOrder(amount)))
+        }
     }
 
     private fun payment(idStatus: String, isPayment: Boolean? = false) {
@@ -223,16 +243,17 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
     }
 
     private fun setupButtonPayment(listPaymentType: ArrayList<Menu>, menu: Menu?){
-        views.optionPayment.text = menu?.name ?: "Tiền mặt"
+        views.optionPayment.text = menu?.name
 
         views.btnPayCash.isVisible = false
         views.btnPayPaypal.isVisible = false
+        views.btnPayZalopay.isVisible = false
 
         when(menu?.id){
             listPaymentType[0].id -> views.btnPayCash.isVisible = true
             listPaymentType[1].id -> views.btnPayPaypal.isVisible = true
             listPaymentType[2].id -> views.btnPayCash.isVisible = true
-            listPaymentType[3].id -> views.btnPayCash.isVisible = true
+            listPaymentType[3].id -> views.btnPayZalopay.isVisible = true
             listPaymentType[4].id -> views.btnPayCash.isVisible = true
             else ->{ views.btnPayCash.isVisible = true }
         }
@@ -266,7 +287,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
         }
 
         withState(paymentViewModel) {
-            paymentViewModel.returnShowLoading(it.asyncAddOrder is Loading || it.asyncUpdatePaymentOrder is Loading)
+            paymentViewModel.returnShowLoading(it.asyncAddOrder is Loading)
             setupButtonPayment(it.paymentTypies ,it.curentPaymentType)
 
             when(it.asyncCurentCart){
@@ -292,7 +313,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 }
 
                 is Fail -> {
-                    Log.e("PayFragment", "invalidate: ${(it.asyncAddOrder as Fail<OrderResponse>).error.message!!.trim()}", )
+                    Log.e("PayFragment", "invalidate: ${(it.asyncAddOrder as Fail<OrderResponse>).error.message!!.trim()}")
                     activity?.showUtilDialog(
                         Notify(
                             getString(R.string.pay),
@@ -305,13 +326,56 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                     it.asyncAddOrder = Uninitialized
                 }
 
-                else -> {}
+                else -> {
+                }
+            }
+
+            when(it.asyncOrderZaloPayReponse){
+                is Success -> {
+                    val data = it.asyncOrderZaloPayReponse.invoke()
+                    if (data?.return_code.equals("1")){
+                        val token = data?.zp_trans_token
+                        handlePaymentZaloPay(token.toString())
+                    }else{
+                        Toast.makeText(requireContext(), "Tạo bóa đơn zalopay thất bại", Toast.LENGTH_SHORT).show()
+                    }
+
+                    it.asyncOrderZaloPayReponse = Uninitialized
+                }
+                is Fail ->{
+                    Toast.makeText(requireContext(), "Tạo bóa đơn zalopay failed", Toast.LENGTH_SHORT).show()
+                    it.asyncOrderZaloPayReponse = Uninitialized
+                }
+                else ->{
+                }
             }
         }
     }
 
     override fun onMapReady(p0: GoogleMap) {
         mGoogleMap = p0
+    }
+
+    private fun handlePaymentZaloPay(token: String){
+        ZaloPaySDK.getInstance().payOrder(requireActivity(), token, "demozpdkpayment://app", object : PayOrderListener{
+            override fun onPaymentSucceeded(p0: String?, p1: String?, p2: String?) {
+                Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show()
+                payment(Status.STATUS_ZALOPAY, true)
+            }
+
+            override fun onPaymentCanceled(p0: String?, p1: String?) {
+                Toast.makeText(requireContext(), "Bạn đã thoát thanh toán", Toast.LENGTH_SHORT).show()
+                Log.e("MainActivity", "OnCancel")
+                paymentViewModel.returnShowLoading(false)
+            }
+
+            override fun onPaymentError(p0: ZaloPayError?, p1: String?, p2: String?) {
+                Toast.makeText(requireContext(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show()
+                Log.e("MainActivity", "OnError $p0")
+                paymentViewModel.returnShowLoading(false)
+            }
+
+        })
     }
 
 }

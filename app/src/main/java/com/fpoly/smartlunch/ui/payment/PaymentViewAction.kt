@@ -5,7 +5,9 @@ import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Menu
 import com.fpoly.smartlunch.data.model.OrderRequest
+import com.fpoly.smartlunch.data.model.OrderZaloPayRequest
 import com.fpoly.smartlunch.ui.main.product.ProductAction
+import okhttp3.RequestBody
 
 sealed class PaymentViewAction : PolyViewAction {
     object getListPaymentType: PaymentViewAction()
@@ -29,4 +31,6 @@ sealed class PaymentViewAction : PolyViewAction {
     object GetProvinceAddress : PaymentViewAction()
     data class GetDistrictAddress(val provinceId: String) : PaymentViewAction()
     data class GetWardAddress(val districtId: String) : PaymentViewAction()
+
+    data class CreateOrderZaloPay(val requestBody: RequestBody) : PaymentViewAction()
 }

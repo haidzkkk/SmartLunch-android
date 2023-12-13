@@ -89,7 +89,7 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
             homeViewModel.handleChangeThemeMode(isChecked)
             handleDarkMode(isChecked)
-            activity?.recreate()
+//            activity?.recreate()
         }
 
         views.layoutNotifies.setOnClickListener {

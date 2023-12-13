@@ -94,7 +94,21 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
             }else{
                 Toast.makeText(requireContext(), "Không tìm thấy người giao hàng", Toast.LENGTH_SHORT).show()
             }
-
+        }
+        views.btnCall.setOnClickListener {
+            if (currentOrder?.shipperId != null){
+                val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                    putExtras(Bundle().apply {
+                        putString("type", MyConfigNotifi.TYPE_CALL_OFFER)
+                        putString("idUrl", currentOrder?.shipperId ?: "")
+                    }
+                    )
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(intent)
+            }else{
+                Toast.makeText(requireContext(), "Không tìm thấy người giao hàng", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

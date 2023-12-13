@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.StrictMode
 import androidx.core.view.isVisible
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -27,6 +28,8 @@ import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
 import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
 import com.fpoly.smartlunch.ultis.startActivityWithData
+import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPaySDK
 import javax.inject.Inject
 
 class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewModel.Factory,
@@ -81,6 +84,11 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
     override fun onPause() {
         super.onPause()
         unregisterReceiver(broadcastReceiverCall)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
     }
 
     private fun initUI() {
