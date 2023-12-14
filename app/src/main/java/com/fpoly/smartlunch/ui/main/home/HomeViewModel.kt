@@ -24,12 +24,12 @@ import com.fpoly.smartlunch.ui.main.order.TrackingOrderFragment
 //import com.fpoly.smartlunch.ui.main.order.PayFragment
 import com.fpoly.smartlunch.ui.main.product.ProductFragment
 import com.fpoly.smartlunch.ui.main.product.ProductListFragment
-import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
 import com.fpoly.smartlunch.ui.main.profile.EditProfileFragment
 import com.fpoly.smartlunch.ui.main.profile.LanguageFragment
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.main.search.SearchFragment
+import com.fpoly.smartlunch.ui.payment.address.AddressPaymentFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -99,7 +99,7 @@ class HomeViewModel @AssistedInject constructor(
     fun returnEditProfileFragment(){
         _viewEvents.post(HomeViewEvent.NavigateTo(EditProfileFragment::class.java))
     }fun returnAddressFragment(){
-        _viewEvents.post(HomeViewEvent.NavigateTo(AddressFragment::class.java))
+        _viewEvents.post(HomeViewEvent.NavigateTo(AddressPaymentFragment::class.java))
     }
     fun returnLanguageFragment(){
         _viewEvents.post(HomeViewEvent.NavigateTo(LanguageFragment::class.java))

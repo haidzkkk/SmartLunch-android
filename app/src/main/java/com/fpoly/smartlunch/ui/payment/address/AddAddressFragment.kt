@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.airbnb.mvrx.Fail
-import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
@@ -28,8 +27,6 @@ import com.fpoly.smartlunch.data.model.Ward
 import com.fpoly.smartlunch.databinding.FragmentAddAddressBinding
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
-import com.fpoly.smartlunch.ui.payment.PaymentViewAction
-import com.fpoly.smartlunch.ui.payment.PaymentViewModel
 import com.fpoly.smartlunch.ultis.checkNull
 import com.fpoly.smartlunch.ultis.checkPhoneNumberValid
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -59,7 +56,8 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
     var curentLatitude: Double? = null
     var curentLongidute: Double? = null
 
-    private val paymentViewModel: PaymentViewModel by activityViewModel()
+    var isProvinceIdHaNoi: Boolean = false
+
     private val userViewModel: UserViewModel by activityViewModel()
 
     lateinit var gMap: GoogleMap
@@ -93,7 +91,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
         adapterSpinnerWard = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listWard)
         views.layoutSpinnerXa.spinner.adapter = adapterSpinnerWard
 
-        paymentViewModel.handle(PaymentViewAction.GetProvinceAddress)
+        userViewModel.handle(UserViewAction.GetProvinceAddress)
         handleResetSpinner(true, true, true)
     }
 
@@ -110,9 +108,10 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 handleResetSpinner(false, true, true)
                 views.edtNote.setText("")
-                paymentViewModel.handle(PaymentViewAction.GetDistrictAddress(listProvince.get(position).province_id))
+                isProvinceIdHaNoi = listProvince[position].province_id == "01"
+                userViewModel.handle(UserViewAction.GetDistrictAddress(listProvince[position].province_id))
                 if (position > 0){
-                    curenProvince = listProvince.get(position)
+                    curenProvince = listProvince[position]
                     handleGetAddressLocation()
                 }else{
                     curenProvince = null
@@ -126,7 +125,7 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
 
         views.layoutSpinnerHuyen.spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                paymentViewModel.handle(PaymentViewAction.GetWardAddress(listDistrict.get(position).district_id))
+                userViewModel.handle(UserViewAction.GetWardAddress(listDistrict.get(position).district_id))
                 handleResetSpinner(false, false, true)
                 views.edtNote.setText("")
 
@@ -162,8 +161,8 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
     }
 
     private fun handleGetAddressLocation() {
-        var geocoder = Geocoder(requireContext())
-        var listLocation: List<android.location.Address>? = null
+        val geocoder = Geocoder(requireContext())
+        var listLocation: List<android.location.Address>?
 
         try {
             listLocation = geocoder.getFromLocationName("${views.edtNote.text.toString().trim()}, ${curenWard?.ward_name}, ${curenDistrict?.district_name}, ${curenProvince?.province_name}", 1)
@@ -221,36 +220,38 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
 
     private fun handlePostAddress() {
         if (views.edtName.checkNull(requireActivity().resources)
-            or views.edtPhone.checkNull(requireActivity().resources) or views.tilPhone.checkPhoneNumberValid(requireActivity().resources)
+            or views.edtPhone.checkNull(requireActivity().resources) or views.edtPhone.checkPhoneNumberValid(requireActivity().resources)
             || curenProvince == null || curenDistrict == null
             || ( curenWard == null && views.edtNote.checkNull(requireActivity().resources) )){
             Toast.makeText(requireContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
         }else{
-            var strAddressLine = ""
+            if (!isProvinceIdHaNoi){
+                Toast.makeText(requireContext(), "Chỉ được chọn địa chỉ quanh khu vực Hà Nội", Toast.LENGTH_SHORT).show()
+            }else{
+                var strAddressLine = ""
 
-            val edtNoteText = views.edtNote.text.toString().trim()
-            val wardName = curenWard?.ward_name
-            if (edtNoteText.isNotEmpty() && wardName?.isNotEmpty() == true) {
-                strAddressLine = "$edtNoteText, $wardName, ${curenDistrict?.district_name}, ${curenProvince?.province_name}"
-            } else {
-                strAddressLine = "${edtNoteText}${if (edtNoteText.isNotEmpty() && wardName.isNullOrEmpty()) "" else wardName}, ${curenDistrict?.district_name}, ${curenProvince?.province_name}"
+                val edtNoteText = views.edtNote.text.toString().trim()
+                val wardName = curenWard?.ward_name
+                if (edtNoteText.isNotEmpty() && wardName?.isNotEmpty() == true) {
+                    strAddressLine = "$edtNoteText, $wardName, ${curenDistrict?.district_name}, ${curenProvince?.province_name}"
+                } else {
+                    strAddressLine = "${edtNoteText}${if (edtNoteText.isNotEmpty() && wardName.isNullOrEmpty()) "" else wardName}, ${curenDistrict?.district_name}, ${curenProvince?.province_name}"
+                }
+
+                    val addressRequest = AddressRequest(
+                    views.edtName.text.toString(),
+                    views.edtPhone.text.toString(),
+                    strAddressLine,
+                    curentLatitude ?: 0.0,
+                    curentLongidute ?: 0.0,
+                    )
+                userViewModel.handle(UserViewAction.AddAddress(addressRequest))
             }
-
-            var addressRequest = AddressRequest(
-                views.edtName.text.toString(),
-                views.edtPhone.text.toString(),
-                strAddressLine,
-                curentLatitude ?: 0.0,
-                curentLongidute ?: 0.0,
-                )
-            userViewModel.handle(UserViewAction.AddAddress(addressRequest))
         }
     }
 
     override fun invalidate() {
         withState(userViewModel){
-            paymentViewModel.returnShowLoading(it.asyncCreateAddress is Loading)
-
             when(it.asyncCreateAddress){
                 is Success ->{
                     Toast.makeText(requireContext(), "Thêm địa chỉ thành công", Toast.LENGTH_SHORT).show()
@@ -264,9 +265,6 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
 
                 }
             }
-        }
-
-        withState(paymentViewModel){
             when(it.asyncListProvince){
                 is Success ->{
                     var listProvinceState = it.asyncListProvince.invoke()?.results

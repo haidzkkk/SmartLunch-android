@@ -21,6 +21,7 @@ import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
+import com.fpoly.smartlunch.ui.main.profile.UserViewEvent
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.payment.cart.CartFragment
@@ -122,6 +123,20 @@ class PaymentActivity : PolyBaseActivity<ActivityPaymentBinding>(), PaymentViewM
         productViewModel.observeViewEvents {
             when(it){
                 is ProductEvent.ReturnFragment<*> -> { addFragmentToBackStack(R.id.frame_layout, it.fragmentClass, bundle = it.bundle) }
+                else -> {}
+            }
+        }
+
+        userViewModel.observeViewEvents {event ->
+            when(event){
+                is UserViewEvent.ReturnFragment<*> -> {
+                    addFragmentToBackStack(
+                        R.id.frame_layout,
+                        event.fragmentClass,
+                        bundle = event.bundle,
+                        tag = event.fragmentClass.simpleName
+                    )
+                }
                 else -> {}
             }
         }

@@ -28,9 +28,5 @@ sealed class PaymentViewAction : PolyViewAction {
     object GetListCoupons : PaymentViewAction()
     data class ApplyCoupon(val coupons: CouponsRequest) : PaymentViewAction()
 
-    object GetProvinceAddress : PaymentViewAction()
-    data class GetDistrictAddress(val provinceId: String) : PaymentViewAction()
-    data class GetWardAddress(val districtId: String) : PaymentViewAction()
-
     data class CreateOrderZaloPay(val requestBody: RequestBody) : PaymentViewAction()
 }

@@ -11,6 +11,10 @@ import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.ChangePassword
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.data.repository.UserRepository
+import com.fpoly.smartlunch.ui.payment.PaymentViewAction
+import com.fpoly.smartlunch.ui.payment.PaymentViewEvent
+import com.fpoly.smartlunch.ui.payment.address.AddAddressFragment
+import com.fpoly.smartlunch.ui.payment.address.DetailAddressFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -42,6 +46,10 @@ class UserViewModel @AssistedInject constructor(
             is UserViewAction.AddAddress -> handleAddAddress(action.addressRequest)
             is UserViewAction.UpdateAddress -> handleUpdateAddress(action.id)
             is UserViewAction.DeleteAddressById -> handleDeleteAddressById(action.id)
+
+            is UserViewAction.GetProvinceAddress -> handleGetListProvince()
+            is UserViewAction.GetDistrictAddress -> handleGetListDistrict(action.provinceId)
+            is UserViewAction.GetWardAddress -> handleGetListWard(action.districtId)
         }
     }
     private fun handleLogoutUser() {
@@ -129,6 +137,44 @@ class UserViewModel @AssistedInject constructor(
             copy(asyncCurrentUser = it)
         }
     }
+
+
+
+    private fun handleGetListProvince() {
+        setState {
+            copy(
+                asyncListProvince = Loading(),
+                asyncListDistrict = Uninitialized,
+                asyncListWard = Uninitialized
+            )
+        }
+        repository.getProvince().execute {
+            copy(asyncListProvince = it)
+        }
+    }
+
+    private fun handleGetListDistrict(provinceId: String) {
+        setState { copy(asyncListDistrict = Loading(), asyncListWard = Uninitialized) }
+        repository.getDistrict(provinceId).execute {
+            copy(asyncListDistrict = it)
+        }
+    }
+
+    private fun handleGetListWard(districtId: String) {
+        setState { copy(asyncListWard = Loading()) }
+        repository.getWard(districtId).execute {
+            copy(asyncListWard = it)
+        }
+    }
+
+    fun returnDetailAddressFragment() {
+        _viewEvents.post(UserViewEvent.ReturnFragment(DetailAddressFragment::class.java))
+    }
+
+    fun returnAddAddressFragment() {
+        _viewEvents.post(UserViewEvent.ReturnFragment(AddAddressFragment::class.java))
+    }
+
 
     @AssistedFactory
     interface Factory {

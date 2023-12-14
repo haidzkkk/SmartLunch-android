@@ -4,6 +4,7 @@ import com.fpoly.smartlunch.core.PolyViewAction
 import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.ChangePassword
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
+import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import java.io.File
 
 sealed class UserViewAction: PolyViewAction {
@@ -18,4 +19,8 @@ sealed class UserViewAction: PolyViewAction {
     data class ChangePasswordUser(val changePassword: ChangePassword): UserViewAction()
     data class UpdateUser(val updateUser: UpdateUserRequest): UserViewAction()
     data class UploadAvatar(val avatar: File): UserViewAction()
+
+    object GetProvinceAddress : UserViewAction()
+    data class GetDistrictAddress(val provinceId: String) : UserViewAction()
+    data class GetWardAddress(val districtId: String) : UserViewAction()
 }

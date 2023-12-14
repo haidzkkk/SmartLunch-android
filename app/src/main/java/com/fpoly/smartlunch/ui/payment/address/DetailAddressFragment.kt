@@ -31,9 +31,7 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
     var gMap: GoogleMap? = null
     var curentAddress: Address? = null
 
-
     private val userViewModel: UserViewModel by activityViewModel()
-    private val paymentViewModel: PaymentViewModel by activityViewModel()
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAddAddressBinding {
         return FragmentAddAddressBinding.inflate(layoutInflater)
     }
@@ -121,9 +119,6 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
 
                 }
             }
-        }
-        withState(paymentViewModel){
-
         }
     }
 

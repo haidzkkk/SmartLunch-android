@@ -1,6 +1,7 @@
 package com.fpoly.smartlunch.ui.main.order
 
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +18,19 @@ import com.fpoly.smartlunch.ui.main.home.adapter.ToppingAdapter
 import com.fpoly.smartlunch.ultis.formatCash
 
 
+@SuppressLint("NotifyDataSetChanged")
 class ProductOrderAdapter(private val onPress: (productOrder: ProductOrder) -> Unit): RecyclerView.Adapter<ProductOrderAdapter.ViewHolder>() {
-    var orderResporn: OrderResponse? = null
+    var products: List<ProductOrder>? = null
 
     fun setData(data: OrderResponse?){
         if (data == null) return
-        this.orderResporn = data
+        this.products = data.products
+        notifyDataSetChanged()
+    }
+
+    fun setData(data: List<ProductOrder>?){
+        if (data == null) return
+        this.products = data
         notifyDataSetChanged()
     }
 
@@ -64,13 +72,13 @@ class ProductOrderAdapter(private val onPress: (productOrder: ProductOrder) -> U
     }
 
     override fun getItemCount(): Int {
-        if (orderResporn?.products != null) return orderResporn?.products!!.size
+        if (products != null) return products!!.size
         return 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (orderResporn?.products != null){
-            holder.onBind(orderResporn?.products!![position], position)
+        if (products != null){
+            holder.onBind(products!![position], position)
         }
     }
 }
