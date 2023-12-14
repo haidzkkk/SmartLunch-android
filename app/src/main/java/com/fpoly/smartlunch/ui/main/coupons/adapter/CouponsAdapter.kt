@@ -35,7 +35,7 @@ class CouponsAdapter(private val onClickItem: (String) -> Unit) : RecyclerView.A
         @SuppressLint("SetTextI18n")
         fun bind(coupon: CouponsResponse) {
             binding.apply {
-                tvName.text = "${coupon.coupon_name} ${coupon.discount_amount}%"
+                tvName.text = coupon.coupon_name
                 tvCode.text = "Tối thiểu ${coupon.min_purchase_amount.toDouble().formatCash()}"
                 date.text = " ${coupon.expiration_date.convertIsoToStringFormat(StringUltis.dateDayFormat)}"
                 Glide.with(root.context).load(if(coupon.coupon_images.isNotEmpty()) coupon.coupon_images[0].url else "").into(imgCoupon)

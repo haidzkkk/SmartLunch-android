@@ -36,15 +36,17 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
             onItemProductClickListener(it)
         }
         views.recyclerViewHoz.adapter = adapter
+        productViewModel.handle(ProductAction.GetAllFavouriteProduct)
     }
 
     private fun listenEvent() {
-        views.swipeLoading.setOnRefreshListener {
-            productViewModel.handle(ProductAction.GetAllFavouriteProduct)
-        }
+
     }
     private fun onItemProductClickListener(productId:String) {
         productViewModel.handle(ProductAction.GetDetailProduct(productId))
+        productViewModel.handle(ProductAction.GetListSizeProduct(productId))
+        productViewModel.handle(ProductAction.GetListToppingProduct(productId))
+        productViewModel.handle(ProductAction.GetListCommentsLimit(productId))
         homeViewModel.returnDetailProductFragment()
     }
 
@@ -56,7 +58,6 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
     }
 
     override fun invalidate():Unit = withState(productViewModel) {
-        views.swipeLoading.isRefreshing = it.asyncFavourites is Loading
 
         when(it.asyncFavourites){
             is Success -> {

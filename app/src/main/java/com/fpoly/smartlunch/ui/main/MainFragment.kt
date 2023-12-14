@@ -93,13 +93,13 @@ class MainFragment : PolyBaseFragment<FragmentMainBinding>(){
 
             is ProductEvent -> {
                 when (event) {
-                    is ProductEvent.ReturnFragment<*> -> {
-                        addFragmentToBackStack(
-                            R.id.frame_main_layout,
-                            event.fragmentClass,
-                            event.fragmentClass.simpleName.toString()
-                        )
-                    }
+//                    is ProductEvent.ReturnFragment<*> -> {
+//                        addFragmentToBackStack(
+//                            R.id.frame_main_layout,
+//                            event.fragmentClass,
+//                            event.fragmentClass.simpleName.toString()
+//                        )
+//                    }
 
                     else -> {}
                 }

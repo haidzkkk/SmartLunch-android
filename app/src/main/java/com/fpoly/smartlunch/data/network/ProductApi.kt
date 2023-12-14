@@ -12,6 +12,7 @@ import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.data.model.Topping
@@ -71,6 +72,8 @@ interface ProductApi {
     fun getViewProduct(@Path("id") id: String) : Completable
     @GET("/api/favourite")
     fun getAllFavourite(): Observable<ArrayList<Product>>
+    @GET("/api/order/user/history")
+    fun getAllHistory(): Observable<ArrayList<ProductOrder>>
     @GET("/api/favourite/product/{id}")
     fun getFavourite(@Path("id") id: String): Observable<Favourite>
     @POST("/api/favourite")

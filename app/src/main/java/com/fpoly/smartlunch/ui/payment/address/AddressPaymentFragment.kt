@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 class AddressPaymentFragment : PolyBaseFragment<FragmentAddressBinding>() {
     private val userViewModel: UserViewModel by activityViewModel()
-    private val paymentViewModel: PaymentViewModel by activityViewModel()
     private var adapterAddress: AddressAdapter? = null
 
     @Inject
@@ -48,7 +47,7 @@ class AddressPaymentFragment : PolyBaseFragment<FragmentAddressBinding>() {
             activity?.onBackPressed()
         }
         views.btnAddAddress.setOnClickListener{
-            paymentViewModel.returnAddAddressFragment()
+            userViewModel.returnAddAddressFragment()
         }
     }
 
@@ -66,7 +65,7 @@ class AddressPaymentFragment : PolyBaseFragment<FragmentAddressBinding>() {
                     Toast.makeText(requireContext(), "Không có id address", Toast.LENGTH_SHORT).show()
                 }else{
                     userViewModel.handle(UserViewAction.GetAddressById(addressDetail._id))
-                    paymentViewModel.returnDetailAddressFragment()
+                    userViewModel.returnDetailAddressFragment()
                 }
             },{addressSelect->
                 if (addressSelect._id == null){

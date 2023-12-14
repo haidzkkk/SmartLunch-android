@@ -180,7 +180,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 }
             },
             onApprove = OnApprove { approval ->
-                approval.orderActions.capture { captureOrderResult ->
+                approval.orderActions.capture {
                     Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show()
                     payment(Status.STATUS_PAYPAL, true)
                 }
@@ -359,6 +359,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
     private fun handlePaymentZaloPay(token: String){
         ZaloPaySDK.getInstance().payOrder(requireActivity(), token, "demozpdkpayment://app", object : PayOrderListener{
             override fun onPaymentSucceeded(p0: String?, p1: String?, p2: String?) {
+                Log.e("PayFragment", "onPaymentSucceeded: ", )
                 Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show()
                 payment(Status.STATUS_ZALOPAY, true)
             }

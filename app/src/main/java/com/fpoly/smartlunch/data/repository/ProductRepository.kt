@@ -15,6 +15,7 @@ import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.PagingRequestProduct
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.data.model.Topping
@@ -65,6 +66,7 @@ class ProductRepository @Inject constructor(
     fun getAllProductByIdCategory(id : String): Observable<ArrayList<Product>> = api.getAllProductByIdCategory(id).subscribeOn(Schedulers.io())
     fun getViewProduct(id : String) : Completable = api.getViewProduct(id).subscribeOn(Schedulers.io())
     fun getAllFavourite(): Observable<ArrayList<Product>> = api.getAllFavourite().subscribeOn(Schedulers.io())
+    fun getAllHistory(): Observable<ArrayList<ProductOrder>> = api.getAllHistory().subscribeOn(Schedulers.io())
     fun likeProduct(product: Product): Observable<Favourite> = api.likeProduct(product).subscribeOn(Schedulers.io())
     fun getFavourite(id: String): Observable<Favourite> = api.getFavourite(id).subscribeOn(Schedulers.io())
     fun createOrder(order: OrderRequest)=api.createOrder(order).subscribeOn(Schedulers.io())

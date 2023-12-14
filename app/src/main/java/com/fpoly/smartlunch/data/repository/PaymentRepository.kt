@@ -18,16 +18,10 @@ import javax.inject.Inject
 
 class PaymentRepository @Inject constructor(
     val api: OrderApi,
-    val apiProvince: ProvinceAddressApi,
     val zalopayApi: ZalopayApi
 ) {
 
     fun getTypePayment(): Observable<ArrayList<Menu>> = getTypePayments()
-
-    fun getProvince(): Observable<ProvinceAddress<Province>> = apiProvince.getProvince().subscribeOn(Schedulers.io())
-    fun getDistrict(idProvince: String): Observable<ProvinceAddress<District>> = apiProvince.getDistrict(idProvince).subscribeOn(Schedulers.io())
-    fun getWard(idDistrict: String): Observable<ProvinceAddress<Ward>> = apiProvince.getWard(idDistrict).subscribeOn(Schedulers.io())
-
     fun createOrderZaloPay(requestBody: RequestBody): Observable<OrderZaloPayReponse>
     = zalopayApi.postOrder("application/x-www-form-urlencoded", requestBody).subscribeOn(Schedulers.io())
 }

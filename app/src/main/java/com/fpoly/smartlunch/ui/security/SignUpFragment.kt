@@ -116,7 +116,7 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                     password.text?.isNotEmpty() == true &&
                     confirmPassword.text?.isNotEmpty() == true &&
                     emailTil.checkValidEmail(context?.resources) &&
-                    phoneTil.checkPhoneNumberValid(context?.resources)
+                    phoneTil.editText?.checkPhoneNumberValid(context?.resources) == true
         }
 
         isSendButtonEnabled = isFieldsFilled

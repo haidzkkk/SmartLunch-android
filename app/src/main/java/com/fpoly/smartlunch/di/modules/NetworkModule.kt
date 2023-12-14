@@ -90,8 +90,9 @@ object NetworkModule {
 
     @Provides
     fun providerUserRepository(
-        api: UserApi
-    ): UserRepository = UserRepository(api)
+        api: UserApi,
+        provinceAddressApi: ProvinceAddressApi,
+    ): UserRepository = UserRepository(api, provinceAddressApi)
 
     @Provides
     fun providerApiProduct(
@@ -144,9 +145,8 @@ object NetworkModule {
     @Provides
     fun providerPaymentRepository(
         OrderApi: OrderApi,
-        provinceAddressApi: ProvinceAddressApi,
         zalopayApi: ZalopayApi,
-    ): PaymentRepository = PaymentRepository(OrderApi, provinceAddressApi, zalopayApi)
+    ): PaymentRepository = PaymentRepository(OrderApi, zalopayApi)
 
     @Provides
     fun providerApiComment(
