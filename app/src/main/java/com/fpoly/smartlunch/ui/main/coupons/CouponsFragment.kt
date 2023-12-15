@@ -18,7 +18,6 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
     private var adapterCoupons: CouponsAdapter? = null
-    private var adapterCouponsRunningOutOfDate: CouponsAdapter? = null
 
     companion object {
         const val TAG = "CardFragment"
@@ -41,11 +40,7 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
         adapterCoupons = CouponsAdapter {
             onClickItemCoupons(it)
         }
-        adapterCouponsRunningOutOfDate = CouponsAdapter {
-            onClickItemCoupons(it)
-        }
         views.rcyCoupon.adapter = adapterCoupons
-        views.rcyCouponRunningOutOfDate.adapter = adapterCouponsRunningOutOfDate
     }
 
     private fun onClickItemCoupons(id: String) {
@@ -58,7 +53,6 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
             is Success -> {
                 setupListCoupon()
                 adapterCoupons?.setData(it.asyncCoupons.invoke())
-                adapterCouponsRunningOutOfDate?.setData(it.asyncCoupons.invoke())
             }
 
             else -> {}

@@ -58,13 +58,24 @@ fun Fragment.checkPermisionCamera(isAllow: (Boolean) -> Unit) {
 }
 
 fun Fragment.checkRequestPermissions(isAllow: (Boolean) -> Unit) {
-    PermissionX.init(this)
-        .permissions(
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        .request { allGranted, _, _ ->
-            isAllow(allGranted)
-        }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        PermissionX.init(this)
+            .permissions(
+                Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            .request{ allGranted,_,_ ->
+                isAllow(allGranted)
+            }
+    }else{
+        PermissionX.init(this)
+            .permissions(
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            .request{ allGranted,_,_ ->
+                isAllow(allGranted)
+            }
+    }
 }
 
 fun Fragment.showPermissionDeniedToast() {

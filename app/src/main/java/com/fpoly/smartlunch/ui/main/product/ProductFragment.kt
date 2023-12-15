@@ -51,7 +51,7 @@ import java.util.Date
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private val productViewModel: ProductViewModel by activityViewModel()
-    private val userViewModel: UserViewModel by activityViewModel()
+    private val homeViewModel: HomeViewModel by activityViewModel()
 
     private lateinit var adapterSize: AdapterSize
     private lateinit var commentAdapter: CommentAdapter

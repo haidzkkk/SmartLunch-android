@@ -129,34 +129,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/other_way_logins"
                 android:layout_below="@+id/default_view"
-                android:layout_marginTop="24dp"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal">
 
-                <ImageButton
-                    android:id="@+id/btn_login_fb"
-                    android:background="@drawable/background_border_radius"
-                    android:layout_width="88dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/logo_fb"/>
-
-                <ImageButton
+                <TextView
                     android:id="@+id/btn_login_gg"
                     android:background="@drawable/background_border_radius"
-                    android:layout_width="88dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/logo_gg"/>
-
-                <ImageButton
-                    android:id="@+id/btn_login_ap"
-                    android:background="@drawable/background_border_radius"
-                    android:layout_width="88dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="16dp"
-                    android:scaleType="fitCenter"
-                    android:padding="8dp"
-                    android:src="@drawable/logo_app"/>
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="16sp"
+                    android:drawableLeft="@drawable/logo_gg"
+                    android:text="Sign in with Google"
+                    />
             </LinearLayout>
 
             <TextView

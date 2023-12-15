@@ -12,5 +12,6 @@ data class SecurityViewState (
     var asyncSignUp: Async<VerifyOTPResponse> = Uninitialized,
     var asyncForgotPassword: Async<VerifyOTPResponse> = Uninitialized,
     var asyncUserCurrent: Async<User> = Uninitialized,
+    var asyncVerifyOTP: Async<User> = Uninitialized,
     var asyncResetPassword: Async<User> = Uninitialized
 ): MvRxState

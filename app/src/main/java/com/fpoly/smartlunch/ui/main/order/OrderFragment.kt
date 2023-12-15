@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
@@ -20,7 +21,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
     private lateinit var tabLayout: TabLayout
-    private val homeViewModel: HomeViewModel by activityViewModel()
     private val productViewModel: ProductViewModel by activityViewModel()
 
     companion object {
@@ -29,7 +29,6 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupUI()
         listenEvent()
     }
@@ -44,16 +43,23 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Chờ"
+                    tab.text = "Chờ xác nhận"
                 }
+
                 1 -> {
                     tab.text = "Xác nhận"
                 }
+
                 2 -> {
                     tab.text = "Đang giao"
                 }
+
                 3 -> {
-                    tab.text = "Lịch sử"
+                    tab.text = "Đã giao hàng"
+                }
+
+                4 -> {
+                    tab.text = "Đã hủy đơn"
                 }
             }
         }.attach()
@@ -68,11 +74,12 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
     }
 
     override fun invalidate() {
-        withState(productViewModel){
-            views.swipeLoading.isRefreshing = it.asyncOrders is Loading || it.asyncUnconfirmed is Loading || it.asyncConfirmed is Loading || it.asyncDelivering is Loading
+        withState(productViewModel) {
+            views.swipeLoading.isRefreshing =
+                it.asyncCompleted is Loading || it.asyncUnconfirmed is Loading || it.asyncConfirmed is Loading || it.asyncDelivering is Loading || it.asyncCancelled is Loading
         }
     }
 
-    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentOrderBinding
-            = FragmentOrderBinding.inflate(inflater, container, false)
+    override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentOrderBinding =
+        FragmentOrderBinding.inflate(inflater, container, false)
 }

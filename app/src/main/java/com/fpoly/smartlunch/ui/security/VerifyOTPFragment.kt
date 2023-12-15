@@ -7,17 +7,21 @@ import android.widget.EditText
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
+import android.widget.Toast
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.Notify
+import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.data.model.VerifyOTPRequest
 import com.fpoly.smartlunch.databinding.FragmentVerifyOTPBinding
 import com.fpoly.smartlunch.ui.security.SecurityViewAction
 import com.fpoly.smartlunch.ui.security.SecurityViewModel
+import com.fpoly.smartlunch.ultis.showSnackbar
 import com.fpoly.smartlunch.ultis.showUtilDialog
 
 class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
@@ -87,18 +91,7 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
         startCountDownTimer()
 
         views.resendOtp.setOnClickListener {
-            if (resendEnabled) {
-                withState(viewModel) {
-                    val resendOTPCode =
-                        it.asyncSignUp.invoke()?.data ?: it.asyncForgotPassword.invoke()?.data
-                    if (it.asyncSignUp.invoke()?.data != null) {
-                        viewModel.handle(SecurityViewAction.ResendOTPCode(resendOTPCode!!))
-                    } else {
-                        viewModel.handle(SecurityViewAction.ResendResetPassOTPCode(resendOTPCode!!))
-                    }
-                }
-                startCountDownTimer()
-            }
+            resendOTPCode()
         }
 
         views.sendButton.setOnClickListener {
@@ -122,6 +115,21 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
                 }
                 progressBar.visibility = View.VISIBLE
             }
+        }
+    }
+
+    private fun resendOTPCode() {
+        if (resendEnabled) {
+            withState(viewModel) {
+                val resendOTPCode =
+                    it.asyncSignUp.invoke()?.data ?: it.asyncForgotPassword.invoke()?.data
+                if (it.asyncSignUp.invoke()?.data != null) {
+                    viewModel.handle(SecurityViewAction.ResendOTPCode(resendOTPCode!!))
+                } else {
+                    viewModel.handle(SecurityViewAction.ResendResetPassOTPCode(resendOTPCode!!))
+                }
+            }
+            startCountDownTimer()
         }
     }
 
@@ -162,6 +170,7 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
     }
 
     override fun invalidate(): Unit = withState(viewModel) {
+        views.progressBar.visibility = View.GONE
         when (it.asyncUserCurrent) {
             is Success -> {
                 activity?.showUtilDialog(
@@ -177,16 +186,46 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
             }
 
             is Fail -> {
+                var err = (it.asyncUserCurrent as Fail<User>).error.message.toString().trim()
+                when (err) {
+                    "HTTP 500 Internal Server Error" -> {
+                        Toast.makeText(requireContext(), "Mã OTP chưa chính xác! vui lòng kiểm tra lại hộp thư", Toast.LENGTH_SHORT).show()
+                    }
+
+                    "HTTP 502 Bad Gateway" -> {
+                        Toast.makeText(requireContext(), "Mã OTP đã hết hạn! vui lòng lấy mã mới", Toast.LENGTH_SHORT).show()
+                    }
+                    "HTTP 400 Bad Request" -> {
+                        Toast.makeText(requireContext(), "Hệ thống gặp sự cố vui lòng thử lại sau!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                err = ""
             }
 
-            else -> {}
+            else -> {
+            }
         }
         when (it.asyncResetPassword) {
             is Success -> {
                 viewModel.handleReturnResetPass()
+                it.asyncResetPassword=Uninitialized
             }
 
             is Fail -> {
+                var err = (it.asyncResetPassword as Fail<User>).error.message.toString().trim()
+                when (err) {
+                    "HTTP 500 Internal Server Error" -> {
+                        Toast.makeText(requireContext(), "Mã OTP chưa chính xác! vui lòng kiểm tra lại hộp thư", Toast.LENGTH_SHORT).show()
+                    }
+
+                    "HTTP 502 Bad Gateway" -> {
+                        Toast.makeText(requireContext(), "Mã OTP đã hết hạn! vui lòng lấy mã mới", Toast.LENGTH_SHORT).show()
+                    }
+                    "HTTP 400 Bad Request" -> {
+                        Toast.makeText(requireContext(), "Hệ thống gặp sự cố vui lòng thử lại sau!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                err = ""
             }
 
             else -> {}

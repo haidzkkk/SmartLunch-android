@@ -81,11 +81,11 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
 
         adapter = AdapterProduct(object: AdapterProduct.OnClickListenner{
             override fun onCLickItem(id: String) {
-                productViewModel.handle(ProductAction.GetListSizeProduct(id))
-                productViewModel.handle(ProductAction.GetListToppingProduct(id))
-                productViewModel.handle(ProductAction.GetListCommentsLimit(id))
-                productViewModel.handle(ProductAction.GetDetailProduct(id))
-                paymentViewModel.returnDetailProductFragment()
+//                productViewModel.handle(ProductAction.GetListSizeProduct(id))
+//                productViewModel.handle(ProductAction.GetListToppingProduct(id))
+//                productViewModel.handle(ProductAction.GetListCommentsLimit(id))
+//                productViewModel.handle(ProductAction.GetDetailProduct(id))
+//                paymentViewModel.returnDetailProductFragment()
             }
 
             override fun onCLickSeeMore() {
@@ -108,11 +108,11 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
                 idProductAdapter: String,
             ) {
                 super.onClickItem(idProductAdapter)
-                productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
-                productViewModel.handle(ProductAction.GetListToppingProduct(idProductAdapter))
-                productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
-                productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
-                paymentViewModel.returnDetailProductFragment()
+//                productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
+//                productViewModel.handle(ProductAction.GetListToppingProduct(idProductAdapter))
+//                productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
+//                productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
+//                paymentViewModel.returnDetailProductFragment()
             }
 
             override fun onSwipeItem(

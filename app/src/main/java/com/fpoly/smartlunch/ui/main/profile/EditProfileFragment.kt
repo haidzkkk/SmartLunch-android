@@ -193,8 +193,8 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
                 activity?.showUtilDialog(
                     Notify(
                         getString(R.string.edit_profile),
-                        "${it.asyncUpdateUser.invoke()?.first_name}",
-                        getString(R.string.reset_password_success_title),
+                        "Ảnh đại diện",
+                        "Cập nhật ảnh đại diện thành công",
                         R.raw.animation_successfully
                     )
                 )

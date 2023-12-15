@@ -36,7 +36,7 @@ fun TextInputLayout.checkValidEmail(res : Resources?): Boolean {
     return false
 }
 
-fun checkValidEPassword(res : Resources , edt1 : TextInputEditText, edt2 : TextInputEditText): Boolean {
+fun TextInputLayout.checkValidEPassword(res : Resources , edt1 : TextInputEditText, edt2 : TextInputEditText): Boolean {
     val str1 = edt1.text.toString().trim()
     val str2 = edt2.text.toString().trim()
     if (str1 == ""|| str2 == "" || str1 != str2){

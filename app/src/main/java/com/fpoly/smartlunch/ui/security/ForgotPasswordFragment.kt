@@ -12,6 +12,7 @@ import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.databinding.FragmentForgotPasswordBinding
+import com.fpoly.smartlunch.ultis.checkValidEmail
 
 class ForgotPasswordFragment : PolyBaseFragment<FragmentForgotPasswordBinding>() {
     private val viewModel: SecurityViewModel by activityViewModel()
@@ -49,7 +50,7 @@ class ForgotPasswordFragment : PolyBaseFragment<FragmentForgotPasswordBinding>()
 
     private fun validateEmailInput() {
         val email = views.edtEmail.text.toString().trim()
-        isEmailFilled = email.isNotEmpty()
+        isEmailFilled = email.isNotEmpty()&& views.tilEmail.checkValidEmail(resources)==false
         views.btnSend.isEnabled = isEmailFilled
     }
 

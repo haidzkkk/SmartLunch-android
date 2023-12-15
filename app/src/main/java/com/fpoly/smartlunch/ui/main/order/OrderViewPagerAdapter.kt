@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class OrderViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle)
     : FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
-        return 4
+        return 5
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -17,6 +17,7 @@ class OrderViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecyc
             1 -> return ConfirmedFragment()
             2 -> return CurrentOrdersFragment()
             3 -> return HistoryOrderFragment()
+            4 -> return CancelledOrdersFragment()
         }
         return WaitingConfirmOrderFragment();
     }
