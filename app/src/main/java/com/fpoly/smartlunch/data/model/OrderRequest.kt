@@ -8,4 +8,5 @@ data class OrderRequest(
     var status: String?,
     var statusPayment: String?,
     var isPayment: Boolean?,
+    var data: String?,
 ): Serializable

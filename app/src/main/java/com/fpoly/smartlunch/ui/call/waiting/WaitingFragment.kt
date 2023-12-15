@@ -39,7 +39,7 @@ class WaitingFragment: PolyBaseFragment<FragmentWaitingBinding>(){
                 val curentRoom = it.curentRoom.invoke()
 
                 views.tvNameLoading.text = "${curentRoom.shopUserId?.last_name} ${curentRoom.shopUserId?.first_name}"
-                views.tvMessage.text = "${curentRoom.shopUserId?.first_name} muốn gọi điện với bạn"
+                views.tvMessage.text = "${curentRoom.shopUserId?.first_name} ${getString(R.string.want_to_call)}"
 
                 views.btnAccept.setOnClickListener { v ->
                     requireActivity().supportFragmentManager.commitTransaction {
@@ -58,7 +58,7 @@ class WaitingFragment: PolyBaseFragment<FragmentWaitingBinding>(){
         }
         when(it.requireCall?.type){
             RequireCallType.STOP_RECEIVED ->{
-                Toast.makeText(requireContext(), "Cuộc gọi đã kết thúc", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.end_call), Toast.LENGTH_SHORT).show()
                 requireActivity().finish()
             }
         }

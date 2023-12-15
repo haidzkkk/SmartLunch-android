@@ -207,4 +207,32 @@ Thanh toán
     <string name="http404">not found</string>
     <string name="http500">Loi server khi su ly</string>
     <string name="loading">loading...</string>
+
+    <string name="faild">Lỗi</string>
+    <string name="end_call_offer">Cuộc gọi kết thúc, đối phương không trả lời</string>
+    <string name="end_call">Cuộc gọi kết thúc</string>
+    <string name="call_faild">Cuộc gọi xảy ra lỗi</string>
+    <string name="refuse">Đối phương từ chối bạn</string>
+    <string name="access_camera">Bạn phải cho phép quyền truy cập máy ảnh</string>
+    <string name="access_gallery">Bạn phải cho phép quyền truy cập thư viện</string>
+    <string name="unable_gallery">Không thể lấy ảnh từ thư viện</string>
+    <string name="ok">Đi</string>
+    <string name="to_setting">Tới cài đặt</string>
+    <string name="want_to_call">muốn gọi cho bạn</string>
+    <string name="room_not_found">Không tìm thấy phòng</string>
+    <string name="chat_section">Đoạn chat</string>
+    <string name="you">Bạn</string>
+    <string name="calling">Đang gọi</string>
+    <string name="join">Tham gia</string>
+    <string name="voice_call">Cuộc gọi thoại</string>
+    <string name="minute">phút</string>
+    <string name="taking_photo_faild">Chụp ảnh thất bại</string>
+    <string name="send_message_faild">Gửi tin nhắn không thành công</string>
+    <string name="please_search">Hãy tìm kiếm</string>
+    <string name="results_for">Xem kết quả cho</string>
+    <string name="evaluate">Đánh giá</string>
+    <string name="coupon_detail">Chi tiết mã giảm giá</string>
+    <string name="minimum">Tối thiểu</string>
+    <string name="promotion">Khuyến mãi</string>
+    <string name="feature_development">Chức năng đang được phát triển</string>
 </resources>

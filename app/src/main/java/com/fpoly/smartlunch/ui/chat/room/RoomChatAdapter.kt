@@ -145,8 +145,8 @@ class RoomChatAdapter(
             binding.layoutCall.root.isVisible = true
 
             binding.layoutCall.root.setBackgroundResource(R.drawable.background_circle_select)
-            binding.layoutCall.tvCallTitle.text = "Đang gọi"
-            binding.layoutCall.tvCallTime.text = "Tham gia"
+            binding.layoutCall.tvCallTitle.text = binding.root.context.getString(R.string.calling)
+            binding.layoutCall.tvCallTime.text = binding.root.context.getString(R.string.join)
 
             binding.layoutCall.root.setOnClickListener{
                 onCallBack.onClickItemJoinCall(message)
@@ -158,8 +158,8 @@ class RoomChatAdapter(
             binding.layoutCall.root.isVisible = true
 
             binding.layoutCall.root.setBackgroundResource(R.drawable.background_circle)
-            binding.layoutCall.tvCallTitle.text = "Cuộc gọi thoại"
-            binding.layoutCall.tvCallTime.text = handleBetweenTimeCall(message.createdAt!!, message.updatedAt!!)
+            binding.layoutCall.tvCallTitle.text = binding.root.context.getString(R.string.voice_call)
+            binding.layoutCall.tvCallTime.text = "${handleBetweenTimeCall(message.createdAt!!, message.updatedAt!!)} ${binding.root.context.getString(R.string.minute)}"
 
             binding.layoutCall.root.setOnClickListener{
                 onCallBack.onClickItemCall()
@@ -229,8 +229,9 @@ class RoomChatAdapter(
             binding.layoutCall.root.isVisible = true
 
             binding.layoutCall.root.setBackgroundResource(R.drawable.background_circle_select)
-            binding.layoutCall.tvCallTitle.text = "Đang gọi"
-            binding.layoutCall.tvCallTime.text = "Tham gia"
+            binding.layoutCall.tvCallTitle.text = binding.root.context.getString(R.string.calling)
+            binding.layoutCall.tvCallTime.text = binding.root.context.getString(R.string.join)
+
 
             binding.layoutCall.root.setOnClickListener{
                 onCallBack.onClickItemJoinCall(message)
@@ -242,8 +243,8 @@ class RoomChatAdapter(
             binding.layoutCall.root.isVisible = true
 
             binding.layoutCall.root.setBackgroundResource(R.drawable.background_circle)
-            binding.layoutCall.tvCallTitle.text = "Cuộc gọi thoại"
-            binding.layoutCall.tvCallTime.text = handleBetweenTimeCall(message.createdAt!!, message.updatedAt!!)
+            binding.layoutCall.tvCallTitle.text = binding.root.context.getString(R.string.voice_call)
+            binding.layoutCall.tvCallTime.text = "${handleBetweenTimeCall(message.createdAt!!, message.updatedAt!!)} ${binding.root.context.getString(R.string.minute)}"
 
             binding.layoutCall.root.setOnClickListener{
                 onCallBack.onClickItemCall()
@@ -300,7 +301,7 @@ class RoomChatAdapter(
             val date2 = strDate2.convertToDateFormat(StringUltis.dateIso8601Format)!!
             val duration = Duration.between(date1.toInstant(), date2.toInstant())
             val minutes = duration.toMinutes()
-            return "$minutes phút"
+            return "$minutes"
         } else {
             return ""
         }

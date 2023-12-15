@@ -60,6 +60,7 @@ class PaymentViewModel @AssistedInject constructor(
 
             is PaymentViewAction.CreateOder -> handleCreateOrder(action.oder)
             is PaymentViewAction.UpdateOder -> handleUpdateOder(action.idOder, action.oder)
+            is PaymentViewAction.UpdateIsPaymentOder -> handleUpdateIsPaymentOder(action.idOder, action.isPayment)
 
             is PaymentViewAction.GetListCoupons -> handleGetListCoupons()
             is PaymentViewAction.ApplyCoupon -> handleApplyCoupon(action.coupons)
@@ -76,6 +77,8 @@ class PaymentViewModel @AssistedInject constructor(
             )
 
             is PaymentViewAction.CreateOrderZaloPay -> handleCreateOrderZalopay(action.requestBody)
+            is PaymentViewAction.StatusOrderZaloPay -> handleGetStatusOrderZalopay(action.requestBody)
+            is PaymentViewAction.RefundOrderZaloPay -> handleRefundOrderZalopay(action.requestBody)
             else -> {}
         }
     }
@@ -146,6 +149,13 @@ class PaymentViewModel @AssistedInject constructor(
     private fun handleUpdateOder(idOrder: String, oder: OrderRequest) {
         setState { copy(asyncUpdateOrder = Loading()) }
         productRepository.updateOrder(idOrder, oder)
+            .execute {
+                copy(asyncUpdateOrder = it)
+            }
+    }
+    private fun handleUpdateIsPaymentOder(idOrder: String, isPayment: Boolean) {
+        setState { copy(asyncUpdateOrder = Loading()) }
+        productRepository.updateIsPaymentOrder(idOrder, isPayment)
             .execute {
                 copy(asyncUpdateOrder = it)
             }
@@ -222,6 +232,20 @@ class PaymentViewModel @AssistedInject constructor(
         setState { copy(asyncOrderZaloPayReponse = Loading()) }
         paymentRepo.createOrderZaloPay(requestBody).execute {
             copy(asyncOrderZaloPayReponse = it)
+        }
+    }
+
+    private fun handleGetStatusOrderZalopay(requestBody: RequestBody) {
+        setState { copy(asyncStatusOrderZaloPayReponse = Loading()) }
+        paymentRepo.getStatusOrderZaloPay(requestBody).execute {
+            copy(asyncStatusOrderZaloPayReponse = it)
+        }
+    }
+
+    private fun handleRefundOrderZalopay(requestBody: RequestBody) {
+        setState { copy(asyncRefundOrderZaloPayReponse = Loading()) }
+        paymentRepo.createRefundOrderZaloPay(requestBody).execute {
+            copy(asyncRefundOrderZaloPayReponse = it)
         }
     }
 

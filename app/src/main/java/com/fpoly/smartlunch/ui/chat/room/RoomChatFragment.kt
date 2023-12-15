@@ -84,7 +84,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 if (result) {
                     handleSendMessageImages()
                 }else{
-                    Toast.makeText(requireContext(), "Chụp ảnh that bai", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.taking_photo_faild), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -233,7 +233,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 if (it){
                     sendCameraPhoto()
                 }else{
-                    showSnackbar(views.root, "Bạn chưa cấp phép quyền truy cập camera", false, "Đến cài đặt"){
+                    showSnackbar(views.root, getString(R.string.access_camera), false, getString(R.string.to_setting)){
                         activity?.startToDetailPermission()
                     }
                 }
@@ -254,7 +254,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 if (it) {
                     checkResutlPerGallery(it)
                 } else {
-                    showSnackbar(views.root, "Bạn chưa cấp phép quyền truy cập ảnh", false, "Đến cài đặt"){
+                    showSnackbar(views.root, getString(R.string.access_gallery), false, getString(R.string.to_setting)){
                         activity?.startToDetailPermission()
                     }
                 }
@@ -262,10 +262,6 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
         }
 
         views.imgCall.setOnClickListener{
-//            chatViewmodel.setCallVideoWithUser(withState(chatViewmodel){ it.curentRoom.invoke()!!.shopUserId})
-//            findNavController().navigate(R.id.callChatFragment)
-//            chatViewmodel.sendCallToServer(RequireCall(RequireCallType.START_CALL, null, null, null))
-
             val idTargetUser: String? = withState(chatViewmodel){ it.curentRoom.invoke()?.shopUserId?._id}
             val intent = Intent(requireContext(), CallActivity::class.java)
             requireActivity().startActivityWithData(intent, MyConfigNotifi.TYPE_CALL_OFFER, idTargetUser)
@@ -420,7 +416,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
                 views.layoutHeader.tvTitleToolbar.text = "${it.curentRoom.invoke().shopUserId?.last_name} ${it.curentRoom.invoke().shopUserId?.first_name}"
             }
             is Fail -> {
-                Toast.makeText(requireContext(), "Không tim thấy phòng", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.room_not_found), Toast.LENGTH_SHORT).show()
                 activity?.onBackPressed()
             }
             else -> {
@@ -448,7 +444,7 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
             is Fail -> {
                 views.imgSending.isVisible = false
                 views.rcvChat.setMargins(0, 0, 0, 0)
-                showSnackbar(views.root, "Giu không thành công", false, null) {}
+                showSnackbar(views.root, getString(R.string.send_message_faild), false, null) {}
             }
 
             is Loading -> {

@@ -94,7 +94,7 @@ class CallActivity : PolyBaseActivity<ActivityCallBinding>(), CallViewModel.Fact
                 }
             }
             else -> {
-                Toast.makeText(this, "Không biet type bạn đang làm gì", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.faild), Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
@@ -124,7 +124,7 @@ class CallActivity : PolyBaseActivity<ActivityCallBinding>(), CallViewModel.Fact
                     currentState = 0
                 }
                 is Fail ->{
-                    Toast.makeText(this, "Không tìm thấy phòng", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.room_not_found), Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 else ->{

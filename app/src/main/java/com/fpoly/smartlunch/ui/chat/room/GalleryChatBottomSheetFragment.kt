@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseBottomSheet
 import com.fpoly.smartlunch.data.model.Gallery
 import com.fpoly.smartlunch.databinding.BottomSheetGalleryChatBinding
@@ -57,7 +58,7 @@ class GalleryBottomSheetFragment(private val itemSelect: (list: ArrayList<Galler
             if (it){
                 homeViewModel.handle(HomeViewAction.getDataGallery)
             }else{
-                showSnackbar(views.root, "Bạn chưa cho quyền truy cập ảnh", false, "Đến cài đặt"){
+                showSnackbar(views.root, getString(R.string.access_gallery), false, getString(R.string.to_setting)){
                     activity?.startToDetailPermission()
                 }
             }
@@ -79,7 +80,7 @@ class GalleryBottomSheetFragment(private val itemSelect: (list: ArrayList<Galler
                     gallertAdapter.setData(it.galleries.invoke())
                 }
                 else ->{
-                    Toast.makeText(requireContext(), "Không thể lấy ảnh từ thư viện", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.unable_gallery), Toast.LENGTH_SHORT).show()
                 }
             }
         }

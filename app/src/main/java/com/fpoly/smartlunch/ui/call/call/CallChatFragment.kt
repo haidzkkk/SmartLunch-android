@@ -54,7 +54,7 @@ class CallChatFragment : PolyBaseFragment<FragmentCallChatBinding>() {
     private val handler = Handler(Looper.getMainLooper())
     private val timeoutMillis: Long = 60000
     private val timeoutCallbackStopCall = Runnable {
-        Toast.makeText(requireContext(), "Cuộc gọi kết thúc, mguoi dùng không trả lời", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.end_call_offer), Toast.LENGTH_SHORT).show()
         callViewModel.sendDataMessageCallToServerSocket(RequireCall(RequireCallType.CREATE_STOP))
         activity?.finish()
     }
@@ -179,7 +179,7 @@ class CallChatFragment : PolyBaseFragment<FragmentCallChatBinding>() {
                 startTimeoutCallVideo()
             }
             is Fail ->{
-                Toast.makeText(requireContext(), "tạo message failed thì gọi thất bại", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.call_faild), Toast.LENGTH_SHORT).show()
             }
             else ->{
 
@@ -222,13 +222,13 @@ class CallChatFragment : PolyBaseFragment<FragmentCallChatBinding>() {
 
                     views.layoutLoading.isVisible = false
                 }else{
-                    Toast.makeText(requireContext(), "Nó từ chối", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.refuse), Toast.LENGTH_SHORT).show()
                     requireActivity().finish()
                 }
             }
 
             RequireCallType.STOP_RECEIVED ->{
-                Toast.makeText(requireContext(), "Ok rời", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.end_call), Toast.LENGTH_SHORT).show()
                 requireActivity().finish()
             }
         }
@@ -259,7 +259,7 @@ class CallChatFragment : PolyBaseFragment<FragmentCallChatBinding>() {
                 callViewModel.initializeSurfaceView(views.remoteView)
                 callViewModel.startLocalVideo(views.localView)
             }else{
-                showSnackbar(views.root, "Bạn phải cho quyền truy cập camera", true, "đi"){
+                showSnackbar(views.root, getString(R.string.access_camera), true, getString(R.string.ok)){
                     requireActivity().startToDetailPermission()
                 }
             }

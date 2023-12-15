@@ -22,6 +22,8 @@ object StringUltis {
     val dateMonthFormat = SimpleDateFormat("MMM yyyy")
     val dateDayTimeFormat = SimpleDateFormat("EEE dd/MM/yy\nHH:mm:ss")
     val dateDay2TimeFormat = SimpleDateFormat("EEE dd/MM/yy HH:mm")
+
+    val dateZaloTimeFormat = SimpleDateFormat("yyMMdd")
 }
 
 fun String.convertToStringFormat(inputDateFormat: SimpleDateFormat, outputDateFormat: SimpleDateFormat): String =

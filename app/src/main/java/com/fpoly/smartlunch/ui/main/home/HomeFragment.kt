@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
@@ -366,15 +367,14 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
             when (it.curentCartResponse) {
                 is Success -> {
-                    if (it.curentCartResponse.invoke()?.products?.size!! > 0) {
-                        views.layoutCart.visibility = View.VISIBLE
+                    if ((it.curentCartResponse.invoke()?.products?.size ?: 0) > 0) {
+                        views.layoutCart.isVisible = true
                     } else {
-                        views.layoutCart.visibility = View.GONE
+                        views.layoutCart.isVisible = false
                     }
                 }
-
                 else -> {
-                    views.layoutCart.visibility = View.GONE
+                    views.layoutCart.isVisible = false
                 }
             }
             when (it.asyncUnreadNotifications) {
@@ -389,7 +389,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                 }
 
                 else -> {
-                    views.layoutCart.visibility = View.GONE
+                    views.unreadNoti.visibility = View.GONE
                 }
             }
             when (it.category) {
