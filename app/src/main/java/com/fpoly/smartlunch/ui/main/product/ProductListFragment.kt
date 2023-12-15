@@ -46,12 +46,6 @@ class ProductListFragment : PolyBaseFragment<FragmentProductListBinding>() {
        views.appBar.btnBackToolbar.setOnClickListener {
            activity?.onBackPressed()
        }
-        views.btnNew.setOnClickListener {  }
-        views.btnBestSeller.setOnClickListener {  }
-        views.btnTopRating.setOnClickListener {  }
-        views.btnPrice.setOnClickListener {
-            openPriceOptionSortBottomSheet()
-        }
     }
 
     private fun openPriceOptionSortBottomSheet() {

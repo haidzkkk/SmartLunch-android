@@ -31,7 +31,6 @@ import com.fpoly.smartlunch.data.model.OrderZaloPayRequest
 import com.fpoly.smartlunch.data.model.ZaloPayInfo
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentPayBinding
-import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
@@ -39,6 +38,7 @@ import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.payment.PaymentViewModel
 import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.formatCash
+import com.fpoly.smartlunch.ultis.formatPaypal
 import com.fpoly.smartlunch.ultis.showUtilDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

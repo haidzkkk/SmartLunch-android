@@ -27,13 +27,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="16dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/notification"
                     android:drawableStart="@drawable/location_black"
                     android:ellipsize="end"
                     android:maxLength="30"
                     android:maxLines="1"
                     android:text=" Đang tải..."
                     android:textColor="@color/title"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="NotSibling" />
 
                 <RelativeLayout
                     android:layout_width="30dp"
