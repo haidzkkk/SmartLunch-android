@@ -20,7 +20,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_above="@+id/tv_code"
-            android:text="Coupon Name" />
+            />
 
         <TextView
             android:id="@+id/tv_code"
@@ -29,7 +29,7 @@
             android:textSize="16sp"
             android:paddingVertical="5dp"
             android:layout_centerVertical="true"
-            android:text="Coupon Code" />
+             />
 
         <TextView
             android:id="@+id/date"
@@ -40,9 +40,7 @@
             android:ellipsize="end"
             android:drawableStart="@drawable/icon_home_outline"
             android:layout_below="@+id/tv_code"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="20/11/2023" />
+            />
 
     </RelativeLayout>
     <LinearLayout

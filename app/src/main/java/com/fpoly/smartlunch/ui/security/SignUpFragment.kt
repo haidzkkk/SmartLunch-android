@@ -117,7 +117,7 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                     password.text?.isNotEmpty() == true &&
                     confirmPassword.text?.isNotEmpty() == true &&
                     emailTil.checkValidEmail(context?.resources) == false &&
-                    phoneTil.checkPhoneNumberValid(context?.resources) == false &&
+                    phoneTil.editText?.checkPhoneNumberValid(context?.resources) == false &&
                     context?.resources?.let { confirmPasswordTil.checkValidEPassword(it,password,confirmPassword) } == false
         }
 

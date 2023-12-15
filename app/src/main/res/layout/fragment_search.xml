@@ -90,7 +90,7 @@
                         android:paddingVertical="8dp"
                         android:drawableStart="@drawable/icon_sort"
                         android:text="Sắp xếp"
-                        android:drawableTint="@color/black"/>
+                        android:drawableTint="@color/grey_black"/>
 
                     <TextView
                         android:id="@+id/btn_best_seller"

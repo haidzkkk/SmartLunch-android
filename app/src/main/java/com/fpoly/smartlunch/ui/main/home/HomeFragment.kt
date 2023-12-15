@@ -301,8 +301,12 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         when (it.asyncGetCurrentLocation) {
             is Success -> {
                 it.asyncGetCurrentLocation.invoke()?.let { location ->
-                    val currentLocation: String =
-                        " " + location?.address?.road + ", " + location?.address?.quarter + ", " + location?.address?.suburb
+                    var currentLocation: String = try {
+                        " " + location.address.road + ", " + location.address.quarter + ", " + location.address.suburb
+                    }catch (e: Exception){
+                        " Đang tải..."
+                    }
+                    currentLocation = currentLocation.replace("null, ", "")
                     setupAppBar(currentLocation)
                 }
             }

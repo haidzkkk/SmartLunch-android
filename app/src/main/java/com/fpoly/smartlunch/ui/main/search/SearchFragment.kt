@@ -106,6 +106,7 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
         }
         views.btnSort.setOnClickListener{
             isSortDesc = isSortDesc != true
+            views.btnSort.text = if (isSortDesc == true) " Tăng" else if(isSortDesc == false) " Giảm" else " Sắp xếp"
             views.btnSort.setBackgroundResource(R.drawable.chips)
             fetchData()
         }
@@ -229,12 +230,14 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
         productAdapter.isLoadingOk = true
         val strSort = if (isSortDesc == false) "asc" else "desc"
         val pagingSearch = PagingRequestProduct(10, strFilter, strSort, productAdapter.curentPage, strSearch)
+        views.btnSort.text = if (isSortDesc == true) " Tăng" else if(isSortDesc == false) " Giảm" else " Sắp xếp"
         productViewModel.handle(ProductAction.SearchProductByName(pagingSearch))
     }
 
     private fun resetData() {
         strFilter = null
         isSortDesc = null
+        views.btnSort.text = if (isSortDesc == true) " Tăng" else if(isSortDesc == false) " Giảm" else " Sắp xếp"
 
         setFilterRate()
         views.btnSort.setBackgroundResource(R.drawable.background_border_gray_outline)

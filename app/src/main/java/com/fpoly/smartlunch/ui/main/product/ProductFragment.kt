@@ -32,7 +32,6 @@ import com.fpoly.smartlunch.data.model.ToppingCart
 import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.databinding.FragmentFoodDetailBinding
 import com.fpoly.smartlunch.ui.main.comment.CommentAdapter
-import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.home.adapter.ImageSlideAdapter
 import com.fpoly.smartlunch.ui.main.home.adapter.ToppingAdapter
@@ -51,7 +50,6 @@ import java.util.Date
 class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
     private val productViewModel: ProductViewModel by activityViewModel()
-    private val homeViewModel: HomeViewModel by activityViewModel()
 
     private lateinit var adapterSize: AdapterSize
     private lateinit var commentAdapter: CommentAdapter
@@ -143,49 +141,60 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             productViewModel.handle(ProductAction.GetListToppingProduct(currentProduct?._id ?: ""))
         }
         views.linearMinu2.setOnClickListener {
-            increaseQuantity()
+            if (currentProduct != null){
+                increaseQuantity()
+            }
         }
 
         views.linearMinu1.setOnClickListener {
-            reduceQuantity()
+            if (currentProduct != null){
+                reduceQuantity()
+            }
         }
         views.tvSeeAllComment.setOnClickListener{
-            productViewModel.returnCommentFragment()
+            if (currentProduct != null){
+                productViewModel.returnCommentFragment()
+            }
         }
         views.tvSeeMore.setOnClickListener{
-            handleStateDesc()
+            if (currentProduct != null){
+                handleStateDesc()
+            }
         }
         views.tvDesc.setOnClickListener{
             handleStateDesc()
         }
         views.btnShare.setOnClickListener{
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "${RemoteDataSource.BASE_URL}/api/admin/products/${currentProduct?._id}")
-            requireActivity().startActivity(Intent.createChooser(shareIntent, "Chia sẻ URL qua"))
+            if (currentProduct != null){
+                val shareIntent = Intent(Intent.ACTION_SEND)
+                shareIntent.type = "text/plain"
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "${RemoteDataSource.BASE_URL}/api/admin/products/${currentProduct?._id}")
+                requireActivity().startActivity(Intent.createChooser(shareIntent, "Chia sẻ URL qua"))
+            }
         }
 
         views.btnLike.setOnClickListener {
-            isLiked = !isLiked
-            if (isLiked){
-                views.btnLike.setImageResource(R.drawable.like_full)
+            if (currentProduct != null){
+                isLiked = !isLiked
+                if (isLiked){
+                    views.btnLike.setImageResource(R.drawable.like_full)
+                }
+                else{
+                    views.btnLike.setImageResource(R.drawable.like_emty)
+                }
+                productViewModel.handle(ProductAction.LikeProduct(currentProduct!!))
             }
-            else{
-                views.btnLike.setImageResource(R.drawable.like_emty)
-            }
-            productViewModel.handle(ProductAction.LikeProduct(currentProduct!!))
         }
 
         views.buttonAddCart.setOnClickListener {
-            addCart()
+            if (currentProduct != null){
+                addCart()
+            }
         }
         views.buttonPay.setOnClickListener{
-//            activity?.startActivityForResult(
-//                Intent(requireContext(), PaymentActivity::class.java),
-//                PayFragment.ACTIVITY_PAY_REQUEST_CODE
-//            )
-            sendCart()
-
+            if (currentProduct != null){
+                sendCart()
+            }
         }
         views.animAddProduct.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
@@ -193,7 +202,6 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
 
             override fun onAnimationEnd(animation: Animator) {
                 views.animAddProduct.visibility = View.GONE
-//                activity?.onBackPressed()
             }
 
             override fun onAnimationCancel(animation: Animator) {

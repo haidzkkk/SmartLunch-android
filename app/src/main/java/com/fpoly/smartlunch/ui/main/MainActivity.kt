@@ -264,19 +264,8 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(),
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         popBackStackAndShowPrevious()
-//        if (views.bottomNav.getSelectedItemId() != R.id.menu_home && views.bottomNav.isVisible == true) {
-//            views.bottomNav.setItemSelected(R.id.menu_home)
-//        } else if (views.bottomNav.getSelectedItemId() == R.id.menu_home && views.bottomNav.isVisible == true) {
-//            if (doubleClickBack) {
-//                finishAffinity()
-//            }
-//            this.doubleClickBack = true
-//            Toast.makeText(this, "Ấn Back lần nữa để thoát", Toast.LENGTH_SHORT).show()
-//            Handler().postDelayed({ doubleClickBack = false }, 2000)
-//        } else {
-            super.onBackPressed()
-//        }
     }
 
 
