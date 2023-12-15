@@ -17,6 +17,7 @@ import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.databinding.FragmentOrderDetailBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
+import com.fpoly.smartlunch.ui.main.notification.adapter.NotificationAdapter
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ultis.Status

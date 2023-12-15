@@ -18,7 +18,6 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
     private val productViewModel: ProductViewModel by activityViewModel()
     private val paymentViewModel: PaymentViewModel by activityViewModel()
     private var adapterCoupons: CouponsAdapter? = null
-    private var adapterCouponsRunningOutOfDate: CouponsAdapter? = null
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCouponsBinding {
         return FragmentCouponsBinding.inflate(layoutInflater)
@@ -47,11 +46,7 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
         adapterCoupons = CouponsAdapter {
             onClickItemCoupons(it)
         }
-        adapterCouponsRunningOutOfDate = CouponsAdapter {
-            onClickItemCoupons(it)
-        }
         views.rcyCoupon.adapter = adapterCoupons
-        views.rcyCouponRunningOutOfDate.adapter = adapterCouponsRunningOutOfDate
     }
 
     private fun onClickItemCoupons(id: String) {
@@ -64,7 +59,6 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
             is Success -> {
                 setupListCoupon()
                 adapterCoupons?.setData(it.asyncCoupons.invoke())
-                adapterCouponsRunningOutOfDate?.setData(it.asyncCoupons.invoke())
             }
 
             else -> {}

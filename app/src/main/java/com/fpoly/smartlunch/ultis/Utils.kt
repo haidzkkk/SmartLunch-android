@@ -15,9 +15,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -31,6 +33,7 @@ import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.ui.chat.ChatActivity
 import com.fpoly.smartlunch.ui.security.LoginActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import java.io.ByteArrayOutputStream
 import java.util.Locale
 
@@ -104,6 +107,20 @@ inline fun androidx.fragment.app.FragmentManager.commitTransaction(allowStateLos
         transaction.commitAllowingStateLoss()
     } else {
         transaction.commit()
+    }
+}
+fun <T : Fragment> AppCompatActivity.addFragmentToBackstack(
+    frameId: Int,
+    fragmentClass: Class<T>,
+    tag: String? = null,
+    allowStateLoss: Boolean = true,
+    option: ((FragmentTransaction) -> Unit)? = null,
+    bundle: Bundle?=null
+) {
+    supportFragmentManager.
+    commitTransaction(allowStateLoss) {
+        option?.invoke(this)
+        replace(frameId, fragmentClass,bundle, tag).addToBackStack(tag)
     }
 }
 

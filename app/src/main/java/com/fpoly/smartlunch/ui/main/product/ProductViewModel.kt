@@ -20,8 +20,10 @@ import com.fpoly.smartlunch.data.model.SortPagingProduct
 import com.fpoly.smartlunch.data.repository.NotificationRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.ui.main.comment.CommentFragment
+import com.fpoly.smartlunch.ultis.Status.CANCEL_STATUS
 import com.fpoly.smartlunch.ultis.Status.CONFIRMED_STATUS
 import com.fpoly.smartlunch.ultis.Status.DELIVERING_STATUS
+import com.fpoly.smartlunch.ultis.Status.SUCCESS_STATUS
 import com.fpoly.smartlunch.ultis.Status.UNCONFIRMED_STATUS
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -205,16 +207,13 @@ class ProductViewModel @AssistedInject constructor(
     private fun handleGetAllOrderByUserId() {
         setState {
             copy(
-                asyncOrders = Loading(),
                 asyncUnconfirmed = Loading(),
                 asyncConfirmed = Loading(),
-                asyncDelivering = Loading()
+                asyncDelivering = Loading(),
+                asyncCompleted = Loading(),
+                asyncCancelled = Loading()
             )
         }
-        repository.getAllOrderByUserId("")
-            .execute {
-                copy(asyncOrders = it)
-            }
         repository.getAllOrderByUserId(UNCONFIRMED_STATUS)
             .execute {
                 copy(asyncUnconfirmed = it)
@@ -226,6 +225,14 @@ class ProductViewModel @AssistedInject constructor(
         repository.getAllOrderByUserId(DELIVERING_STATUS)
             .execute {
                 copy(asyncDelivering = it)
+            }
+        repository.getAllOrderByUserId(SUCCESS_STATUS)
+            .execute {
+                copy(asyncCompleted = it)
+            }
+        repository.getAllOrderByUserId(CANCEL_STATUS)
+            .execute {
+                copy(asyncCancelled = it)
             }
     }
 

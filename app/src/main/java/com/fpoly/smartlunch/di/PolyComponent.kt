@@ -23,6 +23,8 @@ import com.fpoly.smartlunch.ui.paynow.PayNowActivity
 import com.fpoly.smartlunch.ui.security.LoginActivity
 import com.fpoly.smartlunch.ui.security.LoginFragment
 import com.fpoly.smartlunch.ui.security.SplashScreenActivity
+import com.fpoly.smartlunch.ui.security.onboarding.FirstFragment
+import com.fpoly.smartlunch.ui.security.onboarding.SecondFragment
 import com.fpoly.smartlunch.ui.security.onboarding.ThirdFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -43,6 +45,8 @@ interface PolyComponent {
     fun inject(activity: PaymentActivity)
     fun inject(activity: PayNowActivity)
     fun inject(fragment: MainFragment)
+    fun inject(fragment: FirstFragment)
+    fun inject(fragment: SecondFragment)
     fun inject(fragment: ThirdFragment)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ProfileFragment)

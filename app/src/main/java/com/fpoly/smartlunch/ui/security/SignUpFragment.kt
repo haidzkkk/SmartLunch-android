@@ -14,9 +14,12 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.UserRequest
+import com.fpoly.smartlunch.data.model.VerifyOTPResponse
 import com.fpoly.smartlunch.databinding.FragmentSignUpBinding
 import com.fpoly.smartlunch.ultis.checkPhoneNumberValid
+import com.fpoly.smartlunch.ultis.checkValidEPassword
 import com.fpoly.smartlunch.ultis.checkValidEmail
+import com.fpoly.smartlunch.ultis.showSnackbar
 
 class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
 
@@ -64,20 +67,7 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
             password = views.password.text.toString(),
             confirmPassword = views.confirmPassword.text.toString()
         )
-
-        if (checkPasswordMatches(user)) {
-            viewModel.handle(SecurityViewAction.SignupAction(user))
-        } else {
-            setErrorsIfPasswordNotMatches()
-        }
-    }
-
-    private fun setErrorsIfPasswordNotMatches() {
-        views.confirmPasswordTil.error = getString(R.string.password_not_match)
-    }
-
-    private fun checkPasswordMatches(user: UserRequest): Boolean {
-        return user.password == user.confirmPassword
+        viewModel.handle(SecurityViewAction.SignupAction(user))
     }
 
     override fun invalidate(): Unit = withState(viewModel) {
@@ -87,6 +77,17 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
             }
 
             is Fail -> {
+                val error= (it.asyncSignUp as Fail<VerifyOTPResponse>).error.message.toString().trim()
+                when(error){
+                    "HTTP 500 Internal Server Error" ->{
+                        showSnackbar(requireView(),"Email đã được đăng ký!",false,"Đăng nhập",{
+                            activity?.onBackPressed()
+                        })
+                    }
+                    else ->{
+                        showSnackbar(requireView(),"Hệ thống lỗi vui lòng thử lại sau",false,"Ok",{})
+                    }
+                }
             }
 
             else -> {}
@@ -115,8 +116,9 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                     phone.text?.isNotEmpty() == true &&
                     password.text?.isNotEmpty() == true &&
                     confirmPassword.text?.isNotEmpty() == true &&
-                    emailTil.checkValidEmail(context?.resources) &&
-                    phoneTil.checkPhoneNumberValid(context?.resources)
+                    emailTil.checkValidEmail(context?.resources) == false &&
+                    phoneTil.checkPhoneNumberValid(context?.resources) == false &&
+                    context?.resources?.let { confirmPasswordTil.checkValidEPassword(it,password,confirmPassword) } == false
         }
 
         isSendButtonEnabled = isFieldsFilled

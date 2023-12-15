@@ -4,14 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentSecondBinding
+import com.fpoly.smartlunch.ui.security.LoginFragment
+import com.fpoly.smartlunch.ultis.addFragmentToBackstack
+import javax.inject.Inject
+
 //done
 class SecondFragment : PolyBaseFragment<FragmentSecondBinding>() {
-
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity().application as PolyApplication).polyComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
         listenEvent()
     }
@@ -20,7 +29,9 @@ class SecondFragment : PolyBaseFragment<FragmentSecondBinding>() {
         val viewPager2=activity?.findViewById<ViewPager2>(R.id.view_pager)
         views.apply {
             textView3.setOnClickListener {
-                viewPager2?.currentItem=2
+                (requireActivity() as AppCompatActivity).
+                addFragmentToBackstack(R.id.frame_layout, LoginFragment::class.java)
+                sessionManager.saveOnBoardingFinished()
             }
             next.setOnClickListener {
                 viewPager2?.currentItem=2

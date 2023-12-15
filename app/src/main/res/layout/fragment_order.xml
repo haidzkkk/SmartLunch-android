@@ -35,7 +35,8 @@
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorGravity="stretch"
             app:tabSelectedTextColor="@color/white"
-            app:tabRippleColor="@android:color/transparent"/>
+            app:tabRippleColor="@android:color/transparent"
+            />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"

@@ -1,10 +1,13 @@
 package com.fpoly.smartlunch.ui.security
 
 import android.util.Log
+import android.widget.Toast
 import com.airbnb.mvrx.ActivityViewModelContext
+import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.ViewModelContext
 import com.fpoly.smartlunch.core.PolyBaseViewModel
@@ -15,10 +18,13 @@ import com.fpoly.smartlunch.data.model.User
 import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.model.UserRequest
 import com.fpoly.smartlunch.data.model.VerifyOTPRequest
+import com.fpoly.smartlunch.data.model.VerifyOTPResponse
 import com.fpoly.smartlunch.data.repository.AuthRepository
+import com.google.gson.Gson
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import retrofit2.HttpException
 
 class SecurityViewModel @AssistedInject constructor(
     @Assisted state: SecurityViewState,
@@ -108,16 +114,37 @@ class SecurityViewModel @AssistedInject constructor(
     }
 
     private fun handleLogin(userName:String,password: String){
-         withState {
              setState {
-                 copy(asyncLogin= Loading())
+                 copy(asyncLogin = Loading())
              }
-             repository.login(userName,password).execute {
-                 copy(asyncLogin=it)
-             }
-        }
+        repository.login(userName, password)
+            .subscribe(
+                { response ->
+                    setState {
+                        copy(asyncLogin = Success(response))
+                    }
+                },
+                { error ->
+                    if (error is HttpException) {
+                        val statusCode = error.code()
+                        if (statusCode == 500) {
+                            val errorBody = error.response()?.errorBody()
+                            errorBody?.let {
+                                val errorModel = Gson().fromJson(it.string(), VerifyOTPResponse::class.java)
+                                setState {
+                                    copy(asyncSignUp= Success(errorModel))
+                                }
+                            }
 
-
+                        } else {
+                            setState {
+                                copy(asyncLogin= Fail(error))
+                            }
+                        }
+                    } else {
+                    }
+                }
+            )
     }
     private fun handleSignup(user:UserRequest){
         setState {

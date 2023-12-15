@@ -53,7 +53,6 @@ data class ProductState(
     var getAllProductByIdCategory : Async<ArrayList<Product>> = Uninitialized,
 
     var addOrder: Async<OrderResponse> = Uninitialized,
-    var asyncOrders: Async<ArrayList<OrderResponse>> = Uninitialized,
     var asyncUnconfirmed: Async<List<OrderResponse>> = Uninitialized,
     var asyncConfirmed: Async<List<OrderResponse>> = Uninitialized,
     var asyncDelivering: Async<List<OrderResponse>> = Uninitialized,

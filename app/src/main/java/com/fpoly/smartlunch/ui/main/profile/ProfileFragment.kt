@@ -67,7 +67,6 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        sessionManager.fetchDarkMode().let { views.switchDarkMode.isChecked = it }
     }
 
     private fun listenEvent() {
@@ -83,15 +82,6 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.layoutLanguage.setOnClickListener{
             homeViewModel.returnLanguageFragment()
         }
-        sessionManager.fetchDarkMode().let {
-            views.switchDarkMode.isChecked=it
-        }
-        views.switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
-            homeViewModel.handleChangeThemeMode(isChecked)
-            handleDarkMode(isChecked)
-            activity?.recreate()
-        }
-
         views.layoutNotifies.setOnClickListener {
             homeViewModel.returnNotificationFragment()
         }

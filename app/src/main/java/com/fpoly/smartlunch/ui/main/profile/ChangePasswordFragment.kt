@@ -112,7 +112,7 @@ class ChangePasswordFragment : PolyBaseFragment<FragmentChangePasswordBinding>()
             }
 
             is Fail -> {
-
+                views.currentPasswordTil.error = "mật khẩu hiện tại không đúng!"
             }
 
             else -> {}

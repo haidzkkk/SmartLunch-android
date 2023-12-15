@@ -27,13 +27,14 @@ import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentPayBinding
+import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.UserViewAction
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
+import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.payment.PaymentViewAction
 import com.fpoly.smartlunch.ui.payment.PaymentViewModel
 import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.formatCash
-import com.fpoly.smartlunch.ultis.formatPaypal
 import com.fpoly.smartlunch.ultis.showUtilDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.paypal.checkout.approve.OnApprove
 import com.paypal.checkout.cancel.OnCancel
 import com.paypal.checkout.createorder.CreateOrder
+import com.paypal.checkout.createorder.CreateOrderActions
 import com.paypal.checkout.createorder.CurrencyCode
 import com.paypal.checkout.createorder.OrderIntent
 import com.paypal.checkout.createorder.UserAction
@@ -50,6 +52,7 @@ import com.paypal.checkout.error.OnError
 import com.paypal.checkout.order.Amount
 import com.paypal.checkout.order.AppContext
 import com.paypal.checkout.order.PurchaseUnit
+import okhttp3.internal.filterList
 import javax.inject.Inject
 
 class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
@@ -111,11 +114,11 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
     @SuppressLint("SetTextI18n")
     private fun setupUi() {
         views.apply {
-            extraCost.text = myCart?.total?.formatCash()
+            extraCost.text = getString(R.string.min_cost)
             discoutCost.text = (myCart?.totalCoupon ?: 0.0).formatCash()
             shipCost.text = (myAddress?.deliveryFee ?: 0.0).toInt().formatCash()
             couponCode.text = myCart?.couponId?._id
-            total.text = ((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0) + (myAddress?.deliveryFee ?: 0.0)).formatCash()
+            total.text = ((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0)).formatCash()
         }
     }
 
@@ -152,7 +155,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                             PurchaseUnit(
                                 amount = Amount(
                                     currencyCode = CurrencyCode.USD,
-                                    value = (((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0) + (myAddress?.deliveryFee ?: 0.0)) / 24000).formatPaypal()
+                                    value = (((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0)) / 24).toInt().toString()
                                 ),
                             )
                         ),

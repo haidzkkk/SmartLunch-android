@@ -12,6 +12,7 @@ import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityLoginBinding
 import com.fpoly.smartlunch.ui.security.onboarding.ViewPagerFragment
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
+import com.fpoly.smartlunch.ultis.addFragmentToBackstack
 import com.fpoly.smartlunch.ultis.changeLanguage
 import com.fpoly.smartlunch.ultis.changeMode
 import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
@@ -38,9 +39,9 @@ class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewMode
     private fun setupUi() {
         supportFragmentManager.commit {
             if (sessionManager.getOnBoardingFinished()) {
-                add<LoginFragment>(R.id.frame_layout).addToBackStack(LoginFragment::class.java.simpleName)
+                add<LoginFragment>(R.id.frame_layout)
             } else {
-                add<ViewPagerFragment>(R.id.frame_layout).addToBackStack(ViewPagerFragment::class.java.simpleName)
+                add<ViewPagerFragment>(R.id.frame_layout)
             }
         }
         viewModel.observeViewEvents {
@@ -56,31 +57,26 @@ class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewMode
     private fun handleEvent(event: SecurityViewEvent) {
         when (event) {
             is SecurityViewEvent.ReturnSignUpEvent -> {
-                addFragmentToBackStack(R.id.frame_layout, SignUpFragment::class.java)
+                addFragmentToBackstack(R.id.frame_layout, SignUpFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnResetPassEvent -> {
-                addFragmentToBackStack(R.id.frame_layout, ResetPasswordFragment::class.java)
+                addFragmentToBackstack(R.id.frame_layout, ResetPasswordFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnForgotPassEvent -> {
-                addFragmentToBackStack(R.id.frame_layout, ForgotPasswordFragment::class.java)
+                addFragmentToBackstack(R.id.frame_layout, ForgotPasswordFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnLoginEvent -> {
-                addFragmentToBackStack(R.id.frame_layout, LoginFragment::class.java)
+                addFragmentToBackstack(R.id.frame_layout, LoginFragment::class.java)
             }
 
             is SecurityViewEvent.ReturnVerifyOTPEvent -> {
-                addFragmentToBackStack(R.id.frame_layout, VerifyOTPFragment::class.java)
+                addFragmentToBackstack(R.id.frame_layout, VerifyOTPFragment::class.java)
             }
         }
 
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        popBackStackAndShowPrevious()
     }
 
     override fun getBinding(): ActivityLoginBinding =

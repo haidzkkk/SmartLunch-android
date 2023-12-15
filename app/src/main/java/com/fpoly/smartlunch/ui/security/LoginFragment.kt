@@ -16,11 +16,14 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
+import com.fpoly.smartlunch.data.model.Data
+import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.UserGGLogin
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentLoginBinding
 import com.fpoly.smartlunch.ui.main.MainActivity
 import com.fpoly.smartlunch.ultis.MyConfigNotifi.RC_SIGN_IN
+import com.fpoly.smartlunch.ultis.showSnackbar
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -90,9 +93,7 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
         views.btnLoginGg.setOnClickListener {
             signInWithGG()
         }
-        views.btnLoginFb.setOnClickListener {
-            showButtonFB()
-        }
+
         views.tvSignUp.setOnClickListener {
             viewModel.handleReturnSignUpEvent()
         }
@@ -101,11 +102,6 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
         }
         views.edtPassword.addTextChangedListener(this)
         views.edtEmail.addTextChangedListener(this)
-    }
-
-    private fun showButtonFB() {
-        val bottomSheet = FacebookBottomSheetDialog()
-        bottomSheet.show(requireActivity().supportFragmentManager, "FacebookBottomSheet")
     }
 
     private fun loginSubmit() {
@@ -164,7 +160,19 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
             }
 
             is Fail -> {
-                views.tilPassword.error = getString(R.string.login_fail)
+            views.tilPassword.error = getString(R.string.login_fail)
+            }
+
+            else -> {}
+        }
+        when (it.asyncSignUp) {
+            is Success -> {
+                showSnackbar(requireView(),"Tài khoản chưa được xác thực",false,"Xác thực",{
+                    viewModel.handleReturnVerifyOTPEvent()
+                })
+            }
+
+            is Fail -> {
             }
 
             else -> {}
