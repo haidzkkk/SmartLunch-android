@@ -13,6 +13,7 @@ import com.fpoly.smartlunch.data.model.Favourite
 import com.fpoly.smartlunch.data.model.Notification
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.Product
+import com.fpoly.smartlunch.data.model.ProductOrder
 import com.fpoly.smartlunch.data.model.ProductsResponse
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.data.model.Topping
@@ -63,6 +64,7 @@ data class ProductState(
     var asyncLikeProduct: Async<Favourite> = Uninitialized,
     var asyncGetFavourite: Async<Favourite> = Uninitialized,
     var asyncFavourites: Async<ArrayList<Product>> = Uninitialized,
+    var asyncHistories: Async<ArrayList<ProductOrder>> = Uninitialized,
     var asyncNotifications: Async<List<Notification>> = Uninitialized,
     var asyncUnreadNotifications: Async<List<Notification>> = Uninitialized,
     var asyncReadNotification: Async<Notification> = Uninitialized,

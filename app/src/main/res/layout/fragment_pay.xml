@@ -252,7 +252,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_margin="16dp">
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
 
                     <Button
                         android:id="@+id/btn_pay_cash"
@@ -260,7 +261,7 @@
                         android:layout_height="56dp"
                         android:text="Đặt hàng"
                         android:textSize="16dp"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <com.paypal.checkout.paymentbutton.PaymentButtonContainer
                         android:id="@+id/btn_pay_paypal"
@@ -272,6 +273,34 @@
                         app:paypal_button_size="large"
                         app:paypal_button_enabled="true"
                         android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/btn_pay_zalopay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_button_while"
+                        android:paddingVertical="10dp"
+                        android:gravity="center_horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="thanh toán bằng "
+                            android:layout_gravity="center_vertical"
+                            android:textSize="18sp"
+                            android:maxLines="1"
+                            android:layout_marginStart="5dp"/>
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/logo_zalopay"
+                            android:text="Thanh toán với zalo pay"
+                            android:gravity="center"
+                            android:layout_marginStart="10dp"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

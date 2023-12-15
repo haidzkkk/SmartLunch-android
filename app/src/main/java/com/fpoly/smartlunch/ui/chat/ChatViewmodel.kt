@@ -43,7 +43,7 @@ class ChatViewmodel @AssistedInject constructor(
             is ChatViewAction.setCurrentChat -> setCurentChat(action.roomId)
             is ChatViewAction.removeCurrentChat -> removeCurentChat()
 
-            is ChatViewAction.postMessage -> postMessage(action.message, action.images)
+            is ChatViewAction.postMessage -> postMessage(action.message, action.images, action.pathPhoto)
             is ChatViewAction.removePostMessage -> removePostMessage()
             is ChatViewAction.returnOffEventMessageSocket -> repo.offReceiveMessage(action.roomId)
             is ChatViewAction.returnConnectSocket -> repo.connectSocket()
@@ -105,9 +105,9 @@ class ChatViewmodel @AssistedInject constructor(
     }
 
     // post message
-    private fun postMessage(message: Message, images: List<Gallery>?) {
+    private fun postMessage(message: Message, images: List<Gallery>?, pathPhoto: String?) {
         setState { copy(messageSent = Loading()) }
-        repo.postMessage(message, images).execute{
+        repo.postMessage(message, images, pathPhoto).execute{
             copy(messageSent = it)
         }
     }

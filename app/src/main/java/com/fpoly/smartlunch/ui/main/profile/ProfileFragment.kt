@@ -82,6 +82,7 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.layoutLanguage.setOnClickListener{
             homeViewModel.returnLanguageFragment()
         }
+
         views.layoutNotifies.setOnClickListener {
             homeViewModel.returnNotificationFragment()
         }

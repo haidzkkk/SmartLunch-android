@@ -3,10 +3,15 @@ package com.fpoly.smartlunch.data.repository
 import com.fpoly.smartlunch.data.model.Address
 import com.fpoly.smartlunch.data.model.AddressRequest
 import com.fpoly.smartlunch.data.model.ChangePassword
+import com.fpoly.smartlunch.data.model.District
+import com.fpoly.smartlunch.data.model.Province
+import com.fpoly.smartlunch.data.model.ProvinceAddress
 import com.fpoly.smartlunch.data.model.TokenDevice
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.UpdateUserRequest
 import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.Ward
+import com.fpoly.smartlunch.data.network.ProvinceAddressApi
 import com.fpoly.smartlunch.data.network.UserApi
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -19,7 +24,8 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 class UserRepository(
-    private val api: UserApi
+    private val api: UserApi,
+    private val apiProvince: ProvinceAddressApi,
 ) {
     fun changePassword(changePassword: ChangePassword): Observable<TokenResponse> =
         api.changePassword(changePassword).subscribeOn(Schedulers.io())
@@ -47,5 +53,9 @@ class UserRepository(
     fun getUpdateById(id: String): Observable<Address> =
         api.getUpdateById(id).subscribeOn(Schedulers.io())
     fun logout(): Observable<User> =  api.logoutUser().subscribeOn(Schedulers.io())
+
+    fun getProvince(): Observable<ProvinceAddress<Province>> = apiProvince.getProvince().subscribeOn(Schedulers.io())
+    fun getDistrict(idProvince: String): Observable<ProvinceAddress<District>> = apiProvince.getDistrict(idProvince).subscribeOn(Schedulers.io())
+    fun getWard(idDistrict: String): Observable<ProvinceAddress<Ward>> = apiProvince.getWard(idDistrict).subscribeOn(Schedulers.io())
 
 }

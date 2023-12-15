@@ -15,6 +15,7 @@ import com.fpoly.smartlunch.data.network.RemoteDataSource
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.data.network.SocketManager
 import com.fpoly.smartlunch.data.network.UserApi
+import com.fpoly.smartlunch.data.network.ZalopayApi
 import com.fpoly.smartlunch.data.repository.AuthRepository
 import com.fpoly.smartlunch.data.repository.ChatRepository
 import com.fpoly.smartlunch.data.repository.HomeRepository
@@ -89,8 +90,9 @@ object NetworkModule {
 
     @Provides
     fun providerUserRepository(
-        api: UserApi
-    ): UserRepository = UserRepository(api)
+        api: UserApi,
+        provinceAddressApi: ProvinceAddressApi,
+    ): UserRepository = UserRepository(api, provinceAddressApi)
 
     @Provides
     fun providerApiProduct(
@@ -143,13 +145,19 @@ object NetworkModule {
     @Provides
     fun providerPaymentRepository(
         OrderApi: OrderApi,
-        provinceAddressApi: ProvinceAddressApi,
-    ): PaymentRepository = PaymentRepository(OrderApi, provinceAddressApi)
+        zalopayApi: ZalopayApi,
+    ): PaymentRepository = PaymentRepository(OrderApi, zalopayApi)
 
     @Provides
     fun providerApiComment(
         remoteDataSource: RemoteDataSource,
         context: Context
     ): CommentApi = remoteDataSource.buildApi(CommentApi::class.java, context)
+
+    @Provides
+    fun providerApiZalopay(
+        remoteDataSource: RemoteDataSource,
+        context: Context
+    ): ZalopayApi = remoteDataSource.buildApiOrderZalopay(ZalopayApi::class.java, context)
 }
 

@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Không có ảnh để xem"/>
+                android:text="Không thể lấy ảnh từ thiết bị"/>
 
             <Button
                 android:id="@+id/btnPerGaller"
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/tvPerGallery"
-                android:text="Cho xem ảnh đê"/>
+                android:text="Cho phép"/>
 
         </RelativeLayout>
 

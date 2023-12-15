@@ -45,7 +45,7 @@ class OrderAdapter(private val onClickItem: (String) -> Unit): RecyclerView.Adap
             itemOrderBinding.price.text = order.totalAll.formatCash()
             itemOrderBinding.quanlity.text = order.products.size.toString()
             itemOrderBinding.status.setTextColor(order.status._id == Status.SUCCESS_STATUS)
-            itemOrderBinding.tvDate.text = order.createdAt.convertIsoToStringFormat(StringUltis.dateTimeDateFormat)
+            itemOrderBinding.tvDate.text = order.updatedAt.convertIsoToStringFormat(StringUltis.dateTimeDateFormat)
         }
     }
 }

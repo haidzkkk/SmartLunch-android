@@ -15,7 +15,6 @@ import com.fpoly.smartlunch.ui.main.MainFragment
 import com.fpoly.smartlunch.ui.payment.address.AddressPaymentFragment
 import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import com.fpoly.smartlunch.ui.payment.PaymentActivity
-import com.fpoly.smartlunch.ui.main.profile.AddressFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
 import com.fpoly.smartlunch.ui.main.profile.LanguageFragment
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
@@ -54,7 +53,6 @@ interface PolyComponent {
 
     fun inject(fragment: PayFragment)
     fun inject(fragment: com.fpoly.smartlunch.ui.paynow.payment.PaymentNowFragment)
-    fun inject(fragment: AddressFragment)
     fun inject(fragment: AddressPaymentFragment)
     fun inject(fragment: LanguageFragment)
     fun inject(fragment: ChangePasswordFragment)

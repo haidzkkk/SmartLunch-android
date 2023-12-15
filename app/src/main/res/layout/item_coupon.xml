@@ -40,6 +40,8 @@
             android:ellipsize="end"
             android:drawableStart="@drawable/icon_home_outline"
             android:layout_below="@+id/tv_code"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="20/11/2023" />
 
     </RelativeLayout>

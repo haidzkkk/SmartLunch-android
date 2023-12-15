@@ -5,8 +5,12 @@ import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.Uninitialized
 import com.fpoly.smartlunch.data.model.Address
 import com.fpoly.smartlunch.data.model.ChangePassword
+import com.fpoly.smartlunch.data.model.District
+import com.fpoly.smartlunch.data.model.Province
+import com.fpoly.smartlunch.data.model.ProvinceAddress
 import com.fpoly.smartlunch.data.model.TokenResponse
 import com.fpoly.smartlunch.data.model.User
+import com.fpoly.smartlunch.data.model.Ward
 
 data class UserViewState(
     var asyncLogout: Async<User> = Uninitialized,
@@ -19,6 +23,10 @@ data class UserViewState(
     var asyncUpdateAddress: Async<Address> = Uninitialized,
     var asyncDeleteAddress: Async<Address> = Uninitialized,
     var asyncChangePassword: Async<TokenResponse> = Uninitialized,
+
+    var asyncListProvince: Async<ProvinceAddress<Province>> =Uninitialized,
+    var asyncListDistrict: Async<ProvinceAddress<District>> =Uninitialized,
+    var asyncListWard: Async<ProvinceAddress<Ward>> =Uninitialized,
 ): MvRxState {
 
 }

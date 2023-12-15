@@ -16,6 +16,7 @@ import com.fpoly.smartlunch.data.model.ChangeQuantityRequest
 import com.fpoly.smartlunch.data.model.CouponsRequest
 import com.fpoly.smartlunch.data.model.Menu
 import com.fpoly.smartlunch.data.model.OrderRequest
+import com.fpoly.smartlunch.data.model.OrderZaloPayRequest
 import com.fpoly.smartlunch.data.repository.PaymentRepository
 import com.fpoly.smartlunch.data.repository.ProductRepository
 import com.fpoly.smartlunch.data.repository.UserRepository
@@ -32,6 +33,7 @@ import com.fpoly.smartlunch.ui.payment.payment.PayFragment
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import okhttp3.RequestBody
 import retrofit2.HttpException
 
 
@@ -73,9 +75,7 @@ class PaymentViewModel @AssistedInject constructor(
                 action.sizeId
             )
 
-            is PaymentViewAction.GetProvinceAddress -> handleGetListProvince()
-            is PaymentViewAction.GetDistrictAddress -> handleGetListDistrict(action.provinceId)
-            is PaymentViewAction.GetWardAddress -> handleGetListWard(action.districtId)
+            is PaymentViewAction.CreateOrderZaloPay -> handleCreateOrderZalopay(action.requestBody)
             else -> {}
         }
     }
@@ -210,40 +210,19 @@ class PaymentViewModel @AssistedInject constructor(
         }
     }
 
-    private fun handleGetListProvince() {
-        setState {
-            copy(
-                asyncListProvince = Loading(),
-                asyncListDistrict = Uninitialized,
-                asyncListWard = Uninitialized
-            )
-        }
-        paymentRepo.getProvince().execute {
-            copy(asyncListProvince = it)
-        }
-    }
-
-    private fun handleGetListDistrict(provinceId: String) {
-        setState { copy(asyncListDistrict = Loading(), asyncListWard = Uninitialized) }
-        paymentRepo.getDistrict(provinceId).execute {
-            copy(asyncListDistrict = it)
-        }
-    }
-
-    private fun handleGetListWard(districtId: String) {
-        setState { copy(asyncListWard = Loading()) }
-        paymentRepo.getWard(districtId).execute {
-            copy(asyncListWard = it)
-        }
-    }
-
-
     fun handleRemoveAsyncGetCart() {
         setState { copy(asyncCurentCart = Uninitialized) }
     }
 
     fun handleRemoveAsyncChangeQuantity() {
         setState { copy(asyncCurentCart = Uninitialized) }
+    }
+
+    private fun handleCreateOrderZalopay(requestBody: RequestBody) {
+        setState { copy(asyncOrderZaloPayReponse = Loading()) }
+        paymentRepo.createOrderZaloPay(requestBody).execute {
+            copy(asyncOrderZaloPayReponse = it)
+        }
     }
 
     fun returnHomeFragment() {
@@ -261,15 +240,6 @@ class PaymentViewModel @AssistedInject constructor(
     fun returnAddressFragment() {
         _viewEvents.post(PaymentViewEvent.ReturnFragment(AddressPaymentFragment::class.java))
     }
-
-    fun returnAddAddressFragment() {
-        _viewEvents.post(PaymentViewEvent.ReturnFragment(AddAddressFragment::class.java))
-    }
-
-    fun returnDetailAddressFragment() {
-        _viewEvents.post(PaymentViewEvent.ReturnFragment(DetailAddressFragment::class.java))
-    }
-
     fun returnShowLoading(isVisible: Boolean) {
         _viewEvents.post(PaymentViewEvent.ReturnShowLoading(isVisible))
     }

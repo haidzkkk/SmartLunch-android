@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -19,6 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
+    private val productViewModel: ProductViewModel by activityViewModel()
     private lateinit var tabLayout: TabLayout
     companion object{
         const val TAG = "FavouriteFragment"
@@ -26,6 +28,7 @@ class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        listenEvent()
     }
 
     private fun setupUI() {
@@ -41,13 +44,21 @@ class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
                     tab.text = "Yêu thích"
                 }
                 1 -> {
-                    tab.text = "Đánh giá"
+                    tab.text = "Lịch sử"
                 }
             }
         }.attach()
     }
 
-    override fun invalidate() {
+    private fun listenEvent() {
+        views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetAllFavouriteProduct)
+            productViewModel.handle(ProductAction.GetAllHistoryProduct)
+        }
+    }
+
+    override fun invalidate():Unit = withState(productViewModel) {
+        views.swipeLoading.isRefreshing = it.asyncFavourites is Loading
     }
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteBinding
             = FragmentFavouriteBinding.inflate(inflater, container, false)

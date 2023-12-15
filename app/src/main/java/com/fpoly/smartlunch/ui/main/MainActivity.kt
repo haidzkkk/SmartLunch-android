@@ -41,6 +41,7 @@ import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductState
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
+import com.fpoly.smartlunch.ui.main.profile.UserViewEvent
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
@@ -79,6 +80,7 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private val userViewModel: UserViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
     private val productViewModel: ProductViewModel by viewModel()
     private val testViewModel: TestViewModel by lazy { viewModelProvider.get(TestViewModel::class.java) }
@@ -108,6 +110,12 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
 
         productViewModel.observeViewEvents {
+            if (it != null) {
+                handleEvent(it)
+            }
+        }
+
+        userViewModel.observeViewEvents {
             if (it != null) {
                 handleEvent(it)
             }
@@ -173,6 +181,12 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
                     is HomeViewEvent.NavigateTo<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName, bundle = event.bundle)
                    // is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
 //                    is HomeViewEvent.SetBadgeBottomNav ->  handleSetBadgeBottomnav(event.id, event.position)
+                    else -> {}
+                }
+            }
+            is UserViewEvent -> {
+                when (event) {
+                    is UserViewEvent.ReturnFragment<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName, bundle = event.bundle)
                     else -> {}
                 }
             }

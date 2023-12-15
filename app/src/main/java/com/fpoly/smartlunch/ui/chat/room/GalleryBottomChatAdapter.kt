@@ -78,13 +78,20 @@ class GalleryBottomChatAdapter(
                 }
 
                 binding.root.setOnClickListener{
-                    if (!binding.layoutChoose.isVisible){
-                        binding.layoutChoose.isVisible = true
-                        onClick.onClickSelectItem(gallery)
-                    }else{
-                        binding.layoutChoose.isVisible = false
-                        onClick.onClickUnSelectItem(gallery)
+                    if (gallery is GalleyImage){
+                        if (!binding.layoutChoose.isVisible){
+                            binding.layoutChoose.isVisible = true
+                            onClick.onClickSelectItem(gallery)
+                        }else{
+                            binding.layoutChoose.isVisible = false
+                            onClick.onClickUnSelectItem(gallery)
+                        }
                     }
+                }
+
+                binding.root.setOnLongClickListener{
+                    onClick.onLongClickItem(gallery)
+                    true
                 }
             }
 

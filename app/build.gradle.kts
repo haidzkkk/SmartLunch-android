@@ -139,6 +139,13 @@ dependencies {
     // paypal sdk
     implementation("com.paypal.checkout:android-sdk:0.112.2")
 
+    // zalo sdk
+    implementation(fileTree(mapOf(
+        "dir" to "D:\\AndroidStudioProjects\\GraduationProject\\SmartLunch-android",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf<String>()
+    )))
+
     // point banner
     implementation("com.tbuonomo:dotsindicator:5.0")
 
@@ -148,4 +155,7 @@ dependencies {
     implementation ("com.facebook.android:facebook-android-sdk:[4,5)")
 //    implementation ("com.facebook.android:facebook-login:latest.release")
 
+    // video
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation ("com.google.android.exoplayer:exoplayer-ui:2.19.1")
 }

@@ -37,17 +37,10 @@ class ProductViewModel @AssistedInject constructor(
 ) : PolyBaseViewModel<ProductState, ProductAction, ProductEvent>(state) {
 
     init {
-
-//        handleGetAllCategory()
-//        handleGetAllSize()
         handleGetAllCategory()
-        handleGetAllFavouriteProduct()
         handleGetTopProduct(PagingRequestProduct(5, SortPagingProduct.bought, null, null, null))
         handleGetListProductRate(PagingRequestProduct(5, SortPagingProduct.rate, null, null, null))
         handleGetProducts(PagingRequestProduct(10, null, null, 1, null))
-        handleGetAllOrderByUserId()
-        handleGetAllNotification()
-        handleGetListCoupons()
     }
 
     override fun handle(action: ProductAction) {
@@ -58,7 +51,9 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.SearchProductByName -> handleSearchProductByName(action.paging)
 
             is ProductAction.GetAllCategory -> handleGetAllCategory()
+            is ProductAction.GetListCoupons -> handleGetListCoupons()
             is ProductAction.GetAllFavouriteProduct -> handleGetAllFavouriteProduct()
+            is ProductAction.GetAllHistoryProduct -> handleGetAllHistoryProduct()
             is ProductAction.GetDetailProduct -> handleGetOneProduct(action.id)
             is ProductAction.GetDetailCoupons -> handleGetDetailCoupons(action.id)
             is ProductAction.GetListSizeProduct -> handleGetSizeProduct(action.idProduct)
@@ -185,6 +180,14 @@ class ProductViewModel @AssistedInject constructor(
         repository.getAllFavourite()
             .execute {
                 copy(asyncFavourites = it)
+            }
+    }
+
+    private fun handleGetAllHistoryProduct() {
+        setState { copy(asyncHistories = Loading()) }
+        repository.getAllHistory()
+            .execute {
+                copy(asyncHistories = it)
             }
     }
 

@@ -2,6 +2,8 @@ package com.fpoly.smartlunch.ui.chat.room
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.text.util.Linkify
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -120,6 +122,11 @@ class RoomChatAdapter(
             binding.imgMassage.setImageResource(0)
             binding.tvMessage.text = message.message
 
+            if (Patterns.WEB_URL.matcher(message.message.toString()).matches()){
+                Linkify.addLinks(binding.tvMessage, Linkify.WEB_URLS)
+                binding.tvMessage.setLinkTextColor(binding.root.context.resources.getColor(R.color.white))
+            }
+
         }else if(message.type == MessageType.TYPE_IMAGE && !message.images.isNullOrEmpty()){
             binding.imgMassage.isVisible = true
             binding.tvMessage.isVisible = false
@@ -173,8 +180,8 @@ class RoomChatAdapter(
         }
         binding.tvMessage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
             true }
-        binding.imgMassage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
-            true }
+//        binding.imgMassage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
+//            true }
     }
 
 
@@ -199,6 +206,11 @@ class RoomChatAdapter(
             binding.imgMassage.setImageResource(0)
             binding.tvMessage.text = message.message
 
+            if (Patterns.WEB_URL.matcher(message.message.toString()).matches()){
+                Linkify.addLinks(binding.tvMessage, Linkify.WEB_URLS)
+                binding.tvMessage.setLinkTextColor(binding.root.context.resources.getColor(R.color.grey_black))
+            }
+
         }else if(message.type == MessageType.TYPE_IMAGE && !message.images.isNullOrEmpty()){
             binding.imgMassage.isVisible = true
             binding.tvMessage.isVisible = false
@@ -253,8 +265,8 @@ class RoomChatAdapter(
         }
         binding.tvMessage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
             true }
-        binding.imgMassage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
-            true }
+//        binding.imgMassage.setOnLongClickListener{ onCallBack.onLongClickItem(message)
+//            true }
     }
 
     private fun checkTimeStamp(position: Int): Boolean {

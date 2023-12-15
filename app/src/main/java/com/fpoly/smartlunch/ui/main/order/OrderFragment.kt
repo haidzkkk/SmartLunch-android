@@ -63,6 +63,8 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
                 }
             }
         }.attach()
+
+        productViewModel.handle(ProductAction.GetAllOrderByUserId)
     }
 
     private fun listenEvent() {

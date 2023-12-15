@@ -33,6 +33,7 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
 
     private fun setupAppBar() {
         views.layoutHeader.tvTitleToolbar.text = "Khuyến mãi"
+        productViewModel.handle(ProductAction.GetListCoupons)
     }
 
     private fun setupListCoupon() {
