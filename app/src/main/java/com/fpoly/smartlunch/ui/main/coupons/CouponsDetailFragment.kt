@@ -38,7 +38,7 @@ class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
     private fun setupAppBar() {
     views.appBar.apply {
         btnBackToolbar.visibility=View.VISIBLE
-        tvTitleToolbar.text="Chi tiết mã giảm giá"
+        tvTitleToolbar.text = getString(R.string.coupon_detail)
     }
     }
 
@@ -51,7 +51,7 @@ class CouponsDetailFragment : PolyBaseFragment<FragmentCouponsDetailBinding>(){
             .into(imgCoupons)
         tvName.text= currentCoupons.coupon_name
         tvCode.text= "${currentCoupons.discount_amount}%"
-        tvAmount.text= "Tối thiểu ${currentCoupons.min_purchase_amount.toDouble().formatCash()}"
+        tvAmount.text= "${getString(R.string.minimum)} ${currentCoupons.min_purchase_amount.toDouble().formatCash()}"
         tvDate.text= currentCoupons.expiration_date.convertIsoToStringFormat(StringUltis.dateDayFormat)
         tvDesc.text= currentCoupons.coupon_content
     }

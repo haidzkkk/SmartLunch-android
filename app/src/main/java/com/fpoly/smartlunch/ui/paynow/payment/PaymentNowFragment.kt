@@ -73,6 +73,7 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
     private var myCart: CartResponse? = null
     private var myAddress: Address? = null
     private var strNote: String = ""
+    private var data: String = ""
 
     var addOrder: OrderResponse? = null
 
@@ -204,7 +205,10 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
             ZaloPaySDK.init(ZaloPayInfo.APP_ID, Environment.SANDBOX)
 
             val amount = ((myCart?.total ?: 0.0) - (myCart?.totalCoupon ?: 0.0) + (myAddress?.deliveryFee ?: 0.0)).formatPaypal()
-            paymentViewModel.handle(PaymentViewAction.CreateOrderZaloPay(OrderZaloPayRequest.createOrder(amount)))
+            var orderZalopay = OrderZaloPayRequest.createOrder(amount){
+                data = it
+            }
+            paymentViewModel.handle(PaymentViewAction.CreateOrderZaloPay(orderZalopay))
         }
     }
 
@@ -216,6 +220,7 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
                 null,
                 idStatus,
                 isPayment,
+                data
             )
             payNowViewModel.handle(PayNowViewAction.CreateOder(myCart, orderRequest))
         } else {
@@ -242,7 +247,8 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
     }
 
     private fun setupButtonPayment(listPaymentType: ArrayList<Menu>, menu: Menu?){
-        views.optionPayment.text = menu?.name ?: "Tiền mặt"
+        data = ""
+        views.optionPayment.text = menu?.name
 
         views.btnPayCash.isVisible = false
         views.btnPayPaypal.isVisible = false
@@ -251,9 +257,7 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
         when(menu?.id){
             listPaymentType[0].id -> views.btnPayCash.isVisible = true
             listPaymentType[1].id -> views.btnPayPaypal.isVisible = true
-            listPaymentType[2].id -> views.btnPayCash.isVisible = true
-            listPaymentType[3].id -> views.btnPayZalopay.isVisible = true
-            listPaymentType[4].id -> views.btnPayCash.isVisible = true
+            listPaymentType[2].id -> views.btnPayZalopay.isVisible = true
             else ->{ views.btnPayCash.isVisible = true }
         }
     }
@@ -331,7 +335,11 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
 
         withState(paymentViewModel) {
             paymentViewModel.returnShowLoading(it.asyncAddOrder is Loading || it.asyncUpdatePaymentOrder is Loading)
-            setupButtonPayment(it.paymentTypies ,it.curentPaymentType)
+
+            if (it.curentPaymentType != null){
+                setupButtonPayment(it.paymentTypies, it.curentPaymentType)
+                it.curentPaymentType = null
+            }
 
             when(it.asyncOrderZaloPayReponse){
                 is Success -> {
@@ -378,7 +386,6 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
 
         })
     }
-
 
     override fun onMapReady(p0: GoogleMap) {
         mGoogleMap = p0

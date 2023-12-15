@@ -1,10 +1,12 @@
 package com.fpoly.smartlunch.data.model
 
-import android.R.id.input
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.fpoly.smartlunch.data.model.Helpers.getMac
+import com.fpoly.smartlunch.ultis.StringUltis
+import com.fpoly.smartlunch.ultis.convertDateToStringFormat
 import okhttp3.FormBody
 import okhttp3.RequestBody
 import java.io.UnsupportedEncodingException
@@ -18,11 +20,24 @@ import java.util.LinkedList
 import java.util.Objects
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
-
+import kotlin.random.Random
 
 data class OrderZaloPayReponse(
     val return_code: String,
     val zp_trans_token: String,
+)
+
+data class StatusOrderZaloPayReponse(
+    val amount: Double?,
+    val zp_trans_id: String?,
+)
+
+data class RefundOrderZaloPayReponse(
+    val return_code: Int,
+    val return_message: String,
+    val sub_return_code: String,
+    val sub_return_message: String,
+    val refund_id: String,
 )
 
 data class OrderZaloPayRequest(
@@ -37,8 +52,8 @@ data class OrderZaloPayRequest(
     val description: String,
     val mac: String,
 ) {
-    companion object{
-        fun createOrder(amount: String): RequestBody {
+    companion object {
+        fun createOrder(amount: String, idOrder: (id: String) -> Unit): RequestBody {
             val app_id = ZaloPayInfo.APP_ID.toString()
             val app_user = "Android_Demo";
             val app_time = Date().time.toString()
@@ -47,8 +62,19 @@ data class OrderZaloPayRequest(
             val item = "[]";
             val bank_code = "zalopayapp";
             val description = "Merchant pay for order #" + Helpers.appTransId
-            val inputHMac = String.format("%s|%s|%s|%s|%s|%s|%s", app_id, app_trans_id, app_user, amount, app_time, embed_data, item)
+            val inputHMac = String.format(
+                "%s|%s|%s|%s|%s|%s|%s",
+                app_id,
+                app_trans_id,
+                app_user,
+                amount,
+                app_time,
+                embed_data,
+                item
+            )
             val mac = getMac(ZaloPayInfo.MAC_KEY, inputHMac)!!
+
+            idOrder(app_trans_id)
 
             return FormBody.Builder()
                 .add("app_id", app_id)
@@ -59,6 +85,41 @@ data class OrderZaloPayRequest(
                 .add("embed_data", embed_data)
                 .add("item", item)
                 .add("bank_code", bank_code)
+                .add("description", description)
+                .add("mac", mac)
+                .build()
+        }
+
+        fun queryStatusOrderZalo(app_trans_id: String): RequestBody {
+            val app_id = ZaloPayInfo.APP_ID.toString()
+            val inputHMac = String.format("%s|%s|%s", app_id, app_trans_id, ZaloPayInfo.MAC_KEY)
+            val mac = getMac(ZaloPayInfo.MAC_KEY, inputHMac)!!
+
+            return FormBody.Builder()
+                .add("app_id", app_id)
+                .add("app_trans_id", app_trans_id)
+                .add("mac", mac)
+                .build()
+        }
+
+        fun refundOrderZalo(zp_trans_id: String, amount: Double): RequestBody {
+            val app_id = ZaloPayInfo.APP_ID.toString()
+            val timestamp = System.currentTimeMillis()
+            val m_refund_id = String.format("%s_%s_%s",
+                Date().convertDateToStringFormat(StringUltis.dateZaloTimeFormat),
+                app_id,
+                "$timestamp${Random.Default.nextInt(111,999)}")
+            val description = "canncel"
+            val inputHMac = String.format("%s|%s|%s|%s|%s", app_id, zp_trans_id, amount.toInt().toString(), description, timestamp )
+            Log.e(":", "inputHMac: $inputHMac", )
+            val mac = getMac(ZaloPayInfo.MAC_KEY, inputHMac)!!
+
+            return FormBody.Builder()
+                .add("m_refund_id", m_refund_id)
+                .add("app_id", app_id)
+                .add("zp_trans_id", zp_trans_id)
+                .add("amount", amount.toInt().toString())
+                .add("timestamp", timestamp.toString())
                 .add("description", description)
                 .add("mac", mac)
                 .build()

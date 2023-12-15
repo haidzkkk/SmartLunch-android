@@ -56,7 +56,7 @@ class RoomChatAdapter(
                 Glide.with(binding.root.context).load(room.shopUserId?.avatar?.url).placeholder(R.drawable.logo_app).into(binding.imgAvatar)
                 this.tvDisplayName.text = "${room.shopUserId?.first_name} ${room.shopUserId?.last_name}"
                 this.tvTime.text = room.timeSent?.convertToStringFormat(dateIso8601Format, dateTimeDayFormat)
-                this.tvMessage.text = (if (room.userUserId?._id == room.userIdSend?._id) "Bạn: " else "") + room.messSent
+                this.tvMessage.text = (if (room.userUserId?._id == room.userIdSend?._id) "${binding.root.context.getString(R.string.you)}: " else "") + room.messSent
 
 
                 binding.root.setOnClickListener{ callBack.onClickItem(room)}

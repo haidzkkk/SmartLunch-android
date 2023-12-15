@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.databinding.FragmentCouponsBinding
 import com.fpoly.smartlunch.ui.main.coupons.adapter.CouponsAdapter
@@ -32,7 +33,7 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
     }
 
     private fun setupAppBar() {
-        views.layoutHeader.tvTitleToolbar.text = "Khuyến mãi"
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.promotion)
         productViewModel.handle(ProductAction.GetListCoupons)
     }
 

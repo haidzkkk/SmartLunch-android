@@ -40,7 +40,7 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
 
     private fun initUI() {
         views.layoutHeader.btnBackToolbar.isVisible = true
-        views.layoutHeader.tvTitleToolbar.text = "Đánh giá"
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.evaluate)
 
         commentAdapter = CommentAdapter()
         views.rcvComment.adapter = commentAdapter

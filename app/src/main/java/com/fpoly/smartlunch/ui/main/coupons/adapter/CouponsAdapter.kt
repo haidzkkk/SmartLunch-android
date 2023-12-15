@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.data.model.CouponsResponse
 import com.fpoly.smartlunch.databinding.ItemCouponBinding
 import com.fpoly.smartlunch.ultis.StringUltis
@@ -36,7 +37,7 @@ class CouponsAdapter(private val onClickItem: (String) -> Unit) : RecyclerView.A
         fun bind(coupon: CouponsResponse) {
             binding.apply {
                 tvName.text = coupon.coupon_name
-                tvCode.text = "Tối thiểu ${coupon.min_purchase_amount.toDouble().formatCash()}"
+                tvCode.text = "${binding.root.context.getString(R.string.minimum)} ${coupon.min_purchase_amount.toDouble().formatCash()}"
                 date.text = " ${coupon.expiration_date.convertIsoToStringFormat(StringUltis.dateDayFormat)}"
                 Glide.with(root.context).load(if(coupon.coupon_images.isNotEmpty()) coupon.coupon_images[0].url else "").into(imgCoupon)
             }

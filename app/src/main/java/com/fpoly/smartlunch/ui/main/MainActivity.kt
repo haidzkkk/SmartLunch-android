@@ -45,6 +45,8 @@ import com.fpoly.smartlunch.ui.main.profile.UserViewEvent
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
+import com.fpoly.smartlunch.ui.payment.PaymentViewModel
+import com.fpoly.smartlunch.ui.payment.PaymentViewState
 import com.fpoly.smartlunch.ui.security.LoginFragment
 import com.fpoly.smartlunch.ui.security.SecurityViewModel
 import com.fpoly.smartlunch.ui.security.SecurityViewState
@@ -60,7 +62,12 @@ import javax.inject.Inject
 
 
 @SuppressLint("UnspecifiedRegisterReceiverFlag")
-class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Factory, ProductViewModel.Factory,SecurityViewModel.Factory, UserViewModel.Factory {
+class MainActivity : PolyBaseActivity<ActivityMainBinding>(),
+    HomeViewModel.Factory,
+    ProductViewModel.Factory,
+    SecurityViewModel.Factory,
+    UserViewModel.Factory,
+    PaymentViewModel.Factory {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
@@ -76,6 +83,9 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     @Inject
     lateinit var userViewModelFactory: UserViewModel.Factory
+
+    @Inject
+    lateinit var PaymentViewModelFactory: PaymentViewModel.Factory
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -253,25 +263,20 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
         }
     }
 
-//    override fun onBackPressed() {
-//        popBackStackAndShowPrevious()
-////        if (views.bottomNav.getSelectedItemId() != R.id.menu_home && views.bottomNav.isVisible == true) {
-////            views.bottomNav.setItemSelected(R.id.menu_home)
-////        } else if (views.bottomNav.getSelectedItemId() == R.id.menu_home && views.bottomNav.isVisible == true) {
-////            if (doubleClickBack) {
-////                finishAffinity()
-////            }
-////            this.doubleClickBack = true
-////            Toast.makeText(this, "Ấn Back lần nữa để thoát", Toast.LENGTH_SHORT).show()
-////            Handler().postDelayed({ doubleClickBack = false }, 2000)
-////        } else {
-//            super.onBackPressed()
-////        }
-//    }
-
     override fun onBackPressed() {
-        super.onBackPressed()
         popBackStackAndShowPrevious()
+//        if (views.bottomNav.getSelectedItemId() != R.id.menu_home && views.bottomNav.isVisible == true) {
+//            views.bottomNav.setItemSelected(R.id.menu_home)
+//        } else if (views.bottomNav.getSelectedItemId() == R.id.menu_home && views.bottomNav.isVisible == true) {
+//            if (doubleClickBack) {
+//                finishAffinity()
+//            }
+//            this.doubleClickBack = true
+//            Toast.makeText(this, "Ấn Back lần nữa để thoát", Toast.LENGTH_SHORT).show()
+//            Handler().postDelayed({ doubleClickBack = false }, 2000)
+//        } else {
+            super.onBackPressed()
+//        }
     }
 
 
@@ -289,6 +294,10 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(), HomeViewModel.Fact
 
     override fun create(initialState: UserViewState): UserViewModel {
         return userViewModelFactory.create(initialState)
+    }
+
+    override fun create(initialState: PaymentViewState): PaymentViewModel {
+        return PaymentViewModelFactory.create(initialState)
     }
 
 

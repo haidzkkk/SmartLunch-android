@@ -17,6 +17,7 @@ data class OrderResponse(
     val notes: String,
     val statusPayment: Status,
     val isPayment: Boolean,
+    val data: String?,
     val createdAt: String,
-    val updatedAt: String
+    val updatedAt: String,
 ):Serializable

@@ -323,11 +323,6 @@ class ProductViewModel @AssistedInject constructor(
     }
 
     private fun handleGetOneCartById() {
-//        setState { copy(getOneCartById = Loading()) }
-//        repository.getOneCartById()
-//            .execute {
-//                copy(getOneCartById = it)
-//            }
         setState { copy(curentCartResponse = Loading()) }
         repository.getOneCartById()
             .execute {

@@ -50,12 +50,11 @@ class HomeChatFragment : PolyBaseFragment<FragmentHomeChatBinding>() {
         initUI()
         setupRcv()
         clickUILisstenner()
-        Log.e("HomeChatFragment", "onCreate: webRTCClient ${webRTCClient.hashCode()}", )
     }
 
     private fun initUI() {
         views.layoutHeader.imgBack.isVisible = true
-        views.layoutHeader.tvTitleToolbar.text = "Đoạn chat"
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.chat_section)
     }
 
     private fun clickUILisstenner() {

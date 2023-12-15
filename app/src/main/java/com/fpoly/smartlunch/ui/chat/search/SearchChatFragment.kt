@@ -88,9 +88,9 @@ class SearchChatFragment : PolyBaseFragment<FragmentSearchChatBinding>(){
             views.imgClear.isVisible = text.toString().length != 0
 
             if (text.toString().length == 0){
-                views.tvFinding.text = "Hãy tìm kiếm"
+                views.tvFinding.text = getString(R.string.please_search)
             }else{
-                views.tvFinding.text = "Xem kết quả cho: $text"
+                views.tvFinding.text = "${getString(R.string.results_for)}: $text"
             }
 
             views.imgLoading.isVisible = text.toString().length != 0

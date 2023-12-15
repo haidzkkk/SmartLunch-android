@@ -1,9 +1,11 @@
 package com.fpoly.smartlunch.ui.main.order
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Loading
@@ -15,11 +17,14 @@ import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.OrderRequest
 import com.fpoly.smartlunch.data.model.OrderResponse
+import com.fpoly.smartlunch.data.model.OrderZaloPayRequest
 import com.fpoly.smartlunch.databinding.FragmentOrderDetailBinding
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.notification.adapter.NotificationAdapter
 import com.fpoly.smartlunch.ui.main.product.ProductAction
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ui.payment.PaymentViewAction
+import com.fpoly.smartlunch.ui.payment.PaymentViewModel
 import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.StringUltis
 import com.fpoly.smartlunch.ultis.convertIsoToStringFormat
@@ -30,6 +35,7 @@ import com.fpoly.smartlunch.ultis.showSnackbar
 class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
     private val productViewModel: ProductViewModel by activityViewModel()
     private val homeViewModel: HomeViewModel by activityViewModel()
+    private val paymentViewModel: PaymentViewModel by activityViewModel()
     private var currentOrder: OrderResponse? = null
 
     private lateinit var productOrderAdapter: ProductOrderAdapter
@@ -76,7 +82,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         }
         views.btnCancel.setOnClickListener{
             if (currentOrder != null){
-                var orderRequest = OrderRequest(null, null, Status.CANCEL_STATUS, null, null)
+                var orderRequest = OrderRequest(null, null, Status.CANCEL_STATUS, null, null, null)
                 productViewModel.handle(ProductAction.UpdateOder(currentOrder!!._id, orderRequest))
             }
         }
@@ -118,7 +124,6 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             btnCancel.isEnabled = currentOrder.status._id == Status.UNCONFIRMED_STATUS
             tvTitleStatus.setTextColor(currentOrder.status._id == Status.SUCCESS_STATUS)
         }
-
         handleStateProgress(currentOrder)
     }
 
@@ -129,35 +134,107 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         return FragmentOrderDetailBinding.inflate(inflater, container, false)
     }
 
-    override fun invalidate():Unit= withState(productViewModel) {
-        views.swipeLoading.isRefreshing = it.addOrder is Loading || it.asyncUpdateOrder is Loading
+    override fun invalidate() {
+        withState(productViewModel) {
+            views.swipeLoading.isRefreshing = it.addOrder is Loading || it.asyncUpdateOrder is Loading
 
-        when(it.addOrder){
-            is Success -> {
-                currentOrder= it.addOrder.invoke()
-                currentOrder?.let { currentOrder -> setupUI(currentOrder) }
+            when(it.addOrder){
+                is Success -> {
+                    currentOrder= it.addOrder.invoke()
+                    currentOrder?.let { currentOrder -> setupUI(currentOrder) }
+                }
+                is Fail -> {
+                }
+                else -> {}
             }
-            is Fail -> {
-            }
-            else -> {}
-        }
-        when(it.asyncUpdateOrder){
-            is Success -> {
-                showSnackbar(views.root, "Hủy đơn hàng thành công", true, null, null)
-                currentOrder= it.asyncUpdateOrder.invoke()
-                currentOrder?.let { currentOrder -> setupUI(currentOrder) }
-                it.asyncUpdateOrder = Uninitialized
-            }
-            is Fail -> {
-                showSnackbar(views.root, "Hủy đơn hàng thất bại", true, "thử lại"){
+            when(it.asyncUpdateOrder){
+                is Success -> {
+                    showSnackbar(
+                        views.root,
+                        "Hủy đơn hàng thành công",
+                        true,
+                        null,
+                        null
+                    )
+                    currentOrder = it.asyncUpdateOrder.invoke()
+                    currentOrder?.let { currentOrder -> setupUI(currentOrder) }
+                    it.asyncUpdateOrder = Uninitialized
+
+                    // kiểm tra để hoàn tiền
                     if (currentOrder != null){
-                        var orderRequest = OrderRequest(null, null, Status.CANCEL_STATUS, null, null)
-                        productViewModel.handle(ProductAction.UpdateOder(currentOrder!!._id, orderRequest))
+                        if(currentOrder!!.status._id == Status.CANCEL_STATUS && currentOrder!!.isPayment && !currentOrder!!.data.isNullOrEmpty() &&
+                            (currentOrder!!.statusPayment._id == Status.STATUS_ZALOPAY || currentOrder!!.statusPayment._id == Status.STATUS_PAYPAL)
+                        ){
+                            paymentViewModel.handle(PaymentViewAction.StatusOrderZaloPay(OrderZaloPayRequest.queryStatusOrderZalo(currentOrder!!.data!!)))
+                        }
                     }
                 }
-                it.asyncUpdateOrder = Uninitialized
+                is Fail -> {
+                    showSnackbar(
+                        views.root,
+                        "Hủy đơn hàng thất bại",
+                        true,
+                        "thử lại"
+                    ) {
+                        if (currentOrder != null) {
+                            var orderRequest = OrderRequest(
+                                null,
+                                null,
+                                Status.CANCEL_STATUS,
+                                null,
+                                null,
+                                null
+                            )
+                            productViewModel.handle(
+                                ProductAction.UpdateOder(
+                                    currentOrder!!._id,
+                                    orderRequest
+                                )
+                            )
+                        }
+                    }
+                    it.asyncUpdateOrder = Uninitialized
+                }
+                else -> {}
             }
-            else -> {}
+        }
+
+        withState(paymentViewModel){
+            when(it.asyncStatusOrderZaloPayReponse){
+                is Success ->{
+                    val data = it.asyncStatusOrderZaloPayReponse.invoke()
+                    if (data?.amount != null && data.zp_trans_id != null && it.asyncRefundOrderZaloPayReponse == Uninitialized){
+                        paymentViewModel.handle(PaymentViewAction.RefundOrderZaloPay(OrderZaloPayRequest.refundOrderZalo(data.zp_trans_id, data.amount)))
+                    }
+                    it.asyncStatusOrderZaloPayReponse = Uninitialized
+                }
+                else ->{
+
+                }
+            }
+            when(it.asyncRefundOrderZaloPayReponse){
+                is Success ->{
+                    it.asyncRefundOrderZaloPayReponse = Uninitialized
+                    paymentViewModel.handle(PaymentViewAction.UpdateIsPaymentOder(currentOrder?._id ?: "", false))
+                }
+                is Fail ->{
+                    Toast.makeText(requireContext(), "Hoàn tiền thất bại", Toast.LENGTH_SHORT).show()
+                    it.asyncRefundOrderZaloPayReponse = Uninitialized
+                }
+                else ->{
+
+                }
+            }
+            when(it.asyncUpdateOrder){
+                is Success ->{
+                    currentOrder= it.asyncUpdateOrder.invoke()
+                    currentOrder?.let { currentOrder -> setupUI(currentOrder) }
+                    it.asyncUpdateOrder = Uninitialized
+                }
+                else ->{
+
+                }
+            }
         }
     }
 
