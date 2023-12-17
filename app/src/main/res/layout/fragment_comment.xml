@@ -92,7 +92,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/layout_select_size"
+                            android:id="@+id/layout_sort"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -101,10 +101,10 @@
                             android:background="@drawable/backgound_retangle_chip">
 
                             <TextView
-                                android:id="@+id/tv_select_size"
+                                android:id="@+id/tv_sort"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="Size"
+                                android:text="Sắp sếp"
                                 android:textColor="@color/black"
                                 android:paddingEnd="1dp"
                                 android:textSize="12dp"
@@ -114,7 +114,8 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/icon_down"/>
+                                android:src="@drawable/icon_sort"
+                                app:tint="@color/grey_black" />
 
                         </LinearLayout>
 

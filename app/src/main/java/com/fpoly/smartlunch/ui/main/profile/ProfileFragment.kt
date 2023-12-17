@@ -82,7 +82,9 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.layoutLanguage.setOnClickListener{
             homeViewModel.returnLanguageFragment()
         }
-
+        views.layoutSupport.setOnClickListener{
+            homeViewModel.returnIntroductFragment()
+        }
         views.layoutNotifies.setOnClickListener {
             homeViewModel.returnNotificationFragment()
         }
@@ -90,7 +92,6 @@ class ProfileFragment : PolyBaseFragment<FragmentProfileBinding>() {
         views.layoutChat.setOnClickListener{
             activity?.startActivity(Intent(requireContext(), ChatActivity::class.java))
         }
-
         views.logout.setOnClickListener {
             userViewModel.handle(UserViewAction.LogOutUser)
         }

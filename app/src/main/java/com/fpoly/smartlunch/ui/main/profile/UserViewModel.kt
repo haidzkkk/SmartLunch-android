@@ -47,9 +47,12 @@ class UserViewModel @AssistedInject constructor(
             is UserViewAction.UpdateAddress -> handleUpdateAddress(action.id)
             is UserViewAction.DeleteAddressById -> handleDeleteAddressById(action.id)
 
+            is UserViewAction.GetAddressAdmin -> handleGetAddressAdmin()
+
             is UserViewAction.GetProvinceAddress -> handleGetListProvince()
             is UserViewAction.GetDistrictAddress -> handleGetListDistrict(action.provinceId)
             is UserViewAction.GetWardAddress -> handleGetListWard(action.districtId)
+            else -> {}
         }
     }
     private fun handleLogoutUser() {
@@ -116,6 +119,12 @@ class UserViewModel @AssistedInject constructor(
         }
     }
 
+    private fun handleGetAddressAdmin() {
+        setState { copy(asyncAddressAdmin = Loading()) }
+        repository.getAddressAdmin().execute {
+            copy(asyncAddressAdmin = it)
+        }
+    }
     fun handleRemoveAsyncChangePassword() {
         setState { copy(asyncChangePassword = Uninitialized) }
     }

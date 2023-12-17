@@ -61,7 +61,7 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
             productViewModel.handle(ProductAction.GetDetailProduct(it))
             productViewModel.handle(ProductAction.GetListSizeProduct(it))
             productViewModel.handle(ProductAction.GetListToppingProduct(it))
-            productViewModel.handle(ProductAction.GetListCommentsLimit(it))
+            productViewModel.handle(ProductAction.GetListComments(it, limit = 2))
             productViewModel.returnDetailProductFragment()
         }
         val linearLayoutManager = LinearLayoutManager(requireContext())

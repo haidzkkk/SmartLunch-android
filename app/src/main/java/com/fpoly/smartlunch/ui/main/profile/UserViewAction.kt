@@ -19,6 +19,7 @@ sealed class UserViewAction: PolyViewAction {
     data class ChangePasswordUser(val changePassword: ChangePassword): UserViewAction()
     data class UpdateUser(val updateUser: UpdateUserRequest): UserViewAction()
     data class UploadAvatar(val avatar: File): UserViewAction()
+    object GetAddressAdmin: UserViewAction()
 
     object GetProvinceAddress : UserViewAction()
     data class GetDistrictAddress(val provinceId: String) : UserViewAction()

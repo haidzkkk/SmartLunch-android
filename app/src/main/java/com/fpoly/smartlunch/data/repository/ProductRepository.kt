@@ -82,8 +82,7 @@ class ProductRepository @Inject constructor(
     fun getCurrentOrder(id: String): Observable<OrderResponse> = api.getCurrentOrder(id).subscribeOn(Schedulers.io())
     fun getTopViewedProducts(): Observable<ArrayList<Product>> = api.getTopViewedProducts().subscribeOn(Schedulers.io())
 
-    fun getCommentProduct(productId: String): Observable<ArrayList<Comment>> = commentApi.getCommentProduct(productId).subscribeOn(Schedulers.io())
-    fun getCommentProductLimit(productId: String, limitPosition: Int): Observable<ArrayList<Comment>> = commentApi.getCommentProductLimit(productId, limitPosition).subscribeOn(Schedulers.io())
+    fun getCommentProduct(productId: String, limit: Int?, isImage: Boolean?, rate: Int?, isSort: Boolean?): Observable<ArrayList<Comment>> = commentApi.getCommentProduct(productId, limit, isImage, rate, isSort).subscribeOn(Schedulers.io())
     fun postMessage(comment: CommentRequest, images: List<Gallery>?): Observable<Comment>{
 
         val reqBodyProductId: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), comment.productId ?: "")

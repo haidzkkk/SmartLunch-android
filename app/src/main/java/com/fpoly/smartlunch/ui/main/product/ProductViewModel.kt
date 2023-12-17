@@ -80,8 +80,7 @@ class ProductViewModel @AssistedInject constructor(
             is ProductAction.GetCurrentOrder -> handleGetCurrentOrder(action.id)
             is ProductAction.LikeProduct -> handleLikeProduct(action.product)
 
-            is ProductAction.GetListComments -> handleGetListComments(action.productId)
-            is ProductAction.GetListCommentsLimit -> handleGetListCommentsLimit(action.productId)
+            is ProductAction.GetListComments -> handleGetListComments(action.productId, action.limit, action.isImage, action.rate, action.isSort)
             is ProductAction.AddComment -> handleAddComments(action.comment, action.images)
 
             is ProductAction.GetAllNotification -> handleGetAllNotification()
@@ -264,18 +263,11 @@ class ProductViewModel @AssistedInject constructor(
     }
 
 
-    private fun handleGetListComments(idProduct: String) {
+    private fun handleGetListComments(idProduct: String?, limit: Int?, isImage: Boolean?, rate: Int?, isSort: Boolean?) {
         setState { copy(asyncComments = Loading()) }
-        repository.getCommentProduct(idProduct)
+        repository.getCommentProduct(idProduct ?: "", limit, isImage, rate, isSort)
             .execute {
                 copy(asyncComments = it)
-            }
-    }
-    private fun handleGetListCommentsLimit(idProduct: String) {
-        setState { copy(asyncCommentsLimit = Loading()) }
-        repository.getCommentProductLimit(idProduct, 2)
-            .execute {
-                copy(asyncCommentsLimit = it)
             }
     }
 

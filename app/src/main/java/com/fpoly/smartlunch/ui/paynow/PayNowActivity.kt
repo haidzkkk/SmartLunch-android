@@ -19,6 +19,7 @@ import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.data.model.Size
 import com.fpoly.smartlunch.databinding.ActivityPayNowBinding
 import com.fpoly.smartlunch.ui.chat.ChatActivity
+import com.fpoly.smartlunch.ui.main.profile.UserViewEvent
 import com.fpoly.smartlunch.ui.main.profile.UserViewModel
 import com.fpoly.smartlunch.ui.main.profile.UserViewState
 import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
@@ -104,6 +105,20 @@ class PayNowActivity : PolyBaseActivity<ActivityPayNowBinding>(),
     }
 
     private fun listenEvent() {
+        userViewModel.observeViewEvents {event ->
+            when(event){
+                is UserViewEvent.ReturnFragment<*> -> {
+                    addFragmentToBackStack(
+                        R.id.frame_layout,
+                        event.fragmentClass,
+                        bundle = event.bundle,
+                        tag = event.fragmentClass.simpleName
+                    )
+                }
+                else -> {}
+            }
+        }
+
         paymentViewModel.observeViewEvents { event ->
             when (event) {
                 is PaymentViewEvent.ReturnFragment<*> -> {

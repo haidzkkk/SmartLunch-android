@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -58,6 +59,10 @@ class HomeChatFragment : PolyBaseFragment<FragmentHomeChatBinding>() {
     }
 
     private fun clickUILisstenner() {
+        views.swipeLoading.setOnRefreshListener {
+            chatViewModel.handle(ChatViewAction.getRoomChat)
+        }
+
         views.layoutHeader.imgBack.setOnClickListener{
 //            activity?.onBackPressed()
             activity?.finish()
@@ -80,10 +85,10 @@ class HomeChatFragment : PolyBaseFragment<FragmentHomeChatBinding>() {
     ): FragmentHomeChatBinding = FragmentHomeChatBinding.inflate(layoutInflater)
 
     override fun invalidate(): Unit = withState(chatViewModel){
+        views.swipeLoading.isRefreshing = it.rooms is Loading
         when(it.curentUser){
             is Success -> {
-                chatViewModel.connectEventRoomSocket{ roomChatAdapter.updateData(it)} // socket receive room update
-                chatViewModel.connectEventCallSocket()
+                chatViewModel.connectEventRoomSocket{ roomChatAdapter.updateData(it)}
             }
             else -> {}
         }

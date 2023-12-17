@@ -10,6 +10,7 @@
     <string name="cart">Giỏ hàng</string>
     <string name="profile">Hồ sơ</string>
     <string name="chat">Trò chuyện</string>
+    <string name="introduce">Giới thiệu</string>
     <string name="en">Tiếng Anh</string>
     <string name="vi">Tiếng Việt</string>
     <string name="title_activity_main">MainActivity</string>
@@ -131,4 +132,11 @@
     <string name="minimum">Tối thiểu</string>
     <string name="promotion">Khuyến mãi</string>
     <string name="feature_development">Chức năng đang được phát triển</string>
+    <string name="filter">Lọc</string>
+    <string name="increase">Tăng</string>
+    <string name="decrease">Giảm</string>
+    <string name="about_me">Về chúng tôi</string>
+    <string name="introduct">Trong bối cảnh trên, chúng em quyết định chọn đề tài Ứng dụng đặt đồ ăn Smart Lunch để tìm hiểu sâu hơn về cách áp dụng công nghệ thông tin vào ngành dịch vụ ẩm thực, cung cấp giải pháp thúc đẩy sự tiện lợi cho khách hàng và sự hiệu quả cho quản lý nhà hàng</string>
+    <string name="okok1">Thứ 2 - thứ 6</string>
+    <string name="okok2">Thứ bảy - chủ nhật</string>
 </resources>

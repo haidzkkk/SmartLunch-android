@@ -59,7 +59,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             productViewModel.handle(ProductAction.GetDetailProduct(it.productId))
             productViewModel.handle(ProductAction.GetListSizeProduct(it.productId))
             productViewModel.handle(ProductAction.GetListToppingProduct(it.productId))
-            productViewModel.handle(ProductAction.GetListCommentsLimit(it.productId))
+            productViewModel.handle(ProductAction.GetListComments(it.productId, limit = 2))
             homeViewModel.returnDetailProductFragment()
         }
         views.rcvProduct.adapter = productOrderAdapter

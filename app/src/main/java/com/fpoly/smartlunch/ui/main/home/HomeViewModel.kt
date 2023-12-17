@@ -26,6 +26,7 @@ import com.fpoly.smartlunch.ui.main.product.ProductFragment
 import com.fpoly.smartlunch.ui.main.product.ProductListFragment
 import com.fpoly.smartlunch.ui.main.profile.ChangePasswordFragment
 import com.fpoly.smartlunch.ui.main.profile.EditProfileFragment
+import com.fpoly.smartlunch.ui.main.profile.IntroductFragment
 import com.fpoly.smartlunch.ui.main.profile.LanguageFragment
 import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
 import com.fpoly.smartlunch.ui.main.search.SearchFragment
@@ -121,6 +122,9 @@ class HomeViewModel @AssistedInject constructor(
         _viewEvents.post(HomeViewEvent.ReturnFragment(OrderFragment::class.java))
     }fun returnProfileFragment() {
         _viewEvents.post(HomeViewEvent.ReturnFragment(ProfileFragment::class.java))
+    }
+    fun returnIntroductFragment() {
+        _viewEvents.post(HomeViewEvent.NavigateTo(IntroductFragment::class.java))
     }
 
     fun returnProductListFragment(){

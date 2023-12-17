@@ -83,7 +83,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
             override fun onCLickItem(id: String) {
                 productViewModel.handle(ProductAction.GetListSizeProduct(id))
                 productViewModel.handle(ProductAction.GetListToppingProduct(id))
-                productViewModel.handle(ProductAction.GetListCommentsLimit(id))
+                productViewModel.handle(ProductAction.GetListComments(id, limit = 2))
                 productViewModel.handle(ProductAction.GetDetailProduct(id))
                 paymentViewModel.returnDetailProductFragment()
             }
@@ -110,7 +110,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
                 super.onClickItem(idProductAdapter)
                 productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListToppingProduct(idProductAdapter))
-                productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListComments(idProductAdapter, limit = 2))
                 productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
                 paymentViewModel.returnDetailProductFragment()
             }

@@ -18,6 +18,16 @@ fun getTypePayments(): Observable<ArrayList<Menu>> {
     return Observable.just(paymentTypies)
 }
 
+fun getRateComment(): ArrayList<Menu> {
+    var rateTypies = arrayListOf<Menu>()
+    rateTypies.add(Menu("1", "1 sao", ""))
+    rateTypies.add(Menu("2", "2 sao", ""))
+    rateTypies.add(Menu("3", "3 sao", ""))
+    rateTypies.add(Menu("4", "4 sao", ""))
+    rateTypies.add(Menu("5", "5 sao", ""))
+    return rateTypies
+}
+
 fun getListBanner(): ArrayList<Banner>{
     var list: ArrayList<Banner> = arrayListOf()
     list.add(Banner("0", 0, Image("a", "https://treobangron.com.vn/wp-content/uploads/2022/12/banner-quang-cao-nha-hang-32.jpg"), ""))

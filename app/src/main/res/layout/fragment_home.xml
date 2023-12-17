@@ -28,10 +28,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="16dp"
                     android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/notification"
+                    android:layout_toStartOf="@+id/layout_notification"
                     android:drawableStart="@drawable/location_black"
+                    android:paddingEnd="10dp"
                     android:ellipsize="end"
-                    android:maxLength="30"
                     android:maxLines="1"
                     android:text=" Đang tải..."
                     android:textColor="@color/title"
@@ -39,6 +39,7 @@
                     tools:ignore="NotSibling" />
 
                 <RelativeLayout
+                    android:id="@+id/layout_notification"
                     android:layout_width="30dp"
                     android:layout_height="28dp"
                     android:layout_alignParentEnd="true"

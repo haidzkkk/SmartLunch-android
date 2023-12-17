@@ -25,6 +25,12 @@ class PaymentTypeAdapter(val callBack: (menu: Menu) -> Unit) : RecyclerView.Adap
         notifyDataSetChanged()
     }
 
+    fun setSelectItem(index: Int?){
+        if (index == null) return
+        if (index >= 0) positionItemSelect = index
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(val binding: ItemBottomPaymentTypeBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(menu: Menu, position: Int){
             Log.e("TAG", "onBind: $positionItemSelect", )

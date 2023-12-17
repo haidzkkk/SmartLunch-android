@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.profile.IntroductFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="24dp">
+
+        <include
+            android:id="@+id/layout_header"
+            layout="@layout/toolbar_header"/>
+
+        <TextView
+            android:id="@+id/tv_title_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_header"
+            android:layout_marginTop="20dp"
+            android:text="@string/address"/>
+
+        <fragment
+            android:id="@+id/map_view_payment"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:layout_below="@+id/tv_title_address"
+            android:layout_marginTop="10dp"
+            android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+        <TextView
+            android:id="@+id/tv_address_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/map_view_payment"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_title_about_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_address_line"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:textFontWeight="1000"
+            android:text="@string/about_me"/>
+
+        <TextView
+            android:id="@+id/tv_message_about_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_about_me"
+            android:text="@string/introduct"/>
+
+        <TextView
+            android:id="@+id/tv_okok_11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/okok1"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tv_message_about_me"
+            />
+
+        <TextView
+            android:id="@+id/tv_okok_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8:00 - 22:00"
+            android:textColor="@color/red"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_message_about_me"
+            />
+
+        <TextView
+            android:id="@+id/tv_okok_21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/okok2"
+            android:layout_below="@+id/tv_okok_11"
+            />
+
+        <TextView
+            android:id="@+id/tv_okok_22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6:00 - 23:00"
+            android:textColor="@color/red"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_okok_12"
+            />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_okok_21"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

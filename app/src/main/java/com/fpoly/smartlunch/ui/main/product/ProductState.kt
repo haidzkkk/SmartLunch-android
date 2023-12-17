@@ -47,7 +47,6 @@ data class ProductState(
     var getRemoveProductByIdCart : Async<CartResponse> = Uninitialized,
     var applyCoupons : Async<CartResponse> = Uninitialized,
 
-    var asyncCommentsLimit: Async<ArrayList<Comment>> = Uninitialized,
     var asyncComments: Async<ArrayList<Comment>> = Uninitialized,
     var asyncAddComment: Async<Comment> = Uninitialized,
 
