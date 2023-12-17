@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Smart Lunch</string>
-
+    <string name="introduce">介绍</string>
     <string name="hello_blank_fragment">你好，空白片段</string>
     <string name="notification">通知</string>
     <string name="home">主页</string>
@@ -21,7 +21,13 @@
     <string name="second_fragment_label">第二个片段</string>
     <string name="next">下一步</string>
     <string name="previous">上一步</string>
-
+    <string name="filter">过滤器</string>
+    <string name="increase">增加</string>
+    <string name="decrease">减少</string>
+    <string name="about_me">关于我们</string>
+    <string name="introduct">在上述背景下，我们决定选择“智能午餐订餐应用”这个主题，更深入地了解如何将信息技术应用于餐饮服务行业，为客户提供便利，并为餐厅管理提供提高效率的解决方案。</string>
+    <string name="okok1">星期一 - 星期五</string>
+    <string name="okok2">星期六 - 星期日</string>
     <!-- 新手指引 -->
     <string name="onboarding_greeting1">你好！我们是\n智能午餐</string>
     <string name="onboarding_greeting2">使用智能午餐\n轻松方便</string>

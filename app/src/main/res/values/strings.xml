@@ -132,34 +132,6 @@
     <string name="http404">Not found</string>
     <string name="http500">Server error during processing</string>
 
-    <string name="faild">Error</string>
-    <string name="end_call_offer">Call ended, no response from the other side</string>
-    <string name="end_call">Call ended</string>
-    <string name="call_faild">Call encountered an error</string>
-    <string name="refuse">The other side declined</string>
-    <string name="access_camera">You must allow camera access</string>
-    <string name="access_gallery">You must allow gallery access</string>
-    <string name="unable_gallery">Unable to retrieve image from the gallery</string>
-    <string name="ok">Go</string>
-    <string name="to_setting">Go to settings</string>
-    <string name="want_to_call">wants to call you</string>
-    <string name="room_not_found">Room not found</string>
-    <string name="chat_section">Chat section</string>
-    <string name="you">You</string>
-    <string name="calling">Calling</string>
-    <string name="join">Join</string>
-    <string name="voice_call">Voice call</string>
-    <string name="minute">minute(s)</string>
-    <string name="taking_photo_faild">Failed to take a photo</string>
-    <string name="send_message_faild">Failed to send message</string>
-    <string name="please_search">Please search</string>
-    <string name="results_for">Results for</string>
-    <string name="evaluate">Evaluate</string>
-    <string name="coupon_detail">Coupon details</string>
-    <string name="minimum">Minimum</string>
-    <string name="promotion">Promotion</string>
-    <string name="feature_development">Feature under development</string>
-
     <!-- Alert dialog titles -->
     <string name="confirmation_title">Confirmation</string>
     <string name="clear_cart_title">Clear Cart</string>
