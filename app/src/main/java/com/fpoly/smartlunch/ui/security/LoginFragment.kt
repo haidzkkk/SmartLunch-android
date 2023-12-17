@@ -116,7 +116,7 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
     private fun validateLoginInput() {
         val username = views.edtEmail.text.toString().trim()
         val password = views.edtPassword.text.toString().trim()
-        isFieldsFilled = username.isNotEmpty() && password.isNotEmpty()
+        isFieldsFilled = username.isNotEmpty() && password.isNotEmpty() && password.length>=6
         views.btnLogin.isEnabled = isFieldsFilled
     }
 

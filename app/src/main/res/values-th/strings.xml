@@ -64,7 +64,6 @@
     <string name="display_name">ชื่อที่แสดง</string>
     <string name="edit_profile">แก้ไขโปรไฟล์</string>
     <string name="my_location">ตำแหน่งของฉัน</string>
-    <string name="support">สนับสนุน</string>
     <string name="logout">ออกจากระบบ</string>
     <string name="notify">การแจ้งเตือน</string>
     <string name="dark_mode">โหมดมืด</string>

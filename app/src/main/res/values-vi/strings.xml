@@ -62,7 +62,6 @@
     <string name="display_name">Tên hiển thị</string>
     <string name="edit_profile">Chỉnh sửa hồ sơ</string>
     <string name="my_location">Vị trí của tôi</string>
-    <string name="support">Hỗ trợ</string>
     <string name="logout">Đăng xuất</string>
     <string name="notify">Thông báo</string>
     <string name="dark_mode">Chế độ tối</string>
@@ -318,7 +317,7 @@
     <string name="account_not_verified">Tài khoản chưa được xác thực</string>
     <string name="verify">Xác thực</string>
     <string name="note_tile">Ghi chú đặt hàng</string>
-    <string name="sign_in_with_gg">Sign in with Google</string>
+    <string name="sign_in_with_gg">Đăng nhập với Google</string>
     <string name="already_registered">Email đã được đăng ký!</string>
     <string name="system_error">Hệ thống lỗi vui lòng thử lại sau</string>
     <string name="incorrect_otp">Mã OTP chưa chính xác! Vui lòng kiểm tra lại hộp thư</string>

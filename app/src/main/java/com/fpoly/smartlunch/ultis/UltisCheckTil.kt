@@ -40,7 +40,7 @@ fun TextInputLayout.checkValidEPassword(res : Resources , edt1 : TextInputEditTe
     val str1 = edt1.text.toString().trim()
     val str2 = edt2.text.toString().trim()
     if (str1 == ""|| str2 == "" || str1 != str2){
-        edt2.error =   res.getString(R.string.validatePassword)
+        this.error =   res.getString(R.string.validatePassword)
         return true
     }
     edt2.error = null
