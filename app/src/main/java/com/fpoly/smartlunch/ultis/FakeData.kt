@@ -14,13 +14,13 @@ fun getTypePayments(): Observable<ArrayList<Menu>> {
     var paymentTypies = arrayListOf<Menu>()
     paymentTypies.add(Menu("0", "Tiền mặt", "Thanh toán khi nhận hàng"))
     paymentTypies.add(Menu("1", "Paypal", "Ví điện tử paypal"))
-    paymentTypies.add(Menu("3", "Zalopay", "Ví điện tử zalopay"))
+    paymentTypies.add(Menu("2", "Zalopay", "Ví điện tử zalopay"))
     return Observable.just(paymentTypies)
 }
 
 fun getRateComment(): ArrayList<Menu> {
     var rateTypies = arrayListOf<Menu>()
-    rateTypies.add(Menu("1", "1 sao", ""))
+    rateTypies.add(Menu("1", "1 sao" , ""))
     rateTypies.add(Menu("2", "2 sao", ""))
     rateTypies.add(Menu("3", "3 sao", ""))
     rateTypies.add(Menu("4", "4 sao", ""))

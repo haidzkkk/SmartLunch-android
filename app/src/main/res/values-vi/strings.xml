@@ -344,4 +344,9 @@
     <string name="add_to_cart_more">Thêm mặt hàng</string>
     <string name="insert_your_comment">Nhập phản hồi của bạn...</string>
     <string name="send_comment">Gửi đánh giá</string>
+
+    <string name="all_comment">Tất cả</string>
+    <string name="image">Có hình ảnh</string>
+    <string name="star">Sao</string>
+    <string name="arrange">Sắp xếp</string>
 </resources>
