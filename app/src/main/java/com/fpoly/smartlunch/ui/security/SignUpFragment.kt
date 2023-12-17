@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
@@ -67,7 +68,12 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
             password = views.password.text.toString(),
             confirmPassword = views.confirmPassword.text.toString()
         )
-        viewModel.handle(SecurityViewAction.SignupAction(user))
+        if(views.password.text?.length!! <6){
+            Toast.makeText(requireContext(), "${getString(R.string.validatePassword)}", Toast.LENGTH_SHORT).show()
+        }else{
+            viewModel.handle(SecurityViewAction.SignupAction(user))
+        }
+
     }
 
     override fun invalidate(): Unit = withState(viewModel) {
