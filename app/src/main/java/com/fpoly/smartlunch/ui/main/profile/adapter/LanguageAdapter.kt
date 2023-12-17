@@ -42,6 +42,13 @@ class LanguageAdapter(val onClick: (Language) -> Unit) :
                 }
                 notifyDataSetChanged()
             }
+            itemLanguageBinding.root.setOnClickListener{
+                onClick(language)
+                for (item in languages) {
+                    item.isSelected = (item == language)
+                }
+                notifyDataSetChanged()
+            }
         }
     }
 }
