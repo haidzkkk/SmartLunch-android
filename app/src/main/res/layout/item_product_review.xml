@@ -28,7 +28,6 @@
         android:id="@+id/tv_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Nước trà vải thơm ngon"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:layout_below="@+id/tv_status"
@@ -39,7 +38,6 @@
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Size L"
         android:layout_below="@+id/tv_name"
         android:layout_toEndOf="@+id/img_img"
         android:layout_marginStart="10dp"/>
@@ -57,7 +55,6 @@
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="24,000 đ"
         android:textColor="@color/red"
         android:layout_below="@+id/tv_type"
         android:layout_toEndOf="@+id/img_img"
@@ -67,7 +64,6 @@
         android:id="@+id/tv_all_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="265.000đ"
         android:textColor="@color/red"
         android:layout_below="@+id/tv_quantity"
         android:layout_alignParentEnd="true"
@@ -105,6 +101,6 @@
         android:layout_below="@+id/rcv_toping"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
-        android:text="Đánh giá"/>
+        android:text="@string/comment"/>
 
 </RelativeLayout>

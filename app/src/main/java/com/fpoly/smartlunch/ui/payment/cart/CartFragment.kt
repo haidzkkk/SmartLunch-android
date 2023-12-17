@@ -181,13 +181,13 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
                     val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Xác nhận xóa")
-                    builder.setMessage("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?")
-                    builder.setPositiveButton("Xóa") { dialog, which ->
+                    builder.setTitle(getString(R.string.confirm_delete_title))
+                    builder.setMessage(getString(R.string.confirm_delete_message))
+                    builder.setPositiveButton(getString(R.string.delete)) { dialog, which ->
                         adapterCart.onItemSwiped(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
                     }
-                    builder.setNegativeButton("Hủy") { dialog, which ->
+                    builder.setNegativeButton(getString(R.string.confirm_delete_negative_button)) { dialog, which ->
                         adapterCart.notifyItemChanged(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
                     }
@@ -203,7 +203,7 @@ class CartFragment @Inject constructor() : PolyBaseFragment<FragmentCartBinding>
             bundle.putString("strNote", views.note.text.toString().ifEmpty { getString(R.string.note_default)})
             paymentViewModel.returnPayFragment(bundle)
         }else{
-            Toast.makeText(requireContext(), "Giỏ hàng không đủ điều kiện để thanh toán", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),getString(R.string.cart_insufficient_condition_message), Toast.LENGTH_SHORT).show()
         }
     }
 

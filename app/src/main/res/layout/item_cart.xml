@@ -42,7 +42,6 @@
                 android:layout_toRightOf="@+id/image"
                 android:layout_above="@+id/tv_size"
                 android:lineSpacingExtra="5sp"
-                android:text="@string/pizza_th_gi"
                 android:textAppearance="@style/pizza_th_gi"
                 android:translationY="-2.45sp" />
 
@@ -54,7 +53,6 @@
                 android:layout_marginLeft="11dp"
                 android:layout_toRightOf="@+id/image"
                 android:lineSpacingExtra="5sp"
-                android:text="Nhân theeit cà"
                 android:textAppearance="@style/some_id"
                 android:translationY="-2.45sp" />
 
@@ -67,7 +65,6 @@
                 android:layout_marginBottom="8dp"
                 android:layout_toRightOf="@+id/image"
                 android:lineSpacingExtra="5sp"
-                android:text="sadsadsad"
                 android:maxLength="15"
                 android:textAppearance="@style/some_id"
                 android:translationY="-2.45sp" />

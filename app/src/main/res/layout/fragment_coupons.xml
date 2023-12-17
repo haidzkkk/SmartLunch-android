@@ -32,7 +32,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="khuyến mãi hiện có"
+                    android:text="@string/discount_title"
                     />
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"

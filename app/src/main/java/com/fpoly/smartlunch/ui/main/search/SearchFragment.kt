@@ -106,7 +106,7 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
         }
         views.btnSort.setOnClickListener{
             isSortDesc = isSortDesc != true
-            views.btnSort.text = if (isSortDesc == true) " Tăng" else if(isSortDesc == false) " Giảm" else " Sắp xếp"
+            views.btnSort.text = if (isSortDesc == true) " ${getString(R.string.ascending_order)}" else if(isSortDesc == false) " ${getString(R.string.descending_order)}" else " ${getString(R.string.sort_by)}"
             views.btnSort.setBackgroundResource(R.drawable.chips)
             fetchData()
         }
@@ -135,9 +135,9 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
             views.imgLoading.isVisible = text.toString().isNotEmpty()
 
             if (text.toString().isEmpty()){
-                views.tvFinding.text = "Hãy tìm kiếm"
+                views.tvFinding.text = getString(R.string.search_hint_p)
             }else{
-                views.tvFinding.text = "Xem kết quả cho: $text"
+                views.tvFinding.text = "${getString(R.string.search_results_for)} $text"
             }
 
             if (text.toString().isNotEmpty()){
@@ -230,14 +230,14 @@ class SearchFragment : PolyBaseFragment<FragmentSearchBinding>(){
         productAdapter.isLoadingOk = true
         val strSort = if (isSortDesc == false) "asc" else "desc"
         val pagingSearch = PagingRequestProduct(10, strFilter, strSort, productAdapter.curentPage, strSearch)
-        views.btnSort.text = if (isSortDesc == true) " Tăng" else if(isSortDesc == false) " Giảm" else " Sắp xếp"
+        views.btnSort.text = if (isSortDesc == true) " ${getString(R.string.ascending_order)}" else if(isSortDesc == false) " ${getString(R.string.descending_order)}" else " S${getString(R.string.sort_by)}"
         productViewModel.handle(ProductAction.SearchProductByName(pagingSearch))
     }
 
     private fun resetData() {
         strFilter = null
         isSortDesc = null
-        views.btnSort.text = if (isSortDesc == true) " Tăng" else if(isSortDesc == false) " Giảm" else " Sắp xếp"
+        views.btnSort.text = if (isSortDesc == true) " ${getString(R.string.ascending_order)}" else if(isSortDesc == false) " ${getString(R.string.descending_order)}" else " ${getString(R.string.sort_by)}"
 
         setFilterRate()
         views.btnSort.setBackgroundResource(R.drawable.background_border_gray_outline)

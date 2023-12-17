@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:text="#252893"
+            android:text="@string/order_code"
             android:maxLength="6"
             android:ellipsize="end"
             android:textColor="@color/blue"
@@ -41,7 +41,7 @@
             android:id="@+id/lable_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trạng thái"
+            android:text="@string/order_status"
             android:textSize="14sp" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_toRightOf="@+id/lable_status"
-            android:text="đã hủy"
+            android:text="@string/cancelled_status"
             android:textColor="@color/red"
             android:textSize="14sp" />
         <!-- Product Name -->
@@ -60,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/status"
             android:layout_marginTop="4dp"
-            android:text="Tên sản phẩm"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -86,7 +85,7 @@
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Giá tiền"
+                    android:text="@string/price_label"
                     android:textSize="16sp" />
 
                 <TextView
@@ -111,7 +110,7 @@
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Số lượng"
+                    android:text="@string/quantity_label"
                     android:textSize="14sp" />
 
                 <TextView
@@ -139,7 +138,7 @@
                     android:paddingVertical="8dp"
                     android:paddingHorizontal="16dp"
                     android:textColor="?attr/colorPrimary"
-                    android:text="Chi tiết" />
+                    android:text="@string/detail_button" />
             </LinearLayout>
         </LinearLayout>
 

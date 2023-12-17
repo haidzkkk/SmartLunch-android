@@ -33,7 +33,7 @@
                     android:ellipsize="end"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:text=" Đang tải..."
+                    android:text="@string/loading"
                     android:textColor="@color/title"
                     android:textSize="16sp"
                     tools:ignore="NotSibling" />
@@ -75,7 +75,7 @@
                     android:gravity="center|start"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
-                    android:text="  Bạn đang khao khát điều gì?" />
+                    android:text="@string/search_hint" />
 
             </RelativeLayout>
 
@@ -155,7 +155,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="khác"
+                                android:text="@string/default_category"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -180,7 +180,7 @@
                             android:id="@+id/nh_gi_cao"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/ph_bi_n"
+                            android:text="@string/popular_text"
                             android:textAppearance="@style/ph_bi_n"
                             android:textColor="@color/black"
                             android:textFontWeight="1000"
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/icon_right"
-                            android:text="xem tất cả "
+                            android:text="@string/see_all_text"
                             android:textColor="@color/red" />
 
                     </RelativeLayout>
@@ -224,7 +224,7 @@
                             android:id="@+id/nh_gi_cao2"
                             android:layout_width="106dp"
                             android:layout_height="28dp"
-                            android:text="@string/nh_gi_cao"
+                            android:text="@string/high_rating_text"
                             android:textColor="@color/black"
                             android:textFontWeight="1000"
                             android:textSize="18sp" />
@@ -235,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/icon_right"
-                            android:text="xem tất cả "
+                            android:text="@string/see_all_text"
                             android:textColor="@color/red" />
                     </RelativeLayout>
 
@@ -259,7 +259,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="28dp"
-                        android:text="Gợi ý hôm nay"
+                        android:text="@string/recommendation_text"
                         android:textColor="@color/black"
                         android:textFontWeight="1000"
                         android:textSize="18sp"
@@ -282,41 +282,6 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical"
                 android:paddingHorizontal="12dp">
-
-                <RelativeLayout
-                    android:id="@+id/layout_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/background_border_radius_circle"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/btn_see_detail"
-                        android:drawableStart="@drawable/icon_car"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/red_light"
-                        android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:text="Bạn có 2 đơn hàng đang giao"
-                        android:textColor="@color/title" />
-
-                    <Button
-                        android:id="@+id/btn_see_detail"
-                        android:layout_width="120dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:backgroundTint="@color/blue_while"
-                        android:paddingHorizontal="12dp"
-                        android:text="Xem chi tiết"
-                        android:textColor="@color/blue_light"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/layout_cart"

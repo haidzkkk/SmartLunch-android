@@ -48,12 +48,13 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        withState(productViewModel){
+        withState(productViewModel) {
             it.addOrder = Uninitialized
             it.asyncUpdateOrder = Uninitialized
         }
         homeViewModel.returnVisibleBottomNav(true)
     }
+
     private fun initUI() {
         productOrderAdapter = ProductOrderAdapter {
             productViewModel.handle(ProductAction.GetDetailProduct(it.productId))
@@ -67,7 +68,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
 
     private fun listenEvent() {
         views.swipeLoading.setOnRefreshListener {
-            if (currentOrder != null){
+            if (currentOrder != null) {
                 productViewModel.handle(ProductAction.GetCurrentOrder(currentOrder!!._id))
             }
         }
@@ -77,11 +78,11 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         views.followOrderText.setOnClickListener {
             homeViewModel.returnTrackingOrderFragment()
         }
-        views.btnConfirmReceived.setOnClickListener{
+        views.btnConfirmReceived.setOnClickListener {
             homeViewModel.returnProductReviewFragment()
         }
-        views.btnCancel.setOnClickListener{
-            if (currentOrder != null){
+        views.btnCancel.setOnClickListener {
+            if (currentOrder != null) {
                 var orderRequest = OrderRequest(null, null, Status.CANCEL_STATUS, null, null, null)
                 productViewModel.handle(ProductAction.UpdateOder(currentOrder!!._id, orderRequest))
             }
@@ -97,8 +98,10 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
         }
         views.apply {
             recipientName.text = currentOrder.address.recipientName
-            orderTimeValue.text = currentOrder.createdAt.convertIsoToStringFormat(StringUltis.dateDay2TimeFormat)
-            pickupTimeValue.text = currentOrder.updatedAt.convertIsoToStringFormat(StringUltis.dateDay2TimeFormat)
+            orderTimeValue.text =
+                currentOrder.createdAt.convertIsoToStringFormat(StringUltis.dateDay2TimeFormat)
+            pickupTimeValue.text =
+                currentOrder.updatedAt.convertIsoToStringFormat(StringUltis.dateDay2TimeFormat)
             orderCodeValue.text = currentOrder._id
 
             tvTitleStatus.text = currentOrder.status.status_name
@@ -108,7 +111,7 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             phoneNumber.text = currentOrder.address.phoneNumber
 
             layoutCupond.isVisible = currentOrder.couponId != null
-            if (currentOrder.couponId  != null){
+            if (currentOrder.couponId != null) {
                 tvIdCupond.text = currentOrder.couponId
             }
 
@@ -117,8 +120,8 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
             tvDeliverfee.text = currentOrder.deliveryFee.formatCash()
             tvPrice.text = currentOrder.totalAll.formatCash()
             tvTypePaymentName.text = currentOrder.statusPayment.status_name
-            tvIsPayment.text = if (currentOrder.isPayment) "Đã thanh toán" else "Chưa thanh toán"
-
+            tvIsPayment.text =
+                if (currentOrder.isPayment) getString(R.string.payment_paid) else getString(R.string.payment_not_paid)
             followOrderText.isVisible = currentOrder.status._id == Status.DELIVERING_STATUS
             btnConfirmReceived.isEnabled = currentOrder.status._id == Status.SUCCESS_STATUS
             btnCancel.isEnabled = currentOrder.status._id == Status.UNCONFIRMED_STATUS
@@ -136,22 +139,25 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
 
     override fun invalidate() {
         withState(productViewModel) {
-            views.swipeLoading.isRefreshing = it.addOrder is Loading || it.asyncUpdateOrder is Loading
+            views.swipeLoading.isRefreshing =
+                it.addOrder is Loading || it.asyncUpdateOrder is Loading
 
-            when(it.addOrder){
+            when (it.addOrder) {
                 is Success -> {
-                    currentOrder= it.addOrder.invoke()
+                    currentOrder = it.addOrder.invoke()
                     currentOrder?.let { currentOrder -> setupUI(currentOrder) }
                 }
+
                 is Fail -> {
                 }
+
                 else -> {}
             }
-            when(it.asyncUpdateOrder){
+            when (it.asyncUpdateOrder) {
                 is Success -> {
                     showSnackbar(
                         views.root,
-                        "Hủy đơn hàng thành công",
+                        getString(R.string.cancel_order_success),
                         true,
                         null,
                         null
@@ -161,20 +167,25 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
                     it.asyncUpdateOrder = Uninitialized
 
                     // kiểm tra để hoàn tiền
-                    if (currentOrder != null){
-                        if(currentOrder!!.status._id == Status.CANCEL_STATUS && currentOrder!!.isPayment && !currentOrder!!.data.isNullOrEmpty() &&
+                    if (currentOrder != null) {
+                        if (currentOrder!!.status._id == Status.CANCEL_STATUS && currentOrder!!.isPayment && !currentOrder!!.data.isNullOrEmpty() &&
                             (currentOrder!!.statusPayment._id == Status.STATUS_ZALOPAY || currentOrder!!.statusPayment._id == Status.STATUS_PAYPAL)
-                        ){
-                            paymentViewModel.handle(PaymentViewAction.StatusOrderZaloPay(OrderZaloPayRequest.queryStatusOrderZalo(currentOrder!!.data!!)))
+                        ) {
+                            paymentViewModel.handle(
+                                PaymentViewAction.StatusOrderZaloPay(
+                                    OrderZaloPayRequest.queryStatusOrderZalo(currentOrder!!.data!!)
+                                )
+                            )
                         }
                     }
                 }
+
                 is Fail -> {
                     showSnackbar(
                         views.root,
-                        "Hủy đơn hàng thất bại",
+                        getString(R.string.cancel_order_failed),
                         true,
-                        "thử lại"
+                        getString(R.string.retry)
                     ) {
                         if (currentOrder != null) {
                             var orderRequest = OrderRequest(
@@ -195,51 +206,68 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
                     }
                     it.asyncUpdateOrder = Uninitialized
                 }
+
                 else -> {}
             }
         }
 
-        withState(paymentViewModel){
-            when(it.asyncStatusOrderZaloPayReponse){
-                is Success ->{
+        withState(paymentViewModel) {
+            when (it.asyncStatusOrderZaloPayReponse) {
+                is Success -> {
                     val data = it.asyncStatusOrderZaloPayReponse.invoke()
-                    if (data?.amount != null && data.zp_trans_id != null && it.asyncRefundOrderZaloPayReponse == Uninitialized){
-                        paymentViewModel.handle(PaymentViewAction.RefundOrderZaloPay(OrderZaloPayRequest.refundOrderZalo(data.zp_trans_id, data.amount)))
+                    if (data?.amount != null && data.zp_trans_id != null && it.asyncRefundOrderZaloPayReponse == Uninitialized) {
+                        paymentViewModel.handle(
+                            PaymentViewAction.RefundOrderZaloPay(
+                                OrderZaloPayRequest.refundOrderZalo(data.zp_trans_id, data.amount)
+                            )
+                        )
                     }
                     it.asyncStatusOrderZaloPayReponse = Uninitialized
                 }
-                else ->{
+
+                else -> {
 
                 }
             }
-            when(it.asyncRefundOrderZaloPayReponse){
-                is Success ->{
+            when (it.asyncRefundOrderZaloPayReponse) {
+                is Success -> {
                     it.asyncRefundOrderZaloPayReponse = Uninitialized
-                    paymentViewModel.handle(PaymentViewAction.UpdateIsPaymentOder(currentOrder?._id ?: "", false))
+                    paymentViewModel.handle(
+                        PaymentViewAction.UpdateIsPaymentOder(
+                            currentOrder?._id ?: "", false
+                        )
+                    )
                 }
-                is Fail ->{
-                    Toast.makeText(requireContext(), "Hoàn tiền thất bại", Toast.LENGTH_SHORT).show()
+
+                is Fail -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.refund_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     it.asyncRefundOrderZaloPayReponse = Uninitialized
                 }
-                else ->{
+
+                else -> {
 
                 }
             }
-            when(it.asyncUpdateOrder){
-                is Success ->{
-                    currentOrder= it.asyncUpdateOrder.invoke()
+            when (it.asyncUpdateOrder) {
+                is Success -> {
+                    currentOrder = it.asyncUpdateOrder.invoke()
                     currentOrder?.let { currentOrder -> setupUI(currentOrder) }
                     it.asyncUpdateOrder = Uninitialized
                 }
-                else ->{
+
+                else -> {
 
                 }
             }
         }
     }
 
-    fun handleStateProgress(currentOrder: OrderResponse){
-        var index = when(currentOrder.status._id){
+    fun handleStateProgress(currentOrder: OrderResponse) {
+        var index = when (currentOrder.status._id) {
             Status.UNCONFIRMED_STATUS -> 0
             Status.CONFIRMED_STATUS -> 1
             Status.DELIVERING_STATUS -> 2
@@ -250,32 +278,36 @@ class OrderDetailFragment : PolyBaseFragment<FragmentOrderDetailBinding>() {
 
         views.apply {
             progress.progress = index
-            when(index){
+            when (index) {
                 0 -> {
                     imgStatus1.setImageResource(R.drawable.icon_waiting_order)
                     imgStatus2.setImageResource(R.drawable.icon_cooking_unselect)
                     imgStatus3.setImageResource(R.drawable.icon_delivering_unselect)
                     imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
                 }
-                1 ->{
+
+                1 -> {
                     imgStatus1.setImageResource(R.drawable.icon_waiting_order)
                     imgStatus2.setImageResource(R.drawable.icon_cooking)
                     imgStatus3.setImageResource(R.drawable.icon_delivering_unselect)
                     imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
                 }
-                2 ->{
+
+                2 -> {
                     imgStatus1.setImageResource(R.drawable.icon_waiting_order)
                     imgStatus2.setImageResource(R.drawable.icon_cooking)
                     imgStatus3.setImageResource(R.drawable.icon_delivering)
                     imgStatus4.setImageResource(R.drawable.icon_delivered_unselect)
                 }
-                3 ->{
+
+                3 -> {
                     imgStatus1.setImageResource(R.drawable.icon_waiting_order)
                     imgStatus2.setImageResource(R.drawable.icon_cooking)
                     imgStatus3.setImageResource(R.drawable.icon_delivering)
                     imgStatus4.setImageResource(R.drawable.icon_delivered)
                 }
-                4 ->{
+
+                4 -> {
                     imgStatus1.setImageResource(R.drawable.icon_waiting_order)
                     imgStatus2.setImageResource(R.drawable.icon_cooking)
                     imgStatus3.setImageResource(R.drawable.icon_delivering)

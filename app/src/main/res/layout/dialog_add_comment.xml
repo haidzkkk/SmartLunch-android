@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đánh giá sản phẩm"
+        android:text="@string/product_review_title"
         android:textSize="24sp"
         android:textFontWeight="1000"
         android:textColor="@color/black"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:maxHeight="100dp"
                 android:maxLength="1000"
-                android:hint="Nhập phản hồi của bạn..."
+                android:hint="@string/insert_your_comment"
                 android:paddingEnd="40dp"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +104,7 @@
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:text="Gửi đánh giá"
+        android:text="@string/send_comment"
         android:textSize="18sp"
         android:layout_marginTop="20dp"/>
 

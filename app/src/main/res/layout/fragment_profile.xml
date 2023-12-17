@@ -28,7 +28,7 @@
                     android:layout_width="124dp"
                     android:layout_height="124dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ellipse" />
+                    android:src="@drawable/loading_img" />
 
                 <View
                     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     android:id="@+id/display_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/display_name"
+                    android:text="@string/loading"
                     android:textSize="24sp"
                     android:textStyle="bold" />
                 <View

@@ -64,7 +64,7 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
                 lastName.setText(user.last_name)
                 email.setText(user.email)
                 phone.setText(user.phone)
-                birthday.setText(user.birthday)
+                birthday.setText(user?.birthday ?: getString(R.string.data_empty))
                 setGenderRadio(user.gender)
             }
         }
@@ -192,9 +192,9 @@ class EditProfileFragment : PolyBaseFragment<FragmentEditProfileBinding>(), Text
                 viewModel.handle(UserViewAction.GetCurrentUser)
                 activity?.showUtilDialog(
                     Notify(
+                        getString(R.string.notification),
                         getString(R.string.edit_profile),
-                        "Ảnh đại diện",
-                        "Cập nhật ảnh đại diện thành công",
+                        getString(R.string.update_profile_success),
                         R.raw.animation_successfully
                     )
                 )

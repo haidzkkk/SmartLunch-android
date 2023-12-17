@@ -63,13 +63,13 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
                 if (currentOrderResponse != null) {
                     addCommentDialog(currentOrderResponse!!, it)
                 }else{
-                    Toast.makeText(requireContext(), "Không có order", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.no_order_message), Toast.LENGTH_SHORT).show()
                 }
             }
         )
         views.rcvProductReview.adapter = adapter
 
-        views.layoutHeader.tvTitleToolbar.text = "Đánh giá sản phẩm"
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.product_review_title)
         views.layoutHeader.btnBackToolbar.isVisible = true
     }
 
@@ -95,11 +95,11 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
             when(it.asyncAddComment){
                 is Success ->{
                     it.asyncAddComment = Uninitialized
-                    Toast.makeText(requireContext(), "Đánh giá thành công", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.comment_success), Toast.LENGTH_SHORT).show()
                 }
                 is Fail ->{
                     it.asyncAddComment = Uninitialized
-                    Toast.makeText(requireContext(), "Đánh giá thất bại", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.comment_failure), Toast.LENGTH_SHORT).show()
                 }
                 else ->{
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseBottomSheet
 import com.fpoly.smartlunch.databinding.BottomSheetPaymentTypeBinding
 import com.fpoly.smartlunch.ui.payment.PaymentViewAction
@@ -43,7 +44,7 @@ class PaymentTypeBottomSheet() : PolyBaseBottomSheet<BottomSheetPaymentTypeBindi
             dismiss()
         }
 
-        views.layoutHeader.tvTitleToolbar.text = "Thanh toán"
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.pay)
 
         views.rcv.adapter = adapter
         views.rcv.layoutManager = LinearLayoutManager(requireContext())

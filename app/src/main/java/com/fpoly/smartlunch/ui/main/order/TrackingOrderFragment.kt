@@ -92,7 +92,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
                 }
                 startActivity(intent)
             }else{
-                Toast.makeText(requireContext(), "Không tìm thấy người giao hàng", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.shipper_not_found), Toast.LENGTH_SHORT).show()
             }
         }
         views.btnCall.setOnClickListener {
@@ -107,7 +107,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
                 }
                 startActivity(intent)
             }else{
-                Toast.makeText(requireContext(), "Không tìm thấy người giao hàng", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.shipper_not_found), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -115,7 +115,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
     private fun setupAppBar() {
         views.appBar.apply {
             btnBackToolbar.visibility = View.VISIBLE
-            tvTitleToolbar.text = "Theo dõi đơn hàng"
+            tvTitleToolbar.text = getString(R.string.tracking_order_title)
         }
     }
 
@@ -151,9 +151,9 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
         ) {
             activity?.showUtilDialogWithCallback(
                 Notify(
-                    "Yêu cầu quyền",
-                    "bạn chưa cho phép quyền sử dụng vị trí",
-                    "Vào cài đặt để cấp quyền",
+                    getString(R.string.permission_request),
+                    getString(R.string.location_permission_denied),
+                    getString(R.string.open_settings_permission),
                     R.raw.animation_successfully
                 )
             ) {

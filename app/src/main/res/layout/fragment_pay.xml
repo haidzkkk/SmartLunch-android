@@ -29,7 +29,7 @@
                     android:layout_height="24dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Địa chỉ nhận hàng"
+                    android:text="@string/delivery_address"
                     android:textColor="@color/black"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -76,13 +76,14 @@
                             android:id="@+id/phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="@string/chose_anddress"
                             />
 
                         <TextView
                             android:id="@+id/recipientName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Chọn địa chỉ nhận hàng" />
+                             />
                     </LinearLayout>
 
                     <ImageView
@@ -103,7 +104,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
-                        android:text="Thanh toán"
+                        android:text="@string/pay"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -116,7 +117,7 @@
                         android:layout_marginRight="11dp"
                         android:drawableEnd="@drawable/img_8"
                         android:drawablePadding="8dp"
-                        android:text="Tiền mặt "
+                        android:text="@string/money_method"
                         android:textAlignment="textEnd"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -128,7 +129,7 @@
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="Chi tiết thanh toán"
+                    android:text="@string/payment_details"
                     android:textColor="@color/black"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -142,7 +143,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Mã khuyến mại"
+                        android:text="@string/promo_code"
                         android:textColor="#9CA4AB"
                         android:textSize="16dp" />
 
@@ -165,7 +166,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tổng phụ"
+                        android:text="@string/subtotal"
                         android:textColor="#9CA4AB"
                         android:textSize="16dp" />
 
@@ -188,7 +189,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Phí vận chuyển"
+                        android:text="@string/shipping_fee"
                         android:textColor="#9CA4AB"
                         android:textSize="16dp" />
 
@@ -211,7 +212,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="giảm giá"
+                        android:text="@string/discount_money"
                         android:textColor="#9CA4AB"
                         android:textSize="16dp" />
 
@@ -234,7 +235,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tổng"
+                        android:text="@string/total"
                         android:textColor="#9CA4AB"
                         android:textSize="16dp" />
 
@@ -259,7 +260,7 @@
                         android:id="@+id/btn_pay_cash"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:text="Đặt hàng"
+                        android:text="@string/place_order"
                         android:textSize="16dp"
                         android:visibility="gone"/>
 
@@ -286,7 +287,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="thanh toán bằng "
+                            android:text="@string/pay_with"
                             android:layout_gravity="center_vertical"
                             android:textSize="18sp"
                             android:maxLines="1"
@@ -296,7 +297,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/logo_zalopay"
-                            android:text="Thanh toán với zalo pay"
+                            android:text="@string/pay_with_zalo_pay"
                             android:gravity="center"
                             android:layout_marginStart="10dp"/>
 

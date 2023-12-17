@@ -167,12 +167,12 @@ class LoginFragment : PolyBaseFragment<FragmentLoginBinding>(), TextWatcher {
         }
         when (it.asyncSignUp) {
             is Success -> {
-                showSnackbar(requireView(),"Tài khoản chưa được xác thực",false,"Xác thực",{
+                showSnackbar(requireView(), getString(R.string.account_not_verified), false, getString(R.string.verify)) {
                     viewModel.handleReturnVerifyOTPEvent()
-                })
+                }
             }
 
-            is Fail -> {
+        is Fail -> {
             }
 
             else -> {}

@@ -62,14 +62,14 @@ class AddressPaymentFragment : PolyBaseFragment<FragmentAddressBinding>() {
         adapterAddress = AddressAdapter(
             {addressDetail ->
                 if (addressDetail._id == null){
-                    Toast.makeText(requireContext(), "Không có id address", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.no_id_address), Toast.LENGTH_SHORT).show()
                 }else{
                     userViewModel.handle(UserViewAction.GetAddressById(addressDetail._id))
                     userViewModel.returnDetailAddressFragment()
                 }
             },{addressSelect->
                 if (addressSelect._id == null){
-                    Toast.makeText(requireContext(), "Không có id address", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.no_id_address), Toast.LENGTH_SHORT).show()
                 }else{
                     userViewModel.handle(UserViewAction.UpdateAddress(addressSelect._id))
                     adapterAddress?.updateSelectedAddress(addressSelect)

@@ -15,7 +15,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Bao Bao"
             android:layout_marginBottom="4dp"
             android:textStyle="bold"
             android:textSize="16sp" />
@@ -26,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_gravity="center_vertical"
-            android:text="08531234"
             android:textSize="16sp" />
         <TextView
             android:textColor="@color/black"
@@ -35,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_gravity="center_vertical"
-            android:text="Số 35 Tô Vĩnh Diện, Nguyễn Trãi, Hà Nội"
             android:textSize="16sp" />
         <TextView
             android:background="@drawable/background_border_outline"
@@ -46,7 +43,7 @@
             android:paddingVertical="8dp"
             android:paddingHorizontal="16dp"
             android:textColor="?attr/colorPrimary"
-            android:text="Chi tiết" />
+            android:text="@string/see_detail_text" />
     </LinearLayout>
 
     <RadioButton
