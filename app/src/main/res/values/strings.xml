@@ -354,4 +354,9 @@
     <string name="add_to_cart_more">Add to cart</string>
     <string name="insert_your_comment">Insert your comment</string>
     <string name="send_comment">Send comment</string>
+
+    <string name="all_comment">All</string>
+    <string name="image">Image</string>
+    <string name="star">Rating</string>
+    <string name="arrange">Arrange</string>
 </resources>

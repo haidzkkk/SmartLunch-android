@@ -343,4 +343,8 @@
     <string name="insert_your_comment">แทรกความคิดเห็นของคุณ</string>
     <string name="send_comment">ส่งความคิดเห็น</string>
 
+    <string name="all_comment">ทั้งหมด</string>
+    <string name="image">มีรูปภาพ</string>
+    <string name="star">ดาว</string>
+    <string name="arrange">จัดเรียง</string>
 </resources>

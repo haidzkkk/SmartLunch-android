@@ -39,7 +39,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textColor="@color/black"
-                            android:text="Tất cả"
+                            android:text="@string/all_comment"
                             android:textSize="12dp"
                             android:gravity="center"
                             android:padding="3dp"
@@ -52,7 +52,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textColor="@color/black"
-                            android:text="Có hình ảnh"
+                            android:text="@string/image"
                             android:textSize="12dp"
                             android:gravity="center"
                             android:padding="3dp"
@@ -72,7 +72,7 @@
                                 android:id="@+id/tv_select_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="Sao"
+                                android:text="@string/star"
                                 android:textColor="@color/black"
                                 android:paddingEnd="1dp"
                                 android:textSize="12dp"
@@ -88,7 +88,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/icon_down"/>
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -104,7 +103,7 @@
                                 android:id="@+id/tv_sort"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="Sắp sếp"
+                                android:text="@string/arrange"
                                 android:textColor="@color/black"
                                 android:paddingEnd="1dp"
                                 android:textSize="12dp"
@@ -130,8 +129,6 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         />
                 </LinearLayout>
-
-
 
             </androidx.core.widget.NestedScrollView>
 
