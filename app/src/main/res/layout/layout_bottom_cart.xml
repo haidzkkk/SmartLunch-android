@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:backgroundTint="@color/red"
-            android:text="@string/thanh_to_n_"
+            android:text="@string/pay"
             android:textColor="@color/white"
             />
     </LinearLayout>

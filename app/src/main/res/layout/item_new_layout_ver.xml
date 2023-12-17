@@ -39,7 +39,6 @@
                 android:layout_marginTop="4dp"
                 android:gravity="top"
                 android:drawableStart="@drawable/start"
-                android:text=" 4.6"
                 android:textAppearance="@style/type_16"
              />
 
@@ -76,7 +75,6 @@
             android:layout_marginTop="12dp"
             android:gravity="top"
             android:lineSpacingExtra="3sp"
-            android:text="@string/pizza_th_gi"
             android:ellipsize="end"
             android:textColor="@color/black"
             android:textFontWeight="1000"
@@ -87,7 +85,6 @@
             android:layout_below="@id/name_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="48.000 đ"
             android:layout_marginTop="12dp"
             android:textColor="@color/red"
             android:textSize="18sp"
@@ -99,7 +96,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/price_product"
             android:layout_alignParentEnd="true"
-            android:text="đã bán 25.1k"
             android:textSize="12sp"
             android:textStyle="bold" />
 

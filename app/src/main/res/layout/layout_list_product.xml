@@ -57,7 +57,6 @@
                     android:layout_toRightOf="@+id/star"
                     android:gravity="top"
                     android:lineSpacingExtra="4sp"
-                    android:text="@string/type_16"
                     android:paddingStart="1dp"
                     android:textAppearance="@style/type_16"
                     android:translationY="-1.84sp" />
@@ -92,7 +91,6 @@
             android:id="@+id/name_product_list_detail"
             android:layout_width="195dp"
             android:layout_height="20dp"
-            android:text="@string/pizza_th_gi"
             android:textAppearance="@style/pizza_th_gi"
             android:lineSpacingExtra="3sp"
             android:translationY="-1.65sp"
@@ -104,7 +102,6 @@
             android:id="@+id/price_product_list_detail"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="48.000 đ"
             android:layout_marginTop="12dp"
             android:textColor="@color/red"
             android:textSize="18sp"

@@ -54,7 +54,7 @@ class OptionPriceBottomSheetFragment : PolyBaseBottomSheet<FragmentOptionPriceBo
     }
 
     private fun initUi(){
-        views.appBar.tvTitleToolbar.text="Lựa chọn giá"
+        views.appBar.tvTitleToolbar.text=getString(R.string.price_option)
     }
     override fun invalidate() : Unit = withState(productViewModel){
 

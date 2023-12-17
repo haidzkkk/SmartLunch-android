@@ -304,7 +304,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
                     var currentLocation: String = try {
                         " " + location.address.road + ", " + location.address.quarter + ", " + location.address.suburb
                     }catch (e: Exception){
-                        " Đang tải..."
+                        getString(R.string.loading)
                     }
                     currentLocation = currentLocation.replace("null, ", "")
                     setupAppBar(currentLocation)
@@ -312,7 +312,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
             }
 
             is Fail -> {
-                setupAppBar(" Đang tải...")
+                setupAppBar(getString(R.string.loading))
             }
 
             else -> {}

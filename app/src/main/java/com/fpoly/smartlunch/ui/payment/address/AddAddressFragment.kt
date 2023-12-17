@@ -76,9 +76,9 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
     }
 
     private fun initUI() {
-        views.layoutHeader.tvTitleToolbar.text = "Thêm địa chỉ"
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.add_address_title)
         views.layoutHeader.btnBackToolbar.isVisible = true
-        curentUser = withState(userViewModel){ it.asyncCurrentUser.invoke()}
+        curentUser = withState(userViewModel) { it.asyncCurrentUser.invoke() }
     }
 
     private fun initSpinner() {
@@ -198,35 +198,36 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
         supportMapFragment?.getMapAsync(this)
     }
 
-    private fun handleResetSpinner(isResetProvince: Boolean, isResetDistrict: Boolean,isResetWard: Boolean,){
-        if (isResetProvince){
+    private fun handleResetSpinner(isResetProvince: Boolean, isResetDistrict: Boolean, isResetWard: Boolean) {
+        if (isResetProvince) {
             listProvince.clear()
-            listProvince.add(Province("-1", "--- Chọn tỉnh / thành phố ---", ""))
+            listProvince.add(Province("-1", getString(R.string.select_province), ""))
             adapterSpinnerProvince.notifyDataSetChanged()
         }
 
-        if (isResetDistrict){
+        if (isResetDistrict) {
             listDistrict.clear()
-            listDistrict.add(District("-1", "--- Chọn quận / huyện ---", "", ""))
+            listDistrict.add(District("-1", getString(R.string.select_district), "", ""))
             adapterSpinnerDistrict.notifyDataSetChanged()
         }
 
-        if (isResetWard){
+        if (isResetWard) {
             listWard.clear()
-            listWard.add(Ward("-1", "--- Chọn phường / xã / thị trấn ---", "", ""))
+            listWard.add(Ward("-1", getString(R.string.select_ward), "", ""))
             adapterSpinnerWard.notifyDataSetChanged()
         }
     }
+
 
     private fun handlePostAddress() {
         if (views.edtName.checkNull(requireActivity().resources)
             or views.edtPhone.checkNull(requireActivity().resources) or views.edtPhone.checkPhoneNumberValid(requireActivity().resources)
             || curenProvince == null || curenDistrict == null
             || ( curenWard == null && views.edtNote.checkNull(requireActivity().resources) )){
-            Toast.makeText(requireContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.fill_all_information), Toast.LENGTH_SHORT).show()
         }else{
             if (!isProvinceIdHaNoi){
-                Toast.makeText(requireContext(), "Chỉ được chọn địa chỉ quanh khu vực Hà Nội", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.select_hanoi_address), Toast.LENGTH_SHORT).show()
             }else{
                 var strAddressLine = ""
 
@@ -254,12 +255,12 @@ class AddAddressFragment : PolyBaseFragment<FragmentAddAddressBinding>(), OnMapR
         withState(userViewModel){
             when(it.asyncCreateAddress){
                 is Success ->{
-                    Toast.makeText(requireContext(), "Thêm địa chỉ thành công", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.add_address_success), Toast.LENGTH_SHORT).show()
                     activity?.onBackPressed()
                     it.asyncCreateAddress = Uninitialized
                 }
                 is Fail ->{
-                    Toast.makeText(requireContext(), "Thêm địa chỉ thất bại", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),  getString(R.string.add_address_failure), Toast.LENGTH_SHORT).show()
                 }
                 else ->{
 

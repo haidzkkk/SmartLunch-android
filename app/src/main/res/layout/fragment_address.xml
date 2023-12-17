@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.profile.AddressFragment">
+    >
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_loading"
@@ -33,7 +33,7 @@
                 android:id="@+id/btn_add_address"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Thêm địa chỉ"
+                android:text="@string/add_address_title"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="20dp"
                 />

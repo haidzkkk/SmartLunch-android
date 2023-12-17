@@ -26,6 +26,7 @@ import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.ActivityMainBinding
 import com.fpoly.smartlunch.ui.chat.ChatActivity
+import com.fpoly.smartlunch.ui.chat.ChatViewAction
 import com.fpoly.smartlunch.ui.main.coupons.CouponsFragment
 import com.fpoly.smartlunch.ui.main.order.OrderFragment
 import com.fpoly.smartlunch.ui.main.home.HomeFragment
@@ -189,8 +190,6 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(),
             is HomeViewEvent -> {
                 when (event) {
                     is HomeViewEvent.NavigateTo<*> -> addFragmentToBackStack(R.id.frame_layout,event.fragmentClass,event.fragmentClass.simpleName, bundle = event.bundle)
-                   // is HomeViewEvent.ChangeDarkMode -> handleDarkMode(event.isCheckedDarkMode)
-//                    is HomeViewEvent.SetBadgeBottomNav ->  handleSetBadgeBottomnav(event.id, event.position)
                     else -> {}
                 }
             }
@@ -244,9 +243,9 @@ class MainActivity : PolyBaseActivity<ActivityMainBinding>(),
         productViewModel.handle(ProductAction.GetCurrentOrder(result._id))
         showUtilDialogWithCallback(
             Notify(
-                "Đặt hàng thành công",
-                "Chờ xác nhận",
-                "Đơn hàng đã được gửi tới nhà hàng vui lòng chờ trong giây lát",
+                getString(R.string.order_success),
+                getString(R.string.tab_order_0),
+                getString(R.string.content_order_success),
                 R.raw.animation_successfully
             )
         ) {

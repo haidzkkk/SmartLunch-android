@@ -142,7 +142,7 @@
                     android:paddingVertical="10dp"
                     android:textSize="16sp"
                     android:drawableLeft="@drawable/logo_gg"
-                    android:text="Sign in with Google"
+                    android:text="@string/sign_in_with_gg"
                     />
             </LinearLayout>
 

@@ -167,7 +167,6 @@ fun <T : Fragment> AppCompatActivity.addFragmentToBackStack(
     }
 
     val fragments = fragmentManager.fragments
-    Log.d("TAG1", "addFragmentToBackStack: "+fragments.size)
     for (f in fragments) {
         if (f != newFragment) {
             transaction.hide(f)

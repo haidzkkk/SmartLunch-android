@@ -216,10 +216,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     private fun handleStateDesc() {
         if (views.tvDesc.maxLines == 2){
             views.tvDesc.maxLines = 1000
-            views.tvSeeMore.text = "Ẩn bớt"
+            views.tvSeeMore.text = getString(R.string.hide_more)
         }else{
             views.tvDesc.maxLines = 2
-            views.tvSeeMore.text = "Xem thêm"
+            views.tvSeeMore.text = getString(R.string.see_more)
         }
     }
 
@@ -228,10 +228,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             imageSlideAdapter.setData(currentProduct?.images)
             NameDetailFood.text = currentProduct?.product_name
             priceDetailFood.text = currentProduct?.product_price?.formatCash()
-            tvDesc.text = "${currentProduct?.description} \n\n${currentProduct?.views?.formatView()} lượt xem"
+            tvDesc.text = "${currentProduct?.description} \n\n${currentProduct?.views?.formatView()} "+getString(R.string.views)
             someIdQuality.text = "1"
-            tvBought.text = "Đã bán ${currentProduct?.bought?.formatView()}"
-            tvTitleCommemt.text = "${currentProduct?.rate?.formatRate() ?: 0.0} (${currentProduct?.rate_count ?: 0} đánh giá)"
+            tvBought.text = getString(R.string.sold)+ " ${currentProduct?.bought?.formatView()}"
+            tvTitleCommemt.text = "${currentProduct?.rate?.formatRate() ?: 0.0} (${currentProduct?.rate_count ?: 0} "+getString(R.string.ratings)
             cvPositionImg.isVisible = (currentProduct?.images?.size ?: 0) > 1
             views.tvPositionImg.text = "1/${currentProduct?.images?.size}"
         }
@@ -335,7 +335,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
                 it.curentAddProductToCartResponse = Uninitialized
             }
             is Fail ->{
-                Toast.makeText(requireContext(), "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.toast_product_added_to_cart_failure), Toast.LENGTH_SHORT).show()
                 it.curentAddProductToCartResponse = Uninitialized
             }
 

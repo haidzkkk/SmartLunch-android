@@ -56,8 +56,8 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
         views.layoutSpinnerHuyen.root.isVisible = false
         views.layoutSpinnerXa.root.isVisible = false
 
-        views.btnAccept.text = "Xóa"
-        views.layoutHeader.tvTitleToolbar.text = "Chi tiết địa chỉ"
+        views.btnAccept.text = getString(R.string.delete)
+        views.layoutHeader.tvTitleToolbar.text = getString(R.string.detail_address)
         views.layoutHeader.btnBackToolbar.isVisible = true
     }
 
@@ -68,11 +68,11 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
         views.btnAccept.setOnClickListener{
             if (curentAddress != null){
                 requireActivity().showUtilDialogWithCallback(
-                    Notify("Thông báo", "", "Bạn có muôn xóa địa chỉ này không", R.raw.succes_gif)){
+                    Notify(getString(R.string.notification), "", getString(R.string.confirm_delete_address), R.raw.succes_gif)){
                     userViewModel.handle(UserViewAction.DeleteAddressById(curentAddress?._id ?: ""))
                 }
             }else{
-                Toast.makeText(requireContext(), "Không có địa chỉ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.no_address), Toast.LENGTH_SHORT).show()
             }   
 
         }
@@ -108,12 +108,12 @@ class DetailAddressFragment: PolyBaseFragment<FragmentAddAddressBinding>(), OnMa
 
             when(it.asyncDeleteAddress){
                 is Success ->{
-                    Toast.makeText(requireContext(), "Xóa địa chỉ thành công", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.delete_address_success), Toast.LENGTH_SHORT).show()
                     activity?.onBackPressed()
                     it.asyncDeleteAddress = Uninitialized
                 }
                 is Fail ->{
-                    Toast.makeText(requireContext(), "Xóa địa chỉ thất bại", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.delete_address_failure), Toast.LENGTH_SHORT).show()
                 }
                 else ->{
 

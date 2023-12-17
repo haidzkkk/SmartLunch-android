@@ -188,16 +188,23 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
             is Fail -> {
                 var err = (it.asyncUserCurrent as Fail<User>).error.message.toString().trim()
                 when (err) {
-                    "HTTP 500 Internal Server Error" -> {
-                        Toast.makeText(requireContext(), "Mã OTP chưa chính xác! vui lòng kiểm tra lại hộp thư", Toast.LENGTH_SHORT).show()
-                    }
+                    "HTTP 500 Internal Server Error" -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.incorrect_otp),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                    "HTTP 502 Bad Gateway" -> {
-                        Toast.makeText(requireContext(), "Mã OTP đã hết hạn! vui lòng lấy mã mới", Toast.LENGTH_SHORT).show()
-                    }
-                    "HTTP 400 Bad Request" -> {
-                        Toast.makeText(requireContext(), "Hệ thống gặp sự cố vui lòng thử lại sau!", Toast.LENGTH_SHORT).show()
-                    }
+                    "HTTP 502 Bad Gateway" -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.expired_otp),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    "HTTP 400 Bad Request" -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.system_issue),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 err = ""
             }
@@ -208,22 +215,29 @@ class VerifyOTPFragment : PolyBaseFragment<FragmentVerifyOTPBinding>() {
         when (it.asyncResetPassword) {
             is Success -> {
                 viewModel.handleReturnResetPass()
-                it.asyncResetPassword=Uninitialized
+                it.asyncResetPassword = Uninitialized
             }
 
             is Fail -> {
                 var err = (it.asyncResetPassword as Fail<User>).error.message.toString().trim()
                 when (err) {
-                    "HTTP 500 Internal Server Error" -> {
-                        Toast.makeText(requireContext(), "Mã OTP chưa chính xác! vui lòng kiểm tra lại hộp thư", Toast.LENGTH_SHORT).show()
-                    }
+                    "HTTP 500 Internal Server Error" -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.incorrect_otp),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                    "HTTP 502 Bad Gateway" -> {
-                        Toast.makeText(requireContext(), "Mã OTP đã hết hạn! vui lòng lấy mã mới", Toast.LENGTH_SHORT).show()
-                    }
-                    "HTTP 400 Bad Request" -> {
-                        Toast.makeText(requireContext(), "Hệ thống gặp sự cố vui lòng thử lại sau!", Toast.LENGTH_SHORT).show()
-                    }
+                    "HTTP 502 Bad Gateway" -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.expired_otp),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    "HTTP 400 Bad Request" -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.system_issue),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 err = ""
             }

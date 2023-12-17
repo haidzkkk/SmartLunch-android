@@ -89,8 +89,8 @@ class ProductPaginationAdapter(private val onClickItem: (id: String) -> Unit) : 
 
                 nameProduct.text = currentProduct.product_name
                 priceProduct.text = currentProduct.product_price.formatCash()
-                tvRate.text = " ${currentProduct.rate.formatRate()} đánh giá"
-                tvBuy.text = "đã bán ${currentProduct.bought.formatView()}"
+                tvRate.text = " ${currentProduct.rate.formatRate()} "+root.context.getString(R.string.comment)
+                tvBuy.text = root.context.getString(R.string.sold)+" ${currentProduct.bought.formatView()}"
 
                 layoutItemProduct.setOnClickListener {
                     onClickItem(currentProduct._id)

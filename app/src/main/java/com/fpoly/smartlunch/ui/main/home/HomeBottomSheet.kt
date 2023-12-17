@@ -95,13 +95,13 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
                     val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Xác nhận xóa")
-                    builder.setMessage("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?")
-                    builder.setPositiveButton("Xóa") { dialog, which ->
+                    builder.setTitle(getString(R.string.confirmation_title))
+                    builder.setMessage(getString(R.string.delete_product_message))
+                    builder.setPositiveButton(getString(R.string.delete)) { dialog, which ->
                         adapterCart.onItemSwiped(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
                     }
-                    builder.setNegativeButton("Hủy") { dialog, which ->
+                    builder.setNegativeButton(getString(R.string.cancel)) { dialog, which ->
                         adapterCart.notifyItemChanged(viewHolder.bindingAdapterPosition)
                         dialog.dismiss()
                     }
@@ -114,14 +114,14 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
 
     private fun showClearCartConfirmationDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Clear Cart")
-            .setMessage("Are you sure you want to clear your cart?")
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setTitle(getString(R.string.clear_cart_title))
+            .setMessage(getString(R.string.clear_cart_message))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
                 clearCart()
                 dialog.dismiss()
                 this.dismiss()
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -174,7 +174,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         if (cartResponse?.products.isNullOrEmpty()) this.dismiss()
         adapterCart.setData(cartResponse?.products)
         tvQuantity?.text = cartResponse?.products?.size.toString()
-        btnCommit.text = "Thanh toán ${cartResponse?.total?.formatCash()}"
+        btnCommit.text = "${getString(R.string.yes)} ${cartResponse?.total?.formatCash()}"
     }
 
     override fun onPause() {
@@ -196,11 +196,11 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
             is Success -> {
                 cartResponse =  it.curentCartResponse.invoke()
                 if (cartResponse != null) updateDataUI()
-                else Toast.makeText(requireContext(), "getOneCartById Không có dữ liệu", Toast.LENGTH_SHORT).show()
+                else Toast.makeText(requireContext(), getString(R.string.get_cart_empty), Toast.LENGTH_SHORT).show()
             }
 
             is Fail ->{
-                Toast.makeText(requireContext(), "getOneCartById Lỗi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.get_cart_error), Toast.LENGTH_SHORT).show()
             }
             else -> {
             }

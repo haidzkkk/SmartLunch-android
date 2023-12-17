@@ -114,14 +114,14 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:textAlignment="textEnd"
-                            android:text="Quá trình đơn hàng" />
+                            android:text="@string/order_process" />
 
                         <TextView
                             android:id="@+id/followOrderText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="Theo dõi "
+                            android:text="@string/follow_order"
                             android:paddingStart="20dp"
                             android:drawableEnd="@drawable/icon_right"
                             android:textAlignment="textEnd"
@@ -162,14 +162,14 @@
                             android:id="@+id/restaurantType"
                             android:layout_width="178dp"
                             android:layout_height="21dp"
-                            android:text="Nhà hàng giao"
+                            android:text="@string/restaurant_delivery"
                             android:textSize="14dp" />
 
                         <TextView
                             android:id="@+id/restaurantName"
                             android:layout_width="246dp"
                             android:layout_height="48dp"
-                            android:text="SmartLunch - Trịnh Văn Bô, Nam Từ Liêm"
+                            android:text="@string/restaurant_info"
                             android:textSize="16dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -187,7 +187,7 @@
                         android:id="@+id/orderInfoTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Thông tin đơn hàng"
+                        android:text="@string/order_info"
                         android:textSize="16dp"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
@@ -203,7 +203,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Thời gian đặt"
+                            android:text="@string/order_time"
                             android:textSize="14dp" />
 
                         <TextView
@@ -211,7 +211,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="16/11/2022, 12:30 - 13:00"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -227,7 +226,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Cập nhật lúc"
+                            android:text="@string/update_time"
                             android:textSize="14dp" />
 
                         <TextView
@@ -235,7 +234,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Hôm nay, 12:15"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -251,7 +249,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Mã đơn hàng"
+                            android:text="@string/order_code"
                             android:textSize="14dp" />
 
                         <TextView
@@ -260,7 +258,6 @@
                             android:layout_height="wrap_content"
                             android:maxLines="1"
                             android:layout_weight="1"
-                            android:text="#252893"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -277,7 +274,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Mã giảm giá"
+                            android:text="@string/discount_code"
                             android:textSize="14dp" />
 
                         <TextView
@@ -286,7 +283,6 @@
                             android:layout_height="wrap_content"
                             android:maxLines="1"
                             android:layout_weight="1"
-                            android:text="#252893"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -305,7 +301,7 @@
                         android:id="@+id/deliveryAddressTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Địa chỉ nhận hàng"
+                        android:text="@string/delivery_address"
                         android:textColor="@color/black"
                         android:textSize="16dp"
                         android:textStyle="bold" />
@@ -321,7 +317,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Người nhận:"
+                            android:text="@string/recipient"
                             android:textSize="14dp" />
 
                         <TextView
@@ -329,7 +325,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Nguyễn Văn Khuyến"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -345,7 +340,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="21dp"
                             android:layout_weight="1"
-                            android:text="Số điện thoại:"
+                            android:text="@string/phone_number_order"
                             android:textSize="14dp" />
 
                         <TextView
@@ -353,7 +348,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="21dp"
                             android:layout_weight="1"
-                            android:text=" 0988522939"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -369,7 +363,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="21dp"
                             android:layout_weight="1"
-                            android:text="Địa chỉ:"
+                            android:text="@string/address_order"
                             android:textSize="14dp" />
 
                         <TextView
@@ -377,7 +371,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="315,  Trường Chinh, Khương Mai, Đống Đa, Hà Nội"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
 
@@ -417,7 +410,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tổng tiền"
+                        android:text="@string/total_amount"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -441,7 +434,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Khuyến mãi"
+                        android:text="@string/discount"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -465,7 +458,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Phí vận chuyển"
+                        android:text="@string/shipping_fee"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -490,7 +483,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="21dp"
                         android:layout_weight="1"
-                        android:text="Thành tiền"
+                        android:text="@string/final_amount"
                         android:maxLines="1"
                         android:textSize="14dp" />
 
@@ -501,7 +494,7 @@
                         android:layout_gravity="end"
                         android:textColor="@color/red"
                         android:textSize="18sp"
-                        android:text="19200 đ"
+                        android:text="@string/loading"
                         android:maxLines="1"
                         android:textStyle="bold" />
 
@@ -522,7 +515,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Hình thức thanh toán"
+                            android:text="@string/payment_method"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
@@ -531,7 +524,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Tiền mặt"
+                            android:text="@string/money_method"
                             android:textAlignment="textEnd"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -546,7 +539,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Đã thanh toán"
+                            android:text="@string/paid"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
@@ -567,7 +560,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginHorizontal="10dp"
                     android:layout_gravity="center"
-                    android:text="Đánh giá"
+                    android:text="@string/rate_order"
                     android:enabled="false"
                     android:textAlignment="center" />
 
@@ -578,7 +571,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_gravity="center"
-                    android:text="Hủy đơn hàng"
+                    android:text="@string/cancel_order"
                     android:enabled="false"
                     android:textAlignment="center" />
             </LinearLayout>

@@ -34,7 +34,7 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
     }
 
     private fun setupUI() {
-        views.appBar.tvTitleToolbar.text = "Đơn hàng"
+        views.appBar.tvTitleToolbar.text = getString(R.string.order)
         tabLayout = views.tabLayout
         val viewPager = views.viewPager
         val adapter = OrderViewPagerAdapter(childFragmentManager, this.lifecycle)
@@ -43,23 +43,23 @@ class OrderFragment : PolyBaseFragment<FragmentOrderBinding>() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Chờ xác nhận"
+                    tab.text = getString(R.string.tab_order_0)
                 }
 
                 1 -> {
-                    tab.text = "Xác nhận"
+                    tab.text = getString(R.string.tab_order_1)
                 }
 
                 2 -> {
-                    tab.text = "Đang giao"
+                    tab.text = getString(R.string.tab_order_2)
                 }
 
                 3 -> {
-                    tab.text = "Đã giao hàng"
+                    tab.text = getString(R.string.tab_order_3)
                 }
 
                 4 -> {
-                    tab.text = "Đã hủy đơn"
+                    tab.text = getString(R.string.tab_order_4)
                 }
             }
         }.attach()

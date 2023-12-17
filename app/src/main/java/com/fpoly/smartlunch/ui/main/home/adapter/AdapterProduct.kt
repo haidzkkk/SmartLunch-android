@@ -75,7 +75,7 @@ class AdapterProduct(private val onClickItem: OnClickListenner) : RecyclerView.A
                     onClickItem.onCLickItem(currentProduct._id)
                 }
                 tvRate.text = " ${currentProduct.rate.formatRate()} (${currentProduct.rate_count})"
-                tvBuy.text = "đã bán ${currentProduct.bought.formatView()}"
+                tvBuy.text = root.context.getString(R.string.sold)+" ${currentProduct.bought.formatView()}"
 
                 if (position == products.size -1 ) binding.layoutMain.setMargins(0, 0, 30, 0)
                 else binding.layoutMain.setMargins(0, 0, 0, 0)

@@ -68,7 +68,6 @@
                 android:ellipsize="end"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="Burger khổng lồ bà Năm "
                 android:textColor="@color/black"
                 android:textFontWeight="1000"
                 android:maxLines="1"
@@ -79,7 +78,6 @@
                 android:id="@+id/price_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="24 000 đ"
                 android:textColor="@color/red"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -94,7 +92,6 @@
                     android:id="@+id/tv_rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" 4.1 (1.2k)"
                     android:drawableStart="@drawable/icon_vote"
                     android:textAppearance="@style/type_16"
                     android:textSize="14sp" />

@@ -19,7 +19,6 @@
         android:layout_toRightOf="@+id/image"
         android:gravity="top"
         android:lineSpacingExtra="5sp"
-        android:text="@string/pizza_th_gi"
         android:textAppearance="@style/pizza_th_gi"
         android:translationY="-2.45sp" />
 
@@ -34,7 +33,6 @@
         android:layout_toRightOf="@+id/image"
         android:gravity="right|top"
         android:lineSpacingExtra="5sp"
-        android:text="@string/some_id"
         android:textAppearance="@style/some_id"
         android:translationY="-2.45sp" />
 

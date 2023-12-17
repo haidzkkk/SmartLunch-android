@@ -10,6 +10,7 @@ import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.OrderResponse
 import com.fpoly.smartlunch.data.model.OrderZaloPayRequest
@@ -50,7 +51,6 @@ class CancelledOrdersFragment : PolyBaseFragment<FragmentCancelledOrdersBinding>
         views.rcyOrder.adapter = adapter
         adapter.setData(list)
 
-        // kiểm tra để hoàn tiền
         if (list != null){
             list.forEach {currentOrder ->
                 if(currentOrder.status._id == Status.CANCEL_STATUS && currentOrder.isPayment && !currentOrder.data.isNullOrEmpty() &&
@@ -95,7 +95,7 @@ class CancelledOrdersFragment : PolyBaseFragment<FragmentCancelledOrdersBinding>
                     it.asyncRefundOrderZaloPayReponse = Uninitialized
                 }
                 is Fail ->{
-                    Toast.makeText(requireContext(), "Hoàn tiền thất bại", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.refund_failed), Toast.LENGTH_SHORT).show()
                     it.asyncRefundOrderZaloPayReponse = Uninitialized
                 }
                 else ->{
