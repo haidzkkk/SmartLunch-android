@@ -1,48 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="10dp"
     tools:context=".ui.chat.home.HomeChatFragment">
 
-    <include
-        android:id="@+id/layout_header"
-        layout="@layout/toolbar_header"/>
-
-    <RelativeLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_header">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/PolyInputLayoutLogin"
-            app:startIconDrawable="@drawable/icon_search"
-            app:hintEnabled="false"
-            android:layout_marginBottom="10dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:transformPivotY="10dp"
-                android:focusable="false"
-                android:hint="Search"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvChat"
-            android:layout_below="@+id/til_search"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:paddingHorizontal="10dp"
+            >
 
-    </RelativeLayout>
+            <include
+                android:id="@+id/layout_header"
+                layout="@layout/toolbar_header"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layout_header">
 
-</RelativeLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/PolyInputLayoutLogin"
+                    app:startIconDrawable="@drawable/icon_search"
+                    app:hintEnabled="false"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:transformPivotY="10dp"
+                        android:focusable="false"
+                        android:hint="Search"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvChat"
+                    android:layout_below="@+id/til_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

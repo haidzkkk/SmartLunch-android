@@ -15,6 +15,7 @@ import com.airbnb.mvrx.withState
 import com.fpoly.smartlunch.R
 import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.data.model.Comment
+import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.FragmentCommentBinding
 import com.fpoly.smartlunch.ui.main.home.adapter.AdapterSize
 import com.fpoly.smartlunch.ui.main.product.ProductAction
@@ -25,7 +26,9 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
 
     private val productViewModel: ProductViewModel by activityViewModel()
     private lateinit var commentAdapter: CommentAdapter
-    private var mListComment: ArrayList<Comment>? = null
+
+    private var currentProduct: Product? = null
+    private var isSort: Boolean = false
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -46,7 +49,7 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
         views.rcvComment.adapter = commentAdapter
         views.rcvComment.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
-        productViewModel.handle(ProductAction.GetListComments(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
+        productViewModel.handle(ProductAction.GetListComments(withState(productViewModel){it.asyncProduct.invoke()?._id}))
         handleBackChip(0)
     }
 
@@ -55,21 +58,25 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
             activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetListComments(currentProduct?._id))
             productViewModel.handle(ProductAction.GetListComments(withState(productViewModel){it.asyncProduct.invoke()?._id ?: ""}))
         }
         views.tvSelectAll.setOnClickListener{
-            commentAdapter.setData(mListComment)
+            productViewModel.handle(ProductAction.GetListComments(currentProduct?._id))
             handleBackChip(0)
         }
         views.tvSelectImage.setOnClickListener{
-            var list = mListComment?.filter { it.images?.isNotEmpty() == true }?.toList()
-            commentAdapter.setData(list)
+            productViewModel.handle(ProductAction.GetListComments(currentProduct?._id, isImage = true))
             handleBackChip(1)
         }
         views.layoutSelectRate.setOnClickListener{
             handleBackChip(2)
+            CommentRateBottom().show(requireActivity().supportFragmentManager, "CommentRateBottom")
         }
-        views.layoutSelectSize.setOnClickListener{
+        views.layoutSort.setOnClickListener{
+            isSort = !isSort
+            views.tvSort.text = if (isSort) getString(R.string.increase) else getString(R.string.decrease)
+            commentAdapter.sortData(isSort)
             handleBackChip(3)
         }
     }
@@ -78,10 +85,18 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
         withState(productViewModel){
             views.swipeLoading.isRefreshing = it.asyncComments is Loading
 
+            when (it.asyncProduct) {
+                is Success -> {
+                    it.asyncProduct.invoke()?.let { product ->
+                        currentProduct = product
+                    }
+                }
+
+                else -> {}
+            }
             when(it.asyncComments){
                 is Success ->{
-                    mListComment = it.asyncComments.invoke()
-                    commentAdapter.setData(mListComment)
+                    commentAdapter.setData(it.asyncComments.invoke())
                 }
                 else ->{
 
@@ -94,12 +109,12 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
         views.tvSelectAll.setBackgroundResource(R.drawable.backgound_retangle_chip)
         views.tvSelectImage.setBackgroundResource(R.drawable.backgound_retangle_chip)
         views.layoutSelectRate.setBackgroundResource(R.drawable.backgound_retangle_chip)
-        views.layoutSelectSize.setBackgroundResource(R.drawable.backgound_retangle_chip)
+        views.layoutSort.setBackgroundResource(R.drawable.backgound_retangle_chip)
 
         views.tvSelectAll.setTextColor(requireActivity().getColor(R.color.black))
         views.tvSelectImage.setTextColor(requireActivity().getColor(R.color.black))
         views.tvSelectRate.setTextColor(requireActivity().getColor(R.color.black))
-        views.tvSelectSize.setTextColor(requireActivity().getColor(R.color.black))
+        views.tvSort.setTextColor(requireActivity().getColor(R.color.black))
 
         when(index){
             0 -> {
@@ -115,8 +130,8 @@ class CommentFragment : PolyBaseFragment<FragmentCommentBinding>() {
                 views.layoutSelectRate.setBackgroundResource(R.drawable.backgound_retangle_chip_select)
             }
             3 -> {
-                views.tvSelectSize.setTextColor(requireActivity().getColor(R.color.red))
-                views.layoutSelectSize.setBackgroundResource(R.drawable.backgound_retangle_chip_select)
+                views.tvSort.setTextColor(requireActivity().getColor(R.color.red))
+                views.layoutSort.setBackgroundResource(R.drawable.backgound_retangle_chip_select)
             }
 
         }

@@ -15,9 +15,11 @@ import retrofit2.http.Query
 
 interface CommentApi {
     @GET("/api/comment/{productId}")
-    fun getCommentProduct(@Path("productId") productId: String): Observable<ArrayList<Comment>>
-    @GET("/api/comment/{productId}")
-    fun getCommentProductLimit(@Path("productId") productId: String, @Query("limitPosition") limitPosition: Int): Observable<ArrayList<Comment>>
+    fun getCommentProduct(@Path("productId") productId: String,
+                          @Query("limitPosition") limitPosition: Int?,
+                          @Query("isImage") isImage: Boolean?,
+                          @Query("rate") rate: Int?,
+                          @Query("isSort") isSort: Boolean?): Observable<ArrayList<Comment>>
 
     @Multipart
     @POST("/api/comment")

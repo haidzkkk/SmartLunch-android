@@ -141,7 +141,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
                 productViewModel.handle(ProductAction.GetDetailProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListSizeProduct(idProductAdapter))
                 productViewModel.handle(ProductAction.GetListToppingProduct(idProductAdapter))
-                productViewModel.handle(ProductAction.GetListCommentsLimit(idProductAdapter))
+                productViewModel.handle(ProductAction.GetListComments(idProductAdapter, limit = 2))
                 homeViewModel.returnDetailProductFragment()
                 dismiss()
             }

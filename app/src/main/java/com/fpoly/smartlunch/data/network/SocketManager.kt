@@ -48,7 +48,7 @@ class SocketManager @Inject constructor() {
 
     public fun <T> onReceiveEmitSocket(event: String, type: Class<T>, callBack: (data: T?) -> Unit) {
         Log.e("SocketManager", "onReceiveEmitSocket: connected: ${mSocket.connected()} event $event")
-        if (mSocket.connected() == true) {
+        if (mSocket.connected()) {
             mSocket.on(event) {
                 if (!it[0].toString().isNullOrEmpty()) {
                     CoroutineScope(Dispatchers.Main).launch {

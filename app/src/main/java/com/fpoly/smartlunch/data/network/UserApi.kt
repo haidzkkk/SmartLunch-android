@@ -42,6 +42,8 @@ interface UserApi {
     fun getAddressById(@Path("id") id: String):Observable<Address>
     @PATCH("api/addresses/{id}")
     fun getUpdateById(@Path("id") id: String):Observable<Address>
+    @GET("api/shopaddress/address")
+    fun getAddressAdmin():Observable<Address>
     @POST("api/logout/mobile")
     fun logoutUser():Observable<User>
 }

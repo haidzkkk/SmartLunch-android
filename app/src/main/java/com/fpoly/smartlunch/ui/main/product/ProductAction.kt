@@ -40,8 +40,8 @@ sealed class ProductAction : PolyViewAction {
 
     data class UpdateOder(val idOder: String, val oder: OrderRequest) : ProductAction()
 
-    data class GetListCommentsLimit(val productId : String) : ProductAction()
-    data class GetListComments(val productId : String) : ProductAction()
+    data class GetListComments(val productId : String?, val limit: Int? = null,
+                               val isImage: Boolean? = null, val rate: Int? = null, val isSort: Boolean? = null) : ProductAction()
     data class AddComment(val comment: CommentRequest, val images: List<Gallery>?) : ProductAction()
 
     object GetAllNotification: ProductAction()

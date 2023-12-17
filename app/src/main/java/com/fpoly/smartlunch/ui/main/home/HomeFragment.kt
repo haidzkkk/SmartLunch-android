@@ -235,7 +235,7 @@ class HomeFragment @Inject constructor() : PolyBaseFragment<FragmentHomeBinding>
         productViewModel.handle(ProductAction.GetDetailProduct(productId))
         productViewModel.handle(ProductAction.GetListSizeProduct(productId))
         productViewModel.handle(ProductAction.GetListToppingProduct(productId))
-        productViewModel.handle(ProductAction.GetListCommentsLimit(productId))
+        productViewModel.handle(ProductAction.GetListComments(productId, limit = 2))
         homeViewModel.returnDetailProductFragment()
     }
 

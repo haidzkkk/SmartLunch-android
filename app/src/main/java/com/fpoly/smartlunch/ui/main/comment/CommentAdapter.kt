@@ -24,6 +24,18 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>(){
         notifyDataSetChanged()
     }
 
+    fun sortData(isSort: Boolean){
+        // Sắp xếp từ cao đến thấp
+        if (mListComment != null){
+            mListComment = if (isSort){
+                mListComment!!.sortedByDescending { it.rating }
+            }else{
+                mListComment!!.sortedBy { it.rating }
+            }
+            notifyDataSetChanged()
+        }
+    }
+
     inner class ViewHolder(private val binding: ItemCommentBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(comment: Comment){
             Glide.with(binding.root.context).load(comment.userId?.avatar?.url ?: "").placeholder(R.drawable.icon_user).into(binding.imgAvatar)

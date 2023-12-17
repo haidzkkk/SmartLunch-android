@@ -50,7 +50,8 @@ fun Fragment.checkPermisionCallVideo(isAllow: (Boolean) -> Unit) {
 fun Fragment.checkPermisionCamera(isAllow: (Boolean) -> Unit) {
     PermissionX.init(this)
         .permissions(
-            android.Manifest.permission.CAMERA
+            android.Manifest.permission.CAMERA,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         .request { allGranded, _, _ ->
             isAllow(allGranded)

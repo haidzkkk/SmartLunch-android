@@ -52,6 +52,8 @@ class UserRepository(
         api.getAddressById(id).subscribeOn(Schedulers.io())
     fun getUpdateById(id: String): Observable<Address> =
         api.getUpdateById(id).subscribeOn(Schedulers.io())
+    fun getAddressAdmin(): Observable<Address> =
+        api.getAddressAdmin().subscribeOn(Schedulers.io())
     fun logout(): Observable<User> =  api.logoutUser().subscribeOn(Schedulers.io())
 
     fun getProvince(): Observable<ProvinceAddress<Province>> = apiProvince.getProvince().subscribeOn(Schedulers.io())

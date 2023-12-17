@@ -71,7 +71,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         withState(productViewModel){
-            it.asyncCommentsLimit = Uninitialized
+            it.asyncComments = Uninitialized
             it.asyncProduct = Uninitialized
             it.asynGetSizeProduct = Uninitialized
         }
@@ -135,7 +135,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             activity?.onBackPressed()
         }
         views.swipeLoading.setOnRefreshListener {
-            productViewModel.handle(ProductAction.GetListCommentsLimit(currentProduct?._id ?: ""))
+            productViewModel.handle(ProductAction.GetListComments(currentProduct?._id ?: "", limit = 2))
             productViewModel.handle(ProductAction.GetDetailProduct(currentProduct?._id ?: ""))
             productViewModel.handle(ProductAction.GetListSizeProduct(currentProduct?._id ?: ""))
             productViewModel.handle(ProductAction.GetListToppingProduct(currentProduct?._id ?: ""))
@@ -253,6 +253,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         currentSoldQuantity = 1
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun sendCart() {
         var total = 0.0
 
@@ -400,10 +401,10 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
             else -> {}
         }
 
-        when(it.asyncCommentsLimit){
+        when(it.asyncComments){
             is Success ->{
-                commentAdapter.setData(it.asyncCommentsLimit.invoke())
-                views.tvNoComment.isVisible = it.asyncCommentsLimit.invoke().isNullOrEmpty()
+                commentAdapter.setData(it.asyncComments.invoke())
+                views.tvNoComment.isVisible = it.asyncComments.invoke().isNullOrEmpty()
             }
             else ->{
 

@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.DisplayMetrics
@@ -231,7 +232,11 @@ class RoomChatFragment : PolyBaseFragment<FragmentRoomChatBinding>() {
             context?.hideKeyboard(views.root)
             checkPermisionCamera {
                 if (it){
-                    sendCameraPhoto()
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                        sendCameraPhoto()
+                    }else{
+                        Toast.makeText(requireContext(), "Phiên bản của bạn không hỗ trợ camera này", Toast.LENGTH_SHORT).show()
+                    }
                 }else{
                     showSnackbar(views.root, getString(R.string.access_camera), false, getString(R.string.to_setting)){
                         activity?.startToDetailPermission()

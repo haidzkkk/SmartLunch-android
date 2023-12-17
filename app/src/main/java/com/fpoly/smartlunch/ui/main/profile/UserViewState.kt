@@ -17,11 +17,15 @@ data class UserViewState(
     var asyncCurrentUser: Async<User> = Uninitialized,
     var asyncUserSearching: Async<User> = Uninitialized,
     var asyncUpdateUser: Async<User> = Uninitialized,
+
     var asyncListAddress: Async<List<Address>> = Uninitialized,
     var asyncAddress: Async<Address> = Uninitialized,
     var asyncCreateAddress: Async<Address> = Uninitialized,
     var asyncUpdateAddress: Async<Address> = Uninitialized,
     var asyncDeleteAddress: Async<Address> = Uninitialized,
+
+    var asyncAddressAdmin: Async<Address> = Uninitialized,
+
     var asyncChangePassword: Async<TokenResponse> = Uninitialized,
 
     var asyncListProvince: Async<ProvinceAddress<Province>> =Uninitialized,
