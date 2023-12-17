@@ -2,7 +2,7 @@
 <resources>
     <!-- 설정 -->
     <!-- 설정 -->
-
+    <string name="introduce">소개</string>
     <string name="app_name">Smart Lunch</string>
     <string name="hello_blank_fragment">안녕하세요 빈 프래그먼트</string>
     <string name="notification">알림</string>
@@ -23,6 +23,13 @@
     <string name="second_fragment_label">두 번째 프래그먼트</string>
     <string name="next">다음</string>
     <string name="previous">이전</string>
+    <string name="filter">필터</string>
+    <string name="increase">증가</string>
+    <string name="decrease">감소</string>
+    <string name="about_me">우리에 관하여</string>
+    <string name="introduct">위의 맥락에서, 우리는 스마트 런치 음식 배달 앱 주제를 선택하여 정보 기술을 음식 서비스 산업에 더 깊이 살펴보고, 고객에게 편의성을 제공하고 음식점 관리에 효율성을 높일 수 있는 솔루션을 제공하기로 결정했습니다.</string>
+    <string name="okok1">월요일 - 금요일</string>
+    <string name="okok2">토요일 - 일요일</string>
 
     <!-- 온보딩 -->
     <string name="onboarding_greeting1">안녕하세요! 우리는\n스마트 런치입니다</string>

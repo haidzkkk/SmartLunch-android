@@ -2,7 +2,7 @@
 <resources>
     <!-- การตั้งค่า -->
     <!-- การตั้งค่า -->
-
+    <string name="introduce">แนะนำ</string>
     <string name="app_name">Smart Lunch</string>
     <string name="hello_blank_fragment">สวัสดี Fragment ว่างๆ</string>
     <string name="notification">การแจ้งเตือน</string>
@@ -23,7 +23,13 @@
     <string name="second_fragment_label">Fragment thứ hai</string>
     <string name="next">ถัดไป</string>
     <string name="previous">ก่อนหน้า</string>
-
+    <string name="filter">ตัวกรอง</string>
+    <string name="increase">เพิ่ม</string>
+    <string name="decrease">ลด</string>
+    <string name="about_me">เกี่ยวกับเรา</string>
+    <string name="introduct">ในบริบทดังกล่าว เราตัดสินใจเลือกหัวข้อแอปพลิเคชันสำหรับการส่งอาหารอัจฉริยะเพื่อศึกษาลึกลงเกี่ยวกับวิธีการนำเทคโนโลยีสารสนเทศมาใช้ในธุรกิจบริการอาหาร โดยให้คำแนะนำและมุ่งเน้นที่การให้ความสะดวกสบายแก่ลูกค้าและการเพิ่มประสิทธิภาพให้กับการจัดการร้านอาหาร</string>
+    <string name="okok1">จันทร์ - ศุกร์</string>
+    <string name="okok2">เสาร์ - อาทิตย์</string>
     <!-- Onboarding -->
     <string name="onboarding_greeting1">สวัสดี! เราคือ\nSmart Lunch</string>
     <string name="onboarding_greeting2">ง่ายและสะดวกกับ\nSmart Lunch</string>
