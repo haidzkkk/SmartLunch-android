@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
+import com.fpoly.smartlunch.R
 
 import com.fpoly.smartlunch.core.PolyBaseFragment
 
@@ -55,7 +56,7 @@ class ProductListFragment : PolyBaseFragment<FragmentProductListBinding>() {
 
     private fun initUiProduct() {
         views.appBar.apply {
-            tvTitleToolbar.text = "Danh sách"
+            tvTitleToolbar.text = getString(R.string.list)
             btnBackToolbar.visibility = View.VISIBLE
         }
         adapterList = AdapterListProduct {

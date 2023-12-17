@@ -13,6 +13,7 @@ object MyConfigNotifi{
     var TYPE_CHAT = "TYPE_CHAT"
     var TYPE_CALL_OFFER = "TYPE_CALL_OFFER"
     var TYPE_CALL_ANSWER = "TYPE_CALL_ANSWER"
+    var TYPE_LANGUAGE_RESET = "TYPE_LANGUAGE_RESET"
 
 }
 

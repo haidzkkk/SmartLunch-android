@@ -8,7 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="Thịt"
         android:layout_toStartOf="@+id/tv_price"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"/>

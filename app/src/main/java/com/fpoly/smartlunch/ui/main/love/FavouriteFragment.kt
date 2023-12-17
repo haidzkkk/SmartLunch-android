@@ -41,10 +41,10 @@ class FavouriteFragment : PolyBaseFragment<FragmentFavouriteBinding>() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Yêu thích"
+                    tab.text = getString(R.string.favourite)
                 }
                 1 -> {
-                    tab.text = "Lịch sử"
+                    tab.text = getString(R.string.history)
                 }
             }
         }.attach()

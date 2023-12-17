@@ -18,8 +18,16 @@
     <string name="chat">Chat</string>
     <string name="en">English</string>
     <string name="vi">Vietnamese</string>
+    <string name="zh">Chinese</string>
+    <string name="ko">Korean</string>
+    <string name="fr">French</string>
+    <string name="th">Thai</string>
     <string name="en_code" translatable="false">en</string>
     <string name="vi_code" translatable="false">vi</string>
+    <string name="zh_code" translatable="false">zh</string>
+    <string name="ko_code" translatable="false">ko</string>
+    <string name="fr_code" translatable="false">fr</string>
+    <string name="th_code" translatable="false">th</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -102,92 +110,9 @@
     <string name="reset_pass_title">Reset Password</string>
     <string name="new_password">New Password</string>
     <!--    end-->
-    <string name="validatePhone">invali format</string>
-    <string name="validateEmail">invali format</string>
-    <string name="validatePassword">invali password</string>
-    <string name="add_product">add_product</string>
-    <string name="name_product">Bánh pizza gà phô mai 23cm đế mỏng</string>
-    <string name="price_product">200.000đ</string>
-    <string name="k_ch_c_">Kích cỡ</string>
-    <string name="Size_M">Size M</string>
-    <string name="Size_L">Size L</string>
-    <string name="Size_XL">Size XL</string>
-    <string name="h4">
-     Thêm 200.000
-</string>
-    <string name="t_v_nh_di_n">
-35 Tô Vĩnh Diện, Thanh Xuân
-</string>
-    <string name="b_n_ang_kha">Bạn đang khao khát điều gì?</string>
-
-    <string name="pizza_th_gi">
-Pizza thư giãn cùng bà Bảy
-</string>
-    <string name="some_id">
-48.000 đ
-</string>
-    <string name="off">
-25% Off
-</string>
-    <string name="type_16">
-4.4
-</string>
-    <string name="nh_gi_cao">
-Đánh giá cao
-</string>
-    <string name="xem_th_m">
-Xem thêm
-</string>
-    <string name="ph_bi_n">
-Phổ biến
-</string>
-    <string name="gi_h_ng">
-Giỏ hàng
-</string>
-    <string name="xo_">
-Xóa
-</string>
-    <string name="thanh_to_n_">
-Thanh toán
-</string>
-    <string name="title_activity_prodoct">ProdoctActivity</string>
-
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-    </string>
+    <string name="validatePhone">Invalid format</string>
+    <string name="validateEmail">Invalid format</string>
+    <string name="validatePassword">Invalid password</string>
     <string name="order">Order</string>
     <string name="gender">Gender</string>
     <string name="birthday">Birthday</string>
@@ -195,44 +120,232 @@ Thanh toán
     <string name="gender_male">Male</string>
     <string name="pay">Pay</string>
     <string name="category">Category</string>
-    <string name="note_default">having no note</string>
-    <string name="min_cost">0 đ</string>
-    <string name="payment_id">no value</string>
-    <string name="payment_fail">fail</string>
-    <string name="error_500">server error</string>
-    <string name="http200">ok</string>
-    <string name="http400">Loi phia cilent</string>
-    <string name="http401">Chua xac thuc</string>
-    <string name="http403">Khong co quyen</string>
-    <string name="http404">not found</string>
-    <string name="http500">Loi server khi su ly</string>
-    <string name="loading">loading...</string>
+    <string name="note_default">No note</string>
+    <string name="min_cost">0 VND</string>
+    <string name="payment_id">No value</string>
+    <string name="payment_fail">Fail</string>
+    <string name="error_500">Server error</string>
+    <string name="http200">OK</string>
+    <string name="http400">Client-side error</string>
+    <string name="http401">Unauthorized</string>
+    <string name="http403">Forbidden</string>
+    <string name="http404">Not found</string>
+    <string name="http500">Server error during processing</string>
 
-    <string name="faild">Lỗi</string>
-    <string name="end_call_offer">Cuộc gọi kết thúc, đối phương không trả lời</string>
-    <string name="end_call">Cuộc gọi kết thúc</string>
-    <string name="call_faild">Cuộc gọi xảy ra lỗi</string>
-    <string name="refuse">Đối phương từ chối bạn</string>
-    <string name="access_camera">Bạn phải cho phép quyền truy cập máy ảnh</string>
-    <string name="access_gallery">Bạn phải cho phép quyền truy cập thư viện</string>
-    <string name="unable_gallery">Không thể lấy ảnh từ thư viện</string>
-    <string name="ok">Đi</string>
-    <string name="to_setting">Tới cài đặt</string>
-    <string name="want_to_call">muốn gọi cho bạn</string>
-    <string name="room_not_found">Không tìm thấy phòng</string>
-    <string name="chat_section">Đoạn chat</string>
-    <string name="you">Bạn</string>
-    <string name="calling">Đang gọi</string>
-    <string name="join">Tham gia</string>
-    <string name="voice_call">Cuộc gọi thoại</string>
-    <string name="minute">phút</string>
-    <string name="taking_photo_faild">Chụp ảnh thất bại</string>
-    <string name="send_message_faild">Gửi tin nhắn không thành công</string>
-    <string name="please_search">Hãy tìm kiếm</string>
-    <string name="results_for">Xem kết quả cho</string>
-    <string name="evaluate">Đánh giá</string>
-    <string name="coupon_detail">Chi tiết mã giảm giá</string>
-    <string name="minimum">Tối thiểu</string>
-    <string name="promotion">Khuyến mãi</string>
-    <string name="feature_development">Chức năng đang được phát triển</string>
+    <string name="faild">Error</string>
+    <string name="end_call_offer">Call ended, no response from the other side</string>
+    <string name="end_call">Call ended</string>
+    <string name="call_faild">Call encountered an error</string>
+    <string name="refuse">The other side declined</string>
+    <string name="access_camera">You must allow camera access</string>
+    <string name="access_gallery">You must allow gallery access</string>
+    <string name="unable_gallery">Unable to retrieve image from the gallery</string>
+    <string name="ok">Go</string>
+    <string name="to_setting">Go to settings</string>
+    <string name="want_to_call">wants to call you</string>
+    <string name="room_not_found">Room not found</string>
+    <string name="chat_section">Chat section</string>
+    <string name="you">You</string>
+    <string name="calling">Calling</string>
+    <string name="join">Join</string>
+    <string name="voice_call">Voice call</string>
+    <string name="minute">minute(s)</string>
+    <string name="taking_photo_faild">Failed to take a photo</string>
+    <string name="send_message_faild">Failed to send message</string>
+    <string name="please_search">Please search</string>
+    <string name="results_for">Results for</string>
+    <string name="evaluate">Evaluate</string>
+    <string name="coupon_detail">Coupon details</string>
+    <string name="minimum">Minimum</string>
+    <string name="promotion">Promotion</string>
+    <string name="feature_development">Feature under development</string>
+
+    <!-- Alert dialog titles -->
+    <string name="confirmation_title">Confirmation</string>
+    <string name="clear_cart_title">Clear Cart</string>
+
+    <!-- Alert dialog messages -->
+    <string name="clear_cart_message">Are you sure you want to clear your cart?</string>
+    <string name="delete_product_message">Do you want to remove this product from the cart?</string>
+
+    <!-- Alert dialog button labels -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Toast messages -->
+    <string name="get_cart_empty">No data available for getOneCartById</string>
+    <string name="get_cart_error">Error in getOneCartById</string>
+
+    <!-- Other labels -->
+    <string name="commit_payment">Proceed to Payment</string>
+    <string name="loading"> Loading...</string>
+    <string name="search_hint"> What are you craving for?</string>
+    <string name="popular_text">Popular</string>
+    <string name="see_all_text">See all</string>
+    <string name="high_rating_text">High Rating</string>
+    <string name="recommendation_text">Today\'s Recommendation</string>
+    <string name="see_detail_text">See Detail</string>
+    <string name="default_category">More</string>
+    <string name="history">History</string>
+    <!--    notify-->
+    <string name="order_success">Order placed successfully</string>
+    <string name="notification_time">20/10/2023 | 20:00</string>
+    <string name="notification_content">You have canceled an order at Hut. We apologize for your inconvenience. We will try to improve our service next time 🥲</string>
+    <string name="refund_failed">Refund failed</string>
+    <!--    refund-->
+    <string name="payment_status">%1$s</string>
+    <string name="payment_paid">Payment paid</string>
+    <string name="payment_not_paid">Payment not paid</string>
+    <string name="cancel_order_success">Cancel order success</string>
+    <!--    order-->
+    <string name="order_successful">Order_successful</string>
+    <string name="cancel_order_successful">Cancel order success</string>
+    <string name="cancel_order_failed">Cancel order success failed</string>
+    <string name="retry">Retry</string>
+    <string name="title_status">Order status</string>
+    <string name="message_status">Status message</string>
+    <string name="follow_order">Follow order </string>
+    <string name="restaurant_info">SmartLunch - Trinh Van Bo, Nam Tu Liem</string>
+    <string name="order_process">Order process</string>
+    <string name="restaurant_delivery">Restaurant delivery</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="recipient">Recipient</string>
+    <string name="phone_number_order">Phone number</string>
+    <string name="address_order">Address</string>
+    <string name="order_info">Order information</string>
+    <string name="order_time">Order time</string>
+    <string name="update_time">Update time</string>
+    <string name="order_code">Order code</string>
+    <string name="discount_code">Discount code</string>
+    <string name="total_amount">Total amount</string>
+    <string name="discount">Discount</string>
+    <string name="shipping_fee">Shipping fee</string>
+    <string name="final_amount">Final amount</string>
+    <string name="payment_method">Payment method</string>
+    <string name="paid">Paid</string>
+    <string name="cancel_order">Cancel order</string>
+    <string name="rate_order">Rate order</string>
+    <string name="rate_order_text">rate order</string>
+    <string name="money_method">Tiền mặt</string>
+    <string name="tab_order_0">Waiting for confirmation</string>
+    <string name="tab_order_1">Confirmed</string>
+    <string name="tab_order_2">On delivery</string>
+    <string name="tab_order_3">Delivered</string>
+    <string name="tab_order_4">Order canceled</string>
+    <string name="product_review_title">Product Review</string>
+    <string name="no_order_message">No order available</string>
+    <string name="comment_success">Comment successful</string>
+    <string name="comment_failure">Comment failed</string>
+    <string name="tracking_order_title">Track Order</string>
+    <string name="shipper_not_found">Shipper not found</string>
+    <string name="permission_request">Permission Request</string>
+    <string name="location_permission_denied">You haven\'t granted location permission</string>
+    <string name="open_settings_permission">Go to settings to grant permission</string>
+    <string name="upcoming_arrival">Upcoming Arrival!</string>
+    <string name="driver_arriving">The driver will arrive at your location in </string>
+    <string name="wait_a_moment">Please wait a moment! I\'m coming to your place</string>
+    <string name="price_option">Price option</string>
+    <!--    product-->
+    <string name="product_added_to_cart_failure">Add to cart failed</string>
+    <string name="hide_more">Hide less</string>
+    <string name="see_more">See more</string>
+    <string name="toast_product_added_to_cart_failure">Add to cart failed</string>
+    <string name="no_comments_placeholder">No comments</string>
+    <string name="views">views</string>
+    <string name="ratings">ratings</string>
+    <string name="sold">Sold</string>
+    <string name="size">Size</string>
+    <string name="topping">Topping</string>
+    <string name="comment">Comment</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="list">List</string>
+    <string name="pass_wrong">Password is wrong!</string>
+    <string name="current_pass">current password</string>
+    <string name="update_profile_success">Update profile successfully</string>
+    <string name="data_empty">Data empty</string>
+    <string name="search_hint_p">Search something</string>
+    <string name="search_results_for">See results for: %s</string>
+    <string name="ascending_order">Ascending</string>
+    <string name="descending_order">Descending</string>
+    <string name="sort_by">Sort by</string>
+    <string name="price">Price</string>
+    <string name="best_seller">best seller</string>
+    <string name="content_order_success">Order has been sent to the restaurant, please wait a moment</string>
+    <string name="add_address_title">Add Address</string>
+    <string name="select_province">--- Select province / city ---</string>
+    <string name="select_district">--- Select district / town ---</string>
+    <string name="select_ward">--- Select ward / commune / town ---</string>
+    <string name="add_address_success">Address added successfully</string>
+    <string name="add_address_failure">Failed to add address</string>
+    <string name="fill_all_information">Please fill in all information</string>
+    <string name="select_hanoi_address">You can only select an address around Hanoi</string>
+    <string name="address_search_error">Address search error</string>
+    <string name="full_name">Full name</string>
+    <string name="address_detail">Address details</string>
+    <string name="no_id_address">No ID address</string>
+    <string name="detail_address">Detail address</string>
+    <string name="confirm_delete_address">Do you want to delete this address?</string>
+    <string name="no_address">No address</string>
+    <string name="delete_address_success">Delete address successfully</string>
+    <string name="delete_address_failure">Failed to delete address</string>
+    <string name="discount_title">Current promotions</string>
+    <string name="payment_success">Payment Successful</string>
+    <string name="payment_cancel">You\'ve cancelled the payment</string>
+    <string name="payment_failure">Payment Failed</string>
+    <string name="missing_user_info">Missing user information</string>
+    <string name="add_address_prompt">You don\'t have an address yet. Please add one.</string>
+    <string name="no_address_list">No address list available</string>
+    <string name="no_cart">No cart available</string>
+    <string name="create_zalopay_order_fail">Failed to create ZaloPay order</string>
+    <string name="create_zalopay_order_failed">Failed to create ZaloPay order</string>
+    <string name="lack_of_info">Lack of user information</string>
+    <string name="payment_details">Payment details</string>
+    <string name="promo_code">Promo code</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="total">Total</string>
+    <string name="place_order">Place order</string>
+    <string name="chose_anddress">Choose delivery address</string>
+    <string name="pay_with">Pay with </string>
+    <string name="pay_with_zalo_pay">Pay with ZaloPay</string>
+    <string name="discount_money">Discount</string>
+    <string name="insufficient_cart">Cart does not meet the conditions for payment</string>
+    <string name="send_data_function">Send data to payment screen function</string>
+    <string name="total_condition_warning">Insufficient cart to proceed with payment</string>
+    <string name="note_hint">Enter content</string>
+    <string name="add_promo">Add promo</string>
+    <string name="sub_total">Subtotal</string>
+    <string name="total_text">Total</string>
+    <string name="continue_button">Continue</string>
+    <string name="note_tile">Order note</string>
+    <string name="account_not_verified">Account has not been verified</string>
+    <string name="verify">Verify</string>
+    <string name="sign_in_with_gg">Sign in with Google</string>
+    <string name="already_registered">Email is already registered!</string>
+    <string name="system_error">System error, please try again later</string>
+    <string name="incorrect_otp">Incorrect OTP code! Please check your mailbox again</string>
+    <string name="expired_otp">OTP code has expired! Please get a new code</string>
+    <string name="system_issue">System encountered an issue. Please try again later!</string>
+    <string name="payment_money">Payment upon delivery</string>
+    <string name="call">Call</string>
+    <string name="classify">Classification: </string>
+    <string name="out_date">Expired:</string>
+    <string name="order_id">#252893</string>
+    <string name="order_status">Status</string>
+    <string name="cancelled_status">cancelled</string>
+    <string name="product_name">Product name</string>
+    <string name="price_label">Price</string>
+    <string name="quantity_label">Quantity</string>
+    <string name="detail_button">Details</string>
+<!--cart-->
+    <string name="confirm_delete_title">Confirm Delete</string>
+    <string name="confirm_delete_message">Do you want to remove this item from the cart?</string>
+    <string name="confirm_delete_positive_button">Delete</string>
+    <string name="confirm_delete_negative_button">Cancel</string>
+    <string name="cart_insufficient_condition_message">The cart does not meet the requirements for checkout</string>
+    <string name="add_to_cart_more">Add to cart</string>
+    <string name="insert_your_comment">Insert your comment</string>
+    <string name="send_comment">Send comment</string>
 </resources>

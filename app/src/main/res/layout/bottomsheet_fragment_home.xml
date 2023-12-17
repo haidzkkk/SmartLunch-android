@@ -40,7 +40,7 @@
                     android:layout_width="88dp"
                     android:layout_height="32dp"
                     android:layout_centerInParent="true"
-                    android:text="@string/gi_h_ng"
+                    android:text="@string/cart"
                     android:textAppearance="@style/gi_h_ng"
                     android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="3dp"
                     android:gravity="right|top"
-                    android:text="@string/xo_"
+                    android:text="@string/delete"
                     android:textAppearance="@style/xo_" />
             </RelativeLayout>
 

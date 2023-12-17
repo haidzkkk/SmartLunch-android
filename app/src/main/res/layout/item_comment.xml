@@ -15,7 +15,6 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="do thanh hai"
         android:layout_toEndOf="@+id/img_avatar"
         android:layout_marginStart="10dp"
         />
@@ -66,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_start"
-        android:text="Phân loại: "
+        android:text="@string/classify"
         android:textColor="@color/grey"/>
 
     <TextView
@@ -75,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/tv_size"
         android:layout_below="@+id/layout_start"
-        android:text="Size L"
+        android:text="@string/loading"
         android:textColor="@color/black"/>
 
     <TextView
@@ -84,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_message_size"
         android:textColor="@color/black"
-        android:text="Sản phẩm oke, đò ăn quá ngon nên không thể cưỡng lại được. sao ngon đến vậy ;>"
+        android:text="@string/loading"
         />
 
     <androidx.recyclerview.widget.RecyclerView

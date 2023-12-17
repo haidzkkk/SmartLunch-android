@@ -142,7 +142,7 @@ class CartPayNowFragment : PolyBaseFragment<FragmentCartPayNowBinding>(){
             bundle.putString("strNote", views.note.text.toString().ifEmpty { getString(R.string.note_default)})
             payNowViewModel.returnPayFragment(bundle)
         }else{
-            Toast.makeText(requireContext(), "Giỏ hàng không đủ điều kiện để thanh toán", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.insufficient_cart), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -29,7 +29,6 @@ import com.fpoly.smartlunch.ultis.addFragmentToBackStack
 import com.fpoly.smartlunch.ultis.popBackStackAndShowPrevious
 import com.fpoly.smartlunch.ui.notification.receiver.MyReceiver
 import com.fpoly.smartlunch.ultis.startActivityWithData
-import vn.zalopay.sdk.Environment
 import vn.zalopay.sdk.ZaloPaySDK
 import javax.inject.Inject
 

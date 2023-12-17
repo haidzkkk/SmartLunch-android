@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 설정 -->
+    <!-- 설정 -->
+
+    <string name="app_name">Smart Lunch</string>
+    <string name="hello_blank_fragment">안녕하세요 빈 프래그먼트</string>
+    <string name="notification">알림</string>
+    <string name="home">홈</string>
+    <string name="favourite">즐겨찾기</string>
+    <string name="card">카드</string>
+    <string name="cart">장바구니</string>
+    <string name="profile">프로필</string>
+    <string name="chat">채팅</string>
+    <string name="en">영어</string>
+    <string name="vi">베트남어</string>
+    <string name="zh">중국어</string>
+    <string name="ko">한국어</string>
+    <string name="fr">프랑스어</string>
+    <string name="th">태국어</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="first_fragment_label">첫 번째 프래그먼트</string>
+    <string name="second_fragment_label">두 번째 프래그먼트</string>
+    <string name="next">다음</string>
+    <string name="previous">이전</string>
+
+    <!-- 온보딩 -->
+    <string name="onboarding_greeting1">안녕하세요! 우리는\n스마트 런치입니다</string>
+    <string name="onboarding_greeting2">스마트 런치로\n쉽고 편리하게</string>
+    <string name="onboarding_greeting3">스마트 런치로\n다양한 선택을</string>
+    <string name="details_onboarding_fragment1">언제 어디서나 맛있는 음식을 탐험하고 주문하세요</string>
+    <string name="details_onboarding_fragment2">음식을 선택하고 주문하여 문 앞으로 배달 받으세요</string>
+    <string name="details_onbroading_fragment3">인기 있는 식당에서 다양한 옵션을 발견하세요</string>
+    <string name="skip">건너뛰기</string>
+    <string name="continute">계속</string>
+
+    <!-- 보안 -->
+    <string name="btn_continue">계속</string>
+    <string name="forgot_password">비밀번호를 잊으셨나요</string>
+    <string name="or">또는</string>
+    <string name="label_sign_up">계정이 없으신가요? 지금 가입하세요</string>
+    <string name="username">사용자 이름</string>
+    <string name="password">비밀번호</string>
+    <string name="login">로그인</string>
+    <string name="signup">가입</string>
+    <string name="notEmpty">비워둘 수 없음</string>
+    <string name="login_title">로그인</string>
+    <string name="email_title">이메일을 입력하세요</string>
+    <string name="forget_password">비밀번호를 잊으셨나요</string>
+    <string name="lable_sign_up">계정이 없으신가요? <font color="#0085FF"><b>가입</b></font></string>
+    <string name="lable_sign_in">계정이 있으신가요? <font color="#0085FF"><b>로그인</b></font></string>
+    <string name="username_not_empty">이 필드는 비워둘 수 없습니다.</string>
+    <string name="password_not_empty">이 필드는 비워둘 수 없습니다.</string>
+    <string name="email_not_empty">이 필드는 비워둘 수 없습니다.</string>
+    <string name="display_name_not_empty">이 필드는 비워둘 수 없습니다.</string>
+    <string name="confirm_password_not_empty">이 필드는 비워둘 수 없습니다.</string>
+    <string name="login_fail">사용자 이름 또는 비밀번호가 잘못되었습니다</string>
+    <string name="login_success">로그인 성공</string>
+    <string name="display_name">디스플레이 이름</string>
+    <string name="edit_profile">프로필 수정</string>
+    <string name="my_location">내 위치</string>
+    <string name="support">지원</string>
+    <string name="logout">로그아웃</string>
+    <string name="notify">알림</string>
+    <string name="dark_mode">다크 모드</string>
+    <string name="change_password">비밀번호 변경</string>
+    <string name="language">언어</string>
+    <string name="details_onbroading_fragment1">당사 앱에 오신 것을 환영합니다! 우리는 최상의 서비스를 제공할 것입니다</string>
+    <string name="email">이메일</string>
+    <string name="sign_up">가입</string>
+    <string name="confirm_password">비밀번호 확인</string>
+    <string name="signin_account">계정 로그인</string>
+    <string name="signup_account">계정 가입</string>
+    <string name="last_name">성</string>
+    <string name="first_name">이름</string>
+    <string name="phone_number">전화번호</string>
+    <string name="address">주소</string>
+    <string name="signup_success">가입 성공</string>
+    <string name="password_not_match">비밀번호가 일치하지 않습니다</string>
+    <string name="last_name_not_empty">성은 비워둘 수 없습니다</string>
+    <string name="phone_not_empty">전화번호는 비워둘 수 없습니다</string>
+    <string name="address_not_empty">주소는 비워둘 수 없습니다</string>
+    <string name="otp_title">OTP 입력</string>
+    <string name="email_verification_hint">계정 이메일 주소를 입력하여 확인 코드를 받으세요</string>
+    <string name="otp_message_guide">"확인 코드가 이메일로 전송되었습니다"</string>
+    <string name="otp_message_question">코드를 받지 못했나요?</string>
+    <string name="confirm">확인</string>
+    <string name="resend_otp">OTP 다시 보내기</string>
+    <string name="dismiss">닫기</string>
+    <string name="reset_password_success_title">비밀번호 재설</string>
+    <string name="validatePhone">유효하지 않은 형식</string>
+    <string name="validateEmail">유효하지 않은 형식</string>
+    <string name="validatePassword">유효하지 않은 비밀번호</string>
+    <string name="order">주문</string>
+    <string name="gender">성별</string>
+    <string name="birthday">생일</string>
+    <string name="gender_female">여성</string>
+    <string name="gender_male">남성</string>
+    <string name="pay">결제</string>
+    <string name="category">카테고리</string>
+    <string name="note_default">비고 없음</string>
+    <string name="min_cost">0 베트남 동</string>
+    <string name="payment_id">값 없음</string>
+    <string name="payment_fail">실패</string>
+    <string name="error_500">서버 오류</string>
+    <string name="http200">OK</string>
+    <string name="http400">클라이언트 오류</string>
+    <string name="http401">권한 없음</string>
+    <string name="http403">금지됨</string>
+    <string name="http404">찾을 수 없음</string>
+    <string name="http500">처리 중 서버 오류</string>
+    <string name="faild">실패</string>
+    <string name="end_call_offer">통화 종료, 상대방 응답 없음</string>
+    <string name="end_call">통화 종료</string>
+    <string name="call_faild">통화 중 오류 발생</string>
+    <string name="refuse">거부됨</string>
+    <string name="access_camera">카메라 접근을 허용해야 합니다</string>
+    <string name="access_gallery">갤러리 접근을 허용해야 합니다</string>
+    <string name="unable_gallery">갤러리에서 이미지를 가져올 수 없습니다</string>
+    <string name="ok">시작</string>
+    <string name="to_setting">설정으로 이동</string>
+    <string name="want_to_call">전화하고 싶습니다</string>
+    <string name="room_not_found">방을 찾을 수 없음</string>
+    <string name="chat_section">채팅 섹션</string>
+    <string name="you">당신</string>
+    <string name="calling">전화 걸기</string>
+    <string name="join">참여</string>
+    <string name="voice_call">음성 통화</string>
+    <string name="minute">분</string>
+    <string name="taking_photo_faild">사진 촬영 실패</string>
+    <string name="send_message_faild">메시지 전송 실패</string>
+    <string name="please_search">검색하세요</string>
+    <string name="results_for">검색 결과</string>
+    <string name="evaluate">평가</string>
+    <string name="coupon_detail">쿠폰 상세 정보</string>
+    <string name="minimum">최소</string>
+    <string name="promotion">프로모션</string>
+    <string name="feature_development">기능 개발 중</string>
+    <string name="reset_password_success_message">새 비밀번호가 업데이트되었습니다. 계속해서 로그인하세요.</string>
+    <string name="change_password_success_message">새 비밀번호가 업데이트되었습니다. 계속해서 나가세요.</string>
+    <string name="verify_otp_send_button_text">보내기</string>
+    <string name="verify_otp_resend_button_text">코드 다시 보내기</string>
+    <string name="verify_otp_code_entry_hint">여기에 OTP를 입력하세요.</string>
+    <string name="verify_otp_success_title">등록 성공</string>
+    <string name="verify_otp_success_message">귀하의 계정이 성공적으로 등록되었습니다.</string>
+    <string name="verify_otp_reset_password_success_title">비밀번호 재설정 성공</string>
+    <string name="verify_otp_reset_password_success_message">새 비밀번호가 업데이트되었습니다.</string>
+    <string name="reset_pass_title">비밀번호 재설정</string>
+    <string name="new_password">새 비밀번호</string>
+
+    <!-- 제목 대화 상자 -->
+    <string name="confirmation_title">확인</string>
+    <string name="clear_cart_title">장바구니 비우기</string>
+
+    <!-- 대화 상자 메시지 -->
+    <string name="clear_cart_message">장바구니를 비우시겠습니까?</string>
+    <string name="delete_product_message">이 제품을 장바구니에서 삭제하시겠습니까?</string>
+
+    <!-- 대화 상자 버튼 레이블 -->
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="delete">삭제</string>
+    <string name="cancel">취소</string>
+
+    <!-- 알림 -->
+    <string name="get_cart_empty">getOneCartById 데이터를 가져올 수 없습니다</string>
+    <string name="get_cart_error">getOneCartById 오류 발생</string>
+
+    <!-- 기타 레이블 -->
+    <string name="commit_payment">결제하기</string>
+    <string name="loading"> 로딩 중...</string>
+    <string name="search_hint"> 무엇을 찾으시겠습니까?</string>
+    <string name="popular_text">인기</string>
+    <string name="see_all_text">모두 보기</string>
+    <string name="high_rating_text">높은 평점</string>
+    <string name="recommendation_text">추천</string>
+    <string name="see_detail_text">상세 보기</string>
+    <string name="default_category">더 보기</string>
+    <string name="history">히스토리</string>
+
+    <!--    알림-->
+    <string name="order_success">주문 성공</string>
+    <string name="notification_time">2023년 10월 20일 | 오후 8시</string>
+    <string name="notification_content">Hut에서 주문을 취소했습니다. 불편을 끼쳐드려 죄송합니다. 다음에 더 나은 서비스를 제공하겠습니다 🥲</string>
+    <string name="refund_failed">환불 실패</string>
+
+    <!--    결제-->
+    <string name="payment_status">%1$s</string>
+    <string name="payment_paid">결제 완료</string>
+    <string name="payment_not_paid">미결제</string>
+    <string name="cancel_order_success">주문 취소 성공</string>
+
+    <!--    주문-->
+    <string name="order_successful">주문 성공</string>
+    <string name="cancel_order_successful">주문 취소 성공</string>
+    <string name="cancel_order_failed">주문 취소 실패</string>
+    <string name="retry">재시도</string>
+    <string name="title_status">주문 상태</string>
+    <string name="message_status">상태 메시지</string>
+    <string name="follow_order">주문 추적</string>
+    <string name="restaurant_info">SmartLunch - Trinh Van Bo, Nam Tu Liem</string>
+    <string name="order_process">주문 처리</string>
+    <string name="restaurant_delivery">식당 배송</string>
+    <string name="delivery_address">배송 주소</string>
+    <string name="recipient">수령인</string>
+    <string name="phone_number_order">전화 번호</string>
+    <string name="address_order">주소</string>
+    <string name="order_info">주문 정보</string>
+    <string name="order_time">주문 시간</string>
+    <string name="update_time">업데이트 시간</string>
+    <string name="order_code">주문 코드</string>
+    <string name="discount_code">할인 코드</string>
+    <string name="total_amount">총 금액</string>
+    <string name="discount">할인</string>
+    <string name="shipping_fee">배송료</string>
+    <string name="final_amount">최종 금액</string>
+    <string name="payment_method">결제 방법</string>
+    <string name="paid">결제 완료</string>
+    <string name="cancel_order">주문 취소</string>
+    <string name="rate_order">주문 평가</string>
+    <string name="rate_order_text">주문 평가</string>
+    <string name="money_method">현금</string>
+    <string name="tab_order_0">확인 대기 중</string>
+    <string name="tab_order_1">확인됨</string>
+    <string name="tab_order_2">배송 중</string>
+    <string name="tab_order_3">배송 완료</string>
+    <string name="tab_order_4">주문 취소됨</string>
+    <string name="product_review_title">제품 리뷰</string>
+    <string name="no_order_message">사용 가능한 주문이 없습니다</string>
+    <string name="comment_success">코멘트 성공</string>
+    <string name="comment_failure">코멘트 실패</string>
+    <string name="tracking_order_title">주문 추적</string>
+    <string name="shipper_not_found">배송원을 찾을 수 없습니다</string>
+    <string name="permission_request">권한 요청</string>
+    <string name="location_permission_denied">위치 권한을 부여하지 않았습니다</string>
+    <string name="open_settings_permission">설정으로 이동하여 권한을 부여하세요</string>
+    <string name="upcoming_arrival">곧 도착 예정!</string>
+    <string name="driver_arriving">드라이버가 곧 도착할 예정입니다 </string>
+    <string name="wait_a_moment">잠시만 기다려주세요! 곧 도착할 예정입니다</string>
+    <string name="price_option">가격 옵션</string>
+    <!-- 제품 -->
+    <string name="product_added_to_cart_failure">장바구니에 추가하지 못했습니다</string>
+    <string name="hide_more">더 보기 숨기기</string>
+    <string name="see_more">더 보기</string>
+    <string name="toast_product_added_to_cart_failure">장바구니에 추가하지 못했습니다</string>
+    <string name="no_comments_placeholder">코멘트 없음</string>
+    <string name="views">조회수</string>
+    <string name="ratings">평점</string>
+    <string name="sold">판매됨</string>
+    <string name="size">크기</string>
+    <string name="topping">토핑</string>
+    <string name="comment">코멘트</string>
+    <string name="add_to_cart">장바구니에 추가</string>
+    <string name="buy_now">지금 구매</string>
+    <string name="list">목록</string>
+    <string name="pass_wrong">비밀번호가 틀렸습니다!</string>
+    <string name="current_pass">현재 비밀번호</string>
+    <string name="update_profile_success">프로필 업데이트 성공</string>
+    <string name="data_empty">데이터가 비어 있습니다</string>
+    <string name="search_hint_p">검색하기</string>
+    <string name="search_results_for">다음 검색 결과: %s</string>
+    <string name="ascending_order">오름차순</string>
+    <string name="descending_order">내림차순</string>
+    <string name="sort_by">정렬 기준</string>
+    <string name="price">가격</string>
+    <string name="best_seller">베스트셀러</string>
+    <string name="content_order_success">주문이 식당에 전송되었습니다. 잠시만 기다려주세요</string>
+    <string name="add_address_title">주소 추가</string>
+    <string name="select_province">--- 도/시 선택 ---</string>
+    <string name="select_district">--- 구/군 선택 ---</string>
+    <string name="select_ward">--- 읍/면/동 선택 ---</string>
+    <string name="add_address_success">주소가 성공적으로 추가되었습니다</string>
+    <string name="add_address_failure">주소 추가 실패</string>
+    <string name="fill_all_information">모든 정보를 입력하세요</string>
+    <string name="select_hanoi_address">하노이 주변의 주소만 선택할 수 있습니다</string>
+    <string name="address_search_error">주소 검색 오류</string>
+    <string name="full_name">전체 이름</string>
+    <string name="address_detail">상세 주소</string>
+    <string name="no_id_address">ID 주소 없음</string>
+    <string name="detail_address">세부 주소</string>
+    <string name="confirm_delete_address">이 주소를 삭제하시겠습니까?</string>
+    <string name="no_address">주소 없음</string>
+    <string name="delete_address_success">주소 삭제 성공</string>
+    <string name="delete_address_failure">주소 삭제 실패</string>
+    <string name="discount_title">현재 프로모션</string>
+    <string name="payment_success">결제 성공</string>
+    <string name="payment_cancel">결제를 취소하셨습니다</string>
+    <string name="payment_failure">결제 실패</string>
+    <string name="missing_user_info">사용자 정보 부족</string>
+    <string name="add_address_prompt">아직 주소가 없습니다. 주소를 추가하세요.</string>
+    <string name="no_address_list">사용 가능한 주소 목록 없음</string>
+    <string name="no_cart">장바구니가 비어 있습니다</string>
+    <string name="create_zalopay_order_fail">ZaloPay 주문 생성 실패</string>
+    <string name="create_zalopay_order_failed">ZaloPay 주문 생성 실패</string>
+    <string name="lack_of_info">사용자 정보 부족</string>
+    <string name="payment_details">결제 세부 정보</string>
+    <string name="promo_code">프로모션 코드</string>
+    <string name="subtotal">소계</string>
+    <string name="total">총액</string>
+    <string name="place_order">주문하기</string>
+    <string name="chose_anddress">배송 주소 선택</string>
+    <string name="pay_with">...로 결제하기</string>
+    <string name="pay_with_zalo_pay">ZaloPay로 결제하기</string>
+    <string name="discount_money">할인</string>
+    <string name="insufficient_cart">장바구니가 결제 조건을 충족하지 못합니다</string>
+    <string name="send_data_function">결제 화면으로 데이터 보내기 기능</string>
+    <string name="total_condition_warning">결제를 진행하기에 장바구니가 부족합니다</string>
+    <string name="note_hint">내용 입력</string>
+    <string name="add_promo">프로모션 추가</string>
+    <string name="sub_total">소계</string>
+    <string name="total_text">총액</string>
+    <string name="continue_button">계속</string>
+    <string name="note_tile">주문 노트</string>
+    <string name="account_not_verified">계정이 확인되지 않았습니다</string>
+    <string name="verify">확인</string>
+    <string name="sign_in_with_gg">Google으로 로그인</string>
+    <string name="already_registered">이메일이 이미 등록되었습니다!</string>
+    <string name="system_error">시스템 오류입니다. 나중에 다시 시도해주세요</string>
+    <string name="incorrect_otp">잘못된 OTP 코드입니다! 이메일을 다시 확인하세요</string>
+    <string name="expired_otp">OTP 코드가 만료되었습니다! 새로운 코드를 받으세요</string>
+    <string name="system_issue">시스템에 문제가 발생했습니다. 나중에 다시 시도하세요!</string>
+    <string name="payment_money">배송 시 결제</string>
+    <string name="call">전화</string>
+    <string name="classify">분류:</string>
+    <string name="out_date">만료됨:</string>
+    <string name="order_id">#252893</string>
+    <string name="order_status">주문 상태</string>
+    <string name="cancelled_status">취소됨</string>
+    <string name="product_name">상품명</string>
+    <string name="price_label">가격</string>
+    <string name="quantity_label">수량</string>
+    <string name="detail_button">상세정보</string>
+    <!-- 장바구니 -->
+    <string name="confirm_delete_title">삭제 확인</string>
+    <string name="confirm_delete_message">장바구니에서 이 항목을 삭제하시겠습니까?</string>
+    <string name="confirm_delete_positive_button">삭제</string>
+    <string name="confirm_delete_negative_button">취소</string>
+    <string name="cart_insufficient_condition_message">결제를 위한 장바구니 조건을 충족하지 못합니다</string>
+    <string name="add_to_cart_more">장바구니에 추가</string>
+    <string name="insert_your_comment">코멘트 입력</string>
+    <string name="send_comment">코멘트 보내기</string>
+
+
+
+</resources>

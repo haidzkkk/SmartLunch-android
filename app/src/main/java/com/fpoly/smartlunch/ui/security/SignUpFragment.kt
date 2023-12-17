@@ -80,12 +80,12 @@ class SignUpFragment : PolyBaseFragment<FragmentSignUpBinding>(), TextWatcher {
                 val error= (it.asyncSignUp as Fail<VerifyOTPResponse>).error.message.toString().trim()
                 when(error){
                     "HTTP 500 Internal Server Error" ->{
-                        showSnackbar(requireView(),"Email đã được đăng ký!",false,"Đăng nhập",{
+                        showSnackbar(requireView(),getString(R.string.already_registered),false,getString(R.string.login),{
                             activity?.onBackPressed()
                         })
                     }
                     else ->{
-                        showSnackbar(requireView(),"Hệ thống lỗi vui lòng thử lại sau",false,"Ok",{})
+                        showSnackbar(requireView(),getString(R.string.system_error),false,getString(R.string.ok),{})
                     }
                 }
             }

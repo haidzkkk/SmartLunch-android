@@ -40,8 +40,8 @@ class FavouriteProductsFragment : PolyBaseFragment<FragmentFavouriteProductsfrag
     }
 
     private fun listenEvent() {
-
     }
+
     private fun onItemProductClickListener(productId:String) {
         productViewModel.handle(ProductAction.GetDetailProduct(productId))
         productViewModel.handle(ProductAction.GetListSizeProduct(productId))

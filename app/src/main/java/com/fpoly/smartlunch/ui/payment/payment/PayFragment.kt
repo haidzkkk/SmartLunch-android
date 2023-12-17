@@ -177,7 +177,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                         Notify(
                             getString(R.string.pay),
                             getString(R.string.address_not_empty),
-                            "Thieu thong tin nguoi dung",
+                            getString(R.string.lack_of_info),
                             R.raw.animation_falure
                         )
                     )
@@ -185,17 +185,17 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
             },
             onApprove = OnApprove { approval ->
                 approval.orderActions.capture {
-                    Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.payment_success), Toast.LENGTH_SHORT).show()
                     payment(Status.STATUS_PAYPAL, true)
                 }
             },
             onCancel = OnCancel {
-                Toast.makeText(requireContext(), "Bạn đã thoát thanh toán", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.payment_cancel), Toast.LENGTH_SHORT).show()
                 Log.e("MainActivity", "OnCancel")
                 paymentViewModel.returnShowLoading(false)
             },
             onError = OnError {
-                Toast.makeText(requireContext(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.payment_failure), Toast.LENGTH_SHORT).show()
                 Log.e("MainActivity", "OnError $it")
                 paymentViewModel.returnShowLoading(false)
             }
@@ -232,7 +232,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                 Notify(
                     getString(R.string.pay),
                     getString(R.string.address_not_empty),
-                    "Thieu thong tin nguoi dung",
+                    getString(R.string.missing_user_info),
                     R.raw.animation_falure
                 )
             )
@@ -281,11 +281,11 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                         myAddress = listAddress.find { it.isSelected }
                         setupLayoutAddress()
                     }else{
-                        Toast.makeText(requireContext(), "Bạn chưa có địa chỉ hãy thêm địa chỉ", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.add_address_prompt), Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Fail ->{
-                    Toast.makeText(requireContext(), "Không có danh sách địa chỉ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.no_address), Toast.LENGTH_SHORT).show()
                 }
                 else -> {
 
@@ -307,7 +307,7 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                     setupUi()
                 }
                 is Fail ->{
-                    Toast.makeText(requireContext(), "Không có giỏ hàng", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.no_cart), Toast.LENGTH_SHORT).show()
                     activity?.onBackPressed()
                 }
                 else ->{
@@ -348,13 +348,13 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
                         val token = data?.zp_trans_token
                         handlePaymentZaloPay(token.toString())
                     }else{
-                        Toast.makeText(requireContext(), "Tạo bóa đơn zalopay thất bại", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.create_zalopay_order_fail), Toast.LENGTH_SHORT).show()
                     }
 
                     it.asyncOrderZaloPayReponse = Uninitialized
                 }
                 is Fail ->{
-                    Toast.makeText(requireContext(), "Tạo bóa đơn zalopay failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.create_zalopay_order_fail), Toast.LENGTH_SHORT).show()
                     it.asyncOrderZaloPayReponse = Uninitialized
                 }
                 else ->{
@@ -370,18 +370,18 @@ class PayFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCallback {
     private fun handlePaymentZaloPay(token: String){
         ZaloPaySDK.getInstance().payOrder(requireActivity(), token, "demozpdkpayment://app", object : PayOrderListener{
             override fun onPaymentSucceeded(p0: String?, p1: String?, p2: String?) {
-                Toast.makeText(requireContext(), "Thanh toán thành công", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.payment_success), Toast.LENGTH_SHORT).show()
                 payment(Status.STATUS_ZALOPAY, true)
             }
 
             override fun onPaymentCanceled(p0: String?, p1: String?) {
-                Toast.makeText(requireContext(), "Bạn đã thoát thanh toán", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.payment_cancel), Toast.LENGTH_SHORT).show()
                 Log.e("MainActivity", "OnCancel")
                 paymentViewModel.returnShowLoading(false)
             }
 
             override fun onPaymentError(p0: ZaloPayError?, p1: String?, p2: String?) {
-                Toast.makeText(requireContext(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.payment_failure), Toast.LENGTH_SHORT).show()
                 Log.e("MainActivity", "OnError $p0")
                 paymentViewModel.returnShowLoading(false)
             }

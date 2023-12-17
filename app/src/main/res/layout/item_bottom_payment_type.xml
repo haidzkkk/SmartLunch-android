@@ -12,7 +12,7 @@
         android:maxWidth="200dp"
         android:textSize="14sp"
         android:textColor="@color/title"
-        android:text="Tiền mặt"
+        android:text="@string/money_method"
         android:paddingStart="10dp"/>
 
     <TextView
@@ -24,6 +24,6 @@
         android:layout_alignParentEnd="true"
         android:textSize="10sp"
         android:textColor="@color/title"
-        android:text="Thanh toán khi nhận hàng"/>
+        android:text="@string/payment_money"/>
 
 </RelativeLayout>

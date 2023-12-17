@@ -21,7 +21,7 @@
         android:layout_below="@+id/img_main"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:text="Xem tất cả"
+        android:text="@string/see_all_text"
         android:textColor="@color/red"/>
 
 

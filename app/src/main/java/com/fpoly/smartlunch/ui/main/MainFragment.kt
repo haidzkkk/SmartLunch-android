@@ -15,13 +15,14 @@ import com.fpoly.smartlunch.core.PolyBaseFragment
 import com.fpoly.smartlunch.core.PolyViewEvent
 import com.fpoly.smartlunch.data.network.SessionManager
 import com.fpoly.smartlunch.databinding.FragmentMainBinding
+import com.fpoly.smartlunch.ui.main.home.HomeFragment
 import com.fpoly.smartlunch.ui.main.home.HomeViewEvent
 import com.fpoly.smartlunch.ui.main.home.HomeViewModel
 import com.fpoly.smartlunch.ui.main.product.ProductEvent
 import com.fpoly.smartlunch.ui.main.product.ProductViewModel
+import com.fpoly.smartlunch.ui.main.profile.ProfileFragment
+import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.addFragmentToBackStack
-import com.fpoly.smartlunch.ultis.changeLanguage
-import com.fpoly.smartlunch.ultis.changeMode
 import javax.inject.Inject
 
 class MainFragment : PolyBaseFragment<FragmentMainBinding>(){
@@ -36,6 +37,7 @@ class MainFragment : PolyBaseFragment<FragmentMainBinding>(){
         handleViewModel()
         setupBottomNavigation()
     }
+
     private fun handleViewModel() {
         homeViewModel.observeViewEvents {
             if (it != null) {
@@ -86,20 +88,6 @@ class MainFragment : PolyBaseFragment<FragmentMainBinding>(){
                             tag = event.fragmentClass.simpleName.toString()
                         )
                     }
-
-                    else -> {}
-                }
-            }
-
-            is ProductEvent -> {
-                when (event) {
-//                    is ProductEvent.ReturnFragment<*> -> {
-//                        addFragmentToBackStack(
-//                            R.id.frame_main_layout,
-//                            event.fragmentClass,
-//                            event.fragmentClass.simpleName.toString()
-//                        )
-//                    }
 
                     else -> {}
                 }
