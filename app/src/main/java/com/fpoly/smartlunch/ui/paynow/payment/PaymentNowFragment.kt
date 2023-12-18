@@ -110,6 +110,7 @@ class PaymentNowFragment : PolyBaseFragment<FragmentPayBinding>(), OnMapReadyCal
         views.apply {
             address.text=myAddress?.addressLine
             phone.text=myAddress?.phoneNumber
+            recipientName.text = myAddress?.recipientName
         }
 
         if (mGoogleMap == null) return

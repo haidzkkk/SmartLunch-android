@@ -174,7 +174,7 @@ class HomeBottomSheet : PolyBaseBottomSheet<BottomsheetFragmentHomeBinding>() {
         if (cartResponse?.products.isNullOrEmpty()) this.dismiss()
         adapterCart.setData(cartResponse?.products)
         tvQuantity?.text = cartResponse?.products?.size.toString()
-        btnCommit.text = "${getString(R.string.yes)} ${cartResponse?.total?.formatCash()}"
+        btnCommit.text = "${getString(R.string.pay)} ${cartResponse?.total?.formatCash()}"
     }
 
     override fun onPause() {

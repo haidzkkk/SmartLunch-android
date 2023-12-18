@@ -52,7 +52,7 @@
                 <TextView
                     android:id="@+id/tv_rate"
                     android:layout_width="19dp"
-                    android:layout_height="18dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_toRightOf="@+id/star"
                     android:gravity="top"
@@ -62,35 +62,13 @@
                     android:translationY="-1.84sp" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/sale"
-                android:layout_toRightOf="@+id/iconly_bold"
-                android:layout_width="62dp"
-                android:layout_height="22dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/sale">
-
-                <TextView
-                    android:id="@+id/off"
-                    android:layout_width="46dp"
-                    android:layout_height="18dp"
-                    android:text="@string/off"
-                    android:textAppearance="@style/off"
-                    android:lineSpacingExtra="4sp"
-                    android:translationY="-1.84sp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center_horizontal|top" />
-            </RelativeLayout>
-
-
         </RelativeLayout>
 
         <TextView
             android:layout_below="@+id/promotion"
             android:id="@+id/name_product_list_detail"
             android:layout_width="195dp"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:textAppearance="@style/pizza_th_gi"
             android:lineSpacingExtra="3sp"
             android:translationY="-1.65sp"
@@ -101,7 +79,7 @@
             android:layout_below="@id/name_product_list_detail"
             android:id="@+id/price_product_list_detail"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textColor="@color/red"
             android:textSize="18sp"

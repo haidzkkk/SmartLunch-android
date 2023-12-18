@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.Fail
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.activityViewModel
@@ -82,6 +83,8 @@ class ProductReviewFragment: PolyBaseFragment<FragmentProductReviewBinding>(){
 
     override fun invalidate() {
         withState(productViewModel){
+            views.layoytLoading.root.isVisible = it.asyncAddComment is Loading
+
             when(it.addOrder){
                 is Success -> {
                     adapter.setData(it.addOrder.invoke())

@@ -59,7 +59,7 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
     private var currentSize: Size? = null
     private var currentProduct: Product? = null
     private var isLiked: Boolean = false
-    private var currentSoldQuantity: Int? = 1
+    private var currentSoldQuantity: Int = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -187,12 +187,12 @@ class ProductFragment : PolyBaseFragment<FragmentFoodDetailBinding>() {
         }
 
         views.buttonAddCart.setOnClickListener {
-            if (currentProduct != null){
+            if (currentProduct != null && currentSize != null){
                 addCart()
             }
         }
         views.buttonPay.setOnClickListener{
-            if (currentProduct != null){
+            if (currentProduct != null && currentSize != null){
                 sendCart()
             }
         }

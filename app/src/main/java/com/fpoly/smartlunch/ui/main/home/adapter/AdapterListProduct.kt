@@ -10,6 +10,7 @@ import com.fpoly.smartlunch.data.model.Category
 import com.fpoly.smartlunch.data.model.Product
 import com.fpoly.smartlunch.databinding.LayoutCategoryBinding
 import com.fpoly.smartlunch.databinding.LayoutListProductBinding
+import com.fpoly.smartlunch.ultis.formatCash
 import com.fpoly.smartlunch.ultis.formatRate
 
 class AdapterListProduct(private val onClickItem: (id: String) -> Unit) : RecyclerView.Adapter<AdapterListProduct.ProductListViewHolder>() {
@@ -35,7 +36,8 @@ class AdapterListProduct(private val onClickItem: (id: String) -> Unit) : Recycl
                 .error(R.drawable.loading_img)
                 .into(imageCategory)
             nameCategory.text = product.product_name
-            tvRate.text = " ${product.rate.formatRate()}"
+            binding.priceProductListDetail.text = product.product_price.formatCash()
+            tvRate.text = product.rate.formatRate()
             linerCategory.setOnClickListener {
                 onClickItem(product._id)
             }
