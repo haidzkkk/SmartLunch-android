@@ -52,6 +52,7 @@ class HomeBottomSheetCategory : PolyBaseBottomSheet<FragmentHomeBottomSheetCateg
         adapterCategory = AdapterCategory{
             productViewModel.handle(ProductAction.GetAllProductByIdCategory(it))
             homeViewModel.returnProductListFragment()
+            dismiss()
         }
         views.rcvCategory.adapter = adapterCategory
 

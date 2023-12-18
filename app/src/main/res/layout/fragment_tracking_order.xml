@@ -37,6 +37,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_delevery_time"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
                         android:layout_marginRight="32dp"

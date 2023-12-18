@@ -32,6 +32,7 @@ import com.fpoly.smartlunch.ultis.MyConfigNotifi
 import com.fpoly.smartlunch.ultis.Status
 import com.fpoly.smartlunch.ultis.Status.avatar_shipper_default
 import com.fpoly.smartlunch.ultis.Status.collection_user_locations
+import com.fpoly.smartlunch.ultis.formatRate
 import com.fpoly.smartlunch.ultis.showUtilDialogWithCallback
 import com.fpoly.smartlunch.ultis.startToDetailPermission
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.clustering.ClusterManager
+import java.lang.Math.round
 
 class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), OnMapReadyCallback {
     private val productViewModel: ProductViewModel by activityViewModel()
@@ -219,6 +221,7 @@ class TrackingOrderFragment : PolyBaseFragment<FragmentTrackingOrderBinding>(), 
             shipperName.text =
                 "${shipperLocation.user?.last_name} ${shipperLocation.user?.first_name}"
             phone.text = "${shipperLocation.user?.phone}"
+            tvDeleveryTime.text ="${round(currentOrder?.address?.deliveryTime ?: 0.0).toInt()} ${this.root.context.getString(R.string.minute)}"
         }
     }
 

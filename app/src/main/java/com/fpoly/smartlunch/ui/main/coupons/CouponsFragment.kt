@@ -1,9 +1,11 @@
 package com.fpoly.smartlunch.ui.main.coupons
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.withState
@@ -29,19 +31,23 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupAppBar()
+        initUI()
+        listenEvent()
     }
-
-    private fun setupAppBar() {
+    private fun initUI() {
         views.layoutHeader.tvTitleToolbar.text = getString(R.string.promotion)
         productViewModel.handle(ProductAction.GetListCoupons)
-    }
 
-    private fun setupListCoupon() {
         adapterCoupons = CouponsAdapter {
             onClickItemCoupons(it)
         }
         views.rcyCoupon.adapter = adapterCoupons
+    }
+
+    private fun listenEvent() {
+        views.swipeLoading.setOnRefreshListener {
+            productViewModel.handle(ProductAction.GetListCoupons)
+        }
     }
 
     private fun onClickItemCoupons(id: String) {
@@ -50,9 +56,10 @@ class CouponsFragment : PolyBaseFragment<FragmentCouponsBinding>() {
     }
 
     override fun invalidate(): Unit = withState(productViewModel) {
+        views.swipeLoading.isRefreshing = it.asyncCoupons is Loading
         when (it.asyncCoupons) {
             is Success -> {
-                setupListCoupon()
+                Log.e("CouponsAdapter", "setData: ${it.asyncCoupons.invoke()}", )
                 adapterCoupons?.setData(it.asyncCoupons.invoke())
             }
 

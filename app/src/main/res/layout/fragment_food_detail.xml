@@ -70,11 +70,13 @@
 
                             <TextView
                                 android:id="@+id/Name_detail_food"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/loading"
                                 android:textColor="@color/black"
-                                android:textSize="22sp"
+                                android:paddingEnd="10dp"
+                                android:layout_toStartOf="@+id/price_detail_food"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -82,7 +84,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
                                 android:textColor="@color/red"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
