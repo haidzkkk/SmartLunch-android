@@ -2,8 +2,10 @@ package com.fpoly.smartlunch.ui.security
 
 import VerifyOTPFragment
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.viewModel
 import com.fpoly.smartlunch.PolyApplication
 import com.fpoly.smartlunch.R
@@ -48,6 +50,9 @@ class LoginActivity : PolyBaseActivity<ActivityLoginBinding>(), SecurityViewMode
             if (it != null) {
                 handleEvent(it)
             }
+        }
+        viewModel.subscribe(this){
+            views.layoutLoading.root.isVisible = it.asyncLogin is Loading || it.asyncSignUp is Loading
         }
         print(viewModel.getString())
         changeMode(sessionManager.fetchDarkMode())
